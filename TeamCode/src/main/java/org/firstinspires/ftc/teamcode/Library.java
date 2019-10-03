@@ -2,16 +2,19 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 //import com.qualcomm.robotcore.hardware.SonarSensor;
 
 import java.util.*;
 
 public abstract class Library extends OpMode {
     // Declare Hardware Devices
-    public static DcMotor frontLeft, frontRight, backLeft, backRight, stoneLift;
+    public static DcMotor frontLeft, frontRight, backLeft, backRight, liftOne, liftTwo;
     public static VoltageSensor voltSensor;
+    public static Servo grabberServo;
     //public static SonarSensor sonarSensor;
 
     // Declare initializing method
@@ -43,15 +46,16 @@ public abstract class Library extends OpMode {
     static double WARNING_BATTERY_VOLTAGE = 11;
 
 
-    public static void drive(float lf, float rf, float lb, float rb) {
+    /*public static void drive(float lf, float rf, float lb, float rb) {
         frontLeft.setPower(-lf);
         frontRight.setPower(rf);
         backLeft.setPower(-lb);
         backRight.setPower(rb);
-    }
+    }*/
+    
     // public static void driveUntil(float distanceInCM) {
     //     float startPosition = frontLeft.getCurrentPosition();
-    //     float rotations = distanceInCM / 31.4f * 360;//360 if its in degrees
+    //     float rotations = distanceInCM / 31.4f * 360;  //360 if its in degrees
     //     while (frontLeft.getCurrentPosition() < rotations + startPosition) {
     //         omni(1, 0, 0);
     //     }
@@ -105,27 +109,42 @@ public abstract class Library extends OpMode {
         for (int i = 0; i < 4; i++) {
             sums[i] = sums[i] / attenuationfactor;
         }
+            
+        frontLeft.setPower(sums[0]);
+        frontRight.setPower(sums[1]);
+        backLeft.setPower(sums[2]);
+        backRight.setPower(sums[3]);
+    }
 
-        drive(sums[0], sums[1], sums[2], sums[3]);
-
-    } /* OMNI IS WHAT WE USE, DRIVE IS FOR OMNI TO USE*/
-
-    // Returns whether the robot is in front of a skystone
-    //boolean ifThePositionOfTheRobotHappensToBeInFrontOfALocationThatIsInFrontOfTheSkystoneReturnTrueOtherwiseItWillReturnFalseEndOfSentanceWhyAreYouStillReadingYouShouldStopNowYouIdiot() {
-    // Will be added later
-    //}
-
-    public static void driveUntil(float distanceInCM) {
-
+    public static void driveUntil(float cM) {//DO NOT TOUCH MY METHODS
         float startPosition = frontLeft.getCurrentPosition();
-        float rotations = distanceInCM*25.5f;
-        // distance /circumfrence = rotations necesary
-        //distanceInCm/
+        float rotations = 1440 * (cM/25.5f);
         while (frontLeft.getCurrentPosition() < rotations + startPosition) {
             omni(1, 0, 0);
-        }
-        int coastDistance = frontLeft.getCurrentPosition();
+        }        int coastDistance = frontLeft.getCurrentPosition();
         long theTime = System.currentTimeMillis();
         int i = 0;
+//        frontLeft.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+//        frontRight.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+//        backLeft.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+//        backRight.setMode(DcMotorController.RunMode.RESET_ENCODERS);
     }
+
+    public static void encodersInit(){//DO NOT TOUCH MY METHODS
+//        frontLeft.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+//        frontRight.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+//        backLeft.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+//        backRight.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+    }
+
+    /*
+        hardware notes:
+        2 motors for lift - need to be in sync, have intervals that it can go to manually (button press, may require encoders)
+        1 servo for block grabber - likely continuous (button press)
+        */
+        
+//    public static void lift(float zoom){
+//        liftOne.setPower(zoom);
+//        lifeTwo.setPower(zoom);
+//    }
 }

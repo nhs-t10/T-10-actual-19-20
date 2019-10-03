@@ -6,25 +6,20 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name = "DriveTeleOp")
 public class DriveTeleOp extends Library
 {
-    //lift will act as the button for the stoneLift
-    boolean lift  = false;
-    //imuData imu;
     double time_millis = 0.0;
     ElapsedTime t = new ElapsedTime();
     public void init() {
         hardwareInit();
-        //imu = new imuData(hardwareMap);
     }
 
     public void loop() {
         float linear = gamepad1.left_stick_y;
         float side = gamepad1.left_stick_x;
         float rotation = gamepad1.right_stick_x;
-
-        //defining the stuff. linear = straight, rotation = turning, side = skating.
+        //linear = straight, rotation = turning, side = skating.
         //Linear - rotation will compensate one side to allow the other side to overrotate
 
-        /*if(gamepad1.right_stick_button){
+       /* if(gamepad1.right_stick_button){
             mode = mode.getNext();
         }
 
@@ -33,7 +28,7 @@ public class DriveTeleOp extends Library
         if(mode == DRIVING.Medium) {
             omni(linear/1.5f, rotation/1.5f, side/1.5f);} // medium driving
         if(mode == DRIVING.Fast) {
-            omni(linear, rotation, side);} // fast driving*/
+            omni(linear, rotation, side);} // fast driving */
         omni(linear, rotation, side);
         String vals = String.valueOf(linear) + "\n " +String.valueOf(rotation) + "\n " + String.valueOf(side);
         telemetry.addData("Values:", vals);
@@ -49,14 +44,11 @@ public class DriveTeleOp extends Library
             scoreMotor.setPower(0f);
         }*/
 
-        /*if(gamepad1.right_stick_button && gamepad1.left_stick_button){
+        /* if(gamepad1.right_stick_button && gamepad1.left_stick_button){
             shutdown();
             telemetry.addData("SLOW DOWN PARTNER", "RESETING...");
-        }*/
-
-        /*telemetry.addData("Current Angle?", imu.getAngle());
-        telemetry.addData("Driving Mode:",mode);*/
-
+        }
+        telemetry.addData("Driving Mode:",mode); */
     }
 
     //public void stop() {
