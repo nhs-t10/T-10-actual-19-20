@@ -16,7 +16,7 @@ public abstract class Library extends OpMode {
     // Declare Hardware Devices
     public static DcMotor frontLeft, frontRight, backLeft, backRight, liftOne, liftTwo;
     public static VoltageSensor voltSensor;
-    public static Servo grabberServo;
+    public static Servo grabberServo, unknown;
     //public static SonarSensor sonarSensor;
 
     // Declare initializing method
@@ -25,7 +25,9 @@ public abstract class Library extends OpMode {
         frontRight = hardwareMap.dcMotor.get("m1");
         backLeft = hardwareMap.dcMotor.get("m2");
         backRight = hardwareMap.dcMotor.get("m3");
+
         grabberServo = hardwareMap.servo.get("s0");
+
         //sonar = hardwareMap.sonarSensor.get("s1");
         //stoneLift = hardwareMap.dcMotor.get("sL");
 

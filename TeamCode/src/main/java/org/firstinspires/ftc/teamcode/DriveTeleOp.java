@@ -17,7 +17,7 @@ public class DriveTeleOp extends Library
         float side = gamepad1.left_stick_x;
         float rotation = gamepad1.right_stick_x;
         boolean y = gamepad1.y;
-        y = !y;
+        y=!y;
         //linear = straight, rotation = turning, side = skating.
         //Linear - rotation will compensate one side to allow the other side to overrotate
 

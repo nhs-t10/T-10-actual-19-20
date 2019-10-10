@@ -1,4 +1,4 @@
-public class cvBase {
+/*public class cvBase {
 	private enum trackingStates {
 		SKY_STONE
 	}
@@ -7,7 +7,7 @@ public class cvBase {
 
 	private findBounds(trackingStates objectToTrack) {
 		if (objectToTrack == trackingStates.SKY_STONE) {
-			
+
 		}
 	}
-}
+}*/
