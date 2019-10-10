@@ -29,6 +29,7 @@ public class MimingReader extends Library
         try
         {
             String line = bufferedReader.nextLine();
+            System.out.println(line);
 
             if(line != null)
             {
