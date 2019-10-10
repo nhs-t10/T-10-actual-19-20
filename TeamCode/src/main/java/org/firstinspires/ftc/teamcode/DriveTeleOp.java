@@ -12,11 +12,12 @@ public class DriveTeleOp extends Library
         hardwareInit();
     }
 
-    public void loop() {
+    public void loop() { 
         float linear = gamepad1.left_stick_y;
         float side = gamepad1.left_stick_x;
         float rotation = gamepad1.right_stick_x;
         boolean y = gamepad1.y;
+        y=!y;
         //linear = straight, rotation = turning, side = skating.
         //Linear - rotation will compensate one side to allow the other side to overrotate
 

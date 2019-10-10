@@ -25,7 +25,9 @@ public abstract class Library extends OpMode {
         frontRight = hardwareMap.dcMotor.get("m1");
         backLeft = hardwareMap.dcMotor.get("m2");
         backRight = hardwareMap.dcMotor.get("m3");
-        grabberServo = hardwareMap.servo.get("s1");
+
+        grabberServo = hardwareMap.servo.get("s0");
+
         //sonar = hardwareMap.sonarSensor.get("s1");
         //stoneLift = hardwareMap.dcMotor.get("sL");
 
@@ -85,9 +87,9 @@ public abstract class Library extends OpMode {
         Omni-driving function.
         @param: l, linear component, r, rotational component, and s, horizontal component
          */
-        float[] forwardMultiplier = {1f, 1f, 1f, 1f};
-        float[] rotationalMultiplier = {-1f, 1f, -1f, 1f};
-        float[] horizontalMultiplier = {-1f, 1f, 1f, -1f};
+        float[] forwardMultiplier = {-1f, 1f, -1f, 1f};
+        float[] rotationalMultiplier = {1f, 1f, 1f, 1f};
+        float[] horizontalMultiplier = {1f, 1f, -1f, -1f};
 
         float[] forwardComponent = new float[4];
         float[] rotationalComponent = new float[4];
@@ -118,13 +120,22 @@ public abstract class Library extends OpMode {
         backLeft.setPower(sums[2]);
         backRight.setPower(sums[3]);
     }
-
+        //takes in distance in centimeters, drives until it hits that distance
+        //this method is wack rn idk if it works lol
+        /*
+         *Parameter(s): float cM, String mode "turn", float degree(optional), float directionSideways (optional)
+         *cM: distance you want it to travel in centimeters
+         *mode: either forwards, sideways, or turning (this will control what the thing does)
+         *degree: if you are turning fill this in, otherwise it will go straight, this will determine what angle you want the robot to turn
+         *directionSideways: also a degree, no radians PAUL, it determines which diagonal path the robot takes if we want to be extra like that
+        */
     public static void driveUntil(float cM) {//DO NOT TOUCH MY METHODS
-        float startPosition = frontLeft.getCurrentPosition();
-        float rotations = (cM/25.5f); //537.6 is because the motor we use has that many ticks per revolutoin shut the hell up matt
+        float startPosition = encodersLagQuestionMark(frontLeft,frontRight,backLeft,backRight);
+        float rotations = (cM/25.5f); //537.6 is because our motor has that many ticks per revolution
         while (frontLeft.getCurrentPosition() < rotations + startPosition) {
             omni(1, 0, 0);
-        }        int coastDistance = frontLeft.getCurrentPosition();
+        }        
+        int coastDistance = frontLeft.getCurrentPosition();
         long theTime = System.currentTimeMillis();
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -138,7 +149,15 @@ public abstract class Library extends OpMode {
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+    public static int encodersLagQuestionMark(DcMotor one, DcMotor two, DcMotor three, DcMotor four)
+    {
+        return(one.getCurrentPosition()+two.getCurrentPosition()+three.getCurrentPosition()+four.getCurrentPosition())/4
+    }
 
+    public static void turnDegrees(int degrees){
+        
+    }    
+    
     /*
         hardware notes:
         2 motors for lift - need to be in sync, have intervals that it can go to manually (button press, may require encoders)
@@ -147,7 +166,7 @@ public abstract class Library extends OpMode {
         
 //    public static void lift(float zoom){
 //        liftOne.setPower(zoom);
-//        lifeTwo.setPower(zoom);
+//        liftTwo.setPower(zoom);
 //    }
     public static void grab(boolean Grab){
         if(Grab){
