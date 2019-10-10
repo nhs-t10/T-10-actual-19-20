@@ -85,10 +85,13 @@ public abstract class Library extends OpMode {
         Omni-driving function.
         @param: l, linear component, r, rotational component, and s, horizontal component
          */
-        float[] forwardMultiplier = {1f, 1f, 1f, 1f};
-        float[] rotationalMultiplier = {-1f, 1f, -1f, 1f};
-        float[] horizontalMultiplier = {-1f, 1f, 1f, -1f};
+//        float[] forwardMultiplier = {1f, 1f, 1f, 1f};
+//        float[] rotationalMultiplier = {-1f, 1f, -1f, 1f};
+//        float[] horizontalMultiplier = {-1f, 1f, 1f, -1f};
 
+        float[] forwardMultiplier = {-1f, 1f, -1f, 1f};
+        float[] rotationalMultiplier = {-1f, -1f, -1f, -1f};
+        float[] horizontalMultiplier = {1f, 1f, -1f, -1f};
         float[] forwardComponent = new float[4];
         float[] rotationalComponent = new float[4];
         float[] eastwestComponent = new float[4];
