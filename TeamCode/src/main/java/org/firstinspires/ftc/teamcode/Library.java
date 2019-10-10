@@ -2,11 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 //import com.qualcomm.robotcore.hardware.SonarSensor;
+
 
 import java.util.*;
 
@@ -118,23 +120,22 @@ public abstract class Library extends OpMode {
 
     public static void driveUntil(float cM) {//DO NOT TOUCH MY METHODS
         float startPosition = frontLeft.getCurrentPosition();
-        float rotations = 1440 * (cM/25.5f);
+        float rotations = 537.6f * (cM/25.5f); //537.6 is because the motor we use has that many ticks per revolutoin shut the hell up matt
         while (frontLeft.getCurrentPosition() < rotations + startPosition) {
             omni(1, 0, 0);
         }        int coastDistance = frontLeft.getCurrentPosition();
         long theTime = System.currentTimeMillis();
-        int i = 0;
-//        frontLeft.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-//        frontRight.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-//        backLeft.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-//        backRight.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public static void encodersInit(){//DO NOT TOUCH MY METHODS
-//        frontLeft.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-//        frontRight.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-//        backLeft.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-//        backRight.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     /*
