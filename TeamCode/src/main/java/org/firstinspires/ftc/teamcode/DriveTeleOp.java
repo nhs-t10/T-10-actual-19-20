@@ -31,7 +31,7 @@ public class DriveTeleOp extends Library
         if(mode == DRIVING.Fast) {
             omni(linear, rotation, side);} // fast driving */
         grab(y);
-        omni();
+        omni(linear, rotation, side);
         String vals = String.valueOf(linear) + "\n " +String.valueOf(rotation) + "\n " + String.valueOf(side);
         telemetry.addData("Values:", vals);
         /*if(gamepad1.left_trigger > 0 && scoreMotor.getCurrentPosition() > -6000){
