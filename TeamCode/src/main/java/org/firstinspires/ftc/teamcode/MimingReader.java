@@ -51,4 +51,4 @@ public class MimingReader extends Library
 
         omni(linear, side, rotation);
     }
-}
+}*/

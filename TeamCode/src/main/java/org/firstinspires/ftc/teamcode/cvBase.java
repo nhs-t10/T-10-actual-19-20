@@ -1,4 +1,4 @@
-public class cvBase {
+/*public class cvBase {
 	private enum trackingStates {
 		SKY_STONE
 	}
@@ -10,4 +10,4 @@ public class cvBase {
 
 		}
 	}
-}
+}*/
