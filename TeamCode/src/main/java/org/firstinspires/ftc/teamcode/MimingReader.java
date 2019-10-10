@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 @Autonomous(name = "MimingReader")
 public class MimingReader extends Library
@@ -24,7 +22,9 @@ public class MimingReader extends Library
     using them as parameters for the "omni" function. */
     public void loop()
     {
-        float linear, side, rotation;
+        float linear = gamepad1.left_stick_y;
+        float side = gamepad1.left_stick_x;
+        float rotation = gamepad1.right_stick_x;
 
         try
         {
