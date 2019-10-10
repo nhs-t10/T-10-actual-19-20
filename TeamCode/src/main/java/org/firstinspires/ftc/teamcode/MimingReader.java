@@ -24,18 +24,20 @@ public class MimingReader extends Library
     using them as parameters for the "omni" function. */
     public void loop()
     {
+        float linear, side, rotation;
+
         try
         {
             String line = bufferedReader.nextLine();
 
             if(line != null)
             {
-                int first = IndexOf(" ");
+                int first = line.indexOf(" ");
                 int second = line.indexOf(" ", first);
 
-                float linear = Float.parseFloat(line.substring(0, first));
-                float side = Float.parseFloat(line.substring(first + 1, second));
-                float rotation = Float.parseFloat(line.substring(second + 1));
+                linear = Float.parseFloat(line.substring(0, first));
+                side = Float.parseFloat(line.substring(first + 1, second));
+                rotation = Float.parseFloat(line.substring(second + 1));
             }
 
             else
