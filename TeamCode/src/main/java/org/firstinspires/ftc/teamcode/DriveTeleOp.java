@@ -16,6 +16,7 @@ public class DriveTeleOp extends Library
         float linear = gamepad1.left_stick_y;
         float side = gamepad1.left_stick_x;
         float rotation = gamepad1.right_stick_x;
+        boolean y = gamepad1.y;
         //linear = straight, rotation = turning, side = skating.
         //Linear - rotation will compensate one side to allow the other side to overrotate
 
@@ -29,7 +30,8 @@ public class DriveTeleOp extends Library
             omni(linear/1.5f, rotation/1.5f, side/1.5f);} // medium driving
         if(mode == DRIVING.Fast) {
             omni(linear, rotation, side);} // fast driving */
-        omni(linear, rotation, side);
+        grab(y);
+        omni();
         String vals = String.valueOf(linear) + "\n " +String.valueOf(rotation) + "\n " + String.valueOf(side);
         telemetry.addData("Values:", vals);
         /*if(gamepad1.left_trigger > 0 && scoreMotor.getCurrentPosition() > -6000){

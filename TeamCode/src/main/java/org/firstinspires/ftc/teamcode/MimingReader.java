@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+/*package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -43,4 +43,4 @@ public class MimingReader extends Library
 
         omni(values[0], values[1], values[2]);
     }
-}
+}*/

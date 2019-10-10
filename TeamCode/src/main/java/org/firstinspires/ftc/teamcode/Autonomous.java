@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+/*package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.opencv.core.Rect;
@@ -14,3 +14,4 @@ public class Autonomous extends Library {
         super.init_loop();
     }
 }
+*/
