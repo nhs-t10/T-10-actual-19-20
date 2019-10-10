@@ -11,8 +11,8 @@ public class MimingReader extends Library
     MimingFile.txt, which contains instructions for this autonomous'
     actions. The object, "bufferReader," is a BufferedReader that
     will be used to read the aforementioned txt file. */
-    FileReader reader = new FileReader("MimingFile.txt");
-    BufferedReader bufferedReader = new BufferedReader(reader);
+    File file = new File("MimingFile.txt");
+    BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
     public void init()
     {
