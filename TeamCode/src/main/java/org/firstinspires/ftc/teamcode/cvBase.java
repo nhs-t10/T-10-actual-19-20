@@ -7,7 +7,7 @@ public class cvBase {
 
 	private findBounds(trackingStates objectToTrack) {
 		if (objectToTrack == trackingStates.SKY_STONE) {
-			
+
 		}
 	}
 }
