@@ -121,7 +121,7 @@ public abstract class Library extends OpMode {
 
     public static void driveUntil(float cM) {//DO NOT TOUCH MY METHODS
         float startPosition = frontLeft.getCurrentPosition();
-        float rotations = 537.6f * (cM/25.5f); //537.6 is because the motor we use has that many ticks per revolutoin shut the hell up matt
+        float rotations = (cM/25.5f); //537.6 is because the motor we use has that many ticks per revolutoin shut the hell up matt
         while (frontLeft.getCurrentPosition() < rotations + startPosition) {
             omni(1, 0, 0);
         }        int coastDistance = frontLeft.getCurrentPosition();
