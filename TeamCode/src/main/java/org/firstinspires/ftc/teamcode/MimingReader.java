@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
