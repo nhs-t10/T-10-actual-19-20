@@ -58,7 +58,7 @@ public abstract class Library extends OpMode {
         backRight.setPower(rb);
     }*/
     
-    // public static void driveUntil(float distanceInCM) {
+    // public static void driveForCM(float distanceInCM) {
     //     float startPosition = frontLeft.getCurrentPosition();
     //     float rotations = distanceInCM / 31.4f * 360;  //360 if its in degrees
     //     while (frontLeft.getCurrentPosition() < rotations + startPosition) {
@@ -129,11 +129,12 @@ public abstract class Library extends OpMode {
          *degree: if you are turning fill this in, otherwise it will go straight, this will determine what angle you want the robot to turn
          *directionSideways: also a degree, no radians PAUL, it determines which diagonal path the robot takes if we want to be extra like that
         */
-    public static void driveUntil(float cM) {//DO NOT TOUCH MY METHODS
-        float startPosition = encodersLagQuestionMark(frontLeft,frontRight,backLeft,backRight);
-        float rotations = (cM/25.5f); //537.6 is because our motor has that many ticks per revolution
+    public void driveFor(double cM, int lin, int rot, int side) {//DO NOT TOUCH MY METHODS
+        double startPosition = encodersLagQuestionMark(frontLeft,frontRight,backLeft,backRight);
+        double rotations = (cM/25.5f); //537.6 is because our motor has that many ticks per revolution
         while (frontLeft.getCurrentPosition() < rotations + startPosition) {
-            omni(1, 0, 0);
+            telemetry.addData("juice?",frontLeft.getCurrentPosition);
+            omni(lin, rot, side);
         }        
         int coastDistance = frontLeft.getCurrentPosition();
         long theTime = System.currentTimeMillis();
@@ -151,18 +152,18 @@ public abstract class Library extends OpMode {
     }
     public static int encodersLagQuestionMark(DcMotor one, DcMotor two, DcMotor three, DcMotor four)
     {
-        return(one.getCurrentPosition()+two.getCurrentPosition()+three.getCurrentPosition()+four.getCurrentPosition())/4
+        return(one.getCurrentPosition() + two.getCurrentPosition() + three.getCurrentPosition() + four.getCurrentPosition()) / 4;
     }
 
-    public static void turnDegrees(int degrees){
+    //This method allows the robot to turn a certain number of degrees using encoders
+    public void turnDegrees(int degrees){
+         double radius = 30.54607421584;  //radius of circle
+         double circumference = 2 * Math.PI * radius;
+         double turnCM = circumference * degrees;  //arc length in circle
+
+         driveFor(turnCM, 0, 1, 0);
+    }  
         
-    }    
-    
-    /*
-        hardware notes:
-        2 motors for lift - need to be in sync, have intervals that it can go to manually (button press, may require encoders)
-        1 servo for block grabber - likely continuous (button press)
-        */
         
 //    public static void lift(float zoom){
 //        liftOne.setPower(zoom);
