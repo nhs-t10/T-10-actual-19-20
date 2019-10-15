@@ -25,7 +25,7 @@ public abstract class Library extends OpMode {
         frontRight = hardwareMap.dcMotor.get("m1");
         backLeft = hardwareMap.dcMotor.get("m2");
         backRight = hardwareMap.dcMotor.get("m3");
-        grabberServo = hardwareMap.servo.get("s1");
+        grabberServo = hardwareMap.servo.get("s0");
         //sonar = hardwareMap.sonarSensor.get("s1");
         //stoneLift = hardwareMap.dcMotor.get("sL");
 
@@ -90,7 +90,7 @@ public abstract class Library extends OpMode {
 //        float[] horizontalMultiplier = {-1f, 1f, 1f, -1f};
 
         float[] forwardMultiplier = {-1f, 1f, -1f, 1f};
-        float[] rotationalMultiplier = {-1f, -1f, -1f, -1f};
+        float[] rotationalMultiplier = {1f, 1f, 1f, 1f};
         float[] horizontalMultiplier = {1f, 1f, -1f, -1f};
         float[] forwardComponent = new float[4];
         float[] rotationalComponent = new float[4];
@@ -152,7 +152,7 @@ public abstract class Library extends OpMode {
 //        liftOne.setPower(zoom);
 //        lifeTwo.setPower(zoom);
 //    }
-    public static void grab(boolean Grab){
+    public static void platform(boolean Grab){
         if(Grab){
             grabberServo.setPosition(1);
         }
