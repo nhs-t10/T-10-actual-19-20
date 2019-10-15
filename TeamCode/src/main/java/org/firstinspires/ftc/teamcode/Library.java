@@ -57,13 +57,12 @@ public abstract class Library extends OpMode {
         backLeft.setPower(-lb);
         backRight.setPower(rb);
     }*/
-<<<<<<< HEAD
+
     
     // public static void driveForCM(float distanceInCM) {
-=======
 
-    // public static void driveUntil(float distanceInCM) {
->>>>>>> dcebf2b2e39bf53fd7b5064d4fc69aa08e7b5051
+
+
     //     float startPosition = frontLeft.getCurrentPosition();
     //     float rotations = distanceInCM / 31.4f * 360;  //360 if its in degrees
     //     while (frontLeft.getCurrentPosition() < rotations + startPosition) {
@@ -96,9 +95,9 @@ public abstract class Library extends OpMode {
         float[] rotationalMultiplier = {1f, 1f, 1f, 1f};
         float[] horizontalMultiplier = {1f, 1f, -1f, -1f};
 
-        float[] forwardMultiplier = {-1f, 1f, -1f, 1f};
-        float[] rotationalMultiplier = {1f, 1f, 1f, 1f};
-        float[] horizontalMultiplier = {1f, 1f, -1f, -1f};
+        //float[] forwardMultiplier = {-1f, 1f, -1f, 1f};
+        //float[] rotationalMultiplier = {1f, 1f, 1f, 1f};
+        //float[] horizontalMultiplier = {1f, 1f, -1f, -1f};
         float[] forwardComponent = new float[4];
         float[] rotationalComponent = new float[4];
         float[] eastwestComponent = new float[4];
@@ -141,14 +140,11 @@ public abstract class Library extends OpMode {
         double startPosition = encodersLagQuestionMark(frontLeft,frontRight,backLeft,backRight);
         double rotations = (cM/25.5f); //537.6 is because our motor has that many ticks per revolution
         while (frontLeft.getCurrentPosition() < rotations + startPosition) {
-<<<<<<< HEAD
+
             telemetry.addData("juice?",frontLeft.getCurrentPosition);
             omni(lin, rot, side);
         }        
-=======
-            omni(1, 0, 0);
-        }
->>>>>>> dcebf2b2e39bf53fd7b5064d4fc69aa08e7b5051
+
         int coastDistance = frontLeft.getCurrentPosition();
         long theTime = System.currentTimeMillis();
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -168,7 +164,6 @@ public abstract class Library extends OpMode {
         return(one.getCurrentPosition() + two.getCurrentPosition() + three.getCurrentPosition() + four.getCurrentPosition()) / 4;
     }
 
-<<<<<<< HEAD
     //This method allows the robot to turn a certain number of degrees using encoders
     public void turnDegrees(int degrees){
          double radius = 30.54607421584;  //radius of circle
@@ -177,20 +172,13 @@ public abstract class Library extends OpMode {
 
          driveFor(turnCM, 0, 1, 0);
     }  
-        
-        
-=======
-    public static void turnDegrees(int degrees){
-
-    }
-
+      
     /*
         hardware notes:
         2 motors for lift - need to be in sync, have intervals that it can go to manually (button press, may require encoders)
         1 servo for block grabber - likely continuous (button press)
         */
 
->>>>>>> dcebf2b2e39bf53fd7b5064d4fc69aa08e7b5051
 //    public static void lift(float zoom){
 //        liftOne.setPower(zoom);
 //        liftTwo.setPower(zoom);
