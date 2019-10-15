@@ -19,7 +19,7 @@ public class EncodersTest extends Library
     {
         if(yeet)
         {
-            driveUntil(100);
+            driveFor(100,1,0,0);
             telemetry.addData("driven:","yessssssssss");
             yeet=false;
         }
