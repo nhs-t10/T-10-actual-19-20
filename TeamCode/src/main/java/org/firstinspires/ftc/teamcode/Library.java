@@ -141,7 +141,7 @@ public abstract class Library extends OpMode {
         double rotations = (cM/25.5f); //537.6 is because our motor has that many ticks per revolution
         while (frontLeft.getCurrentPosition() < rotations + startPosition) {
 
-            telemetry.addData("juice?",frontLeft.getCurrentPosition);
+            telemetry.addData("juice?",frontLeft.getCurrentPosition());
             omni(lin, rot, side);
         }        
 
