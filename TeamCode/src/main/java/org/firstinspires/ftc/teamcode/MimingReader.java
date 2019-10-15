@@ -1,8 +1,6 @@
 //package org.firstinspires.ftc.teamcode;
 //import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-//import java.io.BufferedReader;
-//import java.io.FileReader;
-//import java.io.IOException;
+//import java.io.*;
 //
 //@Autonomous(name = "MimingReader")
 //public class MimingReader extends Library
@@ -11,8 +9,8 @@
 //    MimingFile.txt, which contains instructions for this autonomous'
 //    actions. The object, "bufferReader," is a BufferedReader that
 //    will be used to read the aforementioned txt file. */
-//    FileReader reader = new FileReader("MimingFile.txt");
-//    BufferedReader bufferedReader = new BufferedReader(reader);
+//    File file = new File("MimingFile.txt");
+//    BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 //
 //    public void init()
 //    {
@@ -24,23 +22,27 @@
 //    using them as parameters for the "omni" function. */
 //    public void loop()
 //    {
+//        float linear = 0;
+//        float side = 0;
+//        float rotation = 0;
+//
 //        try
 //        {
-//            String line = bufferedReader.nextLine();
+//            String line = bufferedReader.readLine();
 //
 //            if(line != null)
 //            {
-//                int first = IndexOf(" ");
+//                int first = line.indexOf(" ");
 //                int second = line.indexOf(" ", first);
 //
-//                float linear = Float.parseFloat(line.substring(0, first));
-//                float side = Float.parseFloat(line.substring(first + 1, second));
-//                float rotation = Float.parseFloat(line.substring(second + 1));
+//                linear = Float.parseFloat(line.substring(0, first));
+//                side = Float.parseFloat(line.substring(first + 1, second));
+//                rotation = Float.parseFloat(line.substring(second + 1));
 //            }
 //
 //            else
 //            {
-//                reader.close();
+//                bufferedReader.close();
 //            }
 //        }
 //
@@ -51,4 +53,4 @@
 //
 //        omni(linear, side, rotation);
 //    }
-//}*/
+//}
