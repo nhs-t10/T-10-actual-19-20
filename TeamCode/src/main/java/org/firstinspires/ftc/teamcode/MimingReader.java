@@ -15,19 +15,18 @@ public class MimingReader extends Library
     using them as parameters for the "omni" function. */
     public void loop()
     {
-        /* The object, "reader," is a FileReader that accesses
-        MimingFile.txt, which contains instructions for this autonomous'
-        actions. The object, "bufferReader," is a BufferedReader that
-        will be used to read the aforementioned txt file. */
-        File file = new File("MimingFile.txt");
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
         float linear = 0;
         float side = 0;
         float rotation = 0;
 
+        /* The object, "reader," is a FileReader that accesses
+        MimingFile.txt, which contains instructions for this autonomous'
+        actions. The object, "bufferReader," is a BufferedReader that
+        will be used to read the aforementioned txt file. */
         try
         {
+            BufferedReader bufferedReader = new BufferedReader(new File("MimingFile.txt"));
             String line = bufferedReader.readLine();
 
             if(line != null)
@@ -38,11 +37,6 @@ public class MimingReader extends Library
                 linear = Float.parseFloat(line.substring(0, first));
                 side = Float.parseFloat(line.substring(first + 1, second));
                 rotation = Float.parseFloat(line.substring(second + 1));
-            }
-
-            else
-            {
-                bufferedReader.close();
             }
         }
 
