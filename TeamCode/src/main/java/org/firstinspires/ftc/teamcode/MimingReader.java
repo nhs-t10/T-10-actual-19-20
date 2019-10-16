@@ -26,7 +26,8 @@ public class MimingReader extends Library
         will be used to read the aforementioned txt file. */
         try
         {
-            BufferedReader bufferedReader = new BufferedReader(new File("MimingFile.txt"));
+            File file = new File("MimingFile.txt");
+            BufferedReader bufferedReader = new BufferedReader(file);
             String line = bufferedReader.readLine();
 
             if(line != null)
