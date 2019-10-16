@@ -40,7 +40,7 @@ public class MimingReader extends Library
 
             else
             {
-                bufferedReader.close();
+                System.exit(0);
             }
         }
 
