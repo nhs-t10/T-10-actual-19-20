@@ -140,7 +140,7 @@ public abstract class Library extends OpMode {
         */
     public static void driveFor(Double distanceInCM, float l, float r, float s) {
 		float startPosition = frontLeft.getCurrentPosition();
-		float rotations = 537.6f * (distanceInCm / 25.5f);
+		float rotations = 537.6f * (distanceInCM / 25.5f);
 		while (frontLeft.getCurrentPosition() < rotations + startPosition) {
 			omni(l, r, s);
         }
