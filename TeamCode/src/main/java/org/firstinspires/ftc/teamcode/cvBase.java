@@ -31,6 +31,7 @@ public class cvBase {
 	private CameraDevice webCam;
 
 	cvBase() {
+		super();
 	}
 
 	// this method is trying to parse out the individual elements in the object
