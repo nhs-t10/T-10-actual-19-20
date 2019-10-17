@@ -3,13 +3,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 
-import java.util.ArrayList;
-
 @TeleOp(name = "EnBROders")
 
-
-@TeleOp(name = "encoders yeet")
-public class MotorEncodersTest extends Library{
+public class EncodersTest extends Library{
     public void init() {
         hardwareInit();
     }
@@ -19,13 +15,17 @@ public class MotorEncodersTest extends Library{
         float side = gamepad1.left_stick_x;
         float rotation = gamepad1.right_stick_x;
         omni(linear, rotation, side);
-        telemetry.addData("front left",frontLeft.getCurrentPosition());
-        telemetry.addData("front right",frontRight.getCurrentPosition());
-        telemetry.addData("back left",backLeft.getCurrentPosition());
-        telemetry.addData("back right",backRight.getCurrentPosition());
+        telemetry.addData("front left", frontLeft.getCurrentPosition());
+        telemetry.addData("front right", frontRight.getCurrentPosition());
+        telemetry.addData("back left", backLeft.getCurrentPosition());
+        telemetry.addData("back right", backRight.getCurrentPosition());
 
         if(gamepad1.a){
-            driveUntil(100);
+            driveFor(100, .75f, 0, 0);
+        
+        }
+        if(gamepad1.b){
+            turnDegrees(90);
         }
 
         //Every SAMPLES_PER_SECOND
