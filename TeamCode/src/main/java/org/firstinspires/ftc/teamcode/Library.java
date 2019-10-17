@@ -58,12 +58,12 @@ public abstract class Library extends OpMode {
     static double REPLACE_BATTERY_VOLTAGE = 10;
     static double WARNING_BATTERY_VOLTAGE = 11;
     
-    public DRIVING mode;
-    public enum DRIVING { Slow, Medium, Fast;
-        public DRIVING getNext() {
-            return values()[(ordinal() + 1) % values().length];
-        } // change driving mode
-    }
+//    public DRIVING mode;
+//    public enum DRIVING { Slow, Medium, Fast;
+//        public DRIVING getNext() {
+//            return values()[(ordinal() + 1) % values().length];
+//        } // change driving mode
+//    }
 
     public static float maxValue(float array[]) {
         float max = 0f;
