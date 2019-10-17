@@ -62,8 +62,8 @@ public class DriveTeleOp extends Library
         telemetry.addData("Driving Mode:",mode); */
     }
 
-    //public void stop() {
+    public void stop() {
 
-    //}
+    }
 
 }
