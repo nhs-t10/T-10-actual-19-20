@@ -61,13 +61,13 @@ public class cvBase {
 	 */
 
 	private void getImageFromWebCam() {
-		VideoImputGraber gerald = new VideoImputGraber(0);
+		VideoImputGrabber gerald = new VideoImputGraber(0);
 	}
 
 	private boolean determineRange(ArrayList<MatOfPoint> contours) {
 		Rect mainRect = Imgproc.boundingRect(contours.get(0));
-		if ((mainRect.width > skyStoneWidth - 5) && (mainRect.width < skyStoneWidth + 5)){
-			if ((mainRect.height > skyStoneHeight - 5) && (mainRect.height < skyStoneHeight + 5){
+		if ((mainRect.width > skyStoneWidth - 5) && (mainRect.width < skyStoneWidth + 5)) {
+			if ((mainRect.height > skyStoneHeight - 5) && (mainRect.height < skyStoneHeight + 5)) {
 				return true;
 			}
 		}
