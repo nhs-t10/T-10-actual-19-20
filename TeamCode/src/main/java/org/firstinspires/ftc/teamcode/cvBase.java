@@ -10,6 +10,10 @@ import org.opencv.core.Core;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.core.Scalar;
 
+import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CameraDevice;
+import android.hardware.camera2.CameraCharacteristics;
+
 public class cvBase {
 	private enum TrackingStates {
 		SKY_STONE
@@ -23,6 +27,8 @@ public class cvBase {
 
 	private int skyStoneWidth;
 	private int skyStoneHeight;
+
+	private CameraDevice webCam;
 
 	cvBase() {
 	}
@@ -60,6 +66,25 @@ public class cvBase {
 	 * contours, new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_NONE); }
 	 */
 
+	private getExternalWebcam() {
+		String[] allCameraIds = CameraManager.getCameraIdList();
+		String chosenCameraId;
+		for (int i = 0; i < allCameraIds.length; i++){
+			CameraCharacteristics currentCharactoristics = CameraManager.getCameraCharacteristics(allCameraIds[i]);
+			if (currentCharactoristics.LENS_FACING == 2) {
+				// LENS_FACING_EXTERNAL, it is an external webcam
+				chosenCameraId = allCameraIds[i];
+				break;
+			}
+		}
+		if (chosenCameraId) {
+			// We have it
+		} else {
+			// The webcam isnt connected
+			throw new Error("Webcam isn't connected");
+		}
+	}
+
 	private void getImageFromWebCam() {
 		VideoImputGrabber gerald = new VideoImputGraber(0);
 	}
@@ -73,4 +98,10 @@ public class cvBase {
 		}
 		return false;
 	}
+
+	private Mat takeWebcamScreencap() {
+		FrameGrabber grabber = new VideoInputFrameGrabber(0); // 1 for next camera
+		OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();
+	}
+
 }
