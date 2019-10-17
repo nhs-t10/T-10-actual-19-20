@@ -11,7 +11,7 @@ public class MimingReader extends Library
     will be used to read the aforementioned txt file. */
     try
     {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("GitHub/T-10-actual-19-20/FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/internal/MimingFile.txt")));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/internal/MimingFile.txt")));
         String line = bufferedReader.readLine();
     }
 
