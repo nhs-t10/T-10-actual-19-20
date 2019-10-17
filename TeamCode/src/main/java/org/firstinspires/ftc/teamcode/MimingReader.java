@@ -1,63 +1,63 @@
-package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import java.io.*;
-
-@Autonomous(name = "MimingReader")
-public class MimingReader extends Library
-{
-    /* The object, "reader," is a FileReader that accesses
-    MimingFile.txt, which contains instructions for this autonomous'
-    actions. The object, "bufferReader," is a BufferedReader that
-    will be used to read the aforementioned txt file. */
-    try
-    {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/internal/MimingFile.txt")));
-        String line = bufferedReader.readLine();
-    }
-
-    catch (IOException ioe)
-    {
-        ioe.printStackTrace();
-    }
-
-    public void init()
-    {
-        hardwareInit();
-    }
-
-    /* The following loop reads MimingFile.txt line by line,
-    accessing the "linear," "side," and "rotation" values and
-    using them as parameters for the "omni" function. */
-    public void loop()
-    {
-        float linear = 0;
-        float side = 0;
-        float rotation = 0;
-
-
-        try
-        {
-            if(line != null)
-            {
-                int first = line.indexOf(" ");
-                int second = line.indexOf(" ", first);
-
-                linear = Float.parseFloat(line.substring(0, first));
-                side = Float.parseFloat(line.substring(first + 1, second));
-                rotation = Float.parseFloat(line.substring(second + 1));
-            }
-
-            else
-            {
-                System.exit(0);
-            }
-        }
-
-        catch (IOException ioe)
-        {
-            ioe.printStackTrace();
-        }
-
-        omni(linear, side, rotation);
-    }
-}
+//package org.firstinspires.ftc.teamcode;
+//import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+//import java.io.*;
+//
+//@Autonomous(name = "MimingReader")
+//public class MimingReader extends Library
+//{
+//    /* The object, "reader," is a FileReader that accesses
+//    MimingFile.txt, which contains instructions for this autonomous'
+//    actions. The object, "bufferReader," is a BufferedReader that
+//    will be used to read the aforementioned txt file. */
+//    try
+//    {
+//        BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/internal/MimingFile.txt")));
+//        String line = bufferedReader.readLine();
+//    }
+//
+//    catch(IOException ioe)
+//    {
+//        ioe.printStackTrace();
+//    }
+//
+//    public void init()
+//    {
+//        hardwareInit();
+//    }
+//
+//    /* The following loop reads MimingFile.txt line by line,
+//    accessing the "linear," "side," and "rotation" values and
+//    using them as parameters for the "omni" function. */
+//    public void loop()
+//    {
+//        float linear = 0;
+//        float side = 0;
+//        float rotation = 0;
+//
+//
+//        try
+//        {
+//            if(line != null)
+//            {
+//                int first = line.indexOf(" ");
+//                int second = line.indexOf(" ", first);
+//
+//                linear = Float.parseFloat(line.substring(0, first));
+//                side = Float.parseFloat(line.substring(first + 1, second));
+//                rotation = Float.parseFloat(line.substring(second + 1));
+//            }
+//
+//            else
+//            {
+//                System.exit(0);
+//            }
+//        }
+//
+//        catch (IOException ioe)
+//        {
+//            ioe.printStackTrace();
+//        }
+//
+//        omni(linear, side, rotation);
+//    }
+//}
