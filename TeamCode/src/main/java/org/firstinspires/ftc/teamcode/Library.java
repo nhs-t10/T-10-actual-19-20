@@ -127,10 +127,11 @@ public abstract class Library extends OpMode {
          *directionSideways: also a degree, no radians PAUL, it determines which diagonal path the robot takes if we want to be extra like that
         */
     public static void driveFor(float distanceInCM, float l, float r, float s) {
-		float startPosition = frontLeft.getCurrentPosition();
+        telemetry.addData("drive for started","bottom text");
+        float startPosition = frontLeft.getCurrentPosition();
 		float rotations = 537.6f * (distanceInCM / 25.5f);
 		while (frontLeft.getCurrentPosition() < rotations + startPosition) {
-			omni(l, r, s);
+            omni(l, r, s);
         }
         
         omni(0, 0, 0);
