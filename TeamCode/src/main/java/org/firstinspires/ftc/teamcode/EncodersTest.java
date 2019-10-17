@@ -35,4 +35,8 @@ public class EncodersTest extends Library{
         //defining the stuff. linear = straight, rotation = turning, side = skating.
         //Linear - rotation will compensate one side to allow the other side to overrate
     }
+    public void stop()
+    {
+        
+    }
 }
