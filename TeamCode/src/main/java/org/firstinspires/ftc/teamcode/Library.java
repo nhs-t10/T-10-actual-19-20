@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.LED;
 //import com.qualcomm.robotcore.hardware.SonarSensor;
 
 
@@ -17,7 +18,8 @@ public abstract class Library extends OpMode {
     public static DcMotor frontLeft, frontRight, backLeft, backRight, liftOne, liftTwo;
     public static VoltageSensor voltSensor;
     //Blinkin needs to be defined as a servo to read data
-    public static Servo grabberServo, unknown, blinkin;
+    public static Servo grabberServo, blinkin;
+    //public static LED blinkin;
     //Blinkin needs to be defined as a servo to read data
     //public static SonarSensor sonarSensor;
 
@@ -29,6 +31,8 @@ public abstract class Library extends OpMode {
         backRight = hardwareMap.dcMotor.get("m3");
 
         grabberServo = hardwareMap.servo.get("s0");
+        blinkin = hardwareMap.servo.get("s1");
+
 
         //sonar = hardwareMap.sonarSensor.get("s1");
         //stoneLift = hardwareMap.dcMotor.get("sL");
