@@ -159,8 +159,8 @@ public abstract class Library extends OpMode {
     }
 
     //This method allows the robot to turn a certain number of degrees using encoders
-    public void turnDegrees(int degrees){
-         double radius = 30.54607421584;  //radius of circle
+    public void turnDegrees(int degrees){  //Degrees can be pos or neg (pos --> right, neg --> left)
+         double radius = 30.54607421584; 
          double circumference = 2 * Math.PI * radius;
          double turnCM = circumference * ((double) degrees / 360) ;  //arc length in circle
 
