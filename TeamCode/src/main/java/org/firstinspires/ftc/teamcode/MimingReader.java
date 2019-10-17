@@ -5,6 +5,21 @@ import java.io.*;
 @Autonomous(name = "MimingReader")
 public class MimingReader extends Library
 {
+    /* The object, "reader," is a FileReader that accesses
+    MimingFile.txt, which contains instructions for this autonomous'
+    actions. The object, "bufferReader," is a BufferedReader that
+    will be used to read the aforementioned txt file. */
+    try
+    {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("GitHub/T-10-actual-19-20/FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/internal/MimingFile.txt")));
+        String line = bufferedReader.readLine();
+    }
+
+    catch (IOException ioe)
+    {
+        ioe.printStackTrace();
+    }
+
     public void init()
     {
         hardwareInit();
@@ -19,15 +34,9 @@ public class MimingReader extends Library
         float side = 0;
         float rotation = 0;
 
+
         try
         {
-            /* The object, "reader," is a FileReader that accesses
-            MimingFile.txt, which contains instructions for this autonomous'
-            actions. The object, "bufferReader," is a BufferedReader that
-            will be used to read the aforementioned txt file. */
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("MimingFile.txt")));
-            String line = bufferedReader.readLine();
-
             if(line != null)
             {
                 int first = line.indexOf(" ");
