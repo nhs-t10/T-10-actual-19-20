@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.LED;
 //import com.qualcomm.robotcore.hardware.SonarSensor;
 
@@ -18,7 +19,8 @@ public abstract class Library extends OpMode {
     public static DcMotor frontLeft, frontRight, backLeft, backRight, liftOne, liftTwo;
     public static VoltageSensor voltSensor;
     //Blinkin needs to be defined as a servo to read data
-    public static Servo grabberServo, blinkin;
+    public static Servo grabberServo;
+    public static CRServo blinkin;
     //public static LED blinkin;
     //Blinkin needs to be defined as a servo to read data
     //public static SonarSensor sonarSensor;
@@ -31,7 +33,7 @@ public abstract class Library extends OpMode {
         backRight = hardwareMap.dcMotor.get("m3");
 
         grabberServo = hardwareMap.servo.get("s0");
-        blinkin = hardwareMap.servo.get("s1");
+        blinkin = hardwareMap.crservo.get("s1");
 
 
         //sonar = hardwareMap.sonarSensor.get("s1");
@@ -56,12 +58,12 @@ public abstract class Library extends OpMode {
     static double REPLACE_BATTERY_VOLTAGE = 10;
     static double WARNING_BATTERY_VOLTAGE = 11;
     
-    public DRIVING mode;
-    public enum DRIVING { Slow, Medium, Fast;
-        public DRIVING getNext() {
-            return values()[(ordinal() + 1) % values().length];
-        } // change driving mode
-    }
+//    public DRIVING mode;
+//    public enum DRIVING { Slow, Medium, Fast;
+//        public DRIVING getNext() {
+//            return values()[(ordinal() + 1) % values().length];
+//        } // change driving mode
+//    }
 
     public static float maxValue(float array[]) {
         float max = 0f;
@@ -132,7 +134,7 @@ public abstract class Library extends OpMode {
         */
     public static void driveFor(float distanceInCM, float l, float r, float s) {
         float startPosition = frontLeft.getCurrentPosition();
-		float rotations = 537.6f * (distanceInCM / 25.5f);
+		float rotations = distanceInCM / 25.5f;
 		while (frontLeft.getCurrentPosition() < rotations + startPosition) {
             omni(l, r, s);
         }
@@ -195,6 +197,6 @@ public abstract class Library extends OpMode {
         double output = 0.2525 + ((0.7475 - 0.2525) / (100 - 1)) * (patternNumber - 1);
 
         //send mapped value to "servo" (Blinkin)
-        blinkin.setPosition(output);
+        blinkin.setPower(output);
     }
 }
