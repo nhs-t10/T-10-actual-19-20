@@ -23,7 +23,7 @@ public class DriveTeleOp extends Library
         //linear = straight, rotation = turning, side = skating.
         //Linear - rotation will compensate one side to allow the other side to overrotate
 
-       /* if(gamepad1.right_stick_button){
+        /* if(gamepad1.right_stick_button){
             mode = mode.getNext();
         }
 
