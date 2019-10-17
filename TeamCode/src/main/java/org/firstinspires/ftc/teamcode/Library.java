@@ -55,26 +55,14 @@ public abstract class Library extends OpMode {
     static int SAMPLES_PER_SECOND = 10;
     static double REPLACE_BATTERY_VOLTAGE = 10;
     static double WARNING_BATTERY_VOLTAGE = 11;
-
-
-    /*public static void drive(float lf, float rf, float lb, float rb) {
-        frontLeft.setPower(-lf);
-        frontRight.setPower(rf);
-        backLeft.setPower(-lb);
-        backRight.setPower(rb);
-    }*/
-
     
-    // public static void driveForCM(float distanceInCM) {
+    public DRIVING mode;
+    public enum DRIVING { Slow, Medium, Fast;
+        public DRIVING getNext() {
+            return values()[(ordinal() + 1) % values().length];
+        } // change driving mode
+    }
 
-
-
-    //     float startPosition = frontLeft.getCurrentPosition();
-    //     float rotations = distanceInCM / 31.4f * 360;  //360 if its in degrees
-    //     while (frontLeft.getCurrentPosition() < rotations + startPosition) {
-    //         omni(1, 0, 0);
-    //     }
-    // }
     public static float maxValue(float array[]) {
         float max = 0f;
         for (float i : array){
@@ -142,22 +130,15 @@ public abstract class Library extends OpMode {
          *degree: if you are turning fill this in, otherwise it will go straight, this will determine what angle you want the robot to turn
          *directionSideways: also a degree, no radians PAUL, it determines which diagonal path the robot takes if we want to be extra like that
         */
-    public void driveFor(double cM, int lin, int rot, int side) {//DO NOT TOUCH MY METHODS
-        double startPosition = encodersLagQuestionMark(frontLeft,frontRight,backLeft,backRight);
-        double rotations = (cM/25.5f); //537.6 is because our motor has that many ticks per revolution
-        while (frontLeft.getCurrentPosition() < rotations + startPosition) {
-
-            telemetry.addData("juice?",frontLeft.getCurrentPosition());
-            omni(lin, rot, side);
-        }        
-
-        int coastDistance = frontLeft.getCurrentPosition();
-        long theTime = System.currentTimeMillis();
-        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
+    public static void driveFor(float distanceInCM, float l, float r, float s) {
+		float startPosition = frontLeft.getCurrentPosition();
+		float rotations = 537.6f * (distanceInCM / 25.5f);
+		while (frontLeft.getCurrentPosition() < rotations + startPosition) {
+			omni(l, r, s);
+        }
+        
+        omni(0, 0, 0);
+	}
 
     public static void encodersInit(){//DO NOT TOUCH MY METHODS
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -165,20 +146,25 @@ public abstract class Library extends OpMode {
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-    public static int encodersLagQuestionMark(DcMotor one, DcMotor two, DcMotor three, DcMotor four)
-    {
+    public static int encodersLagQuestionMark(DcMotor one, DcMotor two, DcMotor three, DcMotor four){
         return(one.getCurrentPosition() + two.getCurrentPosition() + three.getCurrentPosition() + four.getCurrentPosition()) / 4;
     }
 
     //This method allows the robot to turn a certain number of degrees using encoders
-    public void turnDegrees(int degrees){
-         double radius = 30.54607421584;  //radius of circle
-         double circumference = 2 * Math.PI * radius;
-         double turnCM = circumference * degrees;  //arc length in circle
+   public void turnDegrees(int degrees){  //Degrees can be pos or neg (pos --> right, neg --> left)
+        float radius = 30.54607421584f;
+        float circumference = 2 * (float)Math.PI * radius;
+        float turnCM = circumference * ((float)degrees / 360) ;  //arc length in circle
 
-         driveFor(turnCM, 0, 1, 0);
-    }  
-      
+        if(degrees < 0){
+            driveFor(turnCM, 0, -.75f, 0);
+        }
+        else{
+            driveFor(turnCM, 0, .75f, 0);
+        }
+    }
+    
+
     /*
         hardware notes:
         2 motors for lift - need to be in sync, have intervals that it can go to manually (button press, may require encoders)
