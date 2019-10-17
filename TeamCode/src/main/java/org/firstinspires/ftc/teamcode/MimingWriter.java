@@ -35,7 +35,7 @@ public class MimingWriter extends Library
 
         try
         {
-            FileWriter writer = new FileWriter("MimingFile.txt", true);
+            FileWriter writer = new FileWriter("FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/internal/MimingFile.txt", true);
             writer.write(linear/curLimit + " " + side/curLimit + " " + rotation/curLimit);
             writer.close();
         }
