@@ -3,7 +3,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name = "DriveTeleOp")
+@TeleOp(name = "TeleOp")
 public class DriveTeleOp extends Library
 {
     double time_millis = 0.0;
@@ -18,6 +18,8 @@ public class DriveTeleOp extends Library
         float rotation = gamepad1.right_stick_x;
         boolean y = gamepad1.y;
         y=!y;
+        boolean b = gamepad1.b;
+
         //linear = straight, rotation = turning, side = skating.
         //Linear - rotation will compensate one side to allow the other side to overrotate
 
@@ -32,6 +34,12 @@ public class DriveTeleOp extends Library
         if(mode == DRIVING.Fast) {
             omni(linear, rotation, side);} // fast driving */
         platform(y);
+        // test Blinkin (LED Strip) by setting it to "Lawn Green"
+        setBlinkinPattern(86);
+        // change Blinkin (LED Strip) color to "Orange" if B is pressed on gamepad 1
+        if (b) {
+            setBlinkinPattern(83);
+        }
         omni(linear, rotation, side);
         String vals = String.valueOf(linear) + "\n " +String.valueOf(rotation) + "\n " + String.valueOf(side);
         telemetry.addData("Values:", vals);

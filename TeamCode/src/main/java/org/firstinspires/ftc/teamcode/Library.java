@@ -16,7 +16,9 @@ public abstract class Library extends OpMode {
     // Declare Hardware Devices
     public static DcMotor frontLeft, frontRight, backLeft, backRight, liftOne, liftTwo;
     public static VoltageSensor voltSensor;
-    public static Servo grabberServo, unknown;
+    //Blinkin needs to be defined as a servo to read data
+    public static Servo grabberServo, unknown, blinkin;
+    //Blinkin needs to be defined as a servo to read data
     //public static SonarSensor sonarSensor;
 
     // Declare initializing method
@@ -190,5 +192,19 @@ public abstract class Library extends OpMode {
         else{
             grabberServo.setPosition(0);
         }
+    }
+
+    /**
+     * Sets the pattern/color of the Rev Blinkin LED strip based on a pattern number
+     * Rev's documentation: http://www.revrobotics.com/content/docs/REV-11-1105-UM.pdf
+     * @param patternNumber Integer [1,100] that represents desired LED pattern or color
+     */
+    public static void setBlinkinPattern(int patternNumber) {
+        //map patternNumber value from [1,100] => [0.2525, 0.7475]
+        //formula: output = output_start + ((output_end - output_start) / (input_end - input_start)) * (input - input_start)
+        double output = 0.2525 + ((0.7475 - 0.2525) / (100 - 1)) * (patternNumber - 1);
+
+        //send mapped value to "servo" (Blinkin)
+        blinkin.setPosition(output);
     }
 }
