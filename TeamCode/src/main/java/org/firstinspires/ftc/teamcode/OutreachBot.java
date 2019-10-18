@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
-@TeleOp(name = "TeleOp")
+@TeleOp(name = "OutReachBot")
 public class OutreachBot extends OpMode{
     public static DcMotor frontLeft, frontRight;
 
