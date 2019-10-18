@@ -31,6 +31,9 @@ public abstract class Library extends OpMode {
         backLeft = hardwareMap.dcMotor.get("m2");
         backRight = hardwareMap.dcMotor.get("m3");
 
+        liftOne = hardwareMap.dcMotor.get("l1");
+        liftTwo = hardwareMap.dcMotor.get("l2");
+
         grabberServo = hardwareMap.servo.get("s0");
         blinkin = hardwareMap.crservo.get("s1");
         clamp = hardwareMap.crservo.get("s2");
