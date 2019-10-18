@@ -19,6 +19,9 @@ public class DriveTeleOp extends Library
         boolean y = gamepad1.y;
         y=!y;
         boolean b = gamepad1.b;
+        float grab = gamepad1.right_trigger;
+        float drop = gamepad1.left_trigger;
+        float lift = gamepad1.right_stick_y;
 
         //linear = straight, rotation = turning, side = skating.
         //Linear - rotation will compensate one side to allow the other side to overrotate
@@ -34,13 +37,20 @@ public class DriveTeleOp extends Library
 //        if(mode == DRIVING.Fast) {
 //            omni(linear, rotation, side);} // fast driving
         platform(y);
+
         // test Blinkin (LED Strip) by setting it to "Lawn Green"
         setBlinkinPattern(86);
         // change Blinkin (LED Strip) color to "Orange" if B is pressed on gamepad 1
         if (b) {
             setBlinkinPattern(83);
         }
+
         omni(linear, rotation, side);
+
+        Clamp(grab, drop);
+
+        lift(lift);
+
         String vals = String.valueOf(linear) + "\n " +String.valueOf(rotation) + "\n " + String.valueOf(side);
         telemetry.addData("Values:", vals);
         //telemetry.addData("Driving Mode:",mode);
