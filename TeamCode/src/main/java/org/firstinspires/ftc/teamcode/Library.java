@@ -8,8 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.LED;
-//import com.qualcomm.robotcore.hardware.SonarSensor;
+
 
 
 import java.util.*;
@@ -20,7 +19,7 @@ public abstract class Library extends OpMode {
     public static VoltageSensor voltSensor;
     //Blinkin needs to be defined as a servo to read data
     public static Servo grabberServo;
-    public static CRServo blinkin;
+    public static CRServo blinkin, clamp;
     //public static LED blinkin;
     //Blinkin needs to be defined as a servo to read data
     //public static SonarSensor sonarSensor;
@@ -34,6 +33,7 @@ public abstract class Library extends OpMode {
 
         grabberServo = hardwareMap.servo.get("s0");
         blinkin = hardwareMap.crservo.get("s1");
+        clamp = hardwareMap.crservo.get("s2");
 
 
         //sonar = hardwareMap.sonarSensor.get("s1");
@@ -173,10 +173,6 @@ public abstract class Library extends OpMode {
         1 servo for block grabber - likely continuous (button press)
         */
 
-//    public static void lift(float zoom){
-//        liftOne.setPower(zoom);
-//        liftTwo.setPower(zoom);
-//    }
     public static void platform(boolean Grab){
         if(Grab){
             grabberServo.setPosition(1);
@@ -198,5 +194,19 @@ public abstract class Library extends OpMode {
 
         //send mapped value to "servo" (Blinkin)
         blinkin.setPower(output);
+    }
+    public static void Clamp(float grab, float drop){
+        if(grab > drop){
+            clamp.setPower(grab);
+        }
+        else if(drop > grab){
+            clamp.setPower(-drop);
+        }else{
+            clamp.setPower(0);
+        }
+    }
+    public static void lift(float zoom){
+        liftOne.setPower(zoom);
+        liftTwo.setPower(zoom);
     }
 }
