@@ -65,7 +65,7 @@ public abstract class Library extends OpMode {
     static int SAMPLES_PER_SECOND = 10;
     static double REPLACE_BATTERY_VOLTAGE = 10;
     static double WARNING_BATTERY_VOLTAGE = 11;
-    
+
 //    public DRIVING mode;
 //    public enum DRIVING { Slow, Medium, Fast;
 //        public DRIVING getNext() {
@@ -125,31 +125,37 @@ public abstract class Library extends OpMode {
         for (int i = 0; i < 4; i++) {
             sums[i] = sums[i] / attenuationfactor;
         }
+        if(highest < 0.1){
+            sums[0] = 0;
+            sums[1] = 0;
+            sums[2] = 0;
+            sums[3] = 0;
+        }
 
-        frontLeft.setPower(.7 * sums[0]);
-        frontRight.setPower(.7 * sums[1]);
-        backLeft.setPower(.7 * sums[2]);
-        backRight.setPower(.7 * sums[3]);
+        frontLeft.setPower(-.7 * sums[0]);
+        frontRight.setPower(-.7 * sums[1]);
+        backLeft.setPower(-.7 * sums[2]);
+        backRight.setPower(-.7 * sums[3]);
     }
-        //takes in distance in centimeters, drives until it hits that distance
-        //this method is wack rn idk if it works lol
-        /*
-         *Parameter(s): float cM, String mode "turn", float degree(optional), float directionSideways (optional)
-         *cM: distance you want it to travel in centimeters
-         *mode: either forwards, sideways, or turning (this will control what the thing does)
-         *degree: if you are turning fill this in, otherwise it will go straight, this will determine what angle you want the robot to turn
-         *directionSideways: also a degree, no radians PAUL, it determines which diagonal path the robot takes if we want to be extra like that
-        */
+    //takes in distance in centimeters, drives until it hits that distance
+    //this method is wack rn idk if it works lol
+    /*
+     *Parameter(s): float cM, String mode "turn", float degree(optional), float directionSideways (optional)
+     *cM: distance you want it to travel in centimeters
+     *mode: either forwards, sideways, or turning (this will control what the thing does)
+     *degree: if you are turning fill this in, otherwise it will go straight, this will determine what angle you want the robot to turn
+     *directionSideways: also a degree, no radians PAUL, it determines which diagonal path the robot takes if we want to be extra like that
+     */
     public static void driveFor(float distanceInCM, float l, float r, float s) {
         float startPosition = backLeft.getCurrentPosition();
-		float rotations = (distanceInCM / 25.5f) * 1120;
-		//According to website, 1120 ticks per revolution
-		while (backLeft.getCurrentPosition() < rotations + startPosition) {
+        float rotations = (distanceInCM / 31.9f) * 1120f;
+        //According to website, 1120 ticks per revolution
+        while (backLeft.getCurrentPosition() < rotations + startPosition) {
             omni(l, r, s);
         }
 
         omni(0, 0, 0);
-	}
+    }
 
     public static void driveForNeg(float distanceInCM, float l, float r, float s) {
         float startPosition = backLeft.getCurrentPosition();
@@ -173,7 +179,7 @@ public abstract class Library extends OpMode {
     }
 
     //This method allows the robot to turn a certain number of degrees using encoders
-   public void turnDegrees(int degrees){  //Degrees can be pos or neg (pos --> right, neg --> left)
+    public void turnDegrees(int degrees){  //Degrees can be pos or neg (pos --> right, neg --> left)
         float radius = 30.54607421584f;
         float circumference = 2 * (float)Math.PI * radius;
         float turnCM = circumference * ((float)degrees / 360) ;  //arc length in circle
@@ -185,7 +191,7 @@ public abstract class Library extends OpMode {
             driveFor(turnCM, 0, .75f, 0);
         }
     }
-    
+
 
     /*
         hardware notes:
