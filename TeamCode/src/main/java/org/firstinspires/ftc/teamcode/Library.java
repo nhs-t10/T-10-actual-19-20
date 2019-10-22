@@ -31,6 +31,11 @@ public abstract class Library extends OpMode {
         backLeft = hardwareMap.dcMotor.get("m2");
         backRight = hardwareMap.dcMotor.get("m3");
 
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         //liftOne = hardwareMap.dcMotor.get("l1");
         //liftTwo = hardwareMap.dcMotor.get("l2");
 
@@ -121,10 +126,10 @@ public abstract class Library extends OpMode {
             sums[i] = sums[i] / attenuationfactor;
         }
 
-        frontLeft.setPower(sums[0]);
-        frontRight.setPower(sums[1]);
-        backLeft.setPower(sums[2]);
-        backRight.setPower(sums[3]);
+        frontLeft.setPower(.7 * sums[0]);
+        frontRight.setPower(.7 * sums[1]);
+        backLeft.setPower(.7 * sums[2]);
+        backRight.setPower(.7 * sums[3]);
     }
         //takes in distance in centimeters, drives until it hits that distance
         //this method is wack rn idk if it works lol
@@ -136,10 +141,10 @@ public abstract class Library extends OpMode {
          *directionSideways: also a degree, no radians PAUL, it determines which diagonal path the robot takes if we want to be extra like that
         */
     public static void driveFor(float distanceInCM, float l, float r, float s) {
-        float startPosition = frontLeft.getCurrentPosition();
+        float startPosition = backLeft.getCurrentPosition();
 		float rotations = (distanceInCM / 25.5f) * 1120;
 		//According to website, 1120 ticks per revolution
-		while (frontLeft.getCurrentPosition() < rotations + startPosition) {
+		while (backLeft.getCurrentPosition() < rotations + startPosition) {
             omni(l, r, s);
         }
         
