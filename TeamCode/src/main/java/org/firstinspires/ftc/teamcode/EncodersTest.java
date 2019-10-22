@@ -24,12 +24,11 @@ public class EncodersTest extends Library{
 
         if(gamepad1.a){
             driveFor(100, .75f, 0, 0);
-
         }
-//        if(gamepad1.b){
-//            turnDegrees(90);
-//        }
-        
+        if(gamepad1.b){
+            turnDegrees(90);
+        }
+
 
         //Every SAMPLES_PER_SECOND
         //Save floatArray values in a file in the format of "l s r"
@@ -40,5 +39,9 @@ public class EncodersTest extends Library{
     }
     public void stop()
     {
+    }
+    public void juice()
+    {
+
     }
 }
