@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 public class EncodersTest extends Library{
     public void init() {
         hardwareInit();
+        encodersInit();
     }
 
     public void loop() {
