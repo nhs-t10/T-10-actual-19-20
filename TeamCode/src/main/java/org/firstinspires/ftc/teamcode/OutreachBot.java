@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
-@TeleOp(name = "TeleOp")
+@TeleOp(name = "OutReachBot")
 public class OutreachBot extends OpMode{
     public static DcMotor frontLeft, frontRight;
 
@@ -21,8 +21,8 @@ public class OutreachBot extends OpMode{
         float y = gamepad1.left_stick_y;
         float x = gamepad1.left_stick_x;
 
-        float powerLeft = -(y-x);
-        float powerRight = y+x;
+        float powerRight = -(y+x);
+        float powerLeft = y-x;
 
         frontLeft.setPower(.75*powerLeft);
         frontRight.setPower(.75*powerRight);
