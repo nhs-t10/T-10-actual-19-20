@@ -125,6 +125,12 @@ public abstract class Library extends OpMode {
         for (int i = 0; i < 4; i++) {
             sums[i] = sums[i] / attenuationfactor;
         }
+        if(highest < 0.1){
+            sums[0] = 0;
+            sums[1] = 0;
+            sums[2] = 0;
+            sums[3] = 0;
+        }
 
         frontLeft.setPower(-.7 * sums[0]);
         frontRight.setPower(-.7 * sums[1]);
