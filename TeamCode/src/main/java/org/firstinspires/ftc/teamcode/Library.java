@@ -141,10 +141,10 @@ public abstract class Library extends OpMode {
          *directionSideways: also a degree, no radians PAUL, it determines which diagonal path the robot takes if we want to be extra like that
         */
     public static void driveFor(float distanceInCM, float l, float r, float s) {
-        float startPosition = frontLeft.getCurrentPosition();
+        float startPosition = backLeft.getCurrentPosition();
 		float rotations = (distanceInCM / 25.5f) * 1120;
 		//According to website, 1120 ticks per revolution
-		while (frontLeft.getCurrentPosition() < rotations + startPosition) {
+		while (backLeft.getCurrentPosition() < rotations + startPosition) {
             omni(l, r, s);
         }
         
