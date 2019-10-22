@@ -5,11 +5,6 @@ import java.io.*;
 @Autonomous(name = "MimingReader")
 public class MimingReader extends Library
 {
-    /* The object, "reader," is a FileReader that accesses
-    MimingFile.txt, which contains instructions for this autonomous'
-    actions. The object, "bufferReader," is a BufferedReader that
-    will be used to read the aforementioned txt file. */
-
     public void init()
     {
         hardwareInit();
@@ -24,12 +19,16 @@ public class MimingReader extends Library
         float side = 0;
         float rotation = 0;
 
-        try{
-
+        try
+        {
+        /* The object, "reader," is a FileReader that accesses
+        MimingFile.txt, which contains instructions for this autonomous'
+        actions. The object, "bufferReader," is a BufferedReader that
+        will be used to read the aforementioned txt file. */
         BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("FtcRobotController/src/main/java/org/firstinspires/ftc/robotcontroller/internal/MimingFile.txt")));
         String line = bufferedReader.readLine();
 
-            if(line != null)
+            while(line != null)
             {
                 int first = line.indexOf(" ");
                 int second = line.indexOf(" ", first);
@@ -37,11 +36,9 @@ public class MimingReader extends Library
                 linear = Float.parseFloat(line.substring(0, first));
                 side = Float.parseFloat(line.substring(first + 1, second));
                 rotation = Float.parseFloat(line.substring(second + 1));
-            }
 
-            else
-            {
-                System.exit(0);
+                omni(linear, side, rotation);
+                line = bufferedReader.readLine();
             }
         }
 
@@ -49,7 +46,5 @@ public class MimingReader extends Library
         {
             ioe.printStackTrace();
         }
-
-        omni(linear, side, rotation);
     }
 }
