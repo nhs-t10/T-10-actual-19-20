@@ -39,17 +39,18 @@ public class DriveTeleOp extends Library
         platform(y);
 
         // test Blinkin (LED Strip) by setting it to "Lawn Green"
-        setBlinkinPattern(86);
+
+       /* setBlinkinPattern(86);
         // change Blinkin (LED Strip) color to "Orange" if B is pressed on gamepad 1
         if (b) {
             setBlinkinPattern(83);
-        }
+        }*/
 
         omni(linear, rotation, side);
 
-        Clamp(grab, drop);
-
-        lift(lift);
+//        Clamp(grab, drop);
+//
+//        lift(lift);
 
         String vals = String.valueOf(linear) + "\n " +String.valueOf(rotation) + "\n " + String.valueOf(side);
         telemetry.addData("Values:", vals);

@@ -31,12 +31,12 @@ public abstract class Library extends OpMode {
         backLeft = hardwareMap.dcMotor.get("m2");
         backRight = hardwareMap.dcMotor.get("m3");
 
-        liftOne = hardwareMap.dcMotor.get("l1");
-        liftTwo = hardwareMap.dcMotor.get("l2");
+        //liftOne = hardwareMap.dcMotor.get("l1");
+        //liftTwo = hardwareMap.dcMotor.get("l2");
 
         grabberServo = hardwareMap.servo.get("s0");
         blinkin = hardwareMap.crservo.get("s1");
-        clamp = hardwareMap.crservo.get("s2");
+        //clamp = hardwareMap.crservo.get("s2");
 
 
         //sonar = hardwareMap.sonarSensor.get("s1");
@@ -190,26 +190,26 @@ public abstract class Library extends OpMode {
      * Rev's documentation: http://www.revrobotics.com/content/docs/REV-11-1105-UM.pdf
      * @param patternNumber Integer [1,100] that represents desired LED pattern or color
      */
-    public static void setBlinkinPattern(int patternNumber) {
+    /*public static void setBlinkinPattern(int patternNumber) {
         //map patternNumber value from [1,100] => [0.2525, 0.7475]
         //formula: output = output_start + ((output_end - output_start) / (input_end - input_start)) * (input - input_start)
         double output = 0.2525 + ((0.7475 - 0.2525) / (100 - 1)) * (patternNumber - 1);
 
         //send mapped value to "servo" (Blinkin)
         blinkin.setPower(output);
-    }
-    public static void Clamp(float grab, float drop){
-        if(grab > drop){
-            clamp.setPower(grab);
-        }
-        else if(drop > grab){
-            clamp.setPower(-drop);
-        }else{
-            clamp.setPower(0);
-        }
-    }
-    public static void lift(float zoom){
-        liftOne.setPower(zoom);
-        liftTwo.setPower(zoom);
-    }
+    }*/
+//    public static void Clamp(float grab, float drop){
+//        if(grab > drop){
+//            clamp.setPower(grab);
+//        }
+//        else if(drop > grab){
+//            clamp.setPower(-drop);
+//        }else{
+//            clamp.setPower(0);
+//        }
+//    }
+//    public static void lift(float zoom){
+//        liftOne.setPower(zoom);
+//        liftTwo.setPower(zoom);
+//    }
 }
