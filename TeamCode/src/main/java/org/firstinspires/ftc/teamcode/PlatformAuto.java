@@ -23,19 +23,15 @@ public class PlatformAuto extends Library {
         if (currentState == state.MOVING) {
             MoveToPlatform();
         }
-        if (currentState == state.PUSHING) {
-            PushPlatform();
-        }
         telemetry.addData("Current State: ", currentState);
     }
 
     public void MoveToPlatform() {
-        //if aligned with a skystone, drive foreward and get it to ghe other side
-        //if not aligned, use CV to align <-- likely a seperate method
+        platform(false);
+        driveForNeg(-75, -.75f, 0, 0);
+        platform(true);
+        driveFor(75, .75f, 0, 0);
+        //driveFor(100, 0, 0, .75f);
         currentState = state.PUSHING;
-    }
-
-    public void PushPlatform() {
-        
     }
 }

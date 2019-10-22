@@ -147,9 +147,20 @@ public abstract class Library extends OpMode {
 		while (backLeft.getCurrentPosition() < rotations + startPosition) {
             omni(l, r, s);
         }
-        
+
         omni(0, 0, 0);
 	}
+
+    public static void driveForNeg(float distanceInCM, float l, float r, float s) {
+        float startPosition = backLeft.getCurrentPosition();
+        float rotations = (distanceInCM / 25.5f) * 1120;
+        //According to website, 1120 ticks per revolution
+        while (backLeft.getCurrentPosition() > rotations + startPosition) {
+            omni(l, r, s);
+        }
+
+        omni(0, 0, 0);
+    }
 
     public static void encodersInit(){//DO NOT TOUCH MY METHODS
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
