@@ -126,10 +126,10 @@ public abstract class Library extends OpMode {
             sums[i] = sums[i] / attenuationfactor;
         }
 
-        frontLeft.setPower(.7 * sums[0]);
-        frontRight.setPower(.7 * sums[1]);
-        backLeft.setPower(.7 * sums[2]);
-        backRight.setPower(.7 * sums[3]);
+        frontLeft.setPower(-.7 * sums[0]);
+        frontRight.setPower(-.7 * sums[1]);
+        backLeft.setPower(-.7 * sums[2]);
+        backRight.setPower(-.7 * sums[3]);
     }
         //takes in distance in centimeters, drives until it hits that distance
         //this method is wack rn idk if it works lol
