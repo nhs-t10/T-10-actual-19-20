@@ -21,12 +21,17 @@ public class EncodersTest extends Library{
         telemetry.addData("back left", backLeft.getCurrentPosition());
         telemetry.addData("back right", backRight.getCurrentPosition());
 
+
         if(gamepad1.a){
             driveFor(100, .75f, 0, 0);
-        
+
         }
-        if(gamepad1.b){
-            turnDegrees(90);
+//        if(gamepad1.b){
+//            turnDegrees(90);
+//        }
+        if(gamepad1.b)
+        {
+            driveNeg(100, .75f, 0, 0);
         }
 
         //Every SAMPLES_PER_SECOND
@@ -38,6 +43,16 @@ public class EncodersTest extends Library{
     }
     public void stop()
     {
-        
+
+    }
+    public void driveNeg(float distanceInCM, float l, float r, float s) {
+        telemetry.addData("eeeee",backLeft.getCurrentPosition());
+        float startPosition = backLeft.getCurrentPosition();
+        float rotations = distanceInCM*600 / 25.5f;
+        while (backLeft.getCurrentPosition() < rotations + startPosition) {
+            omni(l, r, s);
+
+        }
+
     }
 }
