@@ -91,6 +91,13 @@ public abstract class Library extends OpMode {
 	}*/
 
     public static void omni(float l, float r, float s) {
+        float[] sums = new float[4];
+        if(l > -0.1 && l < 0.1 && r > -0.1 && r < 0.1 && s > -0.1 && s < 0.1){
+            sums[0] = 0;
+            sums[1] = 0;
+            sums[2] = 0;
+            sums[3] = 0;
+        }
         /*
         Omni-driving function.
         @param: l, linear component, r, rotational component, and s, horizontal component
@@ -99,37 +106,21 @@ public abstract class Library extends OpMode {
         float[] rotationalMultiplier = {1f, 1f, 1f, 1f};
         float[] horizontalMultiplier = {1f, 1f, -1f, -1f};
 
-        //float[] forwardMultiplier = {-1f, 1f, -1f, 1f};
-        //float[] rotationalMultiplier = {1f, 1f, 1f, 1f};
-        //float[] horizontalMultiplier = {1f, 1f, -1f, -1f};
-        float[] forwardComponent = new float[4];
-        float[] rotationalComponent = new float[4];
-        float[] eastwestComponent = new float[4];
-
         for (int i = 0; i < 4; i++) {
-            forwardComponent[i] = forwardMultiplier[i] * l;
-            rotationalComponent[i] = rotationalMultiplier[i] * r;
-            eastwestComponent[i] = horizontalMultiplier[i] * s;
-        }
-
-        float[] sums = new float[4];
-        for(int i=0;i<4;i++){
-            sums[i]+=forwardComponent[i]+rotationalComponent[i]+eastwestComponent[i];
+            sums[i] += forwardMultiplier[i] * l +rotationalMultiplier[i] * r + horizontalMultiplier[i] * s;
         }
 
         float highest = maxValue(sums);
 
-        if (Math.abs(highest) > 1) { attenuationfactor = highest;
-        } else { attenuationfactor = 1f; }
+        if (Math.abs(highest) > 1) { 
+            attenuationfactor = highest;
+        }
+        else {
+            attenuationfactor = 1f;
+        }
 
         for (int i = 0; i < 4; i++) {
             sums[i] = sums[i] / attenuationfactor;
-        }
-        if(highest < 0.1){
-            sums[0] = 0;
-            sums[1] = 0;
-            sums[2] = 0;
-            sums[3] = 0;
         }
 
         frontLeft.setPower(-.7 * sums[0]);
