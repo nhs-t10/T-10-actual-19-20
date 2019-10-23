@@ -35,7 +35,7 @@ public class MimingWriter extends Library
 
         try
         {
-            FileWriter writer = new FileWriter("Environment.getExternalStorageDirectory.getPath()/FIRST/Miming/MimingFile.txt", true);
+            FileWriter writer = new FileWriter("Environment.getExternalStorageDirectory.getPath()/FIRST/MimingFile.txt", true);
             writer.write(linear/curLimit + " " + side/curLimit + " " + rotation/curLimit);
             writer.close();
         }
