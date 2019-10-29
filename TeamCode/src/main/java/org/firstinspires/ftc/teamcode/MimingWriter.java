@@ -1,7 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.io.IOException;
+import java.io.Writer;
 
 @TeleOp(name = "MimingWriter")
 public class MimingWriter extends Library
@@ -31,16 +32,16 @@ public class MimingWriter extends Library
         }
 
         omni(linear/curLimit, side/curLimit, rotation/curLimit);
-        telemetry.addData("Values:", String.valueOf(linear) + "\n " +String.valueOf(rotation) + "\n " + String.valueOf(side));
+        telemetry.addData("Values:", linear + "\n " + rotation + "\n " + side);
 
         try
         {
-            FileWriter writer = new FileWriter("Environment.getInternalStorageDirectory.getPath()/FIRST/MimingFile.txt", true);
-            writer.write(linear/curLimit + " " + side/curLimit + " " + rotation/curLimit);
+            Writer writer = new BufferedWriter(new FileWriter("/storage/emulated/0/FIRST/MimingFile.txt", true));
+            writer.append(linear + " " + rotation + " " + side);
             writer.close();
         }
 
-        catch (IOException ioe)
+        catch (java.io.IOException ioe)
         {
             ioe.printStackTrace();
         }
