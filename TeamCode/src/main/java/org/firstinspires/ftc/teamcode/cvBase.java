@@ -1,11 +1,12 @@
 //import org.opencv.core.Mat;
 //import org.opencv.core.Point;
 //import org.opencv.core.Size;
-//import org.opencv.core.Rect;
+//import org.dogecv.core.Rect;
 //import org.opencv.core.MatOfPoint;
 //
 //import java.util.ArrayList;
 //
+//import org.
 //import org.opencv.core.Core;
 //import org.opencv.imgproc.Imgproc;
 //import org.opencv.core.Scalar;

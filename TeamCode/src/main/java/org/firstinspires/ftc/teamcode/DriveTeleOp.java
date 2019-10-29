@@ -46,11 +46,10 @@ public class DriveTeleOp extends Library
             setBlinkinPattern(83);
         }*/
 
-        omni(linear, rotation, side);
+        omni(linear, rotation, side, lift);
 
 //        Clamp(grab, drop);
 //
-//        lift(lift);
 
         String vals = String.valueOf(linear) + "\n " +String.valueOf(rotation) + "\n " + String.valueOf(side);
         telemetry.addData("Values:", vals);

@@ -75,8 +75,10 @@ public abstract class Library extends OpMode {
 
     public static float maxValue(float array[]) {
         float max = 0f;
-        for (float i : array){
-            if(i>max){ max = i; }
+        for (float i : array) {
+            if (i > max) {
+                max = i;
+            }
         }
         return max;
     }
@@ -90,9 +92,9 @@ public abstract class Library extends OpMode {
 		} catch(Exception ex) {}
 	}*/
 
-    public static void omni(float l, float r, float s) {
+    public static void omni(float l, float r, float s, float zoom) {
         float[] sums = new float[4];
-        if(l > -0.1 && l < 0.1 && r > -0.1 && r < 0.1 && s > -0.1 && s < 0.1){
+        if (l > -0.1 && l < 0.1 && r > -0.1 && r < 0.1 && s > -0.1 && s < 0.1) {
             sums[0] = 0;
             sums[1] = 0;
             sums[2] = 0;
@@ -107,27 +109,28 @@ public abstract class Library extends OpMode {
         float[] horizontalMultiplier = {1f, 1f, -1f, -1f};
 
         for (int i = 0; i < 4; i++) {
-            sums[i] += forwardMultiplier[i] * l +rotationalMultiplier[i] * r + horizontalMultiplier[i] * s;
+            sums[i] += forwardMultiplier[i] * l + rotationalMultiplier[i] * r + horizontalMultiplier[i] * s;
         }
 
         float highest = maxValue(sums);
 
-        if (Math.abs(highest) > 1) { 
+        if (Math.abs(highest) > 1) {
             attenuationfactor = highest;
-        }
-        else {
+        } else {
             attenuationfactor = 1f;
         }
 
         for (int i = 0; i < 4; i++) {
             sums[i] = sums[i] / attenuationfactor;
         }
-
+        //liftOne.setPower(zoom);
+        //liftTwo.setPower(zoom);
         frontLeft.setPower(-.7 * sums[0]);
         frontRight.setPower(-.7 * sums[1]);
         backLeft.setPower(-.7 * sums[2]);
         backRight.setPower(-.7 * sums[3]);
     }
+
     //takes in distance in centimeters, drives until it hits that distance
     //this method is wack rn idk if it works lol
     /*
@@ -142,10 +145,10 @@ public abstract class Library extends OpMode {
         float rotations = (distanceInCM / 31.9f) * 1120f;
         //According to website, 1120 ticks per revolution
         while (backLeft.getCurrentPosition() < rotations + startPosition) {
-            omni(l, r, s);
+            omni(l, r, s, 0);
         }
 
-        omni(0, 0, 0);
+        omni(0, 0, 0, 0);
     }
 
     public static void driveForNeg(float distanceInCM, float l, float r, float s) {
@@ -153,32 +156,32 @@ public abstract class Library extends OpMode {
         float rotations = (distanceInCM / 25.5f) * 1120;
         //According to website, 1120 ticks per revolution
         while (backLeft.getCurrentPosition() > rotations + startPosition) {
-            omni(l, r, s);
+            omni(l, r, s, 0);
         }
 
-        omni(0, 0, 0);
+        omni(0, 0, 0, 0);
     }
 
-    public static void encodersInit(){//DO NOT TOUCH MY METHODS
+    public static void encodersInit() {//DO NOT TOUCH MY METHODS
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-    public static int encodersLagQuestionMark(DcMotor one, DcMotor two, DcMotor three, DcMotor four){
-        return(one.getCurrentPosition() + two.getCurrentPosition() + three.getCurrentPosition() + four.getCurrentPosition()) / 4;
+
+    public static int encodersLagQuestionMark(DcMotor one, DcMotor two, DcMotor three, DcMotor four) {
+        return (one.getCurrentPosition() + two.getCurrentPosition() + three.getCurrentPosition() + four.getCurrentPosition()) / 4;
     }
 
     //This method allows the robot to turn a certain number of degrees using encoders
-    public void turnDegrees(int degrees){  //Degrees can be pos or neg (pos --> right, neg --> left)
+    public void turnDegrees(int degrees) {  //Degrees can be pos or neg (pos --> right, neg --> left)
         float radius = 30.54607421584f;
-        float circumference = 2 * (float)Math.PI * radius;
-        float turnCM = circumference * ((float)degrees / 360) ;  //arc length in circle
+        float circumference = 2 * (float) Math.PI * radius;
+        float turnCM = circumference * ((float) degrees / 360);  //arc length in circle
 
-        if(degrees < 0){
+        if (degrees < 0) {
             driveFor(turnCM, 0, -.75f, 0);
-        }
-        else{
+        } else {
             driveFor(turnCM, 0, .75f, 0);
         }
     }
@@ -190,11 +193,10 @@ public abstract class Library extends OpMode {
         1 servo for block grabber - likely continuous (button press)
         */
 
-    public static void platform(boolean Grab){
-        if(Grab){
+    public static void platform(boolean Grab) {
+        if (Grab) {
             grabberServo.setPosition(1);
-        }
-        else{
+        } else {
             grabberServo.setPosition(0);
         }
     }
@@ -221,9 +223,5 @@ public abstract class Library extends OpMode {
 //        }else{
 //            clamp.setPower(0);
 //        }
-//    }
-//    public static void lift(float zoom){
-//        liftOne.setPower(zoom);
-//        liftTwo.setPower(zoom);
 //    }
 }
