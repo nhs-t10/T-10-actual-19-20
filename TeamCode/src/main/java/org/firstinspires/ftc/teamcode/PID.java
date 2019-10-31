@@ -2,8 +2,10 @@
 // Class for Proportional Integral Derivative controler
 // Goal: reduce jerk in the SBotNick ( ͡~ ͜ʖ ͡° )
 // ---------------------------------------------------------
-/*
+
 package org.firstinspires.ftc.teamcode;
+import android.hardware.SensorEventListener;
+
 public class PID{
     double prevError = 0.0;
     double sumError = 0.0;
@@ -11,7 +13,10 @@ public class PID{
     final double P = 0.3;
     final double D = 0.0;
     final double I = 0.0;
+    double dComponent;
     double savedTime;
+    double error2;
+    double time = getCurrTime();
 
 
     enum state {
@@ -22,6 +27,8 @@ public class PID{
         return currentAngle-destination ;
     }
 
+    // method to find the 
+
     public double getCurrTime() {
         return System.currentTimeMillis();
     }
@@ -29,12 +36,11 @@ public class PID{
     public void updateTurning(imuData sean) {
         currentAngle = sean.getAngle();
         double error = getError();
-        double time = getCurrTime();
+        prevTime = getCurrTime();
         pComponent = error * P;
         // Code to make slight delay, in order to avoid dividing by zero error
-        double error2 = getError();
-        double time = getCurrTime();
-        dComponent = ((error2 - error) / (time2 - time)) * D;
+        
+        dComponent = ((error2 - error) / (time - prevTime)) * D;
 
         if (currentEvent==state.TURNING) {
             if (getCurrTime()-savedTime>2000) {
@@ -50,12 +56,12 @@ public class PID{
     public void updateMoving(   ){
         currentAngle = sean.getAngle();
         double error = getError();
-        double time = getCurrTime();
+        prevTime = getCurrTime();
         pComponent = error * P;
         // Code to make slight delay, in order to avoid dividing by zero error
         double error2 = getError();
         double time = getCurrTime();
-        dComponent = ((error2 - error) / (time2 - time)) * D;
+        dComponent = ((error2 - error) / (time - prevTime)) * D;
 
         // code to do control movemment of the robot, in order to get to an "ideal state"
     }
@@ -79,14 +85,16 @@ public class PID{
     
 
     // adjust code to fit distinct variable- also, put this into a methos
+    /*
     driveError = distanceTarget - currentEncoder;
     turnError = angleTarget - currentGyroAngle;
     drivePower = driveKp * driveError;
     turnPower = turnKp*turnError;
     leftPower = drivePower + turnPower;
     rightPower = driverPower - turnPower;
+    */
 
 }
-*/
+
 
 
