@@ -15,7 +15,7 @@ public class EncodersTest extends Library{
         float linear = gamepad1.left_stick_y;
         float side = gamepad1.left_stick_x;
         float rotation = gamepad1.right_stick_x;
-        omni(linear, rotation, side);
+        omni(linear, rotation, side, 0);
         telemetry.addData("front left", frontLeft.getCurrentPosition());
         telemetry.addData("front right", frontRight.getCurrentPosition());
         telemetry.addData("back left", backLeft.getCurrentPosition());

@@ -37,7 +37,7 @@ public class MimingReader extends Library
                 side = Float.parseFloat(line.substring(first + 1, second));
                 rotation = Float.parseFloat(line.substring(second + 1));
 
-                omni(linear, side, rotation);
+                omni(linear, side, rotation, 0);
                 line = bufferedReader.readLine();
             }
         }

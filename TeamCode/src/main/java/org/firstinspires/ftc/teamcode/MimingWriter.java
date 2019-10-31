@@ -31,7 +31,7 @@ public class MimingWriter extends Library
                 curLimit = 2;
         }
 
-        omni(linear/curLimit, side/curLimit, rotation/curLimit);
+        omni(linear/curLimit, side/curLimit, rotation/curLimit, 0);
         telemetry.addData("Values:", linear + "\n " + rotation + "\n " + side);
 
         try
