@@ -15,7 +15,7 @@ import java.util.*;
 
 public abstract class Library extends OpMode {
     // Declare Hardware Devices
-    public static DcMotor frontLeft, frontRight, backLeft, backRight, liftOne, liftTwo;
+    public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo;
     public static VoltageSensor voltSensor;
     //Blinkin needs to be defined as a servo to read data
     public static Servo grabberServo;
@@ -36,8 +36,8 @@ public abstract class Library extends OpMode {
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        //liftOne = hardwareMap.dcMotor.get("l1");
-        //liftTwo = hardwareMap.dcMotor.get("l2");
+        //intakeOne = hardwareMap.dcMotor.get("l1");
+        //intakeTwo = hardwareMap.dcMotor.get("l2");
 
         grabberServo = hardwareMap.servo.get("s0");
         blinkin = hardwareMap.crservo.get("s1");
@@ -92,7 +92,7 @@ public abstract class Library extends OpMode {
 		} catch(Exception ex) {}
 	}*/
 
-    public static void omni(float l, float r, float s, float zoom) {
+    public static void drive(float l, float r, float s, float intake) {
         float[] sums = new float[4];
         if (l > -0.1 && l < 0.1 && r > -0.1 && r < 0.1 && s > -0.1 && s < 0.1) {
             sums[0] = 0;
@@ -101,7 +101,7 @@ public abstract class Library extends OpMode {
             sums[3] = 0;
         }
         /*
-        Omni-driving function.
+        drive-driving function.
         @param: l, linear component, r, rotational component, and s, horizontal component
          */
         float[] forwardMultiplier = {-1f, 1f, -1f, 1f};
@@ -123,8 +123,8 @@ public abstract class Library extends OpMode {
         for (int i = 0; i < 4; i++) {
             sums[i] = sums[i] / attenuationfactor;
         }
-        //liftOne.setPower(zoom);
-        //liftTwo.setPower(zoom);
+        //liftOne.setPower(intake);
+        //liftTwo.setPower(intake);
         frontLeft.setPower(.7 * sums[0]);
         frontRight.setPower(.7 * sums[1]);
         backLeft.setPower(.7 * sums[2]);
@@ -145,10 +145,10 @@ public abstract class Library extends OpMode {
         float rotations = (distanceInCM / 31.9f) * 1120f;
         //According to website, 1120 ticks per revolution
         while (backLeft.getCurrentPosition() < rotations + startPosition) {
-            omni(l, r, s, 0);
+            drive(l, r, s, 0);
         }
 
-        omni(0, 0, 0, 0);
+        drive(0, 0, 0, 0);
     }
 
     public static void driveForNeg(float distanceInCM, float l, float r, float s) {
@@ -156,10 +156,10 @@ public abstract class Library extends OpMode {
         float rotations = (distanceInCM / 25.5f) * 1120;
         //According to website, 1120 ticks per revolution
         while (backLeft.getCurrentPosition() > rotations + startPosition) {
-            omni(l, r, s, 0);
+            drive(l, r, s, 0);
         }
 
-        omni(0, 0, 0, 0);
+        drive(0, 0, 0, 0);
     }
 
     public static void encodersInit() {//DO NOT TOUCH MY METHODS
@@ -193,6 +193,7 @@ public abstract class Library extends OpMode {
         1 servo for block grabber - likely continuous (button press)
         */
 
+
     public static void platform(boolean Grab) {
         if (Grab) {
             grabberServo.setPosition(1);
@@ -214,6 +215,9 @@ public abstract class Library extends OpMode {
         //send mapped value to "servo" (Blinkin)
         blinkin.setPower(output);
     }*/
+
+
+    /* re use for intake*/
 //    public static void Clamp(float grab, float drop){
 //        if(grab > drop){
 //            clamp.setPower(grab);
