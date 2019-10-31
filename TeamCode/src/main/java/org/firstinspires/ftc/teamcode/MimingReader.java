@@ -12,7 +12,7 @@ public class MimingReader extends Library
 
     /* The following loop reads MimingFile.txt line by line,
     accessing the "linear," "side," and "rotation" values and
-    using them as parameters for the "omni" function. */
+    using them as parameters for the "drive" function. */
     public void loop()
     {
         float linear = 0;
@@ -37,7 +37,7 @@ public class MimingReader extends Library
                 side = Float.parseFloat(line.substring(first + 1, second));
                 rotation = Float.parseFloat(line.substring(second + 1));
 
-                omni(linear, side, rotation);
+                drive(linear, side, rotation, 0);
                 line = bufferedReader.readLine();
             }
         }

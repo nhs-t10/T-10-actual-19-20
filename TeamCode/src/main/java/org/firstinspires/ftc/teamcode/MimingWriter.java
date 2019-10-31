@@ -14,7 +14,7 @@ public class MimingWriter extends Library
 
     /* The following loop accesses the "linear," "side," and
     "rotation" values from gamepad1, uses them as paramaters
-    for the omni function (curlimit ensures that the values
+    for the drive function (curlimit ensures that the values
     gradually increase), and records them in MimingFile.txt
     (to be later accessed by "MimingReader.java"). */
     public void loop()
@@ -31,7 +31,7 @@ public class MimingWriter extends Library
                 curLimit = 2;
         }
 
-        omni(linear/curLimit, side/curLimit, rotation/curLimit);
+        drive(linear/curLimit, side/curLimit, rotation/curLimit, 0);
         telemetry.addData("Values:", linear + "\n " + rotation + "\n " + side);
 
         try
