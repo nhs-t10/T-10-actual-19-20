@@ -15,17 +15,27 @@ public class PID{
     final double I = 0.0;
     double dComponent;
     double savedTime;
+    double error;
     double error2;
     double time = getCurrTime();
+    double destination;
+    // setpoint;
 
 
     enum state {
         IDLE,TURNING,TRAVELING_IN_A_LINEAR_FASHION;
     }
 
-    public double getError(){
+    public double getTurningError(){
         return currentAngle-destination ;
     }
+
+    /*
+    public double getDrivingError(){
+        return getCurrentEncoder - distDestination;
+    }
+    */
+    
 
     // method to find the 
 
@@ -33,16 +43,35 @@ public class PID{
         return System.currentTimeMillis();
     }
     
+    public void setTurningDestination(double degrees){
+        savedTime=getCurrTime();
+        if(degrees>180) {
+            destination=degrees-360;
+        }else{
+            destination=degrees;
+        }
+        prevTime = getCurrTime();
+        destination=degrees;
+        currentEvent=state.TURNING;
+    }
+    
+    // This code should take in the encoder value
+    public void setSetpoint(double setpoint){
+		this.setpoint=setpoint;
+    }
+
     public void updateTurning(imuData sean) {
         currentAngle = sean.getAngle();
-        double error = getError();
+        double error = getTurningError();
         prevTime = getCurrTime();
         pComponent = error * P;
         // Code to make slight delay, in order to avoid dividing by zero error
+        error2 = getTurningError();
         
         dComponent = ((error2 - error) / (time - prevTime)) * D;
 
-        if (currentEvent==state.TURNING) {
+       // encoders makes this obselete
+        /*if (currentEvent==state.TURNING) {
             if (getCurrTime()-savedTime>2000) {
                 stopTurning();
             }else {
@@ -51,9 +80,10 @@ public class PID{
         } else if(currentEvent==state.TRAVELING_IN_A_LINEAR_FASHION){
             T10_Library.omni(0.5f,(float) (pComponent), 0f);
         }
+        */
     }
 
-    public void updateMoving(   ){
+    public void updateMoving(imuData sean){
         currentAngle = sean.getAngle();
         double error = getError();
         prevTime = getCurrTime();
