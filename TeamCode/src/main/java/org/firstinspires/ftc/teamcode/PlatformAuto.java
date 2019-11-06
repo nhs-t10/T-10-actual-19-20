@@ -27,11 +27,11 @@ public class PlatformAuto extends Library {
     }
 
     public void MoveToPlatform() {
-        platform(false);
-        driveForNeg(-75, -.75f, 0, 0);
-        platform(true);
-        driveFor(75, .75f, 0, 0);
-        //driveFor(100, 0, 0, .75f);
+        platform(false);//sets platform grabber up
+        driveFor(75, .75f, 0, 0);//moves to platform
+        platform(true);//sets platform grabber down
+        driveForNeg(-75, -.75f, 0, 0);//moves back
+        platform(false);//sets platform grabber up
         currentState = state.PUSHING;
     }
 }
