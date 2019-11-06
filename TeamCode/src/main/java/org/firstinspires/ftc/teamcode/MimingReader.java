@@ -13,20 +13,22 @@ public class MimingReader extends Library
     /* The following loop reads MimingFile.txt line by line,
     accessing the "linear," "side," and "rotation" values and
     using them as parameters for the "drive" function. */
+
     public void loop()
     {
         float linear = 0;
         float side = 0;
         float rotation = 0;
 
-        try
-        {
         /* The object, "reader," is a FileReader that accesses
         MimingFile.txt, which contains instructions for this autonomous'
         actions. The object, "bufferReader," is a BufferedReader that
         will be used to read the aforementioned txt file. */
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("/storage/emulated/0/FIRST/MimingFile.txt")));
-        String line = bufferedReader.readLine();
+
+        try
+        {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("/storage/emulated/0/FIRST/MimingFile.txt")));
+            String line = bufferedReader.readLine();
 
             while(line != null)
             {
