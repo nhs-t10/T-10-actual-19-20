@@ -100,6 +100,9 @@ public abstract class Library extends OpMode {
     If any values are above 1, it divides all the sums by 1, else it divides by the highest value. 
     It then sends the values from the modified sums array to the actual motors, with the code
     having numbers attached to them to account for proper rotation. 
+
+    The intake value is the control for the intake system. Intake being inside of drive() allows
+     for intake to be easily accesible in automous. 
     */
     public static void drive(float l, float r, float s, float intake) {
         float[] sums = new float[4];
