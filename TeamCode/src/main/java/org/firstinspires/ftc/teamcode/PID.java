@@ -84,16 +84,25 @@ public class PID{
     }
 
     public void updateMoving(imuData sean){
-        currentAngle = sean.getAngle();
-        double error = getError();
-        prevTime = getCurrTime();
+        double output;
+        double Poutput;
+        double Doutput;
+        
+        this.setpoint=setpoint;
+        //currentDistance = sean.getDistance();
+        //double error = getDistanceError();
+        //prevTime = getCurrTime();
         pComponent = error * P;
         // Code to make slight delay, in order to avoid dividing by zero error
-        double error2 = getError();
-        double time = getCurrTime();
-        dComponent = ((error2 - error) / (time - prevTime)) * D;
+        // double error2 = getDistanceError();
+        //double time = getCurrTime();
+        dComponent = 0;
+        //dComponent = ((error2 - error) / (time - prevTime)) * D;
+        // double sumError = pComponent + dComponent;
+        // T10_Library.omni(o.5f, (float)(pComponent), 0f);
 
         // code to do control movemment of the robot, in order to get to an "ideal state"
+
     }
     
     // use getError() to get current angle, and use getCurrTime to get currTime
