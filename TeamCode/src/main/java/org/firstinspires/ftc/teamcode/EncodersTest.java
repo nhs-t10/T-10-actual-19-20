@@ -3,9 +3,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 
-@TeleOp(name = "EnBROders")
+@TeleOp(name = "EnBROders") //not changing non negotiable
 
-public class EncodersTest extends Library{
+public class EncodersTest extends Library{ //this my test class not actually important
     public void init() {
         hardwareInit();
         encodersInit();
@@ -40,7 +40,7 @@ public class EncodersTest extends Library{
     public void stop()
     {
     }
-    public void juice()
+    public void juice() //to be clear everything here can and will be deleted, it shouldn't be documented as it is a brick
     {
 
     }

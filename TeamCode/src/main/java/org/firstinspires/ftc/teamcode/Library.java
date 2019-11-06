@@ -92,6 +92,15 @@ public abstract class Library extends OpMode {
 		} catch(Exception ex) {}
 	}*/
 
+    /*drive is the central movement and robot handling method of the code
+    It takes in the linear (forward) component, the rotational (turning) component, and
+    the side(skating) component. 
+    It creates arrays for each of the components, and then adds them all together.
+    After finding the highest value, it makes sure than everything is below 1. 
+    If any values are above 1, it divides all the sums by 1, else it divides by the highest value. 
+    It then sends the values from the modified sums array to the actual motors, with the code
+    having numbers attached to them to account for proper rotation. 
+    */
     public static void drive(float l, float r, float s, float intake) {
         float[] sums = new float[4];
         if (l > -0.1 && l < 0.1 && r > -0.1 && r < 0.1 && s > -0.1 && s < 0.1) {
@@ -160,6 +169,27 @@ public abstract class Library extends OpMode {
         }
 
         drive(0, 0, 0, 0);
+    }
+
+    //Param: degrees --> Degrees the robot will turn
+    //Robot turns (degrees) degrees
+    //Degrees can be pos or neg (pos --> right, neg --> left)
+    public static void turnDegrees(int degrees){  
+        float wheelToWheelWidth;  //Length between the two front wheels 
+        float wheelToWheelLength;  //Length betweeen front and back wheels
+
+        //It calculates a "circle" that starts in the center of the robot and hits all 4 wheels
+        //The arc length for the given degree is the CM the robot turnFor()
+        float radius = Math.sqrt((wheelToWheelWidth / 2.0f) * (wheelToWheelWidth / 2.0f) + (wheelToWheelLength / 2.0f) * (wheelToWheelLength / 2.0f));
+        float circumference = 2 * (float)Math.PI * radius;
+        float turnCM = circumference * ((float)degrees / 360) ;  //arc length of "circle" 
+
+        if(degrees < 0){
+            driveForNeg(turnCM, 0, .75f, 0);
+        }
+        else{
+            driveFor(turnCM, 0, .75f, 0);
+        }
     }
 
     public static void encodersInit() {//DO NOT TOUCH MY METHODS
