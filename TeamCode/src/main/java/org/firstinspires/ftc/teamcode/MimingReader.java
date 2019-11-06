@@ -16,9 +16,7 @@ public class MimingReader extends Library
 
     public void loop()
     {
-        float linear = 0;
-        float side = 0;
-        float rotation = 0;
+        float linear, side, rotation;
 
         /* The object, "reader," is a FileReader that accesses
         MimingFile.txt, which contains instructions for this autonomous'
@@ -27,7 +25,8 @@ public class MimingReader extends Library
 
         try
         {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(new File("/storage/emulated/0/FIRST/MimingFile.txt")));
+            File MimingFile = new File("/storage/emulated/0/FIRST/MimingFile.txt");
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(MimingFile));
             String line = bufferedReader.readLine();
 
             while(line != null)
