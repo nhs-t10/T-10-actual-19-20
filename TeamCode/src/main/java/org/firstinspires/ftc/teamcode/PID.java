@@ -15,31 +15,38 @@ public class PID{
     final double I = 0.0;
     double dComponent;
     double savedTime, error, error2;
-    double time;
-    double destination;
-    double distDestination;
+    double time, destination, distDestination;
     double currentPosition;
+    String state; // IDLE,TURNING,TRAVELING_IN_A_LINEAR_FASHION
     // setpoint;
 
-
-    enum state {
-        IDLE,TURNING,TRAVELING_IN_A_LINEAR_FASHION;
+    public PID(double proport, double derivative, double integral){
+        super();
+        P = proport;
+        D = derivative;
+        I = integral;
     }
+
 
     public double getTurningError(){
         return currentAngle-destination ;
     }
 
+
     // potentially need to create a trig function to calculate the angle
     
-    /*
     public double getDrivingError(){
         return distDestination - motor.getCurrentPosition();
     }
-    */
+
     
+    public void setDistDestination(float centimeters){
+        centimeters2 = encoderConversions(centimeters);
+        distDestination = centimeters2;
+    }
 
     // method to find the 
+
 
     /*
     public double getCurrTime() {
@@ -47,23 +54,13 @@ public class PID{
     }
     */
     
-   /* public void setTurningDestination(double degrees){
-        time = (double) System.currentTimeMillis();
-        if(degrees>180) {
-            destination=degrees-360;
-        }else{
-            destination=degrees;
-        }
-        prevTime = getCurrTime();
-        destination=degrees;
-        currentEvent=state.TURNING;
-    }
-    */
 
     // This code should take in the encoder value
+    /*
     public void setSetpoint(double setpoint){
 		this.setpoint=setpoint;
     }
+    */
 
     public void updateTurning(imuData sean) {
         currentAngle = sean.getAngle();
@@ -93,14 +90,13 @@ public class PID{
         double Poutput;
         double Doutput;
         
-        this.setpoint=setpoint;
         currentDistance = motor.getPosition();
         double error = getDistanceError();
         prevTime = (double) System.currentTimeMillis();
         pComponent = error * P;
         // Code to make slight delay, in order to avoid dividing by zero error
         // double error2 = getDistanceError();
-        double time = (double) System.currentTimeMillis();
+        // double time = (double) System.currentTimeMillis();
         dComponent = 0;
         // dComponent = ((error2 - error) / (time - prevTime)) * D;
         double sumError = pComponent + dComponent;
