@@ -35,7 +35,7 @@ public class MimingWriter extends Library {
             ioe.printStackTrace();
         }
 
-        while (true)
+        for (int i = 0; i < 10000; i++)
         {
             linear = gamepad1.left_stick_y;
             side = gamepad1.left_stick_x;
