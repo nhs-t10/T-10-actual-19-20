@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import java.io.OutputStreamWriter;
 import java.io.FileOutputStream;
@@ -6,12 +7,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 
 @TeleOp(name = "MimingWriter")
-public class MimingWriter extends Library
-{
-    public void init()
-    {
-        hardwareInit();
-    }
+public class MimingWriter extends Library {
+	public void init() {
+		hardwareInit();
+	}
 
     /* The following loop accesses the "linear," "side," and
     "rotation" values from gamepad1, uses them as paramaters

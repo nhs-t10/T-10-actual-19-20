@@ -4,6 +4,7 @@
 // ---------------------------------------------------------
 
 package org.firstinspires.ftc.teamcode;
+
 import android.hardware.SensorEventListener;
 
 public class PID{
@@ -45,7 +46,7 @@ public class PID{
         distDestination = centimeters2;
     }
 
-    // method to find the 
+    // method to find the
 
 
     /*
@@ -105,24 +106,24 @@ public class PID{
         // code to do control movemment of the robot, in order to get to an "ideal state"
 
     }
-    
+
     // use getError() to get current angle, and use getCurrTime to get currTime
 
 
     // Misc. code from FTC PID forum page:
-    
+
     // --------------------------------------------------------------
-    // "You have two components when driving forward: 1) Overall forward power; 
-    // 2) Differential power between left and right. You calculate the overall forward 
-    // power by checking your encoder against its target. So if the target is far away, 
-    // the overall forward power is large. If you are almost there, the overall forward power 
-    // would be small. Then the differential power is controlled by the gyro. If the robot is 
-    // deviated from the center line in a big way (i.e. the error is large), the differential 
-    // power is big. If you are right on straight, the differential power is zero. With these 
+    // "You have two components when driving forward: 1) Overall forward power;
+    // 2) Differential power between left and right. You calculate the overall forward
+    // power by checking your encoder against its target. So if the target is far away,
+    // the overall forward power is large. If you are almost there, the overall forward power
+    // would be small. Then the differential power is controlled by the gyro. If the robot is
+    // deviated from the center line in a big way (i.e. the error is large), the differential
+    // power is big. If you are right on straight, the differential power is zero. With these
     // two components, the wheel powers are:""
     // *mikets - Senior Member
     // --------------------------------------------------------------
-    
+
 
     // adjust code to fit distinct variable- also, put this into a methos
     /*
@@ -135,6 +136,3 @@ public class PID{
 */
 
 }
-
-
-

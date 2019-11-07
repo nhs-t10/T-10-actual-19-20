@@ -1,17 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
-
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-
-@Autonomous(name= "BlockAuto")
+@Autonomous(name = "BlockAuto")
 public class BlockAuto extends Library {
 	/*
-		T-10 Preliminary Autonomous
-		This is based on the assumption that we are:
-            - Starting on the Block side
-            - Doing all 4 possible autonomus tasks
+	 * T-10 Preliminary Autonomous This is based on the assumption that we are: -
+	 * Starting on the Block side - Doing all 4 possible autonomus tasks
 	 */
 
 	// constants and state declaration
@@ -27,7 +22,7 @@ public class BlockAuto extends Library {
 	}
 
 	public void loop() {
-		//Loop constantly checks state, and then executes a command based on this.
+		// Loop constantly checks state, and then executes a command based on this.
 		if (currentState == state.DELIVERING) {
 			deliverSkystone();
 		}
@@ -44,8 +39,8 @@ public class BlockAuto extends Library {
 	}
 
 	public void deliverSkystone() {
-		//if aligned with a skystone, drive foreward and get it to ghe other side
-		//if not aligned, use CV to align <-- likely a seperate method
+		// if aligned with a skystone, drive foreward and get it to ghe other side
+		// if not aligned, use CV to align <-- likely a seperate method
 		currentState = state.PLACING;
 	}
 
@@ -55,9 +50,10 @@ public class BlockAuto extends Library {
 
 	public void reposition() {
 		// if aligned with the building platform, push it into the corner
-		//talk with hardware about which part will be used to push
-		//if not aligned, use CV to drive and turn until aligned with the building platform
-		//then push it into the corner
+		// talk with hardware about which part will be used to push
+		// if not aligned, use CV to drive and turn until aligned with the building
+		// platform
+		// then push it into the corner
 		currentState = state.NAVIGATING;
 	}
 
