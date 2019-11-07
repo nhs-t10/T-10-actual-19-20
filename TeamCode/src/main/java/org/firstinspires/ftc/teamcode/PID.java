@@ -14,11 +14,11 @@ public class PID{
     final double D = 0.0;
     final double I = 0.0;
     double dComponent;
-    double savedTime;
-    double error;
-    double error2;
-    double time = getCurrTime();
+    double savedTime, error, error2;
+    double time;
     double destination;
+    double distDestination;
+    double currentPosition;
     // setpoint;
 
 
@@ -30,21 +30,25 @@ public class PID{
         return currentAngle-destination ;
     }
 
+    // potentially need to create a trig function to calculate the angle
+    
     /*
     public double getDrivingError(){
-        return getCurrentEncoder - distDestination;
+        return distDestination - motor.getCurrentPosition();
     }
     */
     
 
     // method to find the 
 
+    /*
     public double getCurrTime() {
         return System.currentTimeMillis();
     }
+    */
     
-    public void setTurningDestination(double degrees){
-        savedTime=getCurrTime();
+   /* public void setTurningDestination(double degrees){
+        time = (double) System.currentTimeMillis();
         if(degrees>180) {
             destination=degrees-360;
         }else{
@@ -54,7 +58,8 @@ public class PID{
         destination=degrees;
         currentEvent=state.TURNING;
     }
-    
+    */
+
     // This code should take in the encoder value
     public void setSetpoint(double setpoint){
 		this.setpoint=setpoint;
@@ -89,17 +94,17 @@ public class PID{
         double Doutput;
         
         this.setpoint=setpoint;
-        //currentDistance = sean.getDistance();
-        //double error = getDistanceError();
-        //prevTime = getCurrTime();
+        currentDistance = motor.getPosition();
+        double error = getDistanceError();
+        prevTime = (double) System.currentTimeMillis();
         pComponent = error * P;
         // Code to make slight delay, in order to avoid dividing by zero error
         // double error2 = getDistanceError();
-        //double time = getCurrTime();
+        double time = (double) System.currentTimeMillis();
         dComponent = 0;
-        //dComponent = ((error2 - error) / (time - prevTime)) * D;
-        // double sumError = pComponent + dComponent;
-        // T10_Library.omni(o.5f, (float)(pComponent), 0f);
+        // dComponent = ((error2 - error) / (time - prevTime)) * D;
+        double sumError = pComponent + dComponent;
+        drive(0.5f, (float)(sumError), 0f);
 
         // code to do control movemment of the robot, in order to get to an "ideal state"
 
