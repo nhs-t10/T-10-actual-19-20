@@ -13,6 +13,11 @@ import org.opencv.core.Scalar;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraCharacteristics;
+
+// Okay bois, turns out DogeCV is doing something I'm not so I'm just gonna use that
+// Imma give up
+// - Addison
+
 public static class cvBase {
 	private enum TrackingStates {
 		SKY_STONE
@@ -90,7 +95,8 @@ public static class cvBase {
 		VideoImputGrabber gerald = new VideoImputGraber(0);
 	}
 
-	private boolean determineRange(ArrayList<MatOfPoint> contours) {
+	private boolean isSkystone(Mat image) {
+		ArrayList<MatOfPoint> contours = FindBounds(image);
 		Rect mainRect = Imgproc.boundingRect(contours.get(0));
 		int aspectRatio = mainRect.width / mainRect.height;
 		if (aspectRatio - skyStoneAspectRatio > -0.1 && aspectRatio - skyStoneAspectRatio < 0.1) {
