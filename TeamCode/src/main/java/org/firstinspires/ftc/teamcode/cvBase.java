@@ -13,7 +13,6 @@ import org.opencv.core.Scalar;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraCharacteristics;
-
 public static class cvBase {
 	private enum TrackingStates {
 		SKY_STONE
@@ -105,5 +104,4 @@ public static class cvBase {
 		FrameGrabber grabber = new VideoInputFrameGrabber(0); // 1 for next camera
 		OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();
 	}
-
 }

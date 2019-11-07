@@ -4,47 +4,52 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import java.io.*;
 
 @Autonomous(name = "MimingReader")
-public class MimingReader extends Library {
-	public void init() {
-		hardwareInit();
-	}
+public class MimingReader extends Library
+{
+    public void init()
+    {
+        hardwareInit();
+    }
 
-	/*
-	 * The following loop reads MimingFile.txt line by line, accessing the "linear,"
-	 * "side," and "rotation" values and using them as parameters for the "drive"
-	 * function.
-	 */
-	public void loop() {
-		float linear = 0;
-		float side = 0;
-		float rotation = 0;
+    /* The following loop reads MimingFile.txt line by line,
+    accessing the "linear," "side," and "rotation" values and
+    using them as parameters for the "drive" function. */
 
-		try {
-			/*
-			 * The object, "reader," is a FileReader that accesses MimingFile.txt, which
-			 * contains instructions for this autonomous' actions. The object,
-			 * "bufferReader," is a BufferedReader that will be used to read the
-			 * aforementioned txt file.
-			 */
-			BufferedReader bufferedReader = new BufferedReader(
-					new FileReader(new File("/storage/emulated/0/FIRST/MimingFile.txt")));
-			String line = bufferedReader.readLine();
+    public void loop()
+    {
+        float linear, side, rotation;
 
-			while (line != null) {
-				int first = line.indexOf(" ");
-				int second = line.indexOf(" ", first);
+        /* The object, "reader," is a FileReader that accesses
+        MimingFile.txt, which contains instructions for this autonomous'
+        actions. The object, "bufferReader," is a BufferedReader that
+        will be used to read the aforementioned txt file. */
 
-				linear = Float.parseFloat(line.substring(0, first));
-				side = Float.parseFloat(line.substring(first + 1, second));
-				rotation = Float.parseFloat(line.substring(second + 1));
+        try
+        {
+            File MimingFile = new File("/storage/emulated/0/FIRST/MimingFile.txt");
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(MimingFile));
+            String line = bufferedReader.readLine();
 
-				drive(linear, side, rotation, 0);
-				line = bufferedReader.readLine();
-			}
-		}
+            while(line != null)
+            {
+                int first = line.indexOf(" ");
+                int second = line.indexOf(" ", first);
 
-		catch (Exception ioe) {
-			ioe.printStackTrace();
-		}
-	}
+                linear = Float.parseFloat(line.substring(0, first));
+                side = Float.parseFloat(line.substring(first + 1, second));
+                rotation = Float.parseFloat(line.substring(second + 1));
+
+                drive(linear, side, rotation, 0);
+                line = bufferedReader.readLine();
+
+                try { Thread.sleep(10); }
+                catch (InterruptedException ie) { ie.printStackTrace(); }
+            }
+        }
+
+        catch (Exception ioe)
+        {
+            ioe.printStackTrace();
+        }
+    }
 }

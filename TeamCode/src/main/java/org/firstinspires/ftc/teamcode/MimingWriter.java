@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import java.io.OutputStreamWriter;
+import java.io.FileOutputStream;
 import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.Writer;
+import java.io.File;
 
 @TeleOp(name = "MimingWriter")
 public class MimingWriter extends Library {
@@ -11,35 +12,51 @@ public class MimingWriter extends Library {
 		hardwareInit();
 	}
 
-	/*
-	 * The following loop accesses the "linear," "side," and "rotation" values from
-	 * gamepad1, uses them as paramaters for the drive function (curlimit ensures
-	 * that the values gradually increase), and records them in MimingFile.txt (to
-	 * be later accessed by "MimingReader.java").
-	 */
-	public void loop() {
-		float curLimit = 2;
-		float linear = gamepad1.left_stick_y;
-		float side = gamepad1.left_stick_x;
-		float rotation = gamepad1.right_stick_x;
+    /* The following loop accesses the "linear," "side," and
+    "rotation" values from gamepad1, uses them as paramaters
+    for the drive function (curlimit ensures that the values
+    gradually increase), and records them in MimingFile.txt
+    (to be later accessed by "MimingReader.java"). */
 
-		if (gamepad1.right_stick_button) {
-			curLimit -= .5;
-			if (curLimit < 1)
-				curLimit = 2;
-		}
+    public void loop()
+    {
+        float linear, side, rotation;
+        BufferedWriter writer = null;
 
-		drive(linear / curLimit, side / curLimit, rotation / curLimit, 0);
-		telemetry.addData("Values:", linear + "\n " + rotation + "\n " + side);
+        try
+        {
+            File MimingFile = new File("/storage/emulated/0/FIRST/MimingFile.txt");
+            FileOutputStream MimingOutput = new FileOutputStream(MimingFile);
+            writer = new BufferedWriter(new OutputStreamWriter(MimingOutput));
+        }
 
-		try {
-			Writer writer = new BufferedWriter(new FileWriter("/storage/emulated/0/FIRST/MimingFile.txt", true));
-			writer.append(linear + " " + rotation + " " + side);
-			writer.close();
-		}
+        catch(java.io.IOException ioe)
+        {
+            ioe.printStackTrace();
+        }
 
-		catch (java.io.IOException ioe) {
-			ioe.printStackTrace();
-		}
-	}
+        while (true)
+        {
+            linear = gamepad1.left_stick_y;
+            side = gamepad1.left_stick_x;
+            rotation = gamepad1.right_stick_x;
+
+            drive(linear, side, rotation, 0);
+            telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
+
+            try
+            {
+                writer.write(linear + " " + rotation + " " + side);
+                writer.newLine();
+            }
+
+            catch(java.io.IOException ioe)
+            {
+                ioe.printStackTrace();
+            }
+
+            try { Thread.sleep(10); }
+            catch (InterruptedException ie) { ie.printStackTrace(); }
+        }
+    }
 }
