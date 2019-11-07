@@ -100,9 +100,6 @@ public abstract class Library extends OpMode {
     If any values are above 1, it divides all the sums by 1, else it divides by the highest value. 
     It then sends the values from the modified sums array to the actual motors, with the code
     having numbers attached to them to account for proper rotation. 
-
-    The intake value is the control for the intake system. Intake being inside of drive() allows
-     for intake to be easily accesible in automous. 
     */
     public static void drive(float l, float r, float s, float intake) {
         float[] sums = new float[4];
@@ -137,10 +134,11 @@ public abstract class Library extends OpMode {
         }
         //liftOne.setPower(intake);
         //liftTwo.setPower(intake);
-        frontLeft.setPower(.7 * sums[0]);
-        frontRight.setPower(.7 * sums[1]);
-        backLeft.setPower(.7 * sums[2]);
-        backRight.setPower(.7 * sums[3]);
+        float speed = 0.9f; //set speed of driving, speed of 1 was tested and would occasionally crash robot while turning
+        frontLeft.setPower(speed * sums[0]);
+        frontRight.setPower(speed * sums[1]);
+        backLeft.setPower(speed * sums[2]);
+        backRight.setPower(speed * sums[3]);
     }
 
     //takes in distance in centimeters, drives until it hits that distance
@@ -178,14 +176,12 @@ public abstract class Library extends OpMode {
     //Robot turns (degrees) degrees
     //Degrees can be pos or neg (pos --> right, neg --> left)
     public static void turnDegrees(int degrees){  
-        float wheelToWheelWidth = 0;
-        //Length between the two front wheels
-        float wheelToWheelLength = 0;
-        //Length betweeen front and back wheels
+        float wheelToWheelWidth;  //Length between the two front wheels 
+        float wheelToWheelLength;  //Length betweeen front and back wheels
 
         //It calculates a "circle" that starts in the center of the robot and hits all 4 wheels
         //The arc length for the given degree is the CM the robot turnFor()
-        float radius = (float) Math.sqrt((wheelToWheelWidth / 2.0f) * (wheelToWheelWidth / 2.0f) + (wheelToWheelLength / 2.0f) * (wheelToWheelLength / 2.0f));
+        float radius = Math.sqrt((wheelToWheelWidth / 2.0f) * (wheelToWheelWidth / 2.0f) + (wheelToWheelLength / 2.0f) * (wheelToWheelLength / 2.0f));
         float circumference = 2 * (float)Math.PI * radius;
         float turnCM = circumference * ((float)degrees / 360) ;  //arc length of "circle" 
 
@@ -209,17 +205,17 @@ public abstract class Library extends OpMode {
     }
 
     //This method allows the robot to turn a certain number of degrees using encoders
-//    public void turnDegrees(int degrees) {  //Degrees can be pos or neg (pos --> right, neg --> left)
-//        float radius = 30.54607421584f;
-//        float circumference = 2 * (float) Math.PI * radius;
-//        float turnCM = circumference * ((float) degrees / 360);  //arc length in circle
-//
-//        if (degrees < 0) {
-//            driveFor(turnCM, 0, -.75f, 0);
-//        } else {
-//            driveFor(turnCM, 0, .75f, 0);
-//        }
-//    }
+    public void turnDegrees(int degrees) {  //Degrees can be pos or neg (pos --> right, neg --> left)
+        float radius = 30.54607421584f;
+        float circumference = 2 * (float) Math.PI * radius;
+        float turnCM = circumference * ((float) degrees / 360);  //arc length in circle
+
+        if (degrees < 0) {
+            driveFor(turnCM, 0, -.75f, 0);
+        } else {
+            driveFor(turnCM, 0, .75f, 0);
+        }
+    }
 
 
     /*
