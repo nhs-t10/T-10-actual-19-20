@@ -55,6 +55,9 @@ public class MimingWriter extends Library
             {
                 ioe.printStackTrace();
             }
+
+            try { Thread.sleep(10); }
+            catch (InterruptedException ie) { ie.printStackTrace(); }
         }
     }
 }

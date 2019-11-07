@@ -40,6 +40,9 @@ public class MimingReader extends Library
 
                 drive(linear, side, rotation, 0);
                 line = bufferedReader.readLine();
+
+                try { Thread.sleep(10); }
+                catch (InterruptedException ie) { ie.printStackTrace(); }
             }
         }
 
