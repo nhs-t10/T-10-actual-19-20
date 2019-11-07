@@ -137,10 +137,11 @@ public abstract class Library extends OpMode {
         }
         //liftOne.setPower(intake);
         //liftTwo.setPower(intake);
-        frontLeft.setPower(.7 * sums[0]);
-        frontRight.setPower(.7 * sums[1]);
-        backLeft.setPower(.7 * sums[2]);
-        backRight.setPower(.7 * sums[3]);
+        float speed = 0.9f; //set speed of driving, speed of 1 was tested and would occasionally crash robot while turning
+        frontLeft.setPower(speed * sums[0]);
+        frontRight.setPower(speed * sums[1]);
+        backLeft.setPower(speed * sums[2]);
+        backRight.setPower(speed * sums[3]);
     }
 
     //takes in distance in centimeters, drives until it hits that distance
