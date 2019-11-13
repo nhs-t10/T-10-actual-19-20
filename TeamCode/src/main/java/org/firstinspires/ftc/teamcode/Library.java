@@ -161,6 +161,55 @@ public abstract class Library extends OpMode {
         drive(0, 0, 0, 0);
     }
 
+    //this is the second attempt
+    //improved drive for
+    public static void driveForReformed(float distanceInCM, float l, float r, float s, float degreesToTurn)
+    {
+        if(s!=0)
+        {
+            float startPosition = backLeft.getCurrentPosition();
+            float rotations = (distanceInCM / 31.9f) * 1120f;
+            //According to website, 1120 ticks per revolution
+            while () {
+                drive(l, r, s, 0);
+            }
+        }else if(r!=0)
+        {
+            //matt do your thing
+        }else
+        {
+            float startPosition = backLeft.getCurrentPosition();
+            float rotations = (distanceInCM / 31.9f) * 1120f;
+            //According to website, 1120 ticks per revolution
+            while (dealWithNeg(backLeft.getCurrentPosition(), rotations, startPosition)) {
+                drive(l, r, s, 0);
+            }
+
+
+        }
+        drive(0, 0, 0, 0);
+    }
+
+    public static boolean dealWithNeg(float currentValue, float rots, float start)
+    {
+        if(rots==0)
+        {
+            return false;
+        }else if(rots>0)
+        {
+
+            return (currentValue<rots+start);
+        }else
+        {
+            return(-currentValue>rots-start)
+        }
+    }
+
+    public static float cmIntoRots(float cmImput)
+    {
+        return cmImput(1120f)/31.9f
+    }
+
     public static void driveForNeg(float distanceInCM, float l, float r, float s) {
         float startPosition = backLeft.getCurrentPosition();
         float rotations = (distanceInCM / 25.5f) * 1120;
@@ -204,18 +253,7 @@ public abstract class Library extends OpMode {
         return (one.getCurrentPosition() + two.getCurrentPosition() + three.getCurrentPosition() + four.getCurrentPosition()) / 4;
     }
 
-    //This method allows the robot to turn a certain number of degrees using encoders
-    public void turnDegrees(int degrees) {  //Degrees can be pos or neg (pos --> right, neg --> left)
-        float radius = 30.54607421584f;
-        float circumference = 2 * (float) Math.PI * radius;
-        float turnCM = circumference * ((float) degrees / 360);  //arc length in circle
 
-        if (degrees < 0) {
-            driveFor(turnCM, 0, -.75f, 0);
-        } else {
-            driveFor(turnCM, 0, .75f, 0);
-        }
-    }
 
 
     /*
