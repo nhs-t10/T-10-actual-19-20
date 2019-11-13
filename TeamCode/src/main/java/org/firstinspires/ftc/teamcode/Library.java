@@ -39,7 +39,7 @@ public abstract class Library extends OpMode {
         lift = hardwareMap.dcMotor.get("l0");
         //intakeOne = hardwareMap.dcMotor.get("l1");
         //intakeTwo = hardwareMap.dcMotor.get("l2");
-        
+
 
         platform = hardwareMap.servo.get("s0");
         grabber = hardwareMap.servo.get("s1");
@@ -49,7 +49,7 @@ public abstract class Library extends OpMode {
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        
+
 
 
         //sonar = hardwareMap.sonarSensor.get("s1");
@@ -102,12 +102,12 @@ public abstract class Library extends OpMode {
 
     /*drive is the central movement and robot handling method of the code
     It takes in the linear (forward) component, the rotational (turning) component, and
-    the side(skating) component. 
+    the side(skating) component.
     It creates arrays for each of the components, and then adds them all together.
-    After finding the highest value, it makes sure than everything is below 1. 
-    If any values are above 1, it divides all the sums by 1, else it divides by the highest value. 
+    After finding the highest value, it makes sure than everything is below 1.
+    If any values are above 1, it divides all the sums by 1, else it divides by the highest value.
     It then sends the values from the modified sums array to the actual motors, with the code
-    having numbers attached to them to account for proper rotation. 
+    having numbers attached to them to account for proper rotation.
     */
     public static void drive(float l, float r, float s, float intake) {
         float[] sums = new float[4];
@@ -169,6 +169,55 @@ public abstract class Library extends OpMode {
         drive(0, 0, 0, 0);
     }
 
+    //this is the second attempt
+    //improved drive for
+    public static void driveForReformed(float distanceInCM, float l, float r, float s, float degreesToTurn)
+    {
+        if(s!=0)
+        {
+            float startPosition = backLeft.getCurrentPosition();
+            float rotations = (distanceInCM / 31.9f) * 1120f;
+            //According to website, 1120 ticks per revolution
+            while () {
+                drive(l, r, s, 0);
+            }
+        }else if(r!=0)
+        {
+            //matt do your thing
+        }else
+        {
+            float startPosition = backLeft.getCurrentPosition();
+            float rotations = (distanceInCM / 31.9f) * 1120f;
+            //According to website, 1120 ticks per revolution
+            while (dealWithNeg(backLeft.getCurrentPosition(), rotations, startPosition)) {
+                drive(l, r, s, 0);
+            }
+
+
+        }
+        drive(0, 0, 0, 0);
+    }
+
+    public static boolean dealWithNeg(float currentValue, float rots, float start)
+    {
+        if(rots==0)
+        {
+            return false;
+        }else if(rots>0)
+        {
+
+            return (currentValue<rots+start);
+        }else
+        {
+            return(-currentValue>rots-start)
+        }
+    }
+
+    public static float cmIntoRots(float cmImput)
+    {
+        return cmImput(1120f)/31.9f
+    }
+
     public static void driveForNeg(float distanceInCM, float l, float r, float s) {
         float startPosition = backLeft.getCurrentPosition();
         float rotations = (distanceInCM / 25.5f) * 1120;
@@ -183,7 +232,7 @@ public abstract class Library extends OpMode {
     //Param: degrees --> Degrees the robot will turn
     //Robot turns (degrees) degrees
     //Degrees can be pos or neg (pos --> right, neg --> left)
-    public static void turnDegrees(int degrees){  
+    public static void turnDegrees(int degrees){
         float wheelToWheelWidth = 0;  //Length between the two front wheels
         float wheelToWheelLength = 0;  //Length betweeen front and back wheels
 
@@ -191,7 +240,7 @@ public abstract class Library extends OpMode {
         //The arc length for the given degree is the CM the robot turnFor()
         float radius = (float) Math.sqrt((wheelToWheelWidth / 2.0f) * (wheelToWheelWidth / 2.0f) + (wheelToWheelLength / 2.0f) * (wheelToWheelLength / 2.0f));
         float circumference = 2 * (float)Math.PI * radius;
-        float turnCM = circumference * ((float)degrees / 360) ;  //arc length of "circle" 
+        float turnCM = circumference * ((float)degrees / 360) ;  //arc length of "circle"
 
         if(degrees < 0){
             driveForNeg(turnCM, 0, .75f, 0);
@@ -256,7 +305,7 @@ public abstract class Library extends OpMode {
     }*/
 
 
-    
+
     public static void gRotate(float left, float right){
         if(right > left){
             rotateGrabber.setPower(right);
