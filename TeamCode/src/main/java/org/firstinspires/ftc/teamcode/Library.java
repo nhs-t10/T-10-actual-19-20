@@ -18,8 +18,8 @@ public abstract class Library extends OpMode {
     public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
     public static VoltageSensor voltSensor;
     //Blinkin needs to be defined as a servo to read data
-    public static Servo grabberServo, rotateGrabber;
-    public static CRServo blinkin, clamp;
+    public static Servo platform, grabber;
+    public static CRServo blinkin, rotateGrabber;
     //public static LED blinkin;
     //Blinkin needs to be defined as a servo to read data
     //public static SonarSensor sonarSensor;
@@ -41,9 +41,15 @@ public abstract class Library extends OpMode {
         //intakeTwo = hardwareMap.dcMotor.get("l2");
         
 
-        grabberServo = hardwareMap.servo.get("s0");
-        rotateGrabber = hardwareMap.crservo.get("s1");
+        platform = hardwareMap.servo.get("s0");
+        gripper = hardwareMap.servo.get("s1")
+        rotateGrabber = hardwareMap.crservo.get("s2");
         //blinkin = hardwareMap.crservo.get("s2");
+
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        
 
 
         //sonar = hardwareMap.sonarSensor.get("s1");
@@ -134,8 +140,8 @@ public abstract class Library extends OpMode {
         for (int i = 0; i < 4; i++) {
             sums[i] = sums[i] / attenuationfactor;
         }
-        //liftOne.setPower(intake);
-        //liftTwo.setPower(intake);
+        liftOne.setPower(intake);
+        liftTwo.setPower(intake);
         float speed = 0.9f; //set speed of driving, speed of 1 was tested and would occasionally crash robot while turning
         frontLeft.setPower(speed * sums[0]);
         frontRight.setPower(speed * sums[1]);
@@ -227,11 +233,11 @@ public abstract class Library extends OpMode {
         */
 
 
-    public static void platform(boolean Grab) {
-        if (Grab) {
-            grabberServo.setPosition(1);
+    public static void platform(boolean down) {
+        if (down) {
+            platform.setPosition(1);
         } else {
-            grabberServo.setPosition(0);
+            platform.setPosition(0);
         }
     }
 
@@ -250,15 +256,26 @@ public abstract class Library extends OpMode {
     }*/
 
 
-    /* re use for intake*/
-//    public static void Clamp(float grab, float drop){
-//        if(grab > drop){
-//            clamp.setPower(grab);
-//        }
-//        else if(drop > grab){
-//            clamp.setPower(-drop);
-//        }else{
-//            clamp.setPower(0);
-//        }
-//    }
+    
+    public static void gRotate(float left, float right){
+        if(right > left){
+            grabber.setPower(right);
+       }
+        else if(left > right){
+            grabber.setPower(-left);
+        }else{
+            grabber.setPower(0);
+        }
+    }
+    public static void lift(float num){
+        liftOne.setPower(num);
+        liftTwo.setPower(num);
+    }
+    public static void grip(boolean x){
+        if(x){
+            gripper.setPosition(1);
+    }else{
+            gripper.setPosition(0);
+        }
+    }
 }

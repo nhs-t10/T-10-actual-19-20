@@ -17,16 +17,53 @@ public class DriveTeleOp extends Library {
 		float linear = gamepad1.left_stick_y;
 		float side = gamepad1.left_stick_x;
 		float rotation = gamepad1.right_stick_x;
-		boolean y = gamepad1.y;
-		y = !y;
-		boolean b = gamepad1.b;
+
+		boolean y = gamepad1.y; //platform hook
+		boolean a = gamepad1.a; //positive intake
+		boolean b = gamepad1.b; //negative intake
 		// float grab = gamepad1.right_trigger;
-		float clamp = gamepad1.left_trigger;
-		float intake = gamepad1.right_trigger;
+		float grabberRight = gamepad1.left_trigger; //rotate grabber right
+		float grabberLeft = gamepad1.right_trigger; //rotate grabber left
+		boolean x = gamepad1.x; //make grabber close
+		float intake = 0;
+
+		float liftUp = gamepad1.right_bumper;
+		float rightUp = gamepad1.left_bumper;
+
+		boolean grip = false;
+		int count = 0;
+
+		if a {
+			intake = 1;
+		}
+		if b {
+			intake  = -1;
+		}
+		
+		if liftUp {
+			lift(1);
+		}
+		if liftDown {
+			lift(-1);
+		}
+
+		if(x.isPressed() && !grip && count == 0{
+		
+			grip = true;
+			grip(grip);
+			count = 1;
+		}else if (x.isPressed() && grip && count == 1{
+		
+			grip = false;
+			grip(grip);
+			count = 0;
+		
+		}
+
+		y = !y; 
 
 		// linear = straight, rotation = turning, side = skating.
-		// Linear - rotation will compensate one side to allow the other side to
-		// overrotate
+		// Linear - rotation will compensate one side to allow the other side to overrotate
 
 		// if(gamepad1.right_stick_button){
 		// mode = mode.getNext();
@@ -38,7 +75,7 @@ public class DriveTeleOp extends Library {
 		// drive(linear/1.5f, rotation/1.5f, side/1.5f);} // medium driving
 		// if(mode == DRIVING.Fast) {
 		// drive(linear, rotation, side);} // fast driving
-		platform(y);
+		
 
 		// test Blinkin (LED Strip) by setting it to "Lawn Green"
 
@@ -46,11 +83,11 @@ public class DriveTeleOp extends Library {
 		 * setBlinkinPattern(86); // change Blinkin (LED Strip) color to "Orange" if B
 		 * is pressed on gamepad 1 if (b) { setBlinkinPattern(83);r }
 		 */
-
+		platform(y);
 		drive(linear, rotation, side, intake);
+		gRotate(grabberRight, grabberLeft);
 
-		// Clamp(clamp, change code in Library.java so only one value is needed.);
-		//
+		
 
 		String vals = String.valueOf(linear) + "\n " + String.valueOf(rotation) + "\n " + String.valueOf(side);
 		telemetry.addData("Values:", vals);
@@ -69,6 +106,8 @@ public class DriveTeleOp extends Library {
 		 * telemetry.addData("Driving Mode:",mode);
 		 */
 	}
+
+			
 
 	public void stop() {
 
