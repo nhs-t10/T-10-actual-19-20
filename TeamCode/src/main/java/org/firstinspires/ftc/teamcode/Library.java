@@ -15,10 +15,10 @@ import java.util.*;
 
 public abstract class Library extends OpMode {
     // Declare Hardware Devices
-    public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo;
+    public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
     public static VoltageSensor voltSensor;
     //Blinkin needs to be defined as a servo to read data
-    public static Servo grabberServo;
+    public static Servo grabberServo, rotateGrabber;
     public static CRServo blinkin, clamp;
     //public static LED blinkin;
     //Blinkin needs to be defined as a servo to read data
@@ -36,12 +36,14 @@ public abstract class Library extends OpMode {
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        lift = hardwareMap.dcMotor.get("l0");
         //intakeOne = hardwareMap.dcMotor.get("l1");
         //intakeTwo = hardwareMap.dcMotor.get("l2");
+        
 
         grabberServo = hardwareMap.servo.get("s0");
-        blinkin = hardwareMap.crservo.get("s1");
-        //clamp = hardwareMap.crservo.get("s2");
+        rotateGrabber = hardwareMap.crservo.get("s1");
+        //blinkin = hardwareMap.crservo.get("s2");
 
 
         //sonar = hardwareMap.sonarSensor.get("s1");
