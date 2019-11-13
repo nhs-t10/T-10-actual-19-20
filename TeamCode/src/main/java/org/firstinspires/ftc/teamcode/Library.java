@@ -178,7 +178,7 @@ public abstract class Library extends OpMode {
             float startPosition = backLeft.getCurrentPosition();
             float rotations = (distanceInCM / 31.9f) * 1120f;
             //According to website, 1120 ticks per revolution
-            while () {
+            while(true) {
                 drive(l, r, s, 0);
             }
         }else if(r!=0)
@@ -209,13 +209,13 @@ public abstract class Library extends OpMode {
             return (currentValue<rots+start);
         }else
         {
-            return(-currentValue>rots-start)
+            return(-currentValue>rots-start);
         }
     }
 
     public static float cmIntoRots(float cmImput)
     {
-        return cmImput(1120f)/31.9f
+        return cmImput * (1120f/31.9f);
     }
 
     public static void driveForNeg(float distanceInCM, float l, float r, float s) {
