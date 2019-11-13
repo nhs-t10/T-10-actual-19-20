@@ -42,7 +42,7 @@ public abstract class Library extends OpMode {
         
 
         platform = hardwareMap.servo.get("s0");
-        gripper = hardwareMap.servo.get("s1")
+        grabber = hardwareMap.servo.get("s1");
         rotateGrabber = hardwareMap.crservo.get("s2");
         //blinkin = hardwareMap.crservo.get("s2");
 
@@ -140,8 +140,8 @@ public abstract class Library extends OpMode {
         for (int i = 0; i < 4; i++) {
             sums[i] = sums[i] / attenuationfactor;
         }
-        liftOne.setPower(intake);
-        liftTwo.setPower(intake);
+        intakeOne.setPower(intake);
+        intakeTwo.setPower(intake);
         float speed = 0.9f; //set speed of driving, speed of 1 was tested and would occasionally crash robot while turning
         frontLeft.setPower(speed * sums[0]);
         frontRight.setPower(speed * sums[1]);
@@ -184,12 +184,12 @@ public abstract class Library extends OpMode {
     //Robot turns (degrees) degrees
     //Degrees can be pos or neg (pos --> right, neg --> left)
     public static void turnDegrees(int degrees){  
-        float wheelToWheelWidth;  //Length between the two front wheels 
-        float wheelToWheelLength;  //Length betweeen front and back wheels
+        float wheelToWheelWidth = 0;  //Length between the two front wheels
+        float wheelToWheelLength = 0;  //Length betweeen front and back wheels
 
         //It calculates a "circle" that starts in the center of the robot and hits all 4 wheels
         //The arc length for the given degree is the CM the robot turnFor()
-        float radius = Math.sqrt((wheelToWheelWidth / 2.0f) * (wheelToWheelWidth / 2.0f) + (wheelToWheelLength / 2.0f) * (wheelToWheelLength / 2.0f));
+        float radius = (float) Math.sqrt((wheelToWheelWidth / 2.0f) * (wheelToWheelWidth / 2.0f) + (wheelToWheelLength / 2.0f) * (wheelToWheelLength / 2.0f));
         float circumference = 2 * (float)Math.PI * radius;
         float turnCM = circumference * ((float)degrees / 360) ;  //arc length of "circle" 
 
@@ -213,17 +213,17 @@ public abstract class Library extends OpMode {
     }
 
     //This method allows the robot to turn a certain number of degrees using encoders
-    public void turnDegrees(int degrees) {  //Degrees can be pos or neg (pos --> right, neg --> left)
-        float radius = 30.54607421584f;
-        float circumference = 2 * (float) Math.PI * radius;
-        float turnCM = circumference * ((float) degrees / 360);  //arc length in circle
-
-        if (degrees < 0) {
-            driveFor(turnCM, 0, -.75f, 0);
-        } else {
-            driveFor(turnCM, 0, .75f, 0);
-        }
-    }
+//    public void turnDegrees(int degrees) {  //Degrees can be pos or neg (pos --> right, neg --> left)
+//        float radius = 30.54607421584f;
+//        float circumference = 2 * (float) Math.PI * radius;
+//        float turnCM = circumference * ((float) degrees / 360);  //arc length in circle
+//
+//        if (degrees < 0) {
+//            driveFor(turnCM, 0, -.75f, 0);
+//        } else {
+//            driveFor(turnCM, 0, .75f, 0);
+//        }
+//    }
 
 
     /*
@@ -244,7 +244,7 @@ public abstract class Library extends OpMode {
     /**
      * Sets the pattern/color of the Rev Blinkin LED strip based on a pattern number
      * Rev's documentation: http://www.revrobotics.com/content/docs/REV-11-1105-UM.pdf
-     * @param patternNumber Integer [1,100] that represents desired LED pattern or color
+     * patternNumber Integer [1,100] that represents desired LED pattern or color
      */
     /*public static void setBlinkinPattern(int patternNumber) {
         //map patternNumber value from [1,100] => [0.2525, 0.7475]
@@ -259,23 +259,22 @@ public abstract class Library extends OpMode {
     
     public static void gRotate(float left, float right){
         if(right > left){
-            grabber.setPower(right);
+            rotateGrabber.setPower(right);
        }
         else if(left > right){
-            grabber.setPower(-left);
+            rotateGrabber.setPower(-left);
         }else{
-            grabber.setPower(0);
+            rotateGrabber.setPower(0);
         }
     }
     public static void lift(float num){
-        liftOne.setPower(num);
-        liftTwo.setPower(num);
+        lift.setPower(num);
     }
     public static void grip(boolean x){
         if(x){
-            gripper.setPosition(1);
+            grabber.setPosition(1);
     }else{
-            gripper.setPosition(0);
+            grabber.setPosition(0);
         }
     }
 }

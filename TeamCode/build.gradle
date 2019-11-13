@@ -14,5 +14,4 @@
 // Include common definitions from above.
 apply from: '../build.common.gradle'
 
-// Add Dexter implementatiom
-implementation 'com.github.dogecv:dogecv:2020.4-alpha'
+

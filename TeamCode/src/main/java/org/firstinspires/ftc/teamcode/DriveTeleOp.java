@@ -27,31 +27,31 @@ public class DriveTeleOp extends Library {
 		boolean x = gamepad1.x; //make grabber open/close
 		float intake = 0;
 
-		float liftUp = gamepad1.right_bumper;
-		float rightUp = gamepad1.left_bumper;
+		boolean liftUp = gamepad1.right_bumper;
+		boolean liftDown = gamepad1.left_bumper;
 
 		boolean grip = false;
 		int count = 0;
 
-		if a {
+		if (a) {
 			intake = 1;
 		}
-		if b {
+		if (b) {
 			intake  = -1;
 		}
 
-		if liftUp {
+		if (liftUp) {
 			lift(1);
 		}
-		if liftDown {
+		if (liftDown) {
 			lift(-1);
 		}
 
-		if(x.isPressed() && !grip && count == 0{
+		if(x && !grip && count == 0){
 			grip = true;
 			grip(grip);
 			count = 1;
-		}else if (x.isPressed() && grip && count == 1{
+		}else if(x && grip && count == 1){
 			grip = false;
 			grip(grip);
 			count = 0;
