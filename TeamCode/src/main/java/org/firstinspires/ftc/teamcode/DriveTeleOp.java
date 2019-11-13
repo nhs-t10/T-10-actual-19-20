@@ -21,10 +21,10 @@ public class DriveTeleOp extends Library {
 		boolean y = gamepad1.y; //platform hook
 		boolean a = gamepad1.a; //positive intake
 		boolean b = gamepad1.b; //negative intake
-		// float grab = gamepad1.right_trigger;
+		
 		float grabberRight = gamepad1.left_trigger; //rotate grabber right
 		float grabberLeft = gamepad1.right_trigger; //rotate grabber left
-		boolean x = gamepad1.x; //make grabber close
+		boolean x = gamepad1.x; //make grabber open/close
 		float intake = 0;
 
 		float liftUp = gamepad1.right_bumper;
@@ -39,7 +39,7 @@ public class DriveTeleOp extends Library {
 		if b {
 			intake  = -1;
 		}
-		
+
 		if liftUp {
 			lift(1);
 		}
@@ -48,19 +48,16 @@ public class DriveTeleOp extends Library {
 		}
 
 		if(x.isPressed() && !grip && count == 0{
-		
 			grip = true;
 			grip(grip);
 			count = 1;
 		}else if (x.isPressed() && grip && count == 1{
-		
 			grip = false;
 			grip(grip);
 			count = 0;
-		
 		}
 
-		y = !y; 
+		y = !y; //inverts platform hook for ease of use
 
 		// linear = straight, rotation = turning, side = skating.
 		// Linear - rotation will compensate one side to allow the other side to overrotate
@@ -85,7 +82,7 @@ public class DriveTeleOp extends Library {
 		 */
 		platform(y);
 		drive(linear, rotation, side, intake);
-		gRotate(grabberRight, grabberLeft);
+		gRotate(grabberLeft, grabberRight);
 
 		
 
