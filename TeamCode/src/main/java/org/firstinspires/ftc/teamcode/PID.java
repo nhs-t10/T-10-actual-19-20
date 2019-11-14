@@ -1,3 +1,4 @@
+/*
 // ---------------------------------------------------------
 // Class for Proportional Integral Derivative controler
 // Goal: reduce jerk in the SBotNick ( ͡~ ͜ʖ ͡° )
@@ -107,5 +108,4 @@ public class PID{
     leftPower = drivePower + turnPower;
     rightPower = driverPower - turnPower;
 */
-
-}
+//}
