@@ -17,28 +17,48 @@ public class DriveTeleOp extends Library {
 		float linear = gamepad1.left_stick_y;
 		float side = gamepad1.left_stick_x;
 		float rotation = gamepad1.right_stick_x;
-		boolean y = gamepad1.y;
-		y = !y;
-		boolean b = gamepad1.b;
-		// float grab = gamepad1.right_trigger;
-		float clamp = gamepad1.left_trigger;
-		float intake = gamepad1.right_trigger;
 
-		// linear = straight, rotation = turning, side = skating.
-		// Linear - rotation will compensate one side to allow the other side to
-		// overrotate
+		boolean y = gamepad1.y; //platform hook
+		boolean a = gamepad1.a; //positive intake
+		boolean b = gamepad1.b; //negative intake
+		
+		float grabberRight = gamepad1.left_trigger; //rotate grabber right
+		float grabberLeft = gamepad1.right_trigger; //rotate grabber left
+		boolean x = gamepad1.x; //make grabber open/close
+		float intake = 0;
 
-		// if(gamepad1.right_stick_button){
-		// mode = mode.getNext();
-		// }
-		//
-		// if(mode == DRIVING.Slow){
-		// drive(linear/2, rotation/2, side/2);} // slow driving
-		// if(mode == DRIVING.Medium) {
-		// drive(linear/1.5f, rotation/1.5f, side/1.5f);} // medium driving
-		// if(mode == DRIVING.Fast) {
-		// drive(linear, rotation, side);} // fast driving
-		platform(y);
+		boolean liftUp = gamepad1.right_bumper;
+		boolean liftDown = gamepad1.left_bumper;
+
+		boolean grip = false;
+		int count = 0;
+
+		if (a) {
+			intake = 1;
+		}
+		if (b) {
+			intake  = -1;
+		}
+
+		if (liftUp) {
+			lift(1);
+		}
+		if (liftDown) {
+			lift(-1);
+		}
+
+		if(x && !grip && count == 0){
+			grip = true;
+			grip(grip);
+			count = 1;
+		}else if(x && grip && count == 1){
+			grip = false;
+			grip(grip);
+			count = 0;
+		}
+
+		y = !y; //inverts platform hook for ease of use
+
 
 		// test Blinkin (LED Strip) by setting it to "Lawn Green"
 
@@ -46,29 +66,18 @@ public class DriveTeleOp extends Library {
 		 * setBlinkinPattern(86); // change Blinkin (LED Strip) color to "Orange" if B
 		 * is pressed on gamepad 1 if (b) { setBlinkinPattern(83);r }
 		 */
-
+		platform(y);
 		drive(linear, rotation, side, intake);
+		gRotate(grabberLeft, grabberRight);
 
-		// Clamp(clamp, change code in Library.java so only one value is needed.);
-		//
+		
 
 		String vals = String.valueOf(linear) + "\n " + String.valueOf(rotation) + "\n " + String.valueOf(side);
 		telemetry.addData("Values:", vals);
-		// telemetry.addData("Driving Mode:",mode);
-		/*
-		 * if(gamepad1.left_trigger > 0 && scoreMotor.getCurrentPosition() > -6000){
-		 * scoreMotor.setTargetPosition(-6000); scoreMotor.setPower(1); } else if
-		 * (gamepad1.right_trigger > 0 && scoreMotor.getCurrentPosition() < 6000){
-		 * scoreMotor.setTargetPosition(6000); scoreMotor.setPower(-1); } else{
-		 * scoreMotor.setPower(0f); }
-		 */
-
-		/*
-		 * if(gamepad1.right_stick_button && gamepad1.left_stick_button){ shutdown();
-		 * telemetry.addData("SLOW DOWN PARTNER", "RESETING..."); }
-		 * telemetry.addData("Driving Mode:",mode);
-		 */
+		
 	}
+
+			
 
 	public void stop() {
 
