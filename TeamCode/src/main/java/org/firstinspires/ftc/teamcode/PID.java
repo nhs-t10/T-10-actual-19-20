@@ -1,3 +1,4 @@
+/*
 // ---------------------------------------------------------
 // Class for Proportional Integral Derivative controler
 // Goal: reduce jerk in the SBotNick ( ͡~ ͜ʖ ͡° )
@@ -15,56 +16,69 @@ public class PID{
     final double D = 0.0;
     final double I = 0.0;
     double dComponent;
-    double savedTime;
-    double error2;
-    double time = getCurrTime();
+    double savedTime, error, error2;
+    double time, destination, distDestination;
+    double currentPosition;
+    String state; // IDLE,TURNING,TRAVELING_IN_A_LINEAR_FASHION
+    // setpoint;
 
-
-    enum state {
-        IDLE,TURNING,TRAVELING_IN_A_LINEAR_FASHION;
+    public PID(double proport, double derivative, double integral){
+        super();
+        P = proport;
+        D = derivative;
+        I = integral;
     }
 
-    public double getError(){
-        return currentAngle-destination ;
+    // potentially need to create a trig function to calculate the angle
+    
+    public double getDrivingError(){
+        return distDestination - motor.getCurrentPosition();
+    }
+
+    
+    public void setDistDestination(float centimeters){
+        centimeters2 = encoderConversions(centimeters);
+        distDestination = centimeters2;
     }
 
     // method to find the
 
+
+    /*
     public double getCurrTime() {
         return System.currentTimeMillis();
     }
+    */
+    
 
-    public void updateTurning(imuData sean) {
-        currentAngle = sean.getAngle();
-        double error = getError();
-        prevTime = getCurrTime();
-        pComponent = error * P;
-        // Code to make slight delay, in order to avoid dividing by zero error
-
-        dComponent = ((error2 - error) / (time - prevTime)) * D;
-
-        if (currentEvent==state.TURNING) {
-            if (getCurrTime()-savedTime>2000) {
-                stopTurning();
-            }else {
-                T10_Library.omni(0f, (float) (pComponent), 0f);
-            }
-        } else if(currentEvent==state.TRAVELING_IN_A_LINEAR_FASHION){
-            T10_Library.omni(0.5f,(float) (pComponent), 0f);
-        }
+    // This code should take in the encoder value
+    /*
+    public void setSetpoint(double setpoint){
+		this.setpoint=setpoint;
     }
+    */
 
-    public void updateMoving(   ){
-        currentAngle = sean.getAngle();
-        double error = getError();
-        prevTime = getCurrTime();
+
+    public void updateMoving(float cm){
+        double output;
+        double Poutput;
+        double Doutput;
+
+        distDestination = setDistDestination(cm);
+        currentDistance = motor.getPosition();
+        double error = getDistanceError();
+        prevTime = (double) System.currentTimeMillis();
         pComponent = error * P;
         // Code to make slight delay, in order to avoid dividing by zero error
-        double error2 = getError();
-        double time = getCurrTime();
-        dComponent = ((error2 - error) / (time - prevTime)) * D;
+        // double error2 = getDistanceError();
+        // double time = (double) System.currentTimeMillis();
+        dComponent = 0;
+        // dComponent = ((error2 - error) / (time - prevTime)) * D;
+        double sumError = pComponent + dComponent;
+        drive(0.5f, (float)(sumError), 0f);
 
         // code to do control movemment of the robot, in order to get to an "ideal state"
+
     }
 
     // use getError() to get current angle, and use getCurrTime to get currTime
@@ -94,5 +108,4 @@ public class PID{
     leftPower = drivePower + turnPower;
     rightPower = driverPower - turnPower;
 */
-
-}
+//}
