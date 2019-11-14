@@ -22,5 +22,5 @@ android {
 
 dependencies {
     api 'org.openftc:easyopencv:1.2'
-    compileOnly 'org.openftc:robotcore-stock:5.1'
+    //implementation 'org.openftc:robotcore-stock:5.1'
 }
