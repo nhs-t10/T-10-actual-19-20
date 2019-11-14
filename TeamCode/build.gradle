@@ -14,5 +14,4 @@
 // Include common definitions from above.
 apply from: '../build.common.gradle'
 
-// Add Dexter implementatiom
-implementation 'com.karumi:dexter:5.0.0'
+

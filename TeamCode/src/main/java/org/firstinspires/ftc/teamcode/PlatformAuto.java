@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "PlatfromAuto")
+@Autonomous(name= "PlatformAuto")
+
 public class PlatformAuto extends Library {
     enum state {
-        PULLING, MOVING, SCANNING;
+        PULLING, MOVING, SCANNING
     }
 
     state currentState = null;

@@ -10,9 +10,21 @@ import org.opencv.core.Core;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.core.Scalar;
 
+import com.disnodeteam.dogecv.CameraViewDisplay;
+import com.disnodeteam.dogecv.OpenCVPipeline;
+import com.disnodeteam.dogecv.detectors.DogeCVDetector;
+import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraCharacteristics;
+
+// Okay bois, turns out DogeCV is doing something I'm not so I'm just gonna use that
+// Imma give up
+// - Addison
+
 public static class cvBase {
 	private enum TrackingStates {
 		SKY_STONE
@@ -90,7 +102,8 @@ public static class cvBase {
 		VideoImputGrabber gerald = new VideoImputGraber(0);
 	}
 
-	private boolean determineRange(ArrayList<MatOfPoint> contours) {
+	private boolean isSkystone(Mat image) {
+		ArrayList<MatOfPoint> contours = FindBounds(image);
 		Rect mainRect = Imgproc.boundingRect(contours.get(0));
 		int aspectRatio = mainRect.width / mainRect.height;
 		if (aspectRatio - skyStoneAspectRatio > -0.1 && aspectRatio - skyStoneAspectRatio < 0.1) {
