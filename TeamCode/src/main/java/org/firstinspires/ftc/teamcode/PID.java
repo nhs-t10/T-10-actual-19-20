@@ -28,12 +28,6 @@ public class PID{
         I = integral;
     }
 
-
-    public double getTurningError(){
-        return currentAngle-destination ;
-    }
-
-
     // potentially need to create a trig function to calculate the angle
     
     public double getDrivingError(){
@@ -63,34 +57,13 @@ public class PID{
     }
     */
 
-    public void updateTurning(imuData sean) {
-        currentAngle = sean.getAngle();
-        double error = getTurningError();
-        prevTime = getCurrTime();
-        pComponent = error * P;
-        // Code to make slight delay, in order to avoid dividing by zero error
-        error2 = getTurningError();
-        
-        dComponent = ((error2 - error) / (time - prevTime)) * D;
 
-       // encoders makes this obselete
-        /*if (currentEvent==state.TURNING) {
-            if (getCurrTime()-savedTime>2000) {
-                stopTurning();
-            }else {
-                T10_Library.omni(0f, (float) (pComponent), 0f);
-            }
-        } else if(currentEvent==state.TRAVELING_IN_A_LINEAR_FASHION){
-            T10_Library.omni(0.5f,(float) (pComponent), 0f);
-        }
-        */
-    }
-
-    public void updateMoving(imuData sean){
+    public void updateMoving(float cm){
         double output;
         double Poutput;
         double Doutput;
-        
+
+        distDestination = setDistDestination(cm);
         currentDistance = motor.getPosition();
         double error = getDistanceError();
         prevTime = (double) System.currentTimeMillis();
