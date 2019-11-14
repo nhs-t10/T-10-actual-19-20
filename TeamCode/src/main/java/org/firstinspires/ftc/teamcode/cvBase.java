@@ -1,3 +1,4 @@
+/*
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Size;
@@ -66,7 +67,7 @@ public static class cvBase {
 	 * List<MatOfPoint> contours = new ArrayList<>(); Imgproc.findContours(thresh,
 	 * contours, new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_NONE); }
 	 */
-
+/*
 	private getExternalWebcam() {
 		String[] allCameraIds = CameraManager.getCameraIdList();
 		String chosenCameraId;
@@ -105,3 +106,4 @@ public static class cvBase {
 		OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();
 	}
 }
+*/

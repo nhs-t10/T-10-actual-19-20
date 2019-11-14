@@ -1,3 +1,4 @@
+/*
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -120,4 +121,6 @@ public class OpenCVCamera extends AppCompatActivity implements CameraBridgeViewB
 		preprocessor.changeImagePreviewOrientation(colorRgba, des, forward);
 		return colorRgba;
 	}
-}
+
+ */
+//}
