@@ -37,8 +37,8 @@ public abstract class Library extends OpMode {
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         lift = hardwareMap.dcMotor.get("l0");
-        //intakeOne = hardwareMap.dcMotor.get("l1");
-        //intakeTwo = hardwareMap.dcMotor.get("l2");
+        intakeOne = hardwareMap.dcMotor.get("l1");
+        intakeTwo = hardwareMap.dcMotor.get("l2");
 
 
         platform = hardwareMap.servo.get("s0");
@@ -57,11 +57,11 @@ public abstract class Library extends OpMode {
 
 
         //Safety Check: run through the list of voltage sensors; if any of them are below the minimum voltage, exit.
-		/*for (VoltageSensor voltageSensor : hardwareMap.voltageSensor) {
+		for (VoltageSensor voltageSensor : hardwareMap.voltageSensor) {
 			voltSensor = voltageSensor;
 			if (voltageSensor.getVoltage() < WARNING_BATTERY_VOLTAGE) telemetry.addData("WARNING: ", "BATTERY LOW");
 			if (voltageSensor.getVoltage() < REPLACE_BATTERY_VOLTAGE) telemetry.addData("WARNING: ", "BATTERY VERY LOW; REPLACE IMMEDIATELY");
-		}*/
+		}
     }
     // Declare other helper methods
 
