@@ -43,7 +43,7 @@ public abstract class Library extends OpMode {
 
         platform = hardwareMap.servo.get("s0");
         grabber = hardwareMap.servo.get("s1");
-        rotateGrabber = hardwareMap.crservo.get("s2");
+        //rotateGrabber = hardwareMap.crservo.get("s2");
         //blinkin = hardwareMap.crservo.get("s2");
 
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
