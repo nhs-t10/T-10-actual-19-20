@@ -68,7 +68,7 @@ public class DriveTeleOp extends Library {
 		 */
 		platform(y);
 		drive(linear, rotation, side, intake);
-		gRotate(grabberLeft, grabberRight);
+		//grotate(grabberLeft, grabberRight);
 
 		
 

@@ -293,7 +293,7 @@ public abstract class Library extends OpMode {
 
 
 
-    public static void gRotate(float left, float right){
+/*    public static void gRotate(float left, float right){
         if(right > left){
             rotateGrabber.setPower(right);
        }
@@ -302,7 +302,7 @@ public abstract class Library extends OpMode {
         }else{
             rotateGrabber.setPower(0);
         }
-    }
+    }*/
     public static void lift(float num){
         lift.setPower(num);
     }
