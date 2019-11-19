@@ -35,16 +35,24 @@ public class DriveTeleOp extends Library {
 
 		if (a) {
 			intake = 1;
+		}else{
+			intake = 0;
 		}
 		if (b) {
 			intake  = -1;
+		}else{
+			intake = 0;
 		}
 
 		if (liftUp) {
 			lift(1);
+		}else{
+			lift(0);
 		}
 		if (liftDown) {
 			lift(-1);
+		}else{
+			lift(0);
 		}
 
 		if(x && !grip && count == 0){
