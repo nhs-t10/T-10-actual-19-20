@@ -16,10 +16,10 @@ import java.util.*;
 
 public abstract class Library extends OpMode {
     // Declare Hardware Devices
-    public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
-    public static VoltageSensor voltSensor;
+    static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
+    static VoltageSensor voltSensor;
     //Blinkin needs to be defined as a servo to read data
-    public static Servo platform, grabber;
+    private static Servo platform, grabber;
     public static CRServo blinkin, rotateGrabber;
     //public static LED blinkin;
     //Blinkin needs to be defined as a servo to read data
@@ -67,7 +67,6 @@ public abstract class Library extends OpMode {
     // Declare other helper methods
 
     // Constants
-    static float attenuationfactor;
     static double initial_position = 0;
     static double moveRate = .005;
     static boolean servosMoving = false;
@@ -110,7 +109,8 @@ public abstract class Library extends OpMode {
     It then sends the values from the modified sums array to the actual motors, with the code
     having numbers attached to them to account for proper rotation.
     */
-    public static void drive(float l, float r, float s, float intake) {
+    static void drive(float l, float r, float s, float intake) {
+        float factor;
         float[] sums = new float[4];
         if (l > -0.1 && l < 0.1 && r > -0.1 && r < 0.1 && s > -0.1 && s < 0.1) {
             sums[0] = 0;
@@ -133,13 +133,13 @@ public abstract class Library extends OpMode {
         float highest = maxValue(sums);
 
         if (Math.abs(highest) > 1) {
-            attenuationfactor = highest;
+            factor = highest;
         } else {
-            attenuationfactor = 1f;
+            factor = 1f;
         }
 
         for (int i = 0; i < 4; i++) {
-            sums[i] = sums[i] / attenuationfactor;
+            sums[i] = sums[i] / factor;
         }
         intakeOne.setPower(intake);
         intakeTwo.setPower(intake);
@@ -159,7 +159,7 @@ public abstract class Library extends OpMode {
      *degree: if you are turning fill this in, otherwise it will go straight, this will determine what angle you want the robot to turn
      *directionSideways: also a degree, no radians PAUL, it determines which diagonal path the robot takes if we want to be extra like that
      */
-    public static void driveFor(float distanceInCM, float l, float r, float s) {
+    static void driveFor(float distanceInCM, float l, float r, float s) {
         float startPosition = backLeft.getCurrentPosition();
         float rotations = (distanceInCM / 31.9f) * 1120f;
         //According to website, 1120 ticks per revolution
@@ -199,7 +199,7 @@ public abstract class Library extends OpMode {
         drive(0, 0, 0, 0);
     }
 
-    public static boolean dealWithNeg(float currentValue, float rots, float start)
+    private static boolean dealWithNeg(float currentValue, float rots, float start)
     {
         if(rots==0)
         {
@@ -219,7 +219,7 @@ public abstract class Library extends OpMode {
         return cmImput * (1120f/31.9f);
     }
 
-    public static void driveForNeg(float distanceInCM, float l, float r, float s) {
+    static void driveForNeg(float distanceInCM, float l, float r, float s) {
         float startPosition = backLeft.getCurrentPosition();
         float rotations = (distanceInCM / 25.5f) * 1120;
         //According to website, 1120 ticks per revolution
@@ -233,7 +233,7 @@ public abstract class Library extends OpMode {
     //Param: degrees --> Degrees the robot will turn
     //Robot turns (degrees) degrees
     //Degrees can be pos or neg (pos --> right, neg --> left)
-    public static void turnDegrees(int degrees){  
+    static void turnDegrees(int degrees){  
         float wheelToWheelWidth = 0f;  //Length between the two front wheels
         float wheelToWheelLength = 0f;  //Length betweeen front and back wheels
 
@@ -251,7 +251,7 @@ public abstract class Library extends OpMode {
         }
     }
 
-    public static void encodersInit() {//DO NOT TOUCH MY METHODS
+    static void encodersInit() {//DO NOT TOUCH MY METHODS
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -269,7 +269,7 @@ public abstract class Library extends OpMode {
         */
 
 
-    public static void platform(boolean down) {
+    static void platform(boolean down) {
         if (down) {
             platform.setPosition(1);
         } else {
@@ -303,10 +303,10 @@ public abstract class Library extends OpMode {
             rotateGrabber.setPower(0);
         }
     }*/
-    public static void lift(float num){
+    static void lift(float num){
         lift.setPower(num);
     }
-    public static void grip(boolean x){
+    static void grip(boolean x){
         if(x){
             grabber.setPosition(1);
     }else{
