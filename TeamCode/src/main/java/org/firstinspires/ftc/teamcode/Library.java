@@ -61,7 +61,7 @@ public abstract class Library extends OpMode {
     // Declare other helper methods
 
     // Constants
-    static float attenuationfactor;
+
     static double initial_position = 0;
     static double moveRate = .005;
     static boolean servosMoving = false;
@@ -107,6 +107,7 @@ public abstract class Library extends OpMode {
     having numbers attached to them to account for proper rotation.
     */
     static void drive(float l, float r, float s) {
+        float factor;
         float[] sums = new float[4];
         if (l > -0.1 && l < 0.1 && r > -0.1 && r < 0.1 && s > -0.1 && s < 0.1) {
             sums[0] = 0;
@@ -129,13 +130,13 @@ public abstract class Library extends OpMode {
         float highest = maxValue(sums);
 
         if (Math.abs(highest) > 1) {
-            attenuationfactor = highest;
+            factor = highest;
         } else {
-            attenuationfactor = 1f;
+            factor = 1f;
         }
 
         for (int i = 0; i < 4; i++) {
-            sums[i] = sums[i] / attenuationfactor;
+            sums[i] = sums[i] / factor;
         }
         float speed = 0.9f; //set speed of driving, speed of 1 was tested and would occasionally crash robot while turning
         frontLeft.setPower(speed * sums[0]);
@@ -225,7 +226,7 @@ public abstract class Library extends OpMode {
     //    return cmImput * (1120f/31.9f);
     //}
 
-    static void driveForNeg(float distanceInCM, float l, float r, float s) {
+    public static void driveForNeg(float distanceInCM, float l, float r, float s) {
         float startPosition = backLeft.getCurrentPosition();
         float rotations = (distanceInCM / 25.5f) * 1120;
         //According to website, 1120 ticks per revolution
@@ -239,7 +240,7 @@ public abstract class Library extends OpMode {
     //Param: degrees --> Degrees the robot will turn
     //Robot turns (degrees) degrees
     //Degrees can be pos or neg (pos --> right, neg --> left)
-    static void turnDegrees(int degrees){
+    public static void turnDegrees(int degrees){
         float wheelToWheelWidth = 0f;  //Length between the two front wheels
         float wheelToWheelLength = 0f;  //Length betweeen front and back wheels
 
@@ -257,7 +258,7 @@ public abstract class Library extends OpMode {
         }
     }
 
-    static void encodersInit() {//DO NOT TOUCH MY METHODS
+    public static void encodersInit() {//DO NOT TOUCH MY METHODS
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -275,7 +276,7 @@ public abstract class Library extends OpMode {
         */
 
 
-    static void platform(boolean down) {
+    public static void platform(boolean down) {
         if (down) {
             platform.setPosition(1);
         } else {
@@ -309,10 +310,10 @@ public abstract class Library extends OpMode {
             rotateGrabber.setPower(0);
         }
     }
-    static void lift(float num){
+    public static void lift(float num){
         lift.setPower(num);
     }
-    static void grip(boolean x){
+    public static void grip(boolean x){
         if(x){
             grabber.setPosition(1);
     }else{
@@ -320,7 +321,7 @@ public abstract class Library extends OpMode {
         }
     }
 
-    static void intake(float num){
+    public static void intake(float num){
         intakeOne.setPower(num);
         intakeTwo.setPower(num);
     }
