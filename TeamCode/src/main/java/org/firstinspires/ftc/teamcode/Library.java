@@ -47,8 +47,8 @@ public abstract class Library extends OpMode {
         //blinkin = hardwareMap.crservo.get("s3");
 
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         //Safety Check: run through the list of voltage sensors; if any of them are below the minimum voltage, exit.
