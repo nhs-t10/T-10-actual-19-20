@@ -45,16 +45,11 @@ public abstract class Library extends OpMode {
         platform = hardwareMap.servo.get("s0");
         grabber = hardwareMap.servo.get("s1");
         //rotateGrabber = hardwareMap.crservo.get("s2");
-        //blinkin = hardwareMap.crservo.get("s2");
+        //blinkin = hardwareMap.crservo.get("s3");
 
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-
-
-        //sonar = hardwareMap.sonarSensor.get("s1");
-        //stoneLift = hardwareMap.dcMotor.get("sL");
 
 
         //Safety Check: run through the list of voltage sensors; if any of them are below the minimum voltage, exit.
@@ -81,15 +76,7 @@ public abstract class Library extends OpMode {
 //        } // change driving mode
 //    }
 
-    public static float maxValue(float array[]) {
-        float max = 0f;
-        for (float i : array) {
-            if (i > max) {
-                max = i;
-            }
-        }
-        return max;
-    }
+    
 	/*public void battery(){
 		voltSensor.getVoltage();
 		telemetry.addData("Initial Battery: ", voltSensor);
@@ -100,6 +87,16 @@ public abstract class Library extends OpMode {
 		} catch(Exception ex) {}
 	}*/
 
+    private static float maxValue(float array[]) {
+        float max = 0f;
+        for (float i : array) {
+            if (i > max) {
+                max = i;
+            }
+        }
+        return max;
+    }
+
     /*drive is the central movement and robot handling method of the code
     It takes in the linear (forward) component, the rotational (turning) component, and
     the side(skating) component.
@@ -109,7 +106,9 @@ public abstract class Library extends OpMode {
     It then sends the values from the modified sums array to the actual motors, with the code
     having numbers attached to them to account for proper rotation.
     */
-    static void drive(float l, float r, float s, float intake) {
+    static void drive(float l, float r, float s) {
+
+        
         float factor;
         float[] sums = new float[4];
         if (l > -0.1 && l < 0.1 && r > -0.1 && r < 0.1 && s > -0.1 && s < 0.1) {
@@ -141,8 +140,6 @@ public abstract class Library extends OpMode {
         for (int i = 0; i < 4; i++) {
             sums[i] = sums[i] / factor;
         }
-        intakeOne.setPower(intake);
-        intakeTwo.setPower(intake);
         float speed = 0.9f; //set speed of driving, speed of 1 was tested and would occasionally crash robot while turning
         frontLeft.setPower(speed * sums[0]);
         frontRight.setPower(speed * sums[1]);
@@ -164,70 +161,82 @@ public abstract class Library extends OpMode {
         float rotations = (distanceInCM / 31.9f) * 1120f;
         //According to website, 1120 ticks per revolution
         while (backLeft.getCurrentPosition() < rotations + startPosition) {
-            drive(l, r, s, 0);
+            drive(l, r, s);
         }
 
-        drive(0, 0, 0, 0);
+        drive(0, 0, 0);
     }
 
     //this is the second attempt
     //improved drive for
-    public static void driveForReformed(float distanceInCM, float l, float r, float s, float degreesToTurn)
-    {
-        if(s!=0)
-        {
+    public static void driveForReformed(float distanceInCM, float l, float r, float s, float degreesToTurn) {
+        if(s != 0) {
             float startPosition = backLeft.getCurrentPosition();
-            float rotations = (distanceInCM / 31.9f) * 1120f;
-            //According to website, 1120 ticks per revolution
-            while(true) {
-                drive(l, r, s, 0);
+            float rotations = (distanceInCM / 31.9f) * 1120f; //According to website, 1120 ticks per revolution
+            while (backLeft.getCurrentPosition() < rotations + startPosition) {
+                drive(l, r, s);
             }
-        }else if(r!=0)
-        {
-            //matt do your thing
-        }else
-        {
+        }
+        else if(r != 0) {
+            float startPosition = backLeft.getCurrentPosition();
+            float wheelToWheelWidth = 0f;  //Length between the two front wheels
+            float wheelToWheelLength = 0f;  //Length betweeen front and back wheels
+
+            //It calculates a "circle" that starts in the center of the robot and hits all 4 wheels
+            //The arc length for the given degree is the CM the robot turnFor()
+            float radius = (float)Math.sqrt((wheelToWheelWidth / 2.0f) * (wheelToWheelWidth / 2.0f) + (wheelToWheelLength / 2.0f) * (wheelToWheelLength / 2.0f));
+            float arcCircumferenceCM = (2 * (float)Math.PI * radius) * ((float)degreesToTurn / 360); //arc length of "circle"
+            float rotations = (arcCircumferenceCM / 31.9f) * 1120f; 
+        
+            if(degreesToTurn < 0) {
+                while (dealWithNeg(backLeft.getCurrentPosition(), rotations, startPosition)) {
+                    drive(l, r, s);
+                }
+            }
+            else {
+                while (backLeft.getCurrentPosition() < rotations + startPosition) {
+                    drive(l, r, s);
+                }
+            }
+        }
+        else {
             float startPosition = backLeft.getCurrentPosition();
             float rotations = (distanceInCM / 31.9f) * 1120f;
             //According to website, 1120 ticks per revolution
             while (dealWithNeg(backLeft.getCurrentPosition(), rotations, startPosition)) {
-                drive(l, r, s, 0);
+                drive(l, r, s);
             }
-
-
         }
-        drive(0, 0, 0, 0);
+        drive(0, 0, 0);
     }
 
-    private static boolean dealWithNeg(float currentValue, float rots, float start)
-    {
-        if(rots==0)
-        {
+    //This function allows the while loop above to deal with negative position since the motors can't do neg power 
+    private static boolean dealWithNeg(float currentValue, float rots, float start) {
+        if(rots == 0) {
             return false;
-        }else if(rots>0)
-        {
-
-            return (currentValue<rots+start);
-        }else
-        {
-            return(-currentValue>rots-start);
+        }
+        else if(rots > 0) {
+            return (currentValue < rots + start);
+        }
+        else {
+            return(-currentValue > rots - start);
         }
     }
 
-    public static float cmIntoRots(float cmImput)
-    {
-        return cmImput * (1120f/31.9f);
-    }
+    //public static float cmIntoRots(float cmImput)
+    //{
+    //    return cmImput * (1120f/31.9f);
+    //}
 
     static void driveForNeg(float distanceInCM, float l, float r, float s) {
         float startPosition = backLeft.getCurrentPosition();
         float rotations = (distanceInCM / 25.5f) * 1120;
         //According to website, 1120 ticks per revolution
         while (backLeft.getCurrentPosition() > rotations + startPosition) {
-            drive(l, r, s, 0);
+            drive(l, r, s);
         }
 
-        drive(0, 0, 0, 0);
+        drive(0, 0, 0);
     }
 
     //Param: degrees --> Degrees the robot will turn
@@ -312,5 +321,10 @@ public abstract class Library extends OpMode {
     }else{
             grabber.setPosition(0);
         }
+    }
+
+    static void intake(float num){
+        intakeOne.setPower(num);
+        intakeTwo.setPower(num);
     }
 }

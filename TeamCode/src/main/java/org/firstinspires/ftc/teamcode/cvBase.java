@@ -1,4 +1,3 @@
-/*
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Size;
@@ -25,41 +24,42 @@ import android.hardware.camera2.CameraCharacteristics;
 // Okay bois, turns out DogeCV is doing something I'm not so I'm just gonna use that
 // Imma give up
 // - Addison
+//sc-sasha's comments ( i try and understand what this does and write my hypothesis)
 
-public static class cvBase {
+public static class cvBase {  //sc: probably used to change action once an event happens
 	private enum TrackingStates {
 		SKY_STONE
 	}
 
-	private TrackingStates currentTrackingState = SKY_STONE;
-	private int kernelSize = 10; // An idea, I do not have
+	private TrackingStates currentTrackingState = SKY_STONE; //sc: start by setting to the first state
+	private int kernelSize = 10; // An idea, I do not have  //sc: ???????
 
-	private Scalar skyStoneColorLower = new Scalar(35, 95, 90);
+	private Scalar skyStoneColorLower = new Scalar(35, 95, 90); //sc: creates 2 new scalars, not sure what their purpose is
 	private Scalar skyStoneColorUpper = new Scalar(45, 105, 100);
 
 	// Assuming the default resolution is 640x480
 	// 7 (width) by 4.75 (height) inches
-	private int skyStoneAspectRatio = 7 / 4.5;
+	private int skyStoneAspectRatio = 7 / 4.5; //sc: ?????? this will become 1? not sure what adison is planning with this
 
-	private CameraDevice webCam;
+	private CameraDevice webCam; //sc: creates the camera object
 
-	cvBase() {
+	cvBase() { //sc: not really sure?? I don't think we use constructors but I'll let it slide
 		super();
 	}
 
 	// this method is trying to parse out the individual elements in the object
-	private ArrayList<MatOfPoint> FindBounds(Mat image) {
-		Mat converted = new Mat();
-		Imgproc.cvtColor(image, converted, Imgproc.COLOR_RGB2HSV);
+	private ArrayList<MatOfPoint> FindBounds(Mat image/*sc: this is how the image is stored */) { //sc: new method to find bounds?
+		Mat converted = new Mat(); //sc: creates another mat (how the image is stored)
+		Imgproc.cvtColor(image, converted, Imgproc.COLOR_RGB2HSV);//sc: ??????????
 		Mat element = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT,
-				new Size(2 * kernelSize + 1, 2 * kernelSize + 1), new Point(kernelSize, kernelSize));
-		Mat dilated = new Mat();
-		Imgproc.erode(converted, dilated, element);
-		Mat eroded = new Mat();
-		Imgproc.dilate(dilated, eroded, element);
-		Mat thresh = new Mat();
-		if (currentTrackingState == trackingStates.SKY_STONE) {
-			Core.inRange(skyStoneColorLower, skyStoneColorUpper, thresh);
+				new Size(2 * kernelSize + 1, 2 * kernelSize + 1), new Point(kernelSize, kernelSize));//sc: creates a rectangular object based on cv???????
+		Mat dilated = new Mat();//sc: dilated Mat 
+		Imgproc.erode(converted, dilated, element);//sc: increases contrast???
+		Mat eroded = new Mat();// sc: anotha one
+		Imgproc.dilate(dilated, eroded, element);//sc: dilates the Mat's, changes size?
+		Mat thresh = new Mat(); // we got more
+		if (currentTrackingState == trackingStates.SKY_STONE) { //sc: if the state is the tracking state what do you think lmao
+			Core.inRange(skyStoneColorLower, skyStoneColorUpper, thresh); //
 		}
 		ArrayList<MatOfPoint> contours = new ArrayList<>();
 		Imgproc.findContours(thresh, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
@@ -119,4 +119,3 @@ public static class cvBase {
 		OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();
 	}
 }
-*/
