@@ -55,6 +55,6 @@ public class RedFound extends Library
         side = Float.parseFloat(line.substring(first + 1, second));
         rotation = Float.parseFloat(line.substring(second + 1));
 
-        drive(linear, side, rotation, 0);
+        drive(linear, side, rotation);
     }
 }
