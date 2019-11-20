@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -16,10 +15,10 @@ import java.util.*;
 
 public abstract class Library extends OpMode {
     // Declare Hardware Devices
-    static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
-    static VoltageSensor voltSensor;
+    public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
+    public static VoltageSensor voltSensor;
     //Blinkin needs to be defined as a servo to read data
-    private static Servo platform, grabber;
+    public static Servo platform, grabber;
     public static CRServo blinkin, rotateGrabber;
     //public static LED blinkin;
     //Blinkin needs to be defined as a servo to read data
@@ -38,8 +37,8 @@ public abstract class Library extends OpMode {
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         lift = hardwareMap.dcMotor.get("l0");
-        intakeOne = hardwareMap.dcMotor.get("l1");
-        intakeTwo = hardwareMap.dcMotor.get("l2");
+        //intakeOne = hardwareMap.dcMotor.get("l1");
+        //intakeTwo = hardwareMap.dcMotor.get("l2");
 
 
         platform = hardwareMap.servo.get("s0");
@@ -53,15 +52,16 @@ public abstract class Library extends OpMode {
 
 
         //Safety Check: run through the list of voltage sensors; if any of them are below the minimum voltage, exit.
-		for (VoltageSensor voltageSensor : hardwareMap.voltageSensor) {
+		/*for (VoltageSensor voltageSensor : hardwareMap.voltageSensor) {
 			voltSensor = voltageSensor;
 			if (voltageSensor.getVoltage() < WARNING_BATTERY_VOLTAGE) telemetry.addData("WARNING: ", "BATTERY LOW");
 			if (voltageSensor.getVoltage() < REPLACE_BATTERY_VOLTAGE) telemetry.addData("WARNING: ", "BATTERY VERY LOW; REPLACE IMMEDIATELY");
-		}
+		}*/
     }
     // Declare other helper methods
 
     // Constants
+    static float attenuationfactor;
     static double initial_position = 0;
     static double moveRate = .005;
     static boolean servosMoving = false;
@@ -107,9 +107,6 @@ public abstract class Library extends OpMode {
     having numbers attached to them to account for proper rotation.
     */
     static void drive(float l, float r, float s) {
-
-        
-        float factor;
         float[] sums = new float[4];
         if (l > -0.1 && l < 0.1 && r > -0.1 && r < 0.1 && s > -0.1 && s < 0.1) {
             sums[0] = 0;
@@ -132,13 +129,13 @@ public abstract class Library extends OpMode {
         float highest = maxValue(sums);
 
         if (Math.abs(highest) > 1) {
-            factor = highest;
+            attenuationfactor = highest;
         } else {
-            factor = 1f;
+            attenuationfactor = 1f;
         }
 
         for (int i = 0; i < 4; i++) {
-            sums[i] = sums[i] / factor;
+            sums[i] = sums[i] / attenuationfactor;
         }
         float speed = 0.9f; //set speed of driving, speed of 1 was tested and would occasionally crash robot while turning
         frontLeft.setPower(speed * sums[0]);
@@ -156,7 +153,7 @@ public abstract class Library extends OpMode {
      *degree: if you are turning fill this in, otherwise it will go straight, this will determine what angle you want the robot to turn
      *directionSideways: also a degree, no radians PAUL, it determines which diagonal path the robot takes if we want to be extra like that
      */
-    static void driveFor(float distanceInCM, float l, float r, float s) {
+    public static void driveFor(float distanceInCM, float l, float r, float s) {
         float startPosition = backLeft.getCurrentPosition();
         float rotations = (distanceInCM / 31.9f) * 1120f;
         //According to website, 1120 ticks per revolution
@@ -242,7 +239,7 @@ public abstract class Library extends OpMode {
     //Param: degrees --> Degrees the robot will turn
     //Robot turns (degrees) degrees
     //Degrees can be pos or neg (pos --> right, neg --> left)
-    static void turnDegrees(int degrees){  
+    static void turnDegrees(int degrees){
         float wheelToWheelWidth = 0f;  //Length between the two front wheels
         float wheelToWheelLength = 0f;  //Length betweeen front and back wheels
 
@@ -302,7 +299,7 @@ public abstract class Library extends OpMode {
 
 
 
-/*    public static void gRotate(float left, float right){
+    public static void gRotate(float left, float right){
         if(right > left){
             rotateGrabber.setPower(right);
        }
@@ -311,7 +308,7 @@ public abstract class Library extends OpMode {
         }else{
             rotateGrabber.setPower(0);
         }
-    }*/
+    }
     static void lift(float num){
         lift.setPower(num);
     }

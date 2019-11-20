@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import java.io.*;
 
-@Autonomous(name = "MimingReader")
-public class MimingReader extends Library
+@Autonomous(name = "BlueBlock")
+public class BlueBlock extends Library
 {
     BufferedReader bufferedReader = null;
 
@@ -14,7 +14,7 @@ public class MimingReader extends Library
 
         try
         {
-            File MimingFile = new File("/storage/emulated/0/FIRST/MimingFile.txt");
+            File MimingFile = new File("/storage/emulated/0/FIRST/BlueBlock.txt");
             bufferedReader = new BufferedReader(new FileReader(MimingFile));
         }
 

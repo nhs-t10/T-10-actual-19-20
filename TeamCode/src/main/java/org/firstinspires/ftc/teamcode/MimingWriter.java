@@ -40,7 +40,7 @@ public class MimingWriter extends Library
         float side = gamepad1.left_stick_x;
         float rotation = gamepad1.right_stick_x;
 
-        drive(linear, side, rotation, 0);
+        drive(linear, side, rotation);
         telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
 
         try
