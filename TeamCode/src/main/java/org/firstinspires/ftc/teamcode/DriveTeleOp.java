@@ -1,13 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
+//import com.qualcomm.robotcore.util.ElapsedTime;
+//import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name = "TeleOp")
 public class DriveTeleOp extends Library {
-	double time_millis = 0.0;
-	ElapsedTime t = new ElapsedTime();
+	//double time_millis = 0.0;
+	private boolean grip = false;
+	private int count = 0;
+	private float intake = 0;
+	//ElapsedTime t = new ElapsedTime();
 
 	public void init() {
 		hardwareInit();
@@ -21,30 +24,35 @@ public class DriveTeleOp extends Library {
 		boolean y = gamepad1.y; //platform hook
 		boolean a = gamepad1.a; //positive intake
 		boolean b = gamepad1.b; //negative intake
-		
+
 		float grabberRight = gamepad1.left_trigger; //rotate grabber right
 		float grabberLeft = gamepad1.right_trigger; //rotate grabber left
 		boolean x = gamepad1.x; //make grabber open/close
-		float intake = 0;
+
 
 		boolean liftUp = gamepad1.right_bumper;
 		boolean liftDown = gamepad1.left_bumper;
 
-		boolean grip = false;
-		int count = 0;
-
 		if (a) {
 			intake = 1;
+		}else{
+			intake = 0;
 		}
 		if (b) {
 			intake  = -1;
+		}else{
+			intake = 0;
 		}
 
 		if (liftUp) {
 			lift(1);
+		}else{
+			lift(0);
 		}
 		if (liftDown) {
 			lift(-1);
+		}else{
+			lift(0);
 		}
 
 		if(x && !grip && count == 0){
@@ -68,7 +76,7 @@ public class DriveTeleOp extends Library {
 		 */
 		platform(y);
 		drive(linear, rotation, side, intake);
-		gRotate(grabberLeft, grabberRight);
+		//grotate(grabberLeft, grabberRight);
 
 		
 
