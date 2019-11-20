@@ -12,9 +12,9 @@ public class PID{
     double prevError = 0.0;
     double sumError = 0.0;
     double prevTime = 0.0;
-    final double P = 0.3;
-    final double D = 0.0;
-    final double I = 0.0;
+    double P = 0.3;
+    double D = 0.0;
+    double I = 0.0;
     double dComponent;
     double savedTime, error, error2;
     double time, destination, distDestination;
@@ -108,4 +108,4 @@ public class PID{
     leftPower = drivePower + turnPower;
     rightPower = driverPower - turnPower;
 */
-//}
+}
