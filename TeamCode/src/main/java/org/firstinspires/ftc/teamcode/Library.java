@@ -37,18 +37,18 @@ public abstract class Library extends OpMode {
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         lift = hardwareMap.dcMotor.get("l0");
-        //intakeOne = hardwareMap.dcMotor.get("l1");
-        //intakeTwo = hardwareMap.dcMotor.get("l2");
+        intakeOne = hardwareMap.dcMotor.get("l1");
+        intakeTwo = hardwareMap.dcMotor.get("l2");
 
 
         platform = hardwareMap.servo.get("s0");
         grabber = hardwareMap.servo.get("s1");
-        //rotateGrabber = hardwareMap.crservo.get("s2");
+        rotateGrabber = hardwareMap.crservo.get("s2");
         //blinkin = hardwareMap.crservo.get("s3");
 
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         //Safety Check: run through the list of voltage sensors; if any of them are below the minimum voltage, exit.
@@ -76,7 +76,7 @@ public abstract class Library extends OpMode {
 //        } // change driving mode
 //    }
 
-    
+
 	/*public void battery(){
 		voltSensor.getVoltage();
 		telemetry.addData("Initial Battery: ", voltSensor);
@@ -86,6 +86,7 @@ public abstract class Library extends OpMode {
 			}
 		} catch(Exception ex) {}
 	}*/
+
 
     private static float maxValue(float array[]) {
         float max = 0f;
@@ -184,8 +185,8 @@ public abstract class Library extends OpMode {
             //The arc length for the given degree is the CM the robot turnFor()
             float radius = (float)Math.sqrt((wheelToWheelWidth / 2.0f) * (wheelToWheelWidth / 2.0f) + (wheelToWheelLength / 2.0f) * (wheelToWheelLength / 2.0f));
             float arcCircumferenceCM = (2 * (float)Math.PI * radius) * ((float)degreesToTurn / 360); //arc length of "circle"
-            float rotations = (arcCircumferenceCM / 31.9f) * 1120f; 
-        
+            float rotations = (arcCircumferenceCM / 31.9f) * 1120f;
+
             if(degreesToTurn < 0) {
                 while (dealWithNeg(backLeft.getCurrentPosition(), rotations, startPosition)) {
                     drive(l, r, s);
@@ -208,7 +209,7 @@ public abstract class Library extends OpMode {
         drive(0, 0, 0);
     }
 
-    //This function allows the while loop above to deal with negative position since the motors can't do neg power 
+    //This function allows the while loop above to deal with negative position since the motors can't do neg power
     private static boolean dealWithNeg(float currentValue, float rots, float start) {
         if(rots == 0) {
             return false;
