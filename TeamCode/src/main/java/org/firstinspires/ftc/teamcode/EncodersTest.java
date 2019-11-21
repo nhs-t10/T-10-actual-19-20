@@ -23,10 +23,10 @@ public class EncodersTest extends Library { // this my test class not actually i
 		telemetry.addData("back right", backRight.getCurrentPosition());
 
 		if (gamepad1.a) {
-			driveFor(100, .75f, 0, 0);
+			driveFor(100, .75f, 0, 0, 0);
 		}
 		if (gamepad1.b) {
-			turnDegrees(90);
+            driveFor(0, 0, .75f, 0, 90);
 		}
 
 		// Every SAMPLES_PER_SECOND

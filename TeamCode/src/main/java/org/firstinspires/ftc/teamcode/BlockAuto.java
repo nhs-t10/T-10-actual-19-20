@@ -65,7 +65,7 @@ public class BlockAuto extends Library {
 
 	public void deliverSkystone() {
 		//might need to back up a bit to avoid the middle structure
-		turnDegrees(90);
+		//turnDegrees(90);
 		//if(skystoneLocation == 4)
 		//	driveFor(DISTANCE, 1, 0, 0, 0)  <-- Fill in distance with the actual distance, same for below
 		//if(skystoneLocation == 5)

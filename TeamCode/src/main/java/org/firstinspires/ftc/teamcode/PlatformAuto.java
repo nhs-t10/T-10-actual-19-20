@@ -31,7 +31,7 @@ public class PlatformAuto extends Library {
 
     public void MoveToPlatform() {//this is code that moves the platform
         platform(false);//sets platform grabber up
-        driveFor(75, .75f, 0, 0);//moves to platform
+        driveFor(75, .75f, 0, 0, 0);//moves to platform
         platform(true);//sets platform grabber down
         driveForNeg(-75, -.75f, 0, 0);//moves back
         platform(false);//sets platform grabber up
