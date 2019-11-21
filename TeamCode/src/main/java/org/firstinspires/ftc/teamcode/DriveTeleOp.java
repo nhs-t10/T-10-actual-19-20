@@ -68,7 +68,7 @@ public class DriveTeleOp extends Library {
 
 		}
 
-		if (liftUp2 || liftDown2) {
+/* 		if (liftUp2 || liftDown2) {
 			if (liftUp2) {
 				lift(-1);
 			} else {
@@ -92,7 +92,12 @@ public class DriveTeleOp extends Library {
 			} else {
 				lift(0);
 			}
-		}
+		} */
+
+		if (!liftUp2 && !liftDown2)
+			lift(liftUp, liftDown)
+		else
+			lift(liftUp2, liftDown2)
 
 			if (x && !grip && count == 0 || x2 && !grip && count == 0) {
 				grip = true;

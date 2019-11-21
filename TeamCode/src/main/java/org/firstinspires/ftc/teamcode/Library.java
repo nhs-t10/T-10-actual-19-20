@@ -155,7 +155,7 @@ public abstract class Library extends OpMode {
      *degree: if you are turning fill this in, otherwise it will go straight, this will determine what angle you want the robot to turn
      *directionSideways: also a degree, no radians PAUL, it determines which diagonal path the robot takes if we want to be extra like that
      */
-    public static void driveFor(float distanceInCM, float l, float r, float s) {
+    /*public static void driveFor(float distanceInCM, float l, float r, float s) {
         float startPosition = backLeft.getCurrentPosition();
         float rotations = (distanceInCM / 31.9f) * 1120f;
         //According to website, 1120 ticks per revolution
@@ -164,11 +164,11 @@ public abstract class Library extends OpMode {
         }
 
         drive(0, 0, 0);
-    }
+    }*/
 
     //this is the second attempt
     //improved drive for
-    public static void driveForReformed(float distanceInCM, float l, float r, float s, float degreesToTurn) {
+    public static void driveFor(float distanceInCM, float l, float r, float s, float degreesToTurn) {
         if(s != 0) {
             float startPosition = backLeft.getCurrentPosition();
             float rotations = (distanceInCM / 31.9f) * 1120f; //According to website, 1120 ticks per revolution
@@ -241,7 +241,7 @@ public abstract class Library extends OpMode {
     //Param: degrees --> Degrees the robot will turn
     //Robot turns (degrees) degrees
     //Degrees can be pos or neg (pos --> right, neg --> left)
-    public static void turnDegrees(int degrees){
+    /*public static void turnDegrees(int degrees){
         float wheelToWheelWidth = 0f;  //Length between the two front wheels
         float wheelToWheelLength = 0f;  //Length betweeen front and back wheels
 
@@ -257,7 +257,7 @@ public abstract class Library extends OpMode {
         else{
             driveFor(turnCM, 0, .75f, 0);
         }
-    }
+    }*/
 
     public static void encodersInit() {//DO NOT TOUCH MY METHODS
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -311,13 +311,22 @@ public abstract class Library extends OpMode {
             rotateGrabber.setPower(0);
         }
     }
-    public static void lift(float num){
-        lift.setPower(num);
+    public static void lift(boolean up, boolean down)
+    {
+        if (up)
+            lift.setPower(.5);
+        
+        if (down)
+            lift.setPower(-.5);
+
+        if (up && down)
+            lift.setPower(0);
     }
+    
     public static void grip(boolean x){
         if(x){
             grabber.setPosition(1);
-    }else{
+        } else{
             grabber.setPosition(0);
         }
     }
