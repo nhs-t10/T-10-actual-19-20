@@ -103,7 +103,10 @@ public class DriveTeleOp extends Library {
 				grip(grip);
 				count = 0;
 			}
-
+//			x = !x;
+//			x2 = !x2;
+//			grip(x);
+//			grip(x2);
 			y = !y;
 			y2 = !y2; //inverts platform hook for ease of use
 
