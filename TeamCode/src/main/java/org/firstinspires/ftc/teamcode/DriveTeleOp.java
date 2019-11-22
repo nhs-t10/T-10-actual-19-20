@@ -43,64 +43,72 @@ public class DriveTeleOp extends Library {
 		boolean liftUp2 = gamepad2.right_bumper;
 		boolean liftDown2 = gamepad2.left_bumper;
 
-		if (a2 || b2) {
-			if (a2) {
-				intake(1);
-			} else {
-				intake(0);
-			}
-
-			if (b2) {
-				intake(-1);
-			} else {
-				intake(0);
-			}
-		} else {
-			if (a) {
-				intake(1);
-			} else {
-				intake(0);
-			}
-
-			if (b) {
-				intake(-1);
-			} else {
-				intake(0);
-			}
-
-		}
-
-// 		if (liftUp2 || liftDown2) {
-//			if (liftUp2) {
-//				lift(liftUp2, liftDown2);
+//		if (a2 || b2) {
+//			if (a2) {
+//				intake(1);
 //			} else {
-//				lift(false, false);
+//				intake(0);
 //			}
 //
-//		} else {
-//			if (liftUp) {
-//				lift(liftUp, liftDown);
+//			if (b2) {
+//				intake(-1);
 //			} else {
-//				lift(false, false);
+//				intake(0);
 //			}
+//		} else {
+//			if (a) {
+//				intake(1);
+//			} else {
+//				intake(0);
+//			}
+//
+//			if (b) {
+//				intake(-1);
+//			} else {
+//				intake(0);
+//			}
+//
 //		}
 
-		if (!liftUp2 && !liftDown2) {
-			lift(liftUp, liftDown);
-		}
-		else {
-			lift(liftUp2, liftDown2);
+		if (a) {
+			intake(1);
+		} else {
+			intake(0);
 		}
 
-			if (x && !grip && count == 0 || x2 && !grip && count == 0) {
-				grip = true;
-				grip(grip);
-				count = 1;
-			} else if (x && grip && count == 1 || x2 && grip && count == 1) {
-				grip = false;
-				grip(grip);
-				count = 0;
-			}
+		if (b) {
+			intake(-1);
+		} else {
+			intake(0);
+		}
+
+//		if (!liftUp2 && !liftDown2) {
+//			lift(liftUp, liftDown);
+//		}
+//		else {
+//			lift(liftUp2, liftDown2);
+//		}
+		lift(liftUp, liftDown);
+
+//			if (x && !grip && count == 0 || x2 && !grip && count == 0) {
+//				grip = true;
+//				grip(grip);
+//				count = 1;
+//			} else if (x && grip && count == 1 || x2 && grip && count == 1) {
+//				grip = false;
+//				grip(grip);
+//				count = 0;
+//			}
+
+		if (x && !grip && count == 0) {
+			grip = true;
+			grip(grip);
+			count = 1;
+		} else if (x && grip && count == 1) {
+			grip = false;
+			grip(grip);
+			count = 0;
+		}
 			 //inverts platform hook for ease of use
 
 
@@ -109,12 +117,22 @@ public class DriveTeleOp extends Library {
 			/*
 			 * setBlinkinPattern(86); // change Blinkin (LED Strip) color to "Orange" if B
 			 * is pressed on gamepad1 if (b) { setBlinkinPattern(83);r }
-			 */
-		if (y && platform && c == 0 || y2 && platform && c == 0) {
+//			 */
+//		if (y && platform && c == 0 || y2 && platform && c == 0) {
+//			platform = false;
+//			platform(platform);
+//			c = 1;
+//		} else if (y && !platform && c == 1 || y2 && !platform && c == 1) {
+//			platform = true;
+//			platform(platform);
+//			c = 0;
+//		}
+
+		if (y && platform && c == 0) {
 			platform = false;
 			platform(platform);
 			c = 1;
-		} else if (y && !platform && c == 1 || y2 && !platform && c == 1) {
+		} else if (y && !platform && c == 1) {
 			platform = true;
 			platform(platform);
 			c = 0;
