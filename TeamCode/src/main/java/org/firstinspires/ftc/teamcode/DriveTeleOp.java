@@ -67,11 +67,11 @@ public class DriveTeleOp extends Library {
 //				count = 0;
 //			}
 
-		if (x && !grip && count == 0) {
+		if (x2 && !grip && count == 0) {
 			grip = true;
 			grip(grip);
 			count = 1;
-		} else if (x && grip && count == 1) {
+		} else if (x2 && grip && count == 1) {
 			grip = false;
 			grip(grip);
 			count = 0;
