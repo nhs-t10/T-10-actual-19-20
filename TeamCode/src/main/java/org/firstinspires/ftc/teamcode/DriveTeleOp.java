@@ -82,13 +82,12 @@ public class DriveTeleOp extends Library {
 			intake(0);
 		}
 
-//		if (!liftUp2 && !liftDown2) {
-//			lift(liftUp, liftDown);
-//		}
-//		else {
-//			lift(liftUp2, liftDown2);
-//		}
-		lift(liftUp, liftDown);
+		if (!liftUp2 && !liftDown2) {
+			lift(liftUp, liftDown);
+		}
+		else {
+			lift(liftUp2, liftDown2);
+		}
 
 //			if (x && !grip && count == 0 || x2 && !grip && count == 0) {
 //				grip = true;
