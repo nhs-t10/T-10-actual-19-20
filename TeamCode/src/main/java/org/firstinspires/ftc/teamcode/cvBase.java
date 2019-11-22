@@ -57,28 +57,28 @@
 //		Imgproc.erode(converted, dilated, element);//sc: increases contrast???
 //		Mat eroded = new Mat();// sc: anotha one
 //		Imgproc.dilate(dilated, eroded, element);//sc: dilates the Mat's, changes size?
-//		Mat thresh = new Mat(); // we got more
+//		Mat thresh = new Mat(); //sc: we got more
 //		if (currentTrackingState == trackingStates.SKY_STONE) { //sc: if the state is the tracking state what do you think lmao
-//			Core.inRange(skyStoneColorLower, skyStoneColorUpper, thresh); //
+//			Core.inRange(skyStoneColorLower, skyStoneColorUpper, thresh); //sc: checks if blocks are close enough to read??
 //		}
-//		ArrayList<MatOfPoint> contours = new ArrayList<>();
-//		Imgproc.findContours(thresh, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
+//		ArrayList<MatOfPoint> contours = new ArrayList<>();//sc: no idea what mat of point is but it makes a list of them
+//        Imgproc.findContours(thresh, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);//sc: looks for similarities?
 //		return contours;
 //	}
 //}
 //
 //	/*
-//	 * private void detectObject(){ Mat hsvImage = new Mat();
-//	 * Imgproc.cvtColor(image, hsvImage, Imgproc.COLOR_BGR2HSV); List<Mat> images =
-//	 * new ArrayList<>(); Core.split(hsvImage, images);
-//	 *
-//	 * Mat blur = new Mat(); Imgproc.medianBlur(images.get(1), blur, 1);
-//	 *
-//	 * Mat thresh = new Mat(); Imgproc.threshold(blur, thresh, 40, 255,
-//	 * Imgproc.THRESH_BINARY);
-//	 *
-//	 * List<MatOfPoint> contours = new ArrayList<>(); Imgproc.findContours(thresh,
-//	 * contours, new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_NONE); }
+//	  private void detectObject(){ Mat hsvImage = new Mat(); //sc: anotha method
+//	  Imgproc.cvtColor(image, hsvImage, Imgproc.COLOR_BGR2HSV); List<Mat> images =
+//	  new ArrayList<>(); Core.split(hsvImage, images);//sc: calls a imgproc method that I do not know what it does
+//
+//	  Mat blur = new Mat(); Imgproc.medianBlur(images.get(1), blur, 1);//sc: a mat that checks for blur?
+//
+//	  Mat thresh = new Mat(); Imgproc.threshold(blur, thresh, 40, 255,
+//	  Imgproc.THRESH_BINARY); // sc: a mat that I have no idea what it does
+//
+//	  List<MatOfPoint> contours = new ArrayList<>(); Imgproc.findContours(thresh,
+//	  contours, new Mat(), Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_NONE); }
 //	 */
 ///*
 //	private getExternalWebcam() {
@@ -121,4 +121,4 @@
 //	}
 //}
 //
-// */
+//*/

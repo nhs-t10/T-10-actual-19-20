@@ -40,12 +40,19 @@ public class MimingWriter extends Library
         float side = gamepad1.left_stick_x;
         float rotation = gamepad1.right_stick_x;
 
+        boolean grab = gamepad1.x;
+		boolean liftUp = gamepad1.right_bumper;
+		boolean liftDown = gamepad1.left_bumper;
+		boolean x = gamepad1.x;
+
+        grip(x);
+        lift(liftUp, liftDown);
         drive(linear, side, rotation);
         telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
 
         try
         {
-            writer.write(linear + " " + rotation + " " + side);
+            writer.write(linear + " " + rotation + " " + side + " " + grab + " " + liftUp + " " + liftUp);
             writer.newLine();
         }
 

@@ -26,15 +26,16 @@ public class EncodersTest extends Library { // this my test class not actually i
 			driveFor(100, .75f, 0, 0, 0);
 		}
 		if (gamepad1.b) {
-            driveFor(0, 0, .75f, 0, 90);
+			driveFor(0, 0, .75f, 0, 90);
+
+
+			// Every SAMPLES_PER_SECOND
+			// Save floatArray values in a file in the format of "l s r"
+
+			// defining the stuff. linear = straight, rotation = turning, side = skating.
+			// Linear - rotation will compensate one side to allow the other side to
+			// overrate
 		}
-
-		// Every SAMPLES_PER_SECOND
-		// Save floatArray values in a file in the format of "l s r"
-
-		// defining the stuff. linear = straight, rotation = turning, side = skating.
-		// Linear - rotation will compensate one side to allow the other side to
-		// overrate
 	}
 
 	public void stop() {

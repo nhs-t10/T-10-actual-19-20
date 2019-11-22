@@ -7,7 +7,9 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name = "TeleOp")
 public class DriveTeleOp extends Library {
 	private boolean grip = false;
+	private boolean platform = true;
 	private int count = 0;
+	private int c = 0;
 
 	public void init() {
 		hardwareInit();
@@ -68,30 +70,26 @@ public class DriveTeleOp extends Library {
 
 		}
 
-		if (liftUp2 || liftDown2) {
-			if (liftUp2) {
-				lift(-1);
-			} else {
-				lift(0);
-			}
+// 		if (liftUp2 || liftDown2) {
+//			if (liftUp2) {
+//				lift(liftUp2, liftDown2);
+//			} else {
+//				lift(false, false);
+//			}
+//
+//		} else {
+//			if (liftUp) {
+//				lift(liftUp, liftDown);
+//			} else {
+//				lift(false, false);
+//			}
+//		}
 
-			if (liftDown2) {
-				lift(1);
-			} else {
-				lift(0);
-			}
-		} else {
-			if (liftUp) {
-				lift(-1);
-			} else {
-				lift(0);
-			}
-
-			if (liftDown) {
-				lift(1);
-			} else {
-				lift(0);
-			}
+		if (!liftUp2 && !liftDown2) {
+			lift(liftUp, liftDown);
+		}
+		else {
+			lift(liftUp2, liftDown2);
 		}
 
 			if (x && !grip && count == 0 || x2 && !grip && count == 0) {
@@ -103,8 +101,7 @@ public class DriveTeleOp extends Library {
 				grip(grip);
 				count = 0;
 			}
-			y = !y;
-			y2 = !y2; //inverts platform hook for ease of use
+			 //inverts platform hook for ease of use
 
 
 			// test Blinkin (LED Strip) by setting it to "Lawn Green"
@@ -113,9 +110,15 @@ public class DriveTeleOp extends Library {
 			 * setBlinkinPattern(86); // change Blinkin (LED Strip) color to "Orange" if B
 			 * is pressed on gamepad1 if (b) { setBlinkinPattern(83);r }
 			 */
-			platform(y2);
-			platform(y);
-
+		if (y && platform && c == 0 || y2 && platform && c == 0) {
+			platform = false;
+			platform(platform);
+			c = 1;
+		} else if (y && !platform && c == 1 || y2 && !platform && c == 1) {
+			platform = true;
+			platform(platform);
+			c = 0;
+		}
 
 			drive(linear, rotation, side);
 			//gRotate(grabberLeft2, grabberRight2);

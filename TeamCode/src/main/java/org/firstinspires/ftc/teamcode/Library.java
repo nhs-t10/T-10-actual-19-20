@@ -241,7 +241,7 @@ public abstract class Library extends OpMode {
     //Param: degrees --> Degrees the robot will turn
     //Robot turns (degrees) degrees
     //Degrees can be pos or neg (pos --> right, neg --> left)
-   /* public static void turnDegrees(int degrees){
+    /*public static void turnDegrees(int degrees){
         float wheelToWheelWidth = 0f;  //Length between the two front wheels
         float wheelToWheelLength = 0f;  //Length betweeen front and back wheels
 
@@ -311,13 +311,22 @@ public abstract class Library extends OpMode {
             rotateGrabber.setPower(0);
         }
     }
-    public static void lift(float num){
-        lift.setPower(num);
+    public static void lift(boolean up, boolean down)
+    {
+        if (up)
+            lift.setPower(.5);
+        
+        if (down)
+            lift.setPower(-.5);
+
+        if (!up && !down)
+            lift.setPower(0);
     }
+    
     public static void grip(boolean x){
         if(x){
             grabber.setPosition(1);
-    }else{
+        } else{
             grabber.setPosition(0);
         }
     }
