@@ -43,43 +43,11 @@ public class DriveTeleOp extends Library {
 		boolean liftUp2 = gamepad2.right_bumper;
 		boolean liftDown2 = gamepad2.left_bumper;
 
-//		if (a2 || b2) {
-//			if (a2) {
-//				intake(1);
-//			} else {
-//				intake(0);
-//			}
-//
-//			if (b2) {
-//				intake(-1);
-//			} else {
-//				intake(0);
-//			}
-//		} else {
-//			if (a) {
-//				intake(1);
-//			} else {
-//				intake(0);
-//			}
-//
-//			if (b) {
-//				intake(-1);
-//			} else {
-//				intake(0);
-//			}
-//
-//		}
 
-		if (a) {
-			intake(1);
-		} else {
-			intake(0);
-		}
-
-		if (b) {
-			intake(-1);
-		} else {
-			intake(0);
+		if (!a2 && !b2) {
+			intake(a, b);
+		}else{
+			lift(a2, b2);
 		}
 
 		if (!liftUp2 && !liftDown2) {

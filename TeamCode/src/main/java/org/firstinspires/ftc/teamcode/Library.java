@@ -331,8 +331,19 @@ public abstract class Library extends OpMode {
         }
     }
 
-    public static void intake(float num){
-        intakeOne.setPower(num);
-        intakeTwo.setPower(num);
+    public static void intake(boolean in, boolean out){
+        if (in) {
+            intakeOne.setPower(1);
+            intakeTwo.setPower(1);
+        if (out) {
+            intakeOne.setPower(-1);
+            intakeTwo.setPower(-1);
+        }
+        if (!in && !out){
+             intakeOne.setPower(0);
+             intakeTwo.setPower(0);
+        }
+
+        }
     }
 }
