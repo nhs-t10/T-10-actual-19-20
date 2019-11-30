@@ -1,118 +1,67 @@
 package org.firstinspires.ftc.teamcode;
-
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name = "TeleOp")
 public class DriveTeleOp extends Library {
-	private boolean grip = false;
-	private boolean platform = true;
-	private int count = 0;
-	private int c = 0;
 
-	public void init() {
+	public void init()
+	{
 		hardwareInit();
 	}
 
-	public void loop() {
-		float linear = gamepad1.left_stick_y;
-		float side = gamepad1.left_stick_x;
-		float rotation = gamepad1.right_stick_x;
-
-		boolean y = gamepad1.y; //platform hook
-		boolean y2 = gamepad2.y;
-
-		boolean a = gamepad1.a; //positive intake
-		boolean b = gamepad1.b; //negative intake
+	public void loop()
+	{
+		//Intake for platform, lift, and grabber values
+		boolean a = gamepad1.a;
+		boolean b = gamepad1.b;
 		boolean a2 = gamepad2.a;
 		boolean b2 = gamepad2.b;
-
-//
-//		float grabberRight = gamepad1.left_trigger; //rotate grabber right
-//		float grabberLeft = gamepad1.right_trigger; //rotate grabber left
-//		float grabberRight2 = gamepad2.left_trigger; //rotate grabber right
-//		float grabberLeft2 = gamepad2.right_trigger; //rotate grabber left
-
-		boolean x = gamepad1.x; //make grabber open/close
-		boolean x2 = gamepad2.x; //make grabber open/close
-
-
-		boolean liftUp = gamepad1.right_bumper; //Lift control
+		boolean x = gamepad1.x;
+		boolean x2 = gamepad2.x;
+		boolean y = gamepad1.y;
+		boolean y2 = gamepad2.y;
+		boolean liftUp = gamepad1.right_bumper;
 		boolean liftDown = gamepad1.left_bumper;
 		boolean liftUp2 = gamepad2.right_bumper;
 		boolean liftDown2 = gamepad2.left_bumper;
 
+		//Intake for movement and rotation values
+		float linear = gamepad1.left_stick_y;
+		float side = gamepad1.left_stick_x;
+		float rotation = gamepad1.right_stick_x;
+//		float grabberLeft = gamepad1.right_trigger;
+//		float grabberRight = gamepad1.left_trigger;
+//		float grabberRight2 = gamepad2.left_trigger;
+//		float grabberLeft2 = gamepad2.right_trigger;
 
-		if (!a2 && !b2) {
-			intake(a, b);
-		}else{
-			lift(a2, b2);
-		}
+		//If controller two gives any commands (true) than the robot will use those inputs
+		//Otherwise, it will use the inputs of controller one
+		if (a2 || b2)
+			intake (a2, b2);
+		else
+			intake (a, b);
 
-		if (!liftUp2 && !liftDown2) {
-			lift(liftUp, liftDown);
-		}
-		else {
+		if (x2)
+			grip(true);
+		else
+			grip(x);
+
+		if (y2)
+			platform(true);
+		else
+			platform(y);
+
+		if (liftUp2 || liftDown2)
 			lift(liftUp2, liftDown2);
-		}
+		else
+			lift(liftUp, liftDown);
 
-//			if (x && !grip && count == 0 || x2 && !grip && count == 0) {
-//				grip = true;
-//				grip(grip);
-//				count = 1;
-//			} else if (x && grip && count == 1 || x2 && grip && count == 1) {
-//				grip = false;
-//				grip(grip);
-//				count = 0;
-//			}
+//		if (grabberRight2 != 0 || grabberLeft2 != 0)
+//			gRotate(grabberLeft2, grabberRight2);
+//		else
+//			gRotate(grabberLeft, grabberRight);
 
-		if (x2 && !grip && count == 0) {
-			grip = true;
-			grip(grip);
-			count = 1;
-		} else if (x2 && grip && count == 1) {
-			grip = false;
-			grip(grip);
-			count = 0;
-		}
-			 //inverts platform hook for ease of use
-
-
-			// test Blinkin (LED Strip) by setting it to "Lawn Green"
-
-			/*
-			 * setBlinkinPattern(86); // change Blinkin (LED Strip) color to "Orange" if B
-			 * is pressed on gamepad1 if (b) { setBlinkinPattern(83);r }
-//			 */
-//		if (y && platform && c == 0 || y2 && platform && c == 0) {
-//			platform = false;
-//			platform(platform);
-//			c = 1;
-//		} else if (y && !platform && c == 1 || y2 && !platform && c == 1) {
-//			platform = true;
-//			platform(platform);
-//			c = 0;
-//		}
-
-		if (y && platform && c == 0) {
-			platform = false;
-			platform(platform);
-			c = 1;
-		} else if (y && !platform && c == 1) {
-			platform = true;
-			platform(platform);
-			c = 0;
-		}
-
-			drive(linear, rotation, side);
-			//gRotate(grabberLeft2, grabberRight2);
-			//gRotate(grabberLeft, grabberRight);
-
-			String vals = String.valueOf(linear) + "\n " + String.valueOf(rotation) + "\n " + String.valueOf(side);
-			telemetry.addData("Values:", vals);
-
-		}
-		public void stop(){
+		drive(linear, rotation, side);
+		telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
 	}
 }
