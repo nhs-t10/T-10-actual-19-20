@@ -60,7 +60,7 @@ public class MimingReader extends Library
                 cur = line.indexOf(" ", cur) + 1;
             }
 
-            float multiply = parsedFloat[3];
+            float multiply = parsedFloat[3] / (float) getVoltage();
 
             intake(parsedBoolean[0], parsedBoolean[1]);
             grip(parsedBoolean[2]);
