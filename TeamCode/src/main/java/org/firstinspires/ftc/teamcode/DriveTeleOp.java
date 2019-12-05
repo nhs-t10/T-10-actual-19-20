@@ -29,7 +29,7 @@ public class DriveTeleOp extends Library
 		float linear = gamepad1.left_stick_y;
 		float side = gamepad1.left_stick_x;
 		float rotation = gamepad1.right_stick_x;
-//		float grabberLeft = gamepad1.right_trigger;
+//		float grabberLeft = gamepad1.right_trigger;	
 //		float grabberRight = gamepad1.left_trigger;
 //		float grabberRight2 = gamepad2.left_trigger;
 //		float grabberLeft2 = gamepad2.right_trigger;
