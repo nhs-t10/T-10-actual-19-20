@@ -56,7 +56,7 @@ public class MimingWriter extends Library
 
         try
         {
-            writer.write(a + " " + b + " " + x + " " + y + " " + liftUp + " " + liftDown + " " + linear + " " + rotation + " " + side);
+            writer.write(a + " " + b + " " + x + " " + y + " " + liftUp + " " + liftDown + " " + linear + " " + rotation + " " + side + " " + getVoltage());
             writer.newLine();
         }
 

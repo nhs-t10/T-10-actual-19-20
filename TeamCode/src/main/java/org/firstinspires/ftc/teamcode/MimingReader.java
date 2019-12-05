@@ -45,26 +45,28 @@ public class MimingReader extends Library
                 e.printStackTrace();
             }
             int cur = 0;
-            boolean[] parsedValues = new boolean[6];
+            float[] parsedFloat = new float[4];
+            boolean[] parsedBoolean = new boolean[6];
 
             for (int i = 0; i < 6; i++)
             {
-                parsedValues[i] = Boolean.parseBoolean((line.substring(cur, line.indexOf(" ", cur))));
+                parsedBoolean[i] = Boolean.parseBoolean((line.substring(cur, line.indexOf(" ", cur))));
                 cur = line.indexOf(" ", cur) + 1;
             }
 
-            int next = line.indexOf(" ", cur) + 1;
-            int after = line.indexOf(" ", next) + 1;
+            for (int i = 6; i < 10; i++)
+            {
+                parsedFloat[i] = Float.parseFloat(line.substring(cur, line.indexOf(" ", cur)));
+                cur = line.indexOf(" ", cur) + 1;
+            }
 
-            linear = Float.parseFloat(line.substring(cur, next - 1));
-            side = Float.parseFloat(line.substring(next, after - 1));
-            rotation = Float.parseFloat(line.substring(after));
+            float multiply = parsedFloat[3];
 
-            intake(parsedValues[0], parsedValues[1]);
-            grip(parsedValues[2]);
-            platform(parsedValues[3]);
-            lift(parsedValues[4], parsedValues[5]);
-            drive(linear, side, rotation);
+            intake(parsedBoolean[0], parsedBoolean[1]);
+            grip(parsedBoolean[2]);
+            platform(parsedBoolean[3]);
+            lift(parsedBoolean[4], parsedBoolean[5]);
+            drive(parsedFloat[0] * multiply, parsedFloat[1] * multiply, parsedFloat[2] * multiply);
         }
 
         catch (NullPointerException npe)
