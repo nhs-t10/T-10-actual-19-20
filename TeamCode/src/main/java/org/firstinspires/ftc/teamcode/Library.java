@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
 
@@ -11,13 +10,10 @@ public abstract class Library extends OpMode
     public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
     public static Servo platform, grabber;
     public static CRServo rotateGrabber;
-    public static VoltageSensor VS;
 
     // Initialize hardware devices and their zero behavior
     public void hardwareInit()
     {
-        VS = hardwareMap.voltageSensor.get("Motor Controller 1");
-
         frontLeft = hardwareMap.dcMotor.get("m0");
         frontRight = hardwareMap.dcMotor.get("m1");
         backLeft = hardwareMap.dcMotor.get("m2");
@@ -39,12 +35,6 @@ public abstract class Library extends OpMode
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-    }
-
-    //Gets battery voltage
-    public static double getVoltage()
-    {
-        return VS.getVoltage();
     }
 
     //Each method below uses inputs to dictate the robot's actions
