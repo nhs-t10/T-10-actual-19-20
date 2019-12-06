@@ -44,6 +44,11 @@ public abstract class Library extends OpMode
         //voltageSensor.getVoltage(); //Not sure how accurate this is -Cheifetz
     }
 
+    public static float getVoltage()
+    {
+        return 1;
+    }
+
     //Each method below uses inputs to dictate the robot's actions
     //(i.e grip, which determines weather the robot should grab or not)
     public static void intake(boolean a, boolean b)

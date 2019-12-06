@@ -44,22 +44,24 @@ public class MimingReader extends Library
             {
                 e.printStackTrace();
             }
+
             int cur = 0;
             float[] parsedFloat = new float[4];
             boolean[] parsedBoolean = new boolean[6];
+
             for (int i = 0; i < parsedBoolean.length; i++)
             {
                 parsedBoolean[i] = Boolean.parseBoolean((line.substring(cur, line.indexOf(" ", cur))));
                 cur = line.indexOf(" ", cur) + 1;
             }
+
             for (int i = 0; i < parsedFloat.length - 1; i++)
             {
                 parsedFloat[i] = Float.parseFloat(line.substring(cur, line.indexOf(" ", cur)));
-
                 cur = line.indexOf(" ", cur) + 1;
             }
-            float multiply = 1 / (float) 1;
-            //float multiply = (float) voltageSensor.getVoltage();
+
+            float multiply = Float.parseFloat(line.substring(cur)) / getVoltage();
 
             intake(parsedBoolean[0], parsedBoolean[1]);
             grip(parsedBoolean[2]);
