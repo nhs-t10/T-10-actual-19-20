@@ -11,7 +11,6 @@ public abstract class Library extends OpMode
     public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
     public static Servo platform, grabber;
     public static CRServo rotateGrabber;
-
     public static VoltageSensor voltageSensor;
 
     // Initialize hardware devices and their zero behavior
