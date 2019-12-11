@@ -13,7 +13,7 @@ public abstract class Library extends OpMode
     public static Servo platform, grabber;
     public static CRServo rotateGrabber;
     public static VoltageSensor voltageSensor;
-
+    private static final int TRACTION_SCALER = 1;//temp value will be changed // Used in driveForEncoders/slideForEncoders
     // Initialize hardware devices and their zero behavior
     public void hardwareInit()
     {
@@ -140,4 +140,32 @@ public abstract class Library extends OpMode
         backLeft.setPower(sums[2]);
         backRight.setPower(sums[3]);
     }
+
+    //drive method for auto using encoders
+    //float scalar to chose direction+power
+    //float distance in CM is the magnitude of the distance traveled forwards or backwards
+    //use this method if and only if no other sensors can be used to complete the motion
+    public static void driveForEncoders(float distanceInCM, float scalar)
+    {
+        float startPosition = backLeft.getCurrentPosition();
+        while (Math.abs(startPosition - backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f + startPosition)
+        {
+            drive(scalar, 0, 0);
+        }
+        drive(0, 0, 0);
+    }
+    //drive method for auto using encoders
+    //float scalar to chose direction+power
+    //float distance in CM is the magnitude of the distance traveled left or right
+    //use this method if and only if no other sensors can be used to complete the motion
+    public static void slideForEncoders(float distanceInCM, float scalar)
+    {
+        float startPosition = backLeft.getCurrentPosition();
+        while (Math.abs(startPosition - backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f * TRACTION_SCALER + startPosition)
+        {
+            drive(0, 0, scalar);
+        }
+        drive(0, 0, 0);
+    }
+
 }
