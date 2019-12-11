@@ -48,6 +48,14 @@ public abstract class Library extends OpMode
         return 1;
     }
 
+    public static void driveUntil(boolean sensor, int l, int r, int s){
+        if (!sensor)
+            drive(l, r, s);
+        else{
+            drive(0, 0, 0);
+        }
+    }
+
     //Each method below uses inputs to dictate the robot's actions
     //(i.e grip, which determines weather the robot should grab or not)
     public static void intake(boolean a, boolean b)
