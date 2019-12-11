@@ -3,6 +3,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 public abstract class Library extends OpMode
 {
@@ -10,6 +11,7 @@ public abstract class Library extends OpMode
     public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
     public static Servo platform, grabber;
     public static CRServo rotateGrabber;
+    public static VoltageSensor voltageSensor;
 
     // Initialize hardware devices and their zero behavior
     public void hardwareInit()
@@ -27,6 +29,8 @@ public abstract class Library extends OpMode
         grabber = hardwareMap.servo.get("s1");
         rotateGrabber = hardwareMap.crservo.get("s2");
 
+        //voltageSensor = hardwareMap.voltageSensor.get();
+
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -35,6 +39,21 @@ public abstract class Library extends OpMode
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        //voltageSensor.getVoltage(); //Not sure how accurate this is -Cheifetz
+    }
+
+    public static float getVoltage()
+    {
+        return 1;
+    }
+
+    public static void driveUntil(boolean sensor, int l, int r, int s){
+        if (!sensor)
+            drive(l, r, s);
+        else{
+            drive(0, 0, 0);
+        }
     }
 
     //Each method below uses inputs to dictate the robot's actions
