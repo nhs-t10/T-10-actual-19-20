@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "TeleOp")
 public class DriveTeleOp extends Library
 {
-	public void init() { hardwareInit(); }
+	public void init() { hardwareInit();
+	backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);}
 
 	public void loop()
 	{
