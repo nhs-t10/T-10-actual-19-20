@@ -21,12 +21,13 @@ public class DriveTeleOp extends Library
 		boolean liftDown = gamepad1.left_bumper;
 		boolean liftUp2 = gamepad2.right_bumper;
 		boolean liftDown2 = gamepad2.left_bumper;
+		boolean skystone = gamepad1.directional_pad_up;
 
 		//Intake for movement and rotation values
 		float linear = gamepad1.left_stick_y;
 		float side = gamepad1.left_stick_x;
 		float rotation = gamepad1.right_stick_x;
-//		float grabberLeft = gamepad1.right_trigger;	
+//		float grabberLeft = gamepad1.right_trigger;
 //		float grabberRight = gamepad1.left_trigger;
 //		float grabberRight2 = gamepad2.left_trigger;
 //		float grabberLeft2 = gamepad2.right_trigger;
@@ -52,6 +53,11 @@ public class DriveTeleOp extends Library
 			lift(liftUp2, liftDown2);
 		else
 			lift(liftUp, liftDown);
+
+		if (skysyone)
+			runOpMove();
+		else
+			!runOpMode();
 
 //		if (grabberRight2 != 0 || grabberLeft2 != 0)
 //			gRotate(grabberLeft2, grabberRight2);
