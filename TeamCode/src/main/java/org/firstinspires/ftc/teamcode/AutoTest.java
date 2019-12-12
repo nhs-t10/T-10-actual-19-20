@@ -32,22 +32,29 @@ public class AutoTest extends Library {
         boolean b = gamepad1.b;
         boolean liftUp = gamepad1.right_bumper;
         boolean liftDown = gamepad1.left_bumper;
-        drive(linear,rotation,side);
+        float sums[] = drive(linear,rotation,side);
 
         if(a)
         {
+            telemetry.addData("button getting pressed", "a is pressed");
             driveForEncoders(100,1);
         }
         if (b)
         {
+            telemetry.addData("button getting pressed", "b is pressed");
+
             driveForEncoders(150,.5f);
         }
         if(liftUp)
         {
+            telemetry.addData("button getting pressed", "r1 is pressed");
+
             slideForEncoders(100,1);
         }
         if(liftDown)
         {
+            telemetry.addData("button getting pressed", "a is pressed");
+
             slideForEncoders(150,.5f);
         }
 
