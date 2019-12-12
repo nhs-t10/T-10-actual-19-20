@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-@Autonomous(name="foundation sasha")//do not delete this test class used by sasha
+@TeleOp(name="encoders testing")//do not delete this test class used by sasha
 public class AutoTest extends Library {
     public final int DRIVE_TO_PLATFORM = 100;
     public final float DRIVE_SPEED = .8f;
@@ -24,6 +24,19 @@ public class AutoTest extends Library {
     }
     public void loop()
     {
+
+        float linear = gamepad1.left_stick_y;
+        float side = gamepad1.left_stick_x;
+        float rotation = gamepad1.right_stick_x;
+        boolean a = gamepad1.a;
+        drive(linear,rotation,side);
+
+        if(a)
+        {
+            driveForEncoders(100,1);
+        }
+        
+
         if(stat==State.Pulling)
         {
             driveForEncoders(DRIVE_TO_PLATFORM,-DRIVE_SPEED);
