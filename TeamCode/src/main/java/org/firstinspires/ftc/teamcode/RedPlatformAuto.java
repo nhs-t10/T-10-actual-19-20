@@ -9,13 +9,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous(name="foundation sasha")//do not delete this test class used by sasha
 public class RedPlatformAuto extends Library {
-    public final int DRIVE_TO_PLATFORM = 100;
-    public final float DRIVE_SPEED = .8f;
+    public final int platformDistance = 90;
+    public final float driveSpeed = .75f;
 
     enum State{
-        Pulling, Parking, Waiting
+        PLATFORM, PARKING, END
     }
-    State stat = State.Pulling;
+    State state = State.PLATFORM;
 
     @Override public void init() {
         hardwareInit();
@@ -24,19 +24,19 @@ public class RedPlatformAuto extends Library {
     }
     public void loop()
     {
-        if(stat==State.Pulling)
+        if(state == State.PLATFORM)
         {
-            driveForEncoders(DRIVE_TO_PLATFORM,-DRIVE_SPEED);
-
-            driveForEncoders(DRIVE_TO_PLATFORM,DRIVE_SPEED);
-            stat=State.Parking;
+            driveForEncoders(platformDistance+10,-driveSpeed); //drives to platform with extra
+            driveUntil(front1.isPressed()||front2.isPressed(),-1f,0,.25f);
+            //driveForEncoders(platformDistance-10,driveSpeed);
+            state = State.PARKING;
         }
 
-        if(stat==State.Parking)
+        if(state == State.PARKING)
         {
             //driveUntil(ColorSensor,0,0,DRIVE_SPEED);  //commented because I need to define color sensor
-            drive(0,0,0);
-            stat=State.Waiting;
+            //drive(0,0,0);
+            state = State.END;
         }
     }
 }

@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
+import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 public abstract class Library extends OpMode
 {
@@ -13,6 +15,8 @@ public abstract class Library extends OpMode
     public static Servo platform, grabber;
     public static CRServo rotateGrabber;
     public static VoltageSensor voltageSensor;
+    public static TouchSensor front1, front2;
+    public static ColorSensor color;
     private static final int TRACTION_SCALER = 1;//temp value will be changed // Used in driveForEncoders/slideForEncoders
     // Initialize hardware devices and their zero behavior
     public void hardwareInit()
@@ -29,6 +33,10 @@ public abstract class Library extends OpMode
         platform = hardwareMap.servo.get("s0");
         grabber = hardwareMap.servo.get("s1");
         rotateGrabber = hardwareMap.crservo.get("s2");
+
+        //color = hardwareMap.colorSensor.get("color1");
+        front1 = hardwareMap.touchSensor.get("touch1");
+        front2 = hardwareMap.touchSensor.get("touch2");
 
         //voltageSensor = hardwareMap.voltageSensor.get("vs1");
 
@@ -48,7 +56,7 @@ public abstract class Library extends OpMode
         return 1;
     }
 
-    public static void driveUntil(boolean sensor, int l, int r, int s){
+    public static void driveUntil(boolean sensor, float l, float r, float s){
         if (!sensor)
             drive(l, r, s);
         else{
