@@ -12,10 +12,10 @@ public class AutoTest extends Library {
     public final int DRIVE_TO_PLATFORM = 100;
     public final float DRIVE_SPEED = .8f;
 
-    enum State{
-        Pulling, Parking, Waiting
-    }
-    State stat = State.Pulling;
+//    enum State{
+//        Pulling, Parking, Waiting
+//    }
+//    State stat = State.Pulling;
 
     @Override public void init() {
         hardwareInit();
@@ -29,27 +29,42 @@ public class AutoTest extends Library {
         float side = gamepad1.left_stick_x;
         float rotation = gamepad1.right_stick_x;
         boolean a = gamepad1.a;
+        boolean b = gamepad1.b;
+        boolean liftUp = gamepad1.right_bumper;
+        boolean liftDown = gamepad1.left_bumper;
         drive(linear,rotation,side);
 
         if(a)
         {
             driveForEncoders(100,1);
         }
-        
-
-        if(stat==State.Pulling)
+        if (b)
         {
-            driveForEncoders(DRIVE_TO_PLATFORM,-DRIVE_SPEED);
-
-            driveForEncoders(DRIVE_TO_PLATFORM,DRIVE_SPEED);
-            stat=State.Parking;
+            driveForEncoders(150,.5f);
+        }
+        if(liftUp)
+        {
+            slideForEncoders(100,1);
+        }
+        if(liftDown)
+        {
+            slideForEncoders(150,.5f);
         }
 
-        if(stat==State.Parking)
-        {
-            //driveUntil(ColorSensor,0,0,DRIVE_SPEED);  //commented because I need to define color sensor
-            drive(0,0,0);
-            stat=State.Waiting;
-        }
+
+//        if(stat==State.Pulling)
+//        {
+//            driveForEncoders(DRIVE_TO_PLATFORM,-DRIVE_SPEED);
+//
+//            driveForEncoders(DRIVE_TO_PLATFORM,DRIVE_SPEED);
+//            stat=State.Parking;
+//        }
+//
+//        if(stat==State.Parking)
+//        {
+//            //driveUntil(ColorSensor,0,0,DRIVE_SPEED);  //commented because I need to define color sensor
+//            drive(0,0,0);
+//            stat=State.Waiting;
+//        }
     }
 }
