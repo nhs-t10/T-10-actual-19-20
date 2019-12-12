@@ -4,10 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name = "TeleOp")
 public class DriveTeleOp extends Library
 {
-	public void init()
-	{
-		hardwareInit();
-	}
+	public void init() { hardwareInit(); }
 
 	public void loop()
 	{
