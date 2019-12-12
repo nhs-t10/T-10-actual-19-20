@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-@Autonomous(name="foundation sasha")//do not delete this test class used by sasha
+@Autonomous(name="Red Platform")//do not delete this test class used by sasha
 public class RedPlatformAuto extends Library {
-    public final int platformDistance = 90;
+    public final int platformDistance = 60;
     public final float driveSpeed = .75f;
 
     enum State{
@@ -26,8 +26,11 @@ public class RedPlatformAuto extends Library {
     {
         if(state == State.PLATFORM)
         {
-            driveForEncoders(platformDistance+10,-driveSpeed); //drives to platform with extra
-            driveUntil(front1.isPressed()||front2.isPressed(),-1f,0,.25f);
+            //driveForEncoders(platformDistance+10,-driveSpeed); //drives to platform with extra
+            while(!front1.isPressed()||!front2.isPressed()){
+                drive(-.25f,0,0);//drives until touching wall
+            }
+            drive(0,0,0);
             //driveForEncoders(platformDistance-10,driveSpeed);
             state = State.PARKING;
         }
