@@ -29,7 +29,7 @@ public abstract class Library extends OpMode
         grabber = hardwareMap.servo.get("s1");
         rotateGrabber = hardwareMap.crservo.get("s2");
 
-        //voltageSensor = hardwareMap.voltageSensor.get();
+        //voltageSensor = hardwareMap.voltageSensor.get("vs1");
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -39,12 +39,11 @@ public abstract class Library extends OpMode
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        //voltageSensor.getVoltage(); //Not sure how accurate this is -Cheifetz
     }
 
     public static float getVoltage()
     {
+        //return (float) voltageSensor.getVoltage();
         return 1;
     }
 
