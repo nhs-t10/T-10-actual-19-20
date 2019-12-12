@@ -155,7 +155,7 @@ public abstract class Library extends OpMode
     public static void driveForEncoders(float distanceInCM, float scalar)
     {
         float startPosition = backLeft.getCurrentPosition();
-        while (Math.abs(startPosition - backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f + startPosition)
+        while (Math.abs(backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f + startPosition)//31.9 is scuffed
         {
             drive(scalar, 0, 0);
         }
@@ -168,7 +168,7 @@ public abstract class Library extends OpMode
     public static void slideForEncoders(float distanceInCM, float scalar)
     {
         float startPosition = backLeft.getCurrentPosition();
-        while (Math.abs(startPosition - backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f * TRACTION_SCALER + startPosition)
+        while (Math.abs(backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f * TRACTION_SCALER + startPosition)
         {
             drive(0, 0, scalar);
         }
