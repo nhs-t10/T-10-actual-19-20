@@ -32,7 +32,7 @@ public class AutoTest extends Library {
         boolean b = gamepad1.b;
         boolean liftUp = gamepad1.right_bumper;
         boolean liftDown = gamepad1.left_bumper;
-        float sums[] = drive(linear,rotation,side);
+        //float sums[] = drive(linear,rotation,side); //THIS ERRORS
 
         if(a)
         {
