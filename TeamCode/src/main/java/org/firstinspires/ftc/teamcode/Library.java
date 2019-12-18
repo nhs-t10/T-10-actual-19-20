@@ -146,6 +146,11 @@ public abstract class Library extends OpMode
         frontRight.setPower(sums[1]);
         backLeft.setPower(sums[2]);
         backRight.setPower(sums[3]);
+        /*telemetry.addData("Front Left", sums[0]);
+        telemetry.addData("Front Right", sums[1]);
+        telemetry.addData("Back Left", sums[2]);
+        telemetry.addData("Back Right", sums[3]);
+        */
     }
 
     //drive method for auto using encoders
