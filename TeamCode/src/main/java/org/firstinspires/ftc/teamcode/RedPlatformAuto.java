@@ -15,28 +15,34 @@ public class RedPlatformAuto extends Library {
     enum State{
         PLATFORM, PARKING, END
     }
-    State state = State.PLATFORM;
+    State state;
+
 
     @Override public void init() {
         hardwareInit();
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);// we may use more motor encoders but some of the encoders have weird values
-
+        state = State.PLATFORM;
     }
     public void loop()
     {
         if(state == State.PLATFORM)
         {
-            //driveForEncoders(platformDistance+10,-driveSpeed); //drives to platform with extra
-            while(!front1.isPressed()||!front2.isPressed()){
-                drive(-.25f,0,0);//drives until touching wall
-            }
-            drive(0,0,0);
-            //driveForEncoders(platformDistance-10,driveSpeed);
+//            slideForEncoders(60, -100);
+//            driveForEncoders(120,-100);
+            //grip(true);
+//            driveForEncoders(platformDistance+10,-driveSpeed); //drives to platform with extra
+//            while(!front1.isPressed()||!front2.isPressed()){
+//                drive(-1f,0,0);//drives until touching wall
+//            }
+//            drive(0,0,0);
+//            grip(false);
+
             state = State.PARKING;
         }
 
         if(state == State.PARKING)
         {
+//            slideForEncoders(150, 100);
             //driveUntil(ColorSensor,0,0,DRIVE_SPEED);  //commented because I need to define color sensor
             //drive(0,0,0);
             state = State.END;
