@@ -163,25 +163,29 @@ public abstract class Library extends OpMode
     //use this method if and only if no other sensors can be used to complete the motion
 
 
-    public static void driveForEncoders(float distanceInCM, float scalar, float startPosition)
+    public static boolean driveForEncoders(float distanceInCM, float scalar, float startPosition)
     {
         if (Math.abs(backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f + startPosition)//31.9 is scuffed
         {
             drive(scalar, 0, 0);
+            return true;
+        }else{
+            return false;
         }
-        drive(0, 0, 0);
     }
     //drive method for auto using encoders
     //float scalar to chose direction+power
     //float distance in CM is the magnitude of the distance traveled left or right
     //use this method if and only if no other sensors can be used to complete the motion
-    public static void slideForEncoders(float distanceInCM, float scalar, float startPosition)
+    public static boolean slideForEncoders(float distanceInCM, float scalar, float startPosition)
     {
         if (Math.abs(backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f * TRACTION_SCALER + startPosition)
         {
             drive(0, 0, scalar);
+            return true;
+        }else{
+            return false;
         }
-        drive(0, 0, 0);
     }
 
 }

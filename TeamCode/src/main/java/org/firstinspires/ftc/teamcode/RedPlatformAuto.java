@@ -11,6 +11,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class RedPlatformAuto extends Library {
     public final int platformDistance = 60;
     public final float driveSpeed = .75f;
+    public int step;
+    public boolean startPosSet;
+    public float startPos;
+    public boolean drive;
 
     enum State{
         PLATFORM, PARKING, END
@@ -22,11 +26,27 @@ public class RedPlatformAuto extends Library {
         hardwareInit();
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);// we may use more motor encoders but some of the encoders have weird values
         state = State.PLATFORM;
+        step = 1;
+        startPosSet = false;
+        drive = true;
     }
     public void loop()
     {
         if(state == State.PLATFORM)
         {
+            if(step == 1 && startPosSet == false){
+                startPos = getStartPos();
+            }
+            if(step == 1 && startPosSet == true){
+                if(drive) {
+                    drive = slideForEncoders(60, 0.5f, startPos);
+                }else{
+                    step = 2;
+                }
+            }
+            if(step == 2){
+                telemetry.addData("Step 2 woot", true);
+            }
 //            slideForEncoders(60, -100);
 //            driveForEncoders(120,-100);
             //grip(true);
