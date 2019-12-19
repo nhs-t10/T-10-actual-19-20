@@ -39,7 +39,7 @@ public class RedPlatformAuto extends Library {
             }
             if(step == 1 && startPosSet == true){
                 if(drive) {
-                    drive = slideForEncoders(60, 0.5f, startPos);
+                    drive = slideForEncoders(60f, 0.5f, startPos);
                 }else{
                     step = 2;
                 }
