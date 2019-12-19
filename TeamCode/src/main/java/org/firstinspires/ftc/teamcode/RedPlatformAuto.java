@@ -16,7 +16,7 @@ public class RedPlatformAuto extends Library {
         PLATFORM, PARKING, END
     }
     State state;
-
+    int i = 0;
 
     @Override public void init() {
         hardwareInit();
@@ -25,28 +25,35 @@ public class RedPlatformAuto extends Library {
     }
     public void loop()
     {
+        telemetry.addData("Red color: ", color.red());
         if(state == State.PLATFORM)
         {
+            while(color.red()<20){
+                drive(1f,0,0);//drives until touching wall
+            }
+            drive(0,0,0);
 //            slideForEncoders(60, -100);
 //            driveForEncoders(120,-100);
             //grip(true);
 //            driveForEncoders(platformDistance+10,-driveSpeed); //drives to platform with extra
-//            while(!front1.isPressed()||!front2.isPressed()){
-//                drive(-1f,0,0);//drives until touching wall
-//            }
-//            drive(0,0,0);
-//            grip(false);
+            while(i<1000000){
+                grabber.setPosition(1);
+                i++;
+            }
+            while(!front1.isPressed()||!front2.isPressed()){
+                drive(-1f,0,0);//drives until touching wall
+            }
+            drive(0,0,0);
+            //grip(false);
 
             state = State.PARKING;
         }
 
         if(state == State.PARKING)
         {
+
 //            slideForEncoders(150, 100);
-            while(!front1.isPressed()||!front2.isPressed()){
-                drive(-1f,0,0);//drives until touching wall
-            }
-            drive(0,0,0);
+
             state = State.END;
         }
     }
