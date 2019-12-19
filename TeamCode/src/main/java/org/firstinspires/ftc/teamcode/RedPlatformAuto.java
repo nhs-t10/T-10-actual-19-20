@@ -13,7 +13,7 @@ public class RedPlatformAuto extends Library {
         TO_PLATFORM, FROM_PLATFORM, PARKING, END
     }
     State currentstate;
-    int i = 0;
+    int i = 0, gray, red;
     long startTime, startTime2, startTime3, duration, duration2, duration3;
     ElapsedTime clock = new ElapsedTime();
     boolean moving = false;
@@ -22,6 +22,8 @@ public class RedPlatformAuto extends Library {
         hardwareInit();
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);// we may use more motor encoders but some of the encoders have weird values
         currentstate = State.TO_PLATFORM;
+        gray = color.red();
+        red = (int)(gray*1.3);
     }
     public void loop()
     {
@@ -35,7 +37,9 @@ public class RedPlatformAuto extends Library {
             Parking();
         }
 
-        telemetry.addData("Red color: ", color.red());
+        telemetry.addData("Red reading: ", color.red());
+        telemetry.addData("Gray color: ", gray);
+        telemetry.addData("Red color: ", red);
         telemetry.addData("Millis since run: ", clock.seconds());
         telemetry.addData("State: ", currentstate);
     }
@@ -47,7 +51,7 @@ public class RedPlatformAuto extends Library {
             slideForEncoders(60, -1);
         } else if (clock.seconds() < 2) {
 
-        } else if (clock.seconds() > 2 && color.red()<20) {
+        } else if (clock.seconds() > 2 && color.red()<red) {
             drive(1f,0,0);
         }
         else{
@@ -78,10 +82,10 @@ public class RedPlatformAuto extends Library {
         if (!moving) {
             clock.reset();
             moving = true;
-            slideForEncoders(60, 100);
+            slideForEncoders(60, 1);
         } else if (clock.seconds() < 2) {
 
-        } else if (clock.seconds() > 2 && color.red()<20) {
+        } else if (clock.seconds() > 2 && color.red()<red) {
             drive(0,0,1);
         }
         else{
