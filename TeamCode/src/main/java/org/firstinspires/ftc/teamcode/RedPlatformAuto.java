@@ -57,7 +57,7 @@ public class RedPlatformAuto extends Library {
 //            drive(0,0,0);
 //            grip(false);
 
-            state = State.PARKING;
+            
         }
 
         if(state == State.PARKING)
