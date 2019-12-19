@@ -13,46 +13,64 @@ public class RedPlatformAuto extends Library {
     public final float driveSpeed = .75f;
 
     enum State{
-        PLATFORM, PARKING, END
+        TOPLATFORM, FROMPLATFORM, PARKING, END
     }
     State state;
     int i = 0;
+    long startTime;
+    long endTime;
+    long duration;
 
     @Override public void init() {
         hardwareInit();
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);// we may use more motor encoders but some of the encoders have weird values
-        state = State.PLATFORM;
+        state = State.TOPLATFORM;
     }
     public void loop()
     {
         telemetry.addData("Red color: ", color.red());
-        if(state == State.PLATFORM)
+        telemetry.addData("State: ", state);
+
+        if(state == State.TOPLATFORM)
         {
+            startTime = System.nanoTime();
+            duration = (System.nanoTime() - startTime)/1000000000;
+            slideForEncoders(60, -100);
+            while(duration<2){
+                duration = (System.nanoTime() - startTime)/1000000000;//divide by 1000000000 for seconds
+            }
+
             while(color.red()<20){
                 drive(1f,0,0);//drives until touching wall
             }
             drive(0,0,0);
-//            slideForEncoders(60, -100);
-//            driveForEncoders(120,-100);
-            //grip(true);
-//            driveForEncoders(platformDistance+10,-driveSpeed); //drives to platform with extra
-            while(i<1000000){
-                grabber.setPosition(1);
-                i++;
-            }
-            while(!front1.isPressed()||!front2.isPressed()){
+
+            state = State.FROMPLATFORM;
+        }
+
+        if(state == State.FROMPLATFORM)
+        {
+//            startTime = System.nanoTime();
+//            duration = (System.nanoTime() - startTime)/1000000000;
+//            grabber.setPosition(1);
+//            while(duration<2){
+//                duration = (System.nanoTime() - startTime)/1000000000;//divide by 1000000000 for seconds
+//            }
+
+            while(!front1.isPressed()&&!front2.isPressed()){
                 drive(-1f,0,0);//drives until touching wall
             }
             drive(0,0,0);
-            //grip(false);
 
             state = State.PARKING;
         }
 
         if(state == State.PARKING)
         {
-
-//            slideForEncoders(150, 100);
+            while(color.red()<20){
+                drive(0,0,1);//drives until touching wall
+            }
+            drive(0,0,0);
 
             state = State.END;
         }
