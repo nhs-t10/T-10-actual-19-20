@@ -34,7 +34,7 @@ package org.firstinspires.ftc.teamcode;
 //	// 	SKY_STONE
 //	// }
 //
-//	//private TrackingStates currentTrackingState = SKY_STONE; //sc: start by setting to the first state
+//	//private TrackingStates currentTrackingState = SKY_STONE; //sc: start by setting to the first currentstate
 //	private int kernelSize = 10; // An idea, I do not have  //sc: ???????
 //
 //	//These scalars represent the lightest and darkest a stone can reasonably be to be considered a skystone
@@ -56,7 +56,7 @@ package org.firstinspires.ftc.teamcode;
 //		Mat eroded = new Mat();// sc: anotha one
 //		Imgproc.dilate(dilated, eroded, element);//sc: dilates the Mat's, changes size?
 //		Mat thresh = new Mat(); //sc: we got more
-//		if (currentTrackingState == trackingStates.SKY_STONE){ //sc: if the state is the tracking state what do you think lmao
+//		if (currentTrackingState == trackingStates.SKY_STONE){ //sc: if the currentstate is the tracking currentstate what do you think lmao
 //			Core.inRange(skyStoneColorLower, skyStoneColorUpper, thresh); //sc: checks if blocks are close enough to read??
 //		}
 //		ArrayList<MatOfPoint> contours = new ArrayList<>();//sc: no idea what mat of point is but it makes a list of them

@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -15,70 +12,82 @@ public class RedPlatformAuto extends Library {
     enum State{
         TO_PLATFORM, FROM_PLATFORM, PARKING, END
     }
-    State state;
+    State currentstate;
     int i = 0;
     long startTime, startTime2, startTime3, duration, duration2, duration3;
+    ElapsedTime clock = new ElapsedTime();
+    boolean moving = false;
 
     @Override public void init() {
         hardwareInit();
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);// we may use more motor encoders but some of the encoders have weird values
-        state = State.TO_PLATFORM;
+        currentstate = State.TO_PLATFORM;
     }
     public void loop()
     {
+        if(currentstate == State.TO_PLATFORM){
+            ToPlatform();
+        }
+        if(currentstate == State.FROM_PLATFORM){
+            FromPlatform();
+        }
+        if(currentstate == State.PARKING){
+            Parking();
+        }
+
         telemetry.addData("Red color: ", color.red());
-        telemetry.addData("State: ", state);
+        telemetry.addData("Millis since run: ", clock.seconds());
+        telemetry.addData("State: ", currentstate);
+    }
 
-        if(state == State.TO_PLATFORM)
-        {
-            
-            startTime = System.nanoTime();
-            duration = (System.nanoTime() - startTime)/1000000000;
-            slideForEncoders(60, -100);
-            while(duration<2){
-                duration = (System.nanoTime() - startTime)/1000000000;//divide by 1000000000 for seconds
-            }
+    public void ToPlatform() {
+        if (!moving) {
+            clock.reset();
+            moving = true;
+            slideForEncoders(60, -1);
+        } else if (clock.seconds() < 2) {
 
-            while(color.red()<20){
-                drive(1f,0,0);//drives until touching wall
-            }
-            drive(0,0,0);
-
-            state = State.FROM_PLATFORM;
+        } else if (clock.seconds() > 2 && color.red()<20) {
+            drive(1f,0,0);
         }
-
-        if(state == State.FROM_PLATFORM)
-        {
-            startTime2 = System.nanoTime();
-            duration2 = (System.nanoTime() - startTime2)/1000000000;
-//            grabber.setPosition(1);
-            while(duration2<=2){
-                duration2 = (System.nanoTime() - startTime2)/1000000000;//divide by 1000000000 for seconds
-            }
-
-            while(!front1.isPressed()&&!front2.isPressed()){
-                drive(-1f,0,0);//drives until touching wall
-            }
+        else{
+            moving = false;
             drive(0,0,0);
-
-            state = State.PARKING;
+            currentstate = State.FROM_PLATFORM;
         }
+    }
 
-        if(state == State.PARKING)
-        {
-            startTime3 = System.nanoTime();
-            duration3 = (System.nanoTime() - startTime3)/1000000000;
+    public void FromPlatform() {
+        if (!moving) {
+            clock.reset();
+            moving = true;
+            grabber.setPosition(1);
+        } else if (clock.seconds() < 2) {
+
+        } else if (clock.seconds() > 2 && (!front1.isPressed()||!front2.isPressed())) {
+            drive(-1f,0,0);//drives until touching wall
+        }
+        else{
+            moving = false;
+            drive(0,0,0);
+            currentstate = State.PARKING;
+        }
+    }
+
+    public void Parking() {
+        if (!moving) {
+            clock.reset();
+            moving = true;
             slideForEncoders(60, 100);
-            while(duration3<2){
-                duration3 = (System.nanoTime() - startTime3)/1000000000;//divide by 1000000000 for seconds
-            }
+        } else if (clock.seconds() < 2) {
 
-            while(color.red()<20){
-                drive(0,0,1);//drives until touching wall
-            }
+        } else if (clock.seconds() > 2 && color.red()<20) {
+            drive(0,0,1);
+        }
+        else{
+            moving = false;
             drive(0,0,0);
-
-            state = State.END;
+            currentstate = State.END;
         }
     }
 }
