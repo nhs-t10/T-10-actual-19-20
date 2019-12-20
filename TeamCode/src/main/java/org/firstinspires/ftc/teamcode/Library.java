@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
+import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 public abstract class Library extends OpMode
 {
@@ -13,6 +15,8 @@ public abstract class Library extends OpMode
     public static Servo platform, grabber;
     public static CRServo rotateGrabber;
     public static VoltageSensor voltageSensor;
+    public static TouchSensor front1, front2;
+    public static ColorSensor color;
     private static final int TRACTION_SCALER = 1;//temp value will be changed // Used in driveForEncoders/slideForEncoders
     // Initialize hardware devices and their zero behavior
     public void hardwareInit()
@@ -29,6 +33,10 @@ public abstract class Library extends OpMode
         platform = hardwareMap.servo.get("s0");
         grabber = hardwareMap.servo.get("s1");
         rotateGrabber = hardwareMap.crservo.get("s2");
+
+        color = hardwareMap.colorSensor.get("color1");
+        front1 = hardwareMap.touchSensor.get("touch1");
+        front2 = hardwareMap.touchSensor.get("touch2");
 
         //voltageSensor = hardwareMap.voltageSensor.get("vs1");
 
@@ -138,6 +146,11 @@ public abstract class Library extends OpMode
         frontRight.setPower(sums[1]);
         backLeft.setPower(sums[2]);
         backRight.setPower(sums[3]);
+        /*telemetry.addData("Front Left", sums[0]);
+        telemetry.addData("Front Right", sums[1]);
+        telemetry.addData("Back Left", sums[2]);
+        telemetry.addData("Back Right", sums[3]);
+        */
     }
 
     //drive method for auto using encoders
@@ -147,7 +160,7 @@ public abstract class Library extends OpMode
     public static void driveForEncoders(float distanceInCM, float scalar)
     {
         float startPosition = backLeft.getCurrentPosition();
-        while (Math.abs(startPosition - backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f + startPosition)
+        while (Math.abs(backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f + startPosition)//31.9 is scuffed
         {
             drive(scalar, 0, 0);
         }
