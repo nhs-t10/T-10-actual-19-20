@@ -12,9 +12,11 @@ public class AutoTest extends Library {
     public final int DRIVE_TO_PLATFORM = 100;
     public final float DRIVE_SPEED = .8f;
 
-    enum State{
+    enum State
+    {
         Pulling, Parking, Waiting
     }
+
     State stat = State.Pulling;
 
     @Override public void init() {

@@ -48,12 +48,12 @@ public abstract class Library extends OpMode
         return 1;
     }
 
-    public static void driveUntil(boolean sensor, int l, int r, int s){
+    public static void driveUntil(boolean sensor, int l, int r, int s)
+    {
         if (!sensor)
             drive(l, r, s);
-        else{
+        else
             drive(0, 0, 0);
-        }
     }
 
     //Each method below uses inputs to dictate the robot's actions
@@ -161,9 +161,8 @@ public abstract class Library extends OpMode
     {
         float startPosition = backLeft.getCurrentPosition();
         while (Math.abs(startPosition - backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f * TRACTION_SCALER + startPosition)
-        {
             drive(0, 0, scalar);
-        }
+
         drive(0, 0, 0);
     }
 
