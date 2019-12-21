@@ -48,10 +48,9 @@ public class RedPlatformAuto extends Library {
         if (!moving) {
             clock.reset();
             moving = true;
-            slideForEncoders(60, -1);
-        } else if (clock.seconds() < 2) {
-
-        } else if (clock.seconds() > 2 && color.red()<red) {
+        } else if (clock.seconds() < 1) {
+            drive(0,0,-1);
+        } else if (clock.seconds() > 1 && color.red()<red) {
             drive(1f,0,0);
         }
         else{
@@ -62,12 +61,12 @@ public class RedPlatformAuto extends Library {
     }
 
     public void FromPlatform() {
+        grabber.setPosition(1);
         if (!moving) {
             clock.reset();
             moving = true;
-            grabber.setPosition(1);
         } else if (clock.seconds() < 2) {
-
+            //wait for 2 seconds for grabber
         } else if (clock.seconds() > 2 && (!front1.isPressed()||!front2.isPressed())) {
             drive(-1f,0,0);//drives until touching wall
         }
@@ -79,13 +78,13 @@ public class RedPlatformAuto extends Library {
     }
 
     public void Parking() {
+        grabber.setPosition(0);
         if (!moving) {
             clock.reset();
             moving = true;
-            slideForEncoders(60, 1);
-        } else if (clock.seconds() < 2) {
-
-        } else if (clock.seconds() > 2 && color.red()<red) {
+        } else if (clock.seconds() < 1) {
+            drive(0,0,1);
+        } else if (clock.seconds() > 1 && color.red()<red) {
             drive(0,0,1);
         }
         else{
