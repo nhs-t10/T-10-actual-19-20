@@ -3,13 +3,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "TeleOp")
-public class DriveTeleOp extends Library
-{
-	public void init() { hardwareInit();
-	backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);}
+public class DriveTeleOp extends Library {
+	public void init() {
+		hardwareInit();
+		backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+	}
 
-	public void loop()
-	{
+	public void loop() {
 		//Intake for platform, lift, and grabber values
 		boolean a = gamepad1.a;
 		boolean b = gamepad1.b;
@@ -36,30 +36,35 @@ public class DriveTeleOp extends Library
 
 		//If controller two gives any commands (true) than the robot will use those inputs
 		//Otherwise, it will use the inputs of controller one
-		if (a2 || b2)
-			intake (a2, b2);
-		else
-			intake (a, b);
+		if (a2 || b2) {
+			intake(a2, b2);
+		} else {
+			intake(a, b);
+		}
 
-		if (x2)
+		if (x2) {
 			grip(true);
-		else
+		} else {
 			grip(x);
+		}
 
-		if (y2)
+		if (y2) {
 			platform(true);
-		else
+		} else {
 			platform(y);
+		}
 
-		if (liftUp2 || liftDown2)
+		if (liftUp2 || liftDown2) {
 			lift(liftUp2, liftDown2);
-		else
+		} else {
 			lift(liftUp, liftDown);
-		
-//		if (grabberRight2 != 0 || grabberLeft2 != 0)
+		}
+
+//		if (grabberRight2 != 0 || grabberLeft2 != 0){
 //			gRotate(grabberLeft2, grabberRight2);
-//		else
+//		} else
 //			gRotate(grabberLeft, grabberRight);
+//		}
 
 		drive(linear, rotation, side);
 		telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
