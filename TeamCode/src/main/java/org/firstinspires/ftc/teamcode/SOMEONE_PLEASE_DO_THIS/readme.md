@@ -1,1 +1,0 @@
-Okay, it's different now. Just add [this file](https://github.com/OpenFTC/OpenCV-Repackaged/blob/master/doc/libOpenCvNative.so) to the `FIRST` folder of the internal storage.
