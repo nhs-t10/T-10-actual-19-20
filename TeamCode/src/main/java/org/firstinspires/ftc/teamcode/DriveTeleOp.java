@@ -66,7 +66,17 @@ public class DriveTeleOp extends Library {
 //			gRotate(grabberLeft, grabberRight);
 //		}
 
-		drive(linear, rotation, side);
+		if(gamepad1.right_stick_button){
+			mode = mode.getNext();
+		}
+
+		if(mode == DRIVING.Slow){
+			drive(linear/2, rotation/2, side/2);} // slow driving
+		if(mode == DRIVING.Medium) {
+			drive(linear/1.5f, rotation/1.5f, side/1.5f);} // medium driving
+		if(mode == DRIVING.Fast) {
+			drive(linear, rotation, side);} // fast driving
+
 		telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
 	}
 }

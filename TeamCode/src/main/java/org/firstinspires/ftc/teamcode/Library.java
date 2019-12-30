@@ -18,6 +18,15 @@ public abstract class Library extends OpMode {
     public static ColorSensor color;
     private static final int TRACTION_SCALER = 1;//temp value will be changed // Used in driveForEncoders/slideForEncoders
     // Initialize hardware devices and their zero behavior
+
+    public DRIVING mode;
+
+    public enum DRIVING { Slow, Medium, Fast;
+        public DRIVING getNext() {
+            return values()[(ordinal() + 1) % values().length];
+        } // change driving mode
+    }
+
     public void hardwareInit() {
         frontLeft = hardwareMap.dcMotor.get("m0");
         frontRight = hardwareMap.dcMotor.get("m1");
@@ -44,8 +53,12 @@ public abstract class Library extends OpMode {
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        mode = DRIVING.Fast;
     }
 
     public static float getVoltage() {
@@ -110,7 +123,7 @@ public abstract class Library extends OpMode {
         }
     }
 
-    public static void gRotate(float left, float right) {
+    /*public static void gRotate(float left, float right) {
         if(right > left){
             rotateGrabber.setPower(right);
         } else if(left > right){
@@ -118,7 +131,7 @@ public abstract class Library extends OpMode {
         } else {
             rotateGrabber.setPower(0);
         }
-    }
+    }*/
 
     //Drive is the central movement and robot handling method of the code
     //Its parameters are l (forward component), r (rotational component), and s (skating component)
