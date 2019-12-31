@@ -6,10 +6,10 @@ public class RedQuarryAuto extends Library
 {
     /* Constants that will be used to determine how far the robot should travel at certain intervals
        All distances are in mm */
-    const LENGTH_OF_STONE = 203.2;
-    const DISTANCE_SKYSTONE_SHOULD_BE_LIFTED = 0;
-    const DISTANCE_FROM_QUARRY_TO_FOUNDATION = 1340;
-    const DISTANCE_UNTIL_CAMERA_SEES_ONE_STONE = 0;
+    private static final float LENGTH_OF_STONE = 203.2f;
+    private static final float DISTANCE_SKYSTONE_SHOULD_BE_LIFTED = 0;
+    private static final float DISTANCE_FROM_QUARRY_TO_FOUNDATION = 1340;
+    private static final float DISTANCE_UNTIL_CAMERA_SEES_ONE_STONE = 0;
 
     boolean isFoundationInBuildingSite = false;
 
