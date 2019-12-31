@@ -48,8 +48,6 @@ public abstract class Library extends OpMode {
         front1 = hardwareMap.touchSensor.get("touch1");
         front2 = hardwareMap.touchSensor.get("touch2");
 
-        //voltageSensor = hardwareMap.voltageSensor.get("vs1");
-
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -64,17 +62,10 @@ public abstract class Library extends OpMode {
         mode = DRIVING.Fast;
     }
 
-    public static float getVoltage() 
-    {
-        //return (float) voltageSensor.getVoltage();
-        return 1;
-    }
-
     public static void driveUntil(boolean sensor, int l, int r, int s) 
     {
         if (!sensor)
             drive(l, r, s);
-
         else
             drive(0, 0, 0);
     }
@@ -87,7 +78,6 @@ public abstract class Library extends OpMode {
 
         if (a)
             num = .5;
-
         if (b)
             num = -.5;
 
@@ -111,13 +101,12 @@ public abstract class Library extends OpMode {
             platform.setPosition(0);
     }
 
-    public static void liftGivenControllerValues(boolean up, boolean down) {
+    public static void liftGivenControllerValues(boolean up, boolean down) 
+    {
         if (up)
             lift.setPower(.5);
-
         if (down)
             lift.setPower(-.5);
-
         if (!up && !down)
             lift.setPower(0);
     }
@@ -174,7 +163,7 @@ public abstract class Library extends OpMode {
             
         drive(0, 0, 0);
     }
-    
+
     //drive method for auto using encoders
     //float scalar to chose direction+power
     //float distance in CM is the magnitude of the distance traveled left or right
@@ -188,4 +177,27 @@ public abstract class Library extends OpMode {
         drive(0, 0, 0);
     }
 
+
+    // TODO: make this use a PID controller
+    /**
+     * needs to be called every time through loop
+     * @param motor the target motor that will be rotating
+     * @param numRotations number of rotations, can be positive or negative
+     */
+    public static void rotateMotorUsingEncoder(DcMotor motor, float numRotations)
+    {
+        // the rotation of the encoders is measured in steps
+        const STEPS_PER_ROTATION = 1120;
+
+        //may cause overshooting, should probably be changed
+        if (numRotations > 0 && motor.getCurrentPosition() < numRotations * STEPS_PER_ROTATION)
+        {
+            motor.setPower(0.9);
+        }
+
+        else if (numRotations < 0 && motor.getCurrentPosition() > numRotations * STEPS_PER_ROTATION)
+        {
+            motor.setPower(-0.9)
+        }
+    }
 }
