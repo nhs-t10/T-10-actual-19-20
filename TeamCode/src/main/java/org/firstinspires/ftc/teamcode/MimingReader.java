@@ -64,9 +64,9 @@ public class MimingReader extends Library
             float multiply = Float.parseFloat(line.substring(cur)) / getVoltage();
 
             intake(parsedBoolean[0], parsedBoolean[1]);
-            grip(parsedBoolean[2]);
-            platform(parsedBoolean[3]);
-            lift(parsedBoolean[4], parsedBoolean[5]);
+            gripSkystone(parsedBoolean[2]);
+            gripFoundation(parsedBoolean[3]);
+            liftGivenControllerValues(parsedBoolean[4], parsedBoolean[5]);
             drive(parsedFloat[0] * multiply, parsedFloat[1] * multiply, parsedFloat[2] * multiply);
         }
 

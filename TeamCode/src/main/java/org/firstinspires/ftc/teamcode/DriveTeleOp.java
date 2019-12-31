@@ -10,7 +10,7 @@ public class DriveTeleOp extends Library {
 	}
 
 	public void loop() {
-		//Intake for platform, lift, and grabber values
+		//Intake for gripFoundation, liftGivenControllerValues, and grabber values
 		boolean a = gamepad1.a;
 		boolean b = gamepad1.b;
 		boolean a2 = gamepad2.a;
@@ -36,46 +36,47 @@ public class DriveTeleOp extends Library {
 
 		//If controller two gives any commands (true) than the robot will use those inputs
 		//Otherwise, it will use the inputs of controller one
-		if (a2 || b2) {
+		if (a2 || b2)
 			intake(a2, b2);
-		} else {
+
+		else
 			intake(a, b);
-		}
 
-		if (x2) {
-			grip(true);
-		} else {
-			grip(x);
-		}
+		if (x2)
+			gripSkystone(true);
 
-		if (y2) {
-			platform(true);
-		} else {
-			platform(y);
-		}
+		else
+			gripSkystone(x);
 
-		if (liftUp2 || liftDown2) {
-			lift(liftUp2, liftDown2);
-		} else {
-			lift(liftUp, liftDown);
-		}
+		if (y2)
+			gripFoundation(true);
 
-//		if (grabberRight2 != 0 || grabberLeft2 != 0){
+		else
+			gripFoundation(y);
+
+		if (liftUp2 || liftDown2)
+			liftGivenControllerValues(liftUp2, liftDown2);
+
+		else
+			liftGivenControllerValues(liftUp, liftDown);
+
+//		if (grabberRight2 != 0 || grabberLeft2 != 0)
 //			gRotate(grabberLeft2, grabberRight2);
-//		} else
+//
+//		else
 //			gRotate(grabberLeft, grabberRight);
-//		}
 
-		if(gamepad1.right_stick_button){
+		if(gamepad1.right_stick_button)
 			mode = mode.getNext();
-		}
 
-		if(mode == DRIVING.Slow){
-			drive(linear/2, rotation/2, side/2);} // slow driving
-		if(mode == DRIVING.Medium) {
-			drive(linear/1.5f, rotation/1.5f, side/1.5f);} // medium driving
-		if(mode == DRIVING.Fast) {
-			drive(linear, rotation, side);} // fast driving
+		if(mode == DRIVING.Slow)
+			drive(linear/2, rotation/2, side/2); // slow driving
+
+		if(mode == DRIVING.Medium)
+			drive(linear/1.5f, rotation/1.5f, side/1.5f); // medium driving
+
+		if(mode == DRIVING.Fast)
+			drive(linear, rotation, side); // fast driving
 
 		telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
 	}

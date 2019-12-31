@@ -48,9 +48,9 @@ public class MimingWriter extends Library
 		boolean liftDown = gamepad1.left_bumper;
 
 		intake(a, b);
-		grip(x);
-		platform(y);
-        lift(liftUp, liftDown);
+		gripSkystone(x);
+		gripFoundation(y);
+        liftGivenControllerValues(liftUp, liftDown);
         drive(linear, rotation, side);
         telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
 

@@ -23,13 +23,15 @@ public class RedQuarryAuto extends Library
            to push the foundation, use intake to drag the foundation into the building site,
            place the skystone */
 
+
+
         pickUpSkystone();
 
         while (!isRightSideTouching())
             drive(0, .5f, 0);
 
         driveFor(distanceFromQuarrySideToFoundation - distanceUntilCameraSeesOneStone);
-        platform(true);
+        gripFoundation(true);
 
         while (!isBackSideTouching())
             drive(-.5f, 0, 0);
