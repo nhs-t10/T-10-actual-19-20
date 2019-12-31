@@ -21,6 +21,12 @@ public abstract class Library extends OpMode {
 
     public DRIVING mode;
 
+    // the rotation of the encoders is measured in steps
+    final int ENCODER_STEPS_PER_ROTATION = 1120;
+
+    //current (assumed) position of the robot in mm
+    //measured from the back left o
+
     public enum DRIVING
     {
         Slow, Medium, Fast;
@@ -85,7 +91,7 @@ public abstract class Library extends OpMode {
         intakeTwo.setPower(num);
     }
 
-    public static void gripStone(boolean x)
+    public static void gripSkystone(boolean x)
     {
         if(x)
             grabber.setPosition(1);
@@ -169,11 +175,27 @@ public abstract class Library extends OpMode {
     //float scalar to chose direction+power
     //float distance in CM is the magnitude of the distance traveled left or right
     //use this method if and only if no other sensors can be used to complete the motion
-    public static void strafeForEncoders(float distanceInCM, float scalar)
+    // public static void strafeForEncoders(float distanceInCM, float scalar)
+    // {
+    //     float startPosition = backLeft.getCurrentPosition();
+    //     while (Math.abs(startPosition - backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f * TRACTION_SCALER + startPosition)
+    //         drive(0, 0, scalar);
+
+    //     drive(0, 0, 0);
+    // }
+
+    public static void strafeForEncoders(float distanceInMM, boolean sensor)
     {
         float startPosition = backLeft.getCurrentPosition();
-        while (Math.abs(startPosition - backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f * TRACTION_SCALER + startPosition)
-            drive(0, 0, scalar);
+        float num = distanceInMM;
+
+        while ((Math.abs(startPosition - backLeft.getCurrentPosition()) < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition)
+                && !sensor)
+        {
+            drive(0, 0, .5f * Math.abs(num) / distanceInMM);
+            if (startPosition - backLeft.getCurrentPosition() < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition - (distanceInMM*.20))
+                num *= .95;
+        }
 
         drive(0, 0, 0);
     }
@@ -183,22 +205,20 @@ public abstract class Library extends OpMode {
     /**
      * needs to be called every time through loop
      * @param motor the target motor that will be rotating
-     * @param numRotations number of rotations, can be positive or negative
+     * @param finalPos desired final rotation of the motor in encoder steps, can be positive or negative
      */
-    public static void rotateMotorUsingEncoder(DcMotor motor, float numRotations)
+    public static void rotateMotorToPosition(DcMotor motor, float finalPos)
     {
-        // the rotation of the encoders is measured in steps
-        const STEPS_PER_ROTATION = 1120;
 
-        //may cause overshooting, should probably be changed
-        if (numRotations > 0 && motor.getCurrentPosition() < numRotations * STEPS_PER_ROTATION)
+        // TODO: may cause overshooting, should probably be changed
+        if  (finalPos > 0 && motor.getCurrentPosition() < finalPos)
         {
             motor.setPower(0.9);
         }
 
-        else if (numRotations < 0 && motor.getCurrentPosition() > numRotations * STEPS_PER_ROTATION)
+        else if  (finalPos < 0 && motor.getCurrentPosition() > finalPos)
         {
-            motor.setPower(-0.9)
+            motor.setPower(-0.9);
         }
     }
 }
