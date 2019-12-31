@@ -111,15 +111,16 @@ public abstract class Library extends OpMode {
             lift.setPower(0);
     }
 
-    /*public static void gRotate(float left, float right) {
-        if(right > left){
+    public static void gripRotate(float left, float right)
+    {
+        if (right > left)
             rotateGrabber.setPower(right);
-        } else if(left > right){
+        else if (left > right)
             rotateGrabber.setPower(-left);
-        } else {
+        else
             rotateGrabber.setPower(0);
-        }
-    }*/
+    }
+
 
     //Drive is the central movement and robot handling method of the code
     //Its parameters are l (forward component), r (rotational component), and s (skating component)
@@ -168,7 +169,7 @@ public abstract class Library extends OpMode {
     //float scalar to chose direction+power
     //float distance in CM is the magnitude of the distance traveled left or right
     //use this method if and only if no other sensors can be used to complete the motion
-    public static void slideForEncoders(float distanceInCM, float scalar)
+    public static void strafeForEncoders(float distanceInCM, float scalar)
     {
         float startPosition = backLeft.getCurrentPosition();
         while (Math.abs(startPosition - backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f * TRACTION_SCALER + startPosition)

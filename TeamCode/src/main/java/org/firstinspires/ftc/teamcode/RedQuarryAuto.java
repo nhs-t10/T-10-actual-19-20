@@ -15,14 +15,14 @@ public class RedQuarryAuto extends Library
 
     enum AutonomousStates
     {
-        REACH_STARTING_LOCATION, GET_QUARRY_CONFIGURATION, PICKUP_STONE, DRIVE_TO_WALL, 
+        REACH_STARTING_LOCATION, GET_QUARRY_CONFIGURATION, PICKUP_STONE, DRIVE_TO_WALL,
         DRIVE_TO_FOUNDATION, GRIP_FOUNDATION, DRIVE_TO_BUILDING_SITE, PLACE_STONE, MOVE_UNDER_BRIDGE;
     }
 
-    public States(AutonomousStates autonomousStates) 
-    { 
-        this.autonomousStates = autonomousStates; 
-    }  
+    public States(AutonomousStates autonomousStates)
+    {
+        this.autonomousStates = autonomousStates;
+    }
 
     public void init()
     {
@@ -35,7 +35,7 @@ public class RedQuarryAuto extends Library
        Skid until a wall is detected
        Move forward (overshoot) to push the foundation
        Drag the foundation into the building site
-       Place the skystone 
+       Place the skystone
        Skid until under the bridge */
 
     public void loop()
@@ -62,14 +62,14 @@ public class RedQuarryAuto extends Library
             case DRIVE_TO_WALL:
                 // Make seperate function in library so that touch sensors aren't relied on (overshoot just in case)
                 // Make sure overshoot gradually slows down
-    
+
                 if (!touchingSide())
                     drive(0, .5, 0);
 
                 else
                 {
                     drive(0, 0, 0);
-                    curState = "DRIVE_TO_FOUNDATION"     
+                    curState = "DRIVE_TO_FOUNDATION"
                 }
 
                 break;
@@ -84,7 +84,7 @@ public class RedQuarryAuto extends Library
                 gripFoundation(true);
                 curState = "DRIVE_TO_BUILDING_SITE"
                 break;
-                
+
             case DRIVE_TO_BUILDING_SITE:
                 if(!touchingBack())
                     drive(-.5, 0, 0);
@@ -93,9 +93,9 @@ public class RedQuarryAuto extends Library
                 {
                     curState = "PLACE_STONE";
                     drive(0, 0, 0);
-                }    
+                }
 
-                break;    
+                break;
 
             case PLACE_STONE:
                 // not final sitance lifted, think about placing multiple stones
@@ -115,7 +115,7 @@ public class RedQuarryAuto extends Library
 
             default:
                 telemetry.add("Autonomous Compelted with Quarry Configuration " + quarryConfiguration);
-                break; 
+                break;
     }
 
     //Determines the configuration of stones, returning 3 if no skystone is detected
