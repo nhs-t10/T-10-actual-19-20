@@ -21,10 +21,10 @@ public abstract class Library extends OpMode {
 
     public DRIVING mode;
 
-    public enum DRIVING 
+    public enum DRIVING
     {
         Slow, Medium, Fast;
-        public DRIVING getNext() 
+        public DRIVING getNext()
         {
             return values()[(ordinal() + 1) % values().length];
         } // change driving mode
@@ -62,7 +62,7 @@ public abstract class Library extends OpMode {
         mode = DRIVING.Fast;
     }
 
-    public static void driveUntil(boolean sensor, int l, int r, int s) 
+    public static void driveUntil(boolean sensor, int l, int r, int s)
     {
         if (!sensor)
             drive(l, r, s);
@@ -72,7 +72,7 @@ public abstract class Library extends OpMode {
 
     //Each method below uses inputs to dictate the robot's actions
     //(i.e gripSkystone, which determines weather the robot should grab or not)
-    public static void intake(boolean a, boolean b) 
+    public static void intake(boolean a, boolean b)
     {
         double num = 0.0;
 
@@ -85,7 +85,7 @@ public abstract class Library extends OpMode {
         intakeTwo.setPower(num);
     }
 
-    public static void gripSkystone(boolean x) 
+    public static void gripStone(boolean x)
     {
         if(x)
             grabber.setPosition(1);
@@ -93,7 +93,7 @@ public abstract class Library extends OpMode {
             grabber.setPosition(0);
     }
 
-    public static void gripFoundation(boolean y) 
+    public static void gripFoundation(boolean y)
     {
         if (y)
             platform.setPosition(1);
@@ -101,7 +101,7 @@ public abstract class Library extends OpMode {
             platform.setPosition(0);
     }
 
-    public static void liftGivenControllerValues(boolean up, boolean down) 
+    public static void liftGivenControllerValues(boolean up, boolean down)
     {
         if (up)
             lift.setPower(.5);
@@ -128,7 +128,7 @@ public abstract class Library extends OpMode {
     //forward, rotational and horizontal multiplier arrays
     //Any resulting values above .9 are rounded down to .9 (any higher value might cause the robot
     //to crash) and used to set the power of each of the motors
-    public static void drive(float l, float r, float s) 
+    public static void drive(float l, float r, float s)
     {
         float[] sums = new float[4];
         float[] forwardMultiplier = {-1f, 1f, -1f, 1f};
@@ -156,12 +156,12 @@ public abstract class Library extends OpMode {
     //float scalar to chose direction+power
     //float distance in CM is the magnitude of the distance traveled forwards or backwards
     //use this method if and only if no other sensors can be used to complete the motion
-    public static void driveForEncoders(float distanceInCM, float scalar) 
+    public static void driveForEncoders(float distanceInCM, float scalar)
     {
         float startPosition = backLeft.getCurrentPosition();
         while (Math.abs(backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f + startPosition)
             drive(scalar, 0, 0);
-            
+
         drive(0, 0, 0);
     }
 

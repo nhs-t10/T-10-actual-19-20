@@ -2,18 +2,22 @@ package org.firstinspires.ftc.teamcode;
 
 enum States
 {
-    REACH_STARTING_LOCATION, GET_QUARRY_CONFIGURATION, DRIVE_TO_QUARRY, PICKUP_STONE, DRIVE_TO_WALL,
+    DRIVE_TO_STARTING_POS, GET_QUARRY_CONFIGURATION, DRIVE_TO_QUARRY, PICKUP_STONE, DRIVE_TO_WALL,
     DRIVE_TO_FOUNDATION, GRIP_FOUNDATION, DRIVE_TO_BUILDING_SITE, PLACE_STONE, MOVE_UNDER_BRIDGE;
 }
 
-public abstract class AutonomousStates extends Library
+public class AutonomousStates extends Library
 {
+    String curState;
+    AutonomousStates process;
+
     States states;
     int configuration;
-    int numOfStonesPlaced;
+    int numStonesPlaced;
 
-    private static final float HEIGHT_OF_STONE = 127;
-    private static final float LENGTH_OF_STONE = 203.2f;
+    private static final float STONE_HEIGHT = 127;
+    private static final float STONE_LENGTH = 203.2f;
+    private static final float FOUNDATION_HEIGHT = 57.2f;
     private static final float DISTANCE_FROM_SIDE_WALL_TO_QUARRY = 600;
     private static final float DISTANCE_FROM_QUARRY_TO_FOUNDATION = 1340;
     private static final float DISTANCE_UNTIL_CAMERA_SEES_ONE_STONE = 300;
@@ -23,15 +27,15 @@ public abstract class AutonomousStates extends Library
     {
         this.states = states;
         this.configuration = 0;
-        this.numOfStonesPlaced = 0;
+        this.numStonesPlaced = 0;
     }
 
-    public String basicAuto()
+    public String basicQuarryAuto()
     {
         switch(states)
         {
-            case REACH_STARTING_LOCATION:
-                strafeFor(DISTANCE_UNTIL_CAMERA_SEES_ONE_STONE);
+            case DRIVE_TO_STARTING_POS:
+                driveFor(DISTANCE_UNTIL_CAMERA_SEES_ONE_STONE);
                 return "GET_QUARRY_CONFIGURATION";
 
             case GET_QUARRY_CONFIGURATION:
@@ -44,7 +48,7 @@ public abstract class AutonomousStates extends Library
 
             case PICKUP_STONE:
                 rotateFor(90);
-                grip(true);
+                gripStone(true);
 
                 liftFor(10);
                 return "DRIVE_TO_TOP";
@@ -66,22 +70,24 @@ public abstract class AutonomousStates extends Library
                 return "PLACE_STONE";
 
             case PLACE_STONE:
-                liftDistance(HEIGHT_OF_STONE * numOfStonesPlaced);
+                rotateMotorToPosition(STONE_HEIGHT * numStonesPlaced);
+
                 driveFor(10);
-                grip(false);
+                gripStone(false);
 
                 strafeFor(100);
-                liftDistance(-(HEIGHT_OF_STONE * numOfStonesPlaced));
+                liftDistance(-(STONE_HEIGHT * numStonesPlaced));
 
                 return "MOVE_UNDER_BRIDGE";
 
             case MOVE_UNDER_BRIDGE:
                 if (!isUnderBridge())
+                {
                     drive(0, .5f, 0);
-                else
-                    drive(0, 0, 0);
+                    return "MOVE_UNDER_BRIDGE";
+                }
 
-                return "COMPLETED";
+                drive(0, 0, 0);
 
             default:
                 return "COMPLETED";
@@ -95,9 +101,24 @@ public abstract class AutonomousStates extends Library
             if(isSkystoneVisible())
                 return stone;
 
-            strafeFor(LENGTH_OF_STONE);
+            strafeFor(STONE_LENGTH);
         }
 
         return 3;
+    }
+
+    public void init()
+    {
+        curState = "REACH_STARTING_LOCATION";
+        process = new AutonomousStates(States.valueOf(curState));
+    }
+
+    public void loop()
+    {
+        while (!curState.equals("COMPLETED"))
+        {
+            curState = process.basicQuarryAuto();
+            process = new AutonomousStates(States.valueOf(curState));
+        }
     }
 }
