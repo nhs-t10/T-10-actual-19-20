@@ -55,13 +55,13 @@ public class AutoTest extends Library {
         {
             telemetry.addData("button getting pressed", "r1 is pressed");
 
-            strafeForEncoders(100,1);
+            strafeForEncoders(100,false);
         }
         if(liftDown)
         {
             telemetry.addData("button getting pressed", "a is pressed");
 
-            strafeForEncoders(150,.5f);
+            strafeForEncoders(150,false);
         }
 
 
