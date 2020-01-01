@@ -21,7 +21,7 @@ public class AutoTest extends Library {
 
     @Override public void init() {
         hardwareInit();
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);// we may use more motor encoders but some of the encoders have weird values
+        encodersInit();
 
     }
     public void loop()
@@ -34,6 +34,10 @@ public class AutoTest extends Library {
         boolean b = gamepad1.b;
         boolean liftUp = gamepad1.right_bumper;
         boolean liftDown = gamepad1.left_bumper;
+        telemetry.addData("front left:",frontLeft.getCurrentPosition());
+        telemetry.addData("front right:",frontRight.getCurrentPosition());
+        telemetry.addData("back left:",backLeft.getCurrentPosition());
+        telemetry.addData("back right:",backRight.getCurrentPosition());
         //float sums[] = drive(linear,rotation,side); //THIS ERRORS
 
         if(a)
@@ -51,13 +55,13 @@ public class AutoTest extends Library {
         {
             telemetry.addData("button getting pressed", "r1 is pressed");
 
-            strafeForEncoders(100,1);
+            strafeForEncoders(100,false);
         }
         if(liftDown)
         {
             telemetry.addData("button getting pressed", "a is pressed");
 
-            strafeForEncoders(150,.5f);
+            strafeForEncoders(150,false);
         }
 
 
