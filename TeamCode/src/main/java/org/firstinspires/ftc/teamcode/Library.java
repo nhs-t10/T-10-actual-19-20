@@ -165,7 +165,7 @@ public abstract class Library extends OpMode {
     public static void driveForEncoders(float distanceInCM, float scalar)
     {
         float startPosition = backLeft.getCurrentPosition();
-        while (Math.abs(backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f + startPosition)
+        while (Math.abs((backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f) < (distanceInCM / 31.9f) * 1120f + startPosition)
             drive(scalar, 0, 0);
 
         drive(0, 0, 0);
@@ -186,10 +186,11 @@ public abstract class Library extends OpMode {
 
     public static void strafeForEncoders(float distanceInMM, boolean sensor)
     {
+
         float startPosition = backLeft.getCurrentPosition();
         float num = distanceInMM;
 
-        while ((Math.abs(startPosition - backLeft.getCurrentPosition()) < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition)
+        while ((Math.abs(startPosition - (backLeft.getCurrentPosition()+backRight.getCurrentPosition()-frontRight.getCurrentPosition()-frontLeft.getCurrentPosition())/4f) < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition)
                 && !sensor)
         {
             drive(0, 0, .5f * Math.abs(num) / distanceInMM);
@@ -199,6 +200,15 @@ public abstract class Library extends OpMode {
 
         drive(0, 0, 0);
     }
+
+    public static void encodersInit()//slap this in the init of classes that wanna use encoders
+    {
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
 
 
     // TODO: make this use a PID controller
