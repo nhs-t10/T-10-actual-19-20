@@ -91,7 +91,7 @@ public abstract class Library extends OpMode {
         intakeTwo.setPower(num);
     }
 
-    public static void gripSkystone(boolean x)
+    public static void gripStone(boolean x)
     {
         if(x)
             grabber.setPosition(1);
@@ -230,4 +230,6 @@ public abstract class Library extends OpMode {
         int finalPosInSteps = (int)((finalPos / MM_PER_LIFT_ROTATION * ENCODER_STEPS_PER_ROTATION) + 0.5);
         rotateMotorToPosition(lift, finalPosInSteps);
     }
+
+    
 }

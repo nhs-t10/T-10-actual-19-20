@@ -80,7 +80,7 @@ public class AutonomousStates extends Library
                 gripStone(false);
 
                 strafeFor(100);
-                liftDistance(-(STONE_HEIGHT_WITHOUT_NUBS * numStonesPlaced));
+                moveLiftToPosition(0);
 
                 return "MOVE_UNDER_BRIDGE";
 
