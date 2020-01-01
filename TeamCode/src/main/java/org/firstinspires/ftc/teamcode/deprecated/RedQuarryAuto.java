@@ -1,5 +1,8 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.deprecated;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
+import org.firstinspires.ftc.teamcode.Library;
+import org.firstinspires.ftc.teamcode.States;
 
 @Autonomous(name = "RedQuarryAuto")
 public class RedQuarryAuto extends Library
@@ -7,7 +10,7 @@ public class RedQuarryAuto extends Library
     /* Constants that will be used to determine how far the robot should travel at certain intervals
        All distances are in mm */
     private static final float LENGTH_OF_STONE = 203.2f;
-    private static final float DISTANCE_SKYSTONE_SHOULD_BE_LIFTED = 0;
+    private static final float DISTANCE_TO_LIFT_SKYSTONE_WHILE_TRAVELING = 4;
     private static final float DISTANCE_FROM_QUARRY_TO_FOUNDATION = 1340;
     private static final float DISTANCE_UNTIL_CAMERA_SEES_ONE_STONE = 0;
 
@@ -55,7 +58,7 @@ public class RedQuarryAuto extends Library
                 // rotate robot so that lift is facing forwards
                 // drive remaining distance to quarry so that gripper is against stones
                 grip(true);
-                liftDistance(DISTANCE_SKYSTONE_SHOULD_BE_LIFTED);
+                liftDistance(DISTANCE_TO_LIFT_SKYSTONE_WHILE_TRAVELING);
                 curState = "DRIVE_TO_TOP"
                 break;
 
@@ -98,8 +101,9 @@ public class RedQuarryAuto extends Library
                 break;
 
             case PLACE_STONE:
-                // not final sitance lifted, think about placing multiple stones
-                liftDistance(-DISTANCE_SKYSTONE_SHOULD_BE_LIFTED);
+                // not final distance lifted, think about placing multiple stones
+                //liftDistance(-DISTANCE_TO_LIFT_SKYSTONE_WHILE_TRAVELING);
+                moveLiftToPosition(0);
                 grip(false);
                 curState = "MOVE_UNDER_BRIDGE";
                 break;

@@ -15,13 +15,17 @@ public class AutonomousStates extends Library
     int configuration;
     int numStonesPlaced;
 
-    private static final float STONE_HEIGHT = 127;
+    private static final float STONE_HEIGHT_WITHOUT_NUBS = 101.6f;
+    private static final float STONE_NUB_HEIGHT = 25.4f;
     private static final float STONE_LENGTH = 203.2f;
+    private static final float STONE_WIDTH = 101.6f;
     private static final float FOUNDATION_HEIGHT = 57.2f;
     private static final float DISTANCE_FROM_SIDE_WALL_TO_QUARRY = 600;
     private static final float DISTANCE_FROM_QUARRY_TO_FOUNDATION = 1340;
     private static final float DISTANCE_UNTIL_CAMERA_SEES_ONE_STONE = 300;
     private static final float DISTANCE_FROM_STARTING_POSITION_TO_TOP_WALL = 300;
+
+    private static final float STONE_CLEARANCE_HEIGHT = 4;
 
     public AutonomousStates(States states)
     {
@@ -50,7 +54,7 @@ public class AutonomousStates extends Library
                 rotateFor(90);
                 gripStone(true);
 
-                liftFor(10);
+                moveLiftToPosition(STONE_CLEARANCE_HEIGHT);
                 return "DRIVE_TO_TOP";
 
             case DRIVE_TO_WALL:
@@ -70,13 +74,13 @@ public class AutonomousStates extends Library
                 return "PLACE_STONE";
 
             case PLACE_STONE:
-                rotateMotorToPosition(STONE_HEIGHT * numStonesPlaced);
+                moveLiftToPosition(FOUNDATION_HEIGHT + (numStonesPlaced * STONE_HEIGHT_WITHOUT_NUBS) + STONE_NUB_HEIGHT + STONE_CLEARANCE_HEIGHT);
 
                 driveFor(10);
                 gripStone(false);
 
                 strafeFor(100);
-                liftDistance(-(STONE_HEIGHT * numStonesPlaced));
+                liftDistance(-(STONE_HEIGHT_WITHOUT_NUBS * numStonesPlaced));
 
                 return "MOVE_UNDER_BRIDGE";
 

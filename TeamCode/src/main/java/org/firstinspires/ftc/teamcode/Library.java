@@ -22,11 +22,11 @@ public abstract class Library extends OpMode {
     public DRIVING mode;
 
     // the rotation of the encoders is measured in steps
-    final int ENCODER_STEPS_PER_ROTATION = 1120;
+    final static int ENCODER_STEPS_PER_ROTATION = 1120;
 
-    //current (assumed) position of the robot in mm
-    //measured from the back left o
-
+    // mm the lift moves for each rotation of the lift motor
+    // TODO: measured as the diameter of the spool
+    final static int MM_PER_LIFT_ROTATION = 1;
     public enum DRIVING
     {
         Slow, Medium, Fast;
@@ -220,5 +220,14 @@ public abstract class Library extends OpMode {
         {
             motor.setPower(-0.9);
         }
+    }
+
+    /**
+     * moves the stone lift to a target position
+     * @param finalPos target lift position in mm
+     */
+    public static void moveLiftToPosition(float finalPos) {
+        int finalPosInSteps = (int)((finalPos / MM_PER_LIFT_ROTATION * ENCODER_STEPS_PER_ROTATION) + 0.5);
+        rotateMotorToPosition(lift, finalPosInSteps);
     }
 }
