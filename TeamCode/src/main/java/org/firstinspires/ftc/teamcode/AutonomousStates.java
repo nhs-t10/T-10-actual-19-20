@@ -50,7 +50,7 @@ public class AutonomousStates extends Library
                 rotateFor(90);
                 gripStone(true);
 
-                liftFor(10);
+                rotateMotorToPosition(FOUNDATION_HEIGHT);
                 return "DRIVE_TO_TOP";
 
             case DRIVE_TO_WALL:
@@ -76,7 +76,7 @@ public class AutonomousStates extends Library
                 gripStone(false);
 
                 strafeFor(100);
-                liftDistance(-(STONE_HEIGHT * numStonesPlaced));
+                rotateMotorToPosition(-(STONE_HEIGHT * numStonesPlaced + FOUNDATION_HEIGHT));
 
                 return "MOVE_UNDER_BRIDGE";
 
