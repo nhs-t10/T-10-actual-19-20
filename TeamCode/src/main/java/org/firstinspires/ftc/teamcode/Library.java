@@ -127,6 +127,16 @@ public abstract class Library extends OpMode {
             rotateGrabber.setPower(0);
     }
 
+    public static boolean isUnderBridge()
+    {
+        return false;
+    }
+
+    public static boolean isSkystoneVisible()
+    {
+        return true;
+    }
+
 
     //Drive is the central movement and robot handling method of the code
     //Its parameters are l (forward component), r (rotational component), and s (skating component)
