@@ -18,14 +18,14 @@ public class BluePlatformAuto extends Library {
     ElapsedTime clock = new ElapsedTime();
     boolean moving = false;
 
-    @Override public void init() {
+    @Override public void init(){
         hardwareInit();
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);// we may use more motor encoders but some of the encoders have weird values
         currentstate = State.TO_PLATFORM;
         gray = color.blue();
         blue = (int)(gray*1.3);
     }
-    public void loop() {
+    public void loop(){
         if(currentstate == State.TO_PLATFORM){
             ToPlatform();
         }
@@ -43,13 +43,13 @@ public class BluePlatformAuto extends Library {
         telemetry.addData("State: ", currentstate);
     }
 
-    public void ToPlatform() {
-        if (!moving) {
+    public void ToPlatform(){
+        if(!moving){
             clock.reset();
             moving = true;
-        } else if (clock.seconds() < 1) {
+        }else if(clock.seconds() < 1){
             drive(0,0,1);
-        } else if (clock.seconds() > 1 && color.blue()< blue) {
+        }else if(clock.seconds() > 1 && color.blue()< blue){
             drive(1f,0,0);
         }
         else{
@@ -59,14 +59,14 @@ public class BluePlatformAuto extends Library {
         }
     }
 
-    public void FromPlatform() {
+    public void FromPlatform(){
         grabber.setPosition(1);
-        if (!moving) {
+        if(!moving){
             clock.reset();
             moving = true;
-        } else if (clock.seconds() < 2) {
+        } else if(clock.seconds() < 2){
             //wait for 2 seconds for grabber
-        } else if (clock.seconds() > 2 && (!front1.isPressed()||!front2.isPressed())) {
+        } else if(clock.seconds() > 2 && (!front1.isPressed()||!front2.isPressed())){
             drive(-1f,0,0);//drives until touching wall
         }
         else{
@@ -76,14 +76,14 @@ public class BluePlatformAuto extends Library {
         }
     }
 
-    public void Parking() {
+    public void Parking(){
         grabber.setPosition(0);
-        if (!moving) {
+        if(!moving){
             clock.reset();
             moving = true;
-        } else if (clock.seconds() < 1) {
+        } else if(clock.seconds() < 1){
             drive(0,0,-1);
-        } else if (clock.seconds() > 1 && color.blue()< blue) {
+        } else if(clock.seconds() > 1 && color.blue()< blue){
             drive(0,0,-1);
         }
         else{

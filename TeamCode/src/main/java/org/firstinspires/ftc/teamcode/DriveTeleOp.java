@@ -4,12 +4,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "TeleOp")
 public class DriveTeleOp extends Library {
-	public void init() {
+	public void init(){
 		hardwareInit();
 		backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 	}
 
-	public void loop() {
+	public void loop(){
 		//Intake for gripFoundation, liftGivenControllerValues, and grabber values
 		boolean a = gamepad1.a;
 		boolean b = gamepad1.b;
@@ -36,47 +36,52 @@ public class DriveTeleOp extends Library {
 
 		//If controller two gives any commands (true) than the robot will use those inputs
 		//Otherwise, it will use the inputs of controller one
-		if (a2 || b2)
+		if(a2 || b2){
 			intake(a2, b2);
-
-		else
+		}else{
 			intake(a, b);
+		}//this is proper bracket etiquette
 
-		if (x2)
-			gripSkystone(true);
+		if(x2){
+			gripStone(true);
+		}else{
+			gripStone(x);
+		}
 
-		else
-			gripSkystone(x);
-
-		if (y2)
+		if(y2){
 			gripFoundation(true);
-
-		else
+		}else{
 			gripFoundation(y);
+		}
 
-		if (liftUp2 || liftDown2)
+		if(liftUp2 || liftDown2){
 			liftGivenControllerValues(liftUp2, liftDown2);
-
-		else
+		}else{
 			liftGivenControllerValues(liftUp, liftDown);
+		}
 
-//		if (grabberRight2 != 0 || grabberLeft2 != 0)
+
+//		if(grabberRight2 != 0 || grabberLeft2 != 0){
 //			gRotate(grabberLeft2, grabberRight2);
-//
-//		else
+//		}else{
 //			gRotate(grabberLeft, grabberRight);
+//		}
 
-		if(gamepad1.right_stick_button)
+		if(gamepad1.right_stick_button){
 			mode = mode.getNext();
+		}
 
-		if(mode == DRIVING.Slow)
+		if(mode == DRIVING.Slow){
 			drive(linear/2, rotation/2, side/2); // slow driving
+		}
 
-		if(mode == DRIVING.Medium)
+		if(mode == DRIVING.Medium){
 			drive(linear/1.5f, rotation/1.5f, side/1.5f); // medium driving
+		}
 
-		if(mode == DRIVING.Fast)
+		if(mode == DRIVING.Fast){
 			drive(linear, rotation, side); // fast driving
+		}
 
 		telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
 	}

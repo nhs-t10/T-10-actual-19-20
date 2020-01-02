@@ -27,16 +27,14 @@ public abstract class Library extends OpMode {
     // mm the lift moves for each rotation of the lift motor
     // TODO: measured as the diameter of the spool
     final static int MM_PER_LIFT_ROTATION = 1;
-    public enum DRIVING
-    {
+    public enum DRIVING{
         Slow, Medium, Fast;
-        public DRIVING getNext()
-        {
+        public DRIVING getNext(){
             return values()[(ordinal() + 1) % values().length];
         } // change driving mode
     }
 
-    public void hardwareInit() {
+    public void hardwareInit(){
         frontLeft = hardwareMap.dcMotor.get("m0");
         frontRight = hardwareMap.dcMotor.get("m1");
         backLeft = hardwareMap.dcMotor.get("m2");
@@ -68,63 +66,67 @@ public abstract class Library extends OpMode {
         mode = DRIVING.Fast;
     }
 
-    public static void driveUntil(boolean sensor, int l, int r, int s)
-    {
-        if (!sensor)
+    public static void driveUntil(boolean sensor, int l, int r, int s){
+        if (!sensor){
             drive(l, r, s);
-        else
+        } else{
             drive(0, 0, 0);
+        }
     }
 
     //Each method below uses inputs to dictate the robot's actions
     //(i.e gripSkystone, which determines weather the robot should grab or not)
-    public static void intake(boolean a, boolean b)
-    {
+    public static void intake(boolean a, boolean b){
         double num = 0.0;
 
-        if (a)
+        if (a){
             num = .5;
-        if (b)
+        }
+        if (b){
             num = -.5;
+        }
 
         intakeOne.setPower(num);
         intakeTwo.setPower(num);
     }
 
-    public static void gripStone(boolean x)
-    {
-        if(x)
+    public static void gripStone(boolean x){
+        if(x){
             grabber.setPosition(1);
-        else
+        }else{
             grabber.setPosition(0);
+        }
     }
 
-    public static void gripFoundation(boolean y)
-    {
-        if (y)
+    public static void gripFoundation(boolean y){
+        if(y){
             platform.setPosition(1);
-        else
+        }else{
             platform.setPosition(0);
+        }
     }
 
-    public static void liftGivenControllerValues(boolean up, boolean down)
-    {
-        if (up)
+    public static void liftGivenControllerValues(boolean up, boolean down){
+        if(up){
             lift.setPower(.5);
-        if (down)
+        }
+        if(down){
             lift.setPower(-.5);
-        if (!up && !down)
+        }
+        if(!up && !down){
             lift.setPower(0);
+        }
     }
 
     public static void gripRotate(float left, float right)
     {
-        if (right > left)
+        if(right > left){
             rotateGrabber.setPower(right);
-        else if (left > right)
+        }else if(left > right){
             rotateGrabber.setPower(-left);
-        else
+        }else{
             rotateGrabber.setPower(0);
+        }
     }
 
     public static boolean isUnderBridge()
@@ -144,19 +146,21 @@ public abstract class Library extends OpMode {
     //forward, rotational and horizontal multiplier arrays
     //Any resulting values above .9 are rounded down to .9 (any higher value might cause the robot
     //to crash) and used to set the power of each of the motors
-    public static void drive(float l, float r, float s)
-    {
+    public static void drive(float l, float r, float s){
         float[] sums = new float[4];
         float[] forwardMultiplier = {-1f, 1f, -1f, 1f};
         float[] rotationalMultiplier = {1f, 1f, 1f, 1f};
         float[] horizontalMultiplier = {1f, 1f, -1f, -1f};
 
-        for (int i = 0; i < 4; i++)
+        for(int i = 0; i < 4; i++){
             sums[i] += forwardMultiplier[i] * l + rotationalMultiplier[i] * r + horizontalMultiplier[i] * s;
+        }
 
-        for (int i = 0; i < 4; i++)
-            if (sums[i] > .9)
+        for(int i = 0; i < 4; i++){
+            if (sums[i] > .9){
                 sums[i] = .9f;
+            }
+        }
 
         frontLeft.setPower(sums[0]);
         frontRight.setPower(sums[1]);
@@ -172,11 +176,11 @@ public abstract class Library extends OpMode {
     //float scalar to chose direction+power
     //float distance in CM is the magnitude of the distance traveled forwards or backwards
     //use this method if and only if no other sensors can be used to complete the motion
-    public static void driveForEncoders(float distanceInCM, float scalar)
-    {
+    public static void driveForEncoders(float distanceInCM, float scalar){
         float startPosition = backLeft.getCurrentPosition();
-        while (Math.abs((backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f) < (distanceInCM / 31.9f) * 1120f + startPosition)
+        while(Math.abs((backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f) < (distanceInCM / 31.9f) * 1120f + startPosition){
             drive(scalar, 0, 0);
+        }
 
         drive(0, 0, 0);
     }
@@ -194,29 +198,38 @@ public abstract class Library extends OpMode {
     //     drive(0, 0, 0);
     // }
 
-    public static void strafeForEncoders(float distanceInMM, boolean sensor)
-    {
+    public static void strafeForEncoders(float distanceInMM, boolean sensor){
 
         float startPosition = backLeft.getCurrentPosition();
         float num = distanceInMM;
 
-        while ((Math.abs(startPosition - (backLeft.getCurrentPosition()+backRight.getCurrentPosition()-frontRight.getCurrentPosition()-frontLeft.getCurrentPosition())/4f) < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition)
-                && !sensor)
-        {
+        while((Math.abs(startPosition - (backLeft.getCurrentPosition()+backRight.getCurrentPosition()-frontRight.getCurrentPosition()-frontLeft.getCurrentPosition())/4f) < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition)
+                && !sensor){
             drive(0, 0, .5f * Math.abs(num) / distanceInMM);
-            if (startPosition - backLeft.getCurrentPosition() < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition - (distanceInMM*.20))
+            if(startPosition - backLeft.getCurrentPosition() < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition - (distanceInMM*.20)){
                 num *= .95;
+            }
         }
 
         drive(0, 0, 0);
     }
 
-    public static void encodersInit()//slap this in the init of classes that wanna use encoders
-    {
+    public static void encodersInit(){//slap this in the init of classes that wanna use encoders
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public static boolean underBridge(int gray, boolean blue){//tells if under bidge or not (basic version)
+        int minColor = (int)(gray*1.3);//number 1.3 worked on old robot in Lab. Expect change with new robot
+        if(color.blue() > minColor && blue){
+            return true;
+        }if(color.red() > minColor && !blue){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 
@@ -227,17 +240,14 @@ public abstract class Library extends OpMode {
      * @param motor the target motor that will be rotating
      * @param finalPos desired final rotation of the motor in encoder steps, can be positive or negative
      */
-    public static void rotateMotorToPosition(DcMotor motor, float finalPos)
-    {
+    public static void rotateMotorToPosition(DcMotor motor, float finalPos){
 
         // TODO: may cause overshooting, should probably be changed
-        if  (finalPos > 0 && motor.getCurrentPosition() < finalPos)
-        {
+        if(finalPos > 0 && motor.getCurrentPosition() < finalPos){
             motor.setPower(0.9);
         }
 
-        else if  (finalPos < 0 && motor.getCurrentPosition() > finalPos)
-        {
+        else if(finalPos < 0 && motor.getCurrentPosition() > finalPos){
             motor.setPower(-0.9);
         }
     }
@@ -246,7 +256,7 @@ public abstract class Library extends OpMode {
      * moves the stone lift to a target position
      * @param finalPos target lift position in mm
      */
-    public static void moveLiftToPosition(float finalPos) {
+    public static void moveLiftToPosition(float finalPos){
         int finalPosInSteps = (int)((finalPos / MM_PER_LIFT_ROTATION * ENCODER_STEPS_PER_ROTATION) + 0.5);
         rotateMotorToPosition(lift, finalPosInSteps);
     }
