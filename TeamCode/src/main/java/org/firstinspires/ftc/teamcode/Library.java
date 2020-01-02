@@ -129,6 +129,16 @@ public abstract class Library extends OpMode {
         }
     }
 
+    public static boolean isUnderBridge()
+    {
+        return false;
+    }
+
+    public static boolean isSkystoneVisible()
+    {
+        return true;
+    }
+
 
     //Drive is the central movement and robot handling method of the code
     //Its parameters are l (forward component), r (rotational component), and s (skating component)
@@ -167,7 +177,7 @@ public abstract class Library extends OpMode {
     //float distance in CM is the magnitude of the distance traveled forwards or backwards
     //use this method if and only if no other sensors can be used to complete the motion
     public static void driveForEncoders(float distanceInCM, float scalar){
-        float startPosition = backLeft.getCurrentPosition();
+        float startPosition = (backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f;
         while(Math.abs((backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f) < (distanceInCM / 31.9f) * 1120f + startPosition){
             drive(scalar, 0, 0);
         }
@@ -190,7 +200,7 @@ public abstract class Library extends OpMode {
 
     public static void strafeForEncoders(float distanceInMM, boolean sensor){
 
-        float startPosition = backLeft.getCurrentPosition();
+        float startPosition = (backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f;
         float num = distanceInMM;
 
         while((Math.abs(startPosition - (backLeft.getCurrentPosition()+backRight.getCurrentPosition()-frontRight.getCurrentPosition()-frontLeft.getCurrentPosition())/4f) < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition)
