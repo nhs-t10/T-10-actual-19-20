@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-@Autonomous(name="red close block")
+@Autonomous(name="blue close block")
 public class BlockAutoCloseParking extends Library{
     public final int platformDistance = 60;
     public final float driveSpeed = .75f;

@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-@Autonomous(name="red far block")
+@Autonomous(name="blue far block")
 public class BlockAutoFarParking extends Library {
     public final int platformDistance = 60;
     public final float driveSpeed = .75f;

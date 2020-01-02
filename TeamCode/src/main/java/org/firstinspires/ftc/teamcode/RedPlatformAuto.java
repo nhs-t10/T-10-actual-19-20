@@ -6,34 +6,37 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="Red Platform")//do not delete this test class used by sasha
 public class RedPlatformAuto extends Library {
-    public final int platformDistance = 60;
-    public final float driveSpeed = .75f;
 
     enum State{
-        TO_PLATFORM, FROM_PLATFORM, PARKING, END
+        TO_FOUNDATION, FROM_FOUNDATION, PARKING, END
     }
     State currentstate;
-    int i = 0, gray, red;
-    long startTime, startTime2, startTime3, duration, duration2, duration3;
+    int gray, red;
     ElapsedTime clock = new ElapsedTime();
     boolean moving = false;
 
     @Override public void init(){
         hardwareInit();
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);// we may use more motor encoders but some of the encoders have weird values
-        currentstate = State.TO_PLATFORM;
+        currentstate = State.TO_FOUNDATION;
         gray = color.red();
         red = (int)(gray*1.3);
     }
     public void loop(){
-        if(currentstate == State.TO_PLATFORM){
-            ToPlatform();
+        /*
+        Loop constantly checks state, and then executes a command based on this.
+        */
+        if(currentstate == State.TO_FOUNDATION){
+            ToFoundation();
         }
-        if(currentstate == State.FROM_PLATFORM){
-            FromPlatform();
+        if(currentstate == State.FROM_FOUNDATION){
+            FromFoundation();
         }
         if(currentstate == State.PARKING){
             Parking();
+        }
+        if(currentstate == State.END){
+            Stop();
         }
 
         telemetry.addData("Red reading: ", color.red());
@@ -43,7 +46,7 @@ public class RedPlatformAuto extends Library {
         telemetry.addData("State: ", currentstate);
     }
 
-    public void ToPlatform(){
+    public void ToFoundation(){
         if(!moving){
             clock.reset();
             moving = true;
@@ -55,11 +58,11 @@ public class RedPlatformAuto extends Library {
         else{
             moving = false;
             drive(0,0,0);
-            currentstate = State.FROM_PLATFORM;
+            currentstate = State.FROM_FOUNDATION;
         }
     }
 
-    public void FromPlatform(){
+    public void FromFoundation(){
         grabber.setPosition(1);
         if (!moving){
             clock.reset();
@@ -91,6 +94,11 @@ public class RedPlatformAuto extends Library {
             drive(0,0,0);
             currentstate = State.END;
         }
+    }
+
+    public void Stop(){
+        moving = false;
+        drive(0,0,0);
     }
 }
 
