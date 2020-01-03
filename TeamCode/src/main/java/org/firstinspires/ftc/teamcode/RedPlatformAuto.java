@@ -52,7 +52,7 @@ public class RedPlatformAuto extends Library {
             moving = true;
         } else if(clock.seconds() < 1){
             drive(0,0,-1);
-        } else if(clock.seconds() > 1 && color.red()<red){
+        } else if(clock.seconds() > 1 && clock.seconds() < 2.5){ //color.red()<red
             drive(1f,0,0);
         }
         else{
@@ -69,7 +69,7 @@ public class RedPlatformAuto extends Library {
             moving = true;
         } else if(clock.seconds() < 2){
             //wait for 2 seconds for grabber
-        } else if(clock.seconds() > 2 && (!front1.isPressed()||!front2.isPressed())){
+        } else if(clock.seconds() > 2 && clock.seconds() < 3.6){ //(!front1.isPressed()||!front2.isPressed())
             drive(-1f,0,0);//drives until touching wall
         }
         else{
@@ -86,7 +86,7 @@ public class RedPlatformAuto extends Library {
             moving = true;
         } else if(clock.seconds() < 1){
             drive(0,0,1);
-        } else if(clock.seconds() > 1 && color.red()<red){
+        } else if(clock.seconds() > 1 && (color.red()<red || clock.seconds() < 4)){
             drive(0,0,1);
         }
         else{
