@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Blue Depot")//do not delete this test class used by sasha
+@Autonomous(name="Blue Platform Park")//do not delete this test class used by sasha
 public class BluePlatformPark extends Library {
 
     enum State{

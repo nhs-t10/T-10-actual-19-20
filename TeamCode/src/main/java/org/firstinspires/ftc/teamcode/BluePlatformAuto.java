@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Blue Platform")//do not delete this test class used by sasha
+@Autonomous(name="Blue Platform Auto")//do not delete this test class used by sasha
 public class BluePlatformAuto extends Library {
 
     enum State{
@@ -50,10 +50,8 @@ public class BluePlatformAuto extends Library {
         if(!moving){
             clock.reset();
             moving = true;
-        } else if(clock.seconds() < 1){
-            drive(0,0,-1);
-        } else if(clock.seconds() > 1 && clock.seconds() < 2.5){ //color.blue()<blue
-            drive(1f,0,0);
+        } else if(clock.seconds() < 1.4){ //color.blue()<blue
+            drive(.75f,0,0);
         }
         else{
             moving = false;
@@ -69,8 +67,8 @@ public class BluePlatformAuto extends Library {
             moving = true;
         } else if(clock.seconds() < 2){
             //wait for 2 seconds for grabber
-        } else if(clock.seconds() > 2 && clock.seconds() < 3.6){ //(!front1.isPressed()||!front2.isPressed())
-            drive(-1f,0,0);//drives until touching wall
+        } else if(clock.seconds() > 2 && clock.seconds() < 3.5){ //(!front1.isPressed()||!front2.isPressed())
+            drive(-.75f,0,0);//drives until touching wall
         }
         else{
             moving = false;
@@ -84,10 +82,8 @@ public class BluePlatformAuto extends Library {
         if(!moving){
             clock.reset();
             moving = true;
-        } else if(clock.seconds() < 1){
-            drive(0,0,1);
-        } else if(clock.seconds() > 1 && (color.blue()< blue || clock.seconds() < 3)){
-            drive(0,0,1);
+        } else if(color.blue()< blue || clock.seconds() < 3){
+            drive(0,0,.5f);
         }
         else{
             moving = false;
