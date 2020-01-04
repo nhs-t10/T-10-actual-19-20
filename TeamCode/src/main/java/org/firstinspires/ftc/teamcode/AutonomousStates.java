@@ -105,7 +105,11 @@ public class AutonomousStates extends Library
             if(isSkystoneVisible())
                 return stone;
 
+<<<<<<< Updated upstream
             strafeFor(STONE_LENGTH);
+=======
+            strafeForEncoders(STONE_LENGTH);
+>>>>>>> Stashed changes
         }
 
         return 3;
