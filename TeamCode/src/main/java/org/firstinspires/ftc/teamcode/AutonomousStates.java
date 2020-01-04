@@ -39,7 +39,7 @@ public class AutonomousStates extends Library
         switch(states)
         {
             case DRIVE_TO_STARTING_POS:
-                driveFor(DISTANCE_UNTIL_CAMERA_SEES_ONE_STONE);
+                driveForEncoders(DISTANCE_UNTIL_CAMERA_SEES_ONE_STONE, .5f);
                 return "GET_QUARRY_CONFIGURATION";
 
             case GET_QUARRY_CONFIGURATION:
@@ -47,7 +47,7 @@ public class AutonomousStates extends Library
                 return "DRIVE_TO_QUARRY";
 
             case DRIVE_TO_QUARRY:
-                driveFor(DISTANCE_FROM_SIDE_WALL_TO_QUARRY - DISTANCE_UNTIL_CAMERA_SEES_ONE_STONE);
+                driveForEncoders(DISTANCE_FROM_SIDE_WALL_TO_QUARRY - DISTANCE_UNTIL_CAMERA_SEES_ONE_STONE, .5f);
                 return "PICKUP_STONE";
 
             case PICKUP_STONE:
@@ -58,11 +58,11 @@ public class AutonomousStates extends Library
                 return "DRIVE_TO_TOP";
 
             case DRIVE_TO_WALL:
-                strafeFor(DISTANCE_FROM_STARTING_POSITION_TO_TOP_WALL);
+                strafeForEncoders(DISTANCE_FROM_STARTING_POSITION_TO_TOP_WALL, true);
                 return "DRIVE_TO_FOUNDATION";
 
             case DRIVE_TO_FOUNDATION:
-                driveFor(DISTANCE_FROM_QUARRY_TO_FOUNDATION);
+                driveForEncoders(DISTANCE_FROM_QUARRY_TO_FOUNDATION, .5f);
                 return "GRIP_FOUNDATION";
 
             case GRIP_FOUNDATION:
@@ -70,16 +70,16 @@ public class AutonomousStates extends Library
                 return "DRIVE_TO_BUILDING_SITE";
 
             case DRIVE_TO_BUILDING_SITE:
-                driveFor(-(DISTANCE_FROM_SIDE_WALL_TO_QUARRY + DISTANCE_FROM_QUARRY_TO_FOUNDATION));
+                driveForEncoders(-(DISTANCE_FROM_SIDE_WALL_TO_QUARRY + DISTANCE_FROM_QUARRY_TO_FOUNDATION), .5f);
                 return "PLACE_STONE";
 
             case PLACE_STONE:
                 moveLiftToPosition(FOUNDATION_HEIGHT + (numStonesPlaced * STONE_HEIGHT_WITHOUT_NUBS) + STONE_NUB_HEIGHT + STONE_CLEARANCE_HEIGHT);
 
-                driveFor(10);
+                driveForEncoders(10, .5f);
                 gripStone(false);
 
-                strafeFor(100);
+                strafeForEncoders(100, true);
                 moveLiftToPosition(0);
 
                 return "MOVE_UNDER_BRIDGE";
@@ -105,11 +105,7 @@ public class AutonomousStates extends Library
             if(isSkystoneVisible())
                 return stone;
 
-<<<<<<< Updated upstream
-            strafeFor(STONE_LENGTH);
-=======
-            strafeForEncoders(STONE_LENGTH);
->>>>>>> Stashed changes
+            strafeForEncoders(STONE_LENGTH, true);
         }
 
         return 3;

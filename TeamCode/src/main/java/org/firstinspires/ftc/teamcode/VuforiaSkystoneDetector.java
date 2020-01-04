@@ -128,6 +128,7 @@ public class VuforiaSkystoneDetector extends LinearOpMode
     private static final float quadField  = 36 * mmPerInch;
 
     // Class Members
+    List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
     private OpenGLMatrix lastLocation = null;
     private VuforiaLocalizer vuforia = null;
     private boolean targetVisible = false;
@@ -184,7 +185,6 @@ public class VuforiaSkystoneDetector extends LinearOpMode
         rear2.setName("Rear Perimeter 2");
 
         // For convenience, gather together all the trackable objects in one easily-iterable collection */
-        List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
         allTrackables.addAll(targetsSkyStone);
 
         /**
