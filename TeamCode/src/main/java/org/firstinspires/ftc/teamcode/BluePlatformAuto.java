@@ -20,7 +20,7 @@ public class BluePlatformAuto extends Library {
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);// we may use more motor encoders but some of the encoders have weird values
         currentstate = State.TO_FOUNDATION;
         gray = color.blue();
-        blue = (int)(gray*1.3);
+        blue = (int)(gray*1.2);
     }
     public void loop(){
         /*
