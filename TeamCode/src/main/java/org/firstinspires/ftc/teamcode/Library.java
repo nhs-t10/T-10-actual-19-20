@@ -157,8 +157,8 @@ public abstract class Library extends OpMode {
         }
 
         for(int i = 0; i < 4; i++){
-            if (sums[i] > .9){
-                sums[i] = .9f;
+            if (sums[i] > 1f){
+                sums[i] = 1f;
             }
         }
 
@@ -176,14 +176,54 @@ public abstract class Library extends OpMode {
     //float scalar to chose direction+power
     //float distance in CM is the magnitude of the distance traveled forwards or backwards
     //use this method if and only if no other sensors can be used to complete the motion
-    public static void driveForEncoders(float distanceInCM, float scalar){
-        float startPosition = (backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f;
-        while(Math.abs((backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f) < (distanceInCM / 31.9f) * 1120f + startPosition){
-            drive(scalar, 0, 0);
-        }
+//    public static void driveForEncoders(float distanceInCM, float scalar){
+//        float startPosition = (backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f;
+//        while(Math.abs((backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f) < (distanceInCM / 31.9f) * 1120f + startPosition){
+//            drive(scalar, 0, 0);
+//        }
+//
+//        drive(0, 0, 0);
+//    }
+    public static Float getEncoderValue()
+    {
+        return (backLeft.getCurrentPosition() + frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backRight.getCurrentPosition()) / 4f;
+    }
 
+//    public static void driveForEncoders(float startPosition, float mm, boolean sense, float updated) {
+//        float distanceInMM = mm;
+//        float num = mm;
+//        if (updated < mm)
+//            num = updated;
+//
+//        if ((Math.abs(startPosition - (backLeft.getCurrentPosition() + backRight.getCurrentPosition() - frontRight.getCurrentPosition() - frontLeft.getCurrentPosition()) / 4f) < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition) && !sense)
+//            drive(-.5f * Math.abs(num) / distanceInMM, 0, 0);
+//        else drive(0, 0, 0);
+//    }
+
+    public static void driveForEncoders(float startPos, float curPos, float distGoal)
+    {
+        if (curPos - startPos < distGoal)
+        {
+            drive(distGoal / Math.abs(distGoal) * .5f, 0, 0);
+            driveForEncoders(startPos, getEncoderValue(), distGoal);
+        }
+        
         drive(0, 0, 0);
     }
+
+//    public static Float encoderHelper(float startPosition, float mm) {
+//
+////        float travel = (startPosition - (backLeft.getCurrentPosition() + backRight.getCurrentPosition() - frontRight.getCurrentPosition() - frontLeft.getCurrentPosition()) / 4f);
+////        float compare = ((mm / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition;
+////        if (startPosition - ((backLeft.getCurrentPosition() + backRight.getCurrentPosition() + frontLeft.getCurrentPosition() + frontRight.getCurrentPosition()) / 4f) < ((mm / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition - (mm * .20)){
+////            travel *= .95;
+////        }
+////        if (travel <= compare)
+////            return travel;
+////        else
+////            return mm;
+//    }
+
 
     //drive method for auto using encoders
     //float scalar to chose direction+power
