@@ -82,7 +82,7 @@ public class BluePlatformAuto extends Library {
         if(!moving){
             clock.reset();
             moving = true;
-        } else if(color.blue()< blue || clock.seconds() < 3){
+        } else if(color.blue()< blue || clock.seconds() < 1.5){
             drive(0,0,.5f);
         }
         else{

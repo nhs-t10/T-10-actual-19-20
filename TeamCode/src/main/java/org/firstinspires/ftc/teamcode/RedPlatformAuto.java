@@ -82,7 +82,7 @@ public class RedPlatformAuto extends Library {
         if(!moving){
             clock.reset();
             moving = true;
-        } else if(color.red()< red || clock.seconds() < 3){
+        } else if(color.red()< red || clock.seconds() < 1.5){
             drive(0,0,.5f);
         }
         else{

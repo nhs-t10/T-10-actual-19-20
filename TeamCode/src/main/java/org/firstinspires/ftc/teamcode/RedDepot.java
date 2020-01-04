@@ -46,7 +46,7 @@ public class RedDepot extends Library {
             clock.reset();
             moving = true;
         } else if((color.red()<red || clock.seconds() < 1.5)){
-            drive(0,0,-1);
+            drive(0,0,-.5f);
         }
         else{
             moving = false;
