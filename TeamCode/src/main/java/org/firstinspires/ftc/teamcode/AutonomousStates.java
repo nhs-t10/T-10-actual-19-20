@@ -85,13 +85,15 @@ public class AutonomousStates extends Library
                 return "MOVE_UNDER_BRIDGE";
 
             case MOVE_UNDER_BRIDGE:
-                if (!isUnderBridge())
-                {
-                    drive(0, .5f, 0);
-                    return "MOVE_UNDER_BRIDGE";
-                }
+//                if (!isUnderBridge())
+//                {
+//                    drive(0, .5f, 0);
+//                    return "MOVE_UNDER_BRIDGE";
+//                }
+//
+//                drive(0, 0, 0);
 
-                drive(0, 0, 0);
+                driveForEncoders(500, .5f);
 
             default:
                 return "COMPLETED";

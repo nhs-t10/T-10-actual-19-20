@@ -24,8 +24,7 @@
  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package org.firstinspires.ftc.teamcode;
 import java.util.ArrayList;
@@ -163,11 +162,9 @@ public abstract class Library extends OpMode {
 
         mode = DRIVING.Fast;
 
-        /*
-         * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
+        /* Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
          * We can pass Vuforia the handle to a camera preview resource (on the RC phone);
-         * If no camera monitor is desired, use the parameter-less constructor instead (commented out below).
-         */
+         * If no camera monitor is desired, use the parameter-less constructor instead (commented out below). */
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
@@ -213,8 +210,7 @@ public abstract class Library extends OpMode {
         // For convenience, gather together all the trackable objects in one easily-iterable collection */
         allTrackables.addAll(targetsSkyStone);
 
-        /**
-         * In order for localization to work, we need to tell the system where each target is on the field, and
+        /* In order for localization to work, we need to tell the system where each target is on the field, and
          * where the phone resides on the robot.  These specifications are in the form of <em>transformation matrices.</em>
          * Transformation matrices are a central, important concept in the math here involved in localization.
          * See <a href="https://en.wikipedia.org/wiki/Transformation_matrix">Transformation Matrix</a>
@@ -228,8 +224,7 @@ public abstract class Library extends OpMode {
          *     - The Z axis runs from the floor, upwards towards the ceiling.  (Positive is above the floor)
          *
          * Before being transformed, each target image is conceptually located at the origin of the field's
-         *  coordinate system (the center of the field), facing up.
-         */
+         *  coordinate system (the center of the field), facing up */
 
         // Set the position of the Stone Target.  Since it's not fixed in position, assume it's at the field origin.
         // Rotated it to to face forward, and raised it to sit on the ground correctly.
@@ -288,7 +283,6 @@ public abstract class Library extends OpMode {
                 .translation(halfField, -quadField, mmTargetHeight)
                 .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, -90)));
 
-        //
         // Create a transformation matrix describing where the phone is on the robot.
         //
         // NOTE !!!!  It's very important that you turn OFF your phone's Auto-Screen-Rotation option.
@@ -526,11 +520,10 @@ public abstract class Library extends OpMode {
 
 
     // TODO: make this use a PID controller
-    /**
-     * needs to be called every time through loop
+    /* needs to be called every time through loop
      * @param motor the target motor that will be rotating
-     * @param finalPos desired final rotation of the motor in encoder steps, can be positive or negative
-     */
+     * @param finalPos desired final rotation of the motor in encoder steps, can be positive or negative */
+
     public static void rotateMotorToPosition(DcMotor motor, float finalPos){
 
         // TODO: may cause overshooting, should probably be changed
@@ -543,10 +536,8 @@ public abstract class Library extends OpMode {
         }
     }
 
-    /**
-     * moves the stone lift to a target position
-     * @param finalPos target lift position in mm
-     */
+    /* moves the stone lift to a target position
+     * @param finalPos target lift position in mm */
     public static void moveLiftToPosition(float finalPos){
         int finalPosInSteps = (int)((finalPos / MM_PER_LIFT_ROTATION * ENCODER_STEPS_PER_ROTATION) + 0.5);
         rotateMotorToPosition(lift, finalPosInSteps);
