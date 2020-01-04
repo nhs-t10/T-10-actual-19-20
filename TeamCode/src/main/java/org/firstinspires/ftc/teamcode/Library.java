@@ -100,9 +100,9 @@ public abstract class Library extends OpMode {
 
     public static void gripFoundation(boolean y){
         if(y){
-            platform.setPosition(1);
-        }else{
             platform.setPosition(0);
+        }else{
+            platform.setPosition(1);
         }
     }
 
