@@ -207,7 +207,7 @@ public abstract class Library extends OpMode {
             drive(distGoal / Math.abs(distGoal) * .5f, 0, 0);
             driveForEncoders(startPos, getEncoderValue(), distGoal);
         }
-        
+
         drive(0, 0, 0);
     }
 
