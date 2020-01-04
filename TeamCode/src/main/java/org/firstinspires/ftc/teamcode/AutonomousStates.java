@@ -105,7 +105,7 @@ public class AutonomousStates extends Library
             if(isSkystoneVisible())
                 return stone;
 
-            strafeForEncoders(STONE_LENGTH, true);
+            strafeFor(STONE_LENGTH);
         }
 
         return 3;
