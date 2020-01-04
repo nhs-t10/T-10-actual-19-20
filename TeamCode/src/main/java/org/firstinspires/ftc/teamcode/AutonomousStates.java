@@ -92,6 +92,7 @@
 //                }
 //
 //                drive(0, 0, 0);
+//                return "COMPLETED";
 //
 //            default:
 //                return "COMPLETED";
@@ -119,7 +120,7 @@
 //
 //    public void loop()
 //    {
-//        while (!curState.equals("COMPLETED"))
+//        if (!curState.equals("COMPLETED"))
 //        {
 //            curState = process.basicQuarryAuto();
 //            process = new AutonomousStates(States.valueOf(curState));
