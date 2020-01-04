@@ -129,11 +129,6 @@ public abstract class Library extends OpMode {
         }
     }
 
-    public static boolean isUnderBridge()
-    {
-        return false;
-    }
-
     public static boolean isSkystoneVisible()
     {
         return true;
@@ -189,25 +184,25 @@ public abstract class Library extends OpMode {
         return (backLeft.getCurrentPosition() + frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backRight.getCurrentPosition()) / 4f;
     }
 
-//    public static void driveForEncoders(float startPosition, float mm, boolean sense, float updated) {
-//        float distanceInMM = mm;
-//        float num = mm;
-//        if (updated < mm)
-//            num = updated;
-//
-//        if ((Math.abs(startPosition - (backLeft.getCurrentPosition() + backRight.getCurrentPosition() - frontRight.getCurrentPosition() - frontLeft.getCurrentPosition()) / 4f) < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition) && !sense)
-//            drive(-.5f * Math.abs(num) / distanceInMM, 0, 0);
-//        else drive(0, 0, 0);
-//    }
-
     public static void driveForEncoders(float startPos, float curPos, float distGoal)
     {
-        if (curPos - startPos < distGoal)
+        if (Math.abs(curPos) - startPos < Math.abs(distGoal))
         {
             drive(distGoal / Math.abs(distGoal) * .5f, 0, 0);
             driveForEncoders(startPos, getEncoderValue(), distGoal);
         }
         
+        drive(0, 0, 0);
+    }
+
+    public static void strafeForEncoders(float startPos, float curPos, float distGoal)
+    {
+        if (Math.abs(curPos) - startPos < Math.abs(distGoal))
+        {
+            drive(0, distGoal / Math.abs(distGoal) * .5f, 0);
+            driveForEncoders(startPos, getEncoderValue(), distGoal);
+        }
+
         drive(0, 0, 0);
     }
 
@@ -238,21 +233,21 @@ public abstract class Library extends OpMode {
     //     drive(0, 0, 0);
     // }
 
-    public static void strafeForEncoders(float distanceInMM, boolean sensor){
-
-        float startPosition = (backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f;
-        float num = distanceInMM;
-
-        while((Math.abs(startPosition - (backLeft.getCurrentPosition()+backRight.getCurrentPosition()-frontRight.getCurrentPosition()-frontLeft.getCurrentPosition())/4f) < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition)
-                && !sensor){
-            drive(0, 0, .5f * Math.abs(num) / distanceInMM);
-            if(startPosition - backLeft.getCurrentPosition() < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition - (distanceInMM*.20)){
-                num *= .95;
-            }
-        }
-
-        drive(0, 0, 0);
-    }
+//    public static void strafeForEncoders(float distanceInMM, boolean sensor){
+//
+//        float startPosition = (backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f;
+//        float num = distanceInMM;
+//
+//        while((Math.abs(startPosition - (backLeft.getCurrentPosition()+backRight.getCurrentPosition()-frontRight.getCurrentPosition()-frontLeft.getCurrentPosition())/4f) < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition)
+//                && !sensor){
+//            drive(0, 0, .5f * Math.abs(num) / distanceInMM);
+//            if(startPosition - backLeft.getCurrentPosition() < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition - (distanceInMM*.20)){
+//                num *= .95;
+//            }
+//        }
+//
+//        drive(0, 0, 0);
+//    }
 
     public static void encodersInit(){//slap this in the init of classes that wanna use encoders
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -261,7 +256,7 @@ public abstract class Library extends OpMode {
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public static boolean underBridge(int gray, boolean blue){//tells if under bidge or not (basic version)
+    public static boolean isUnderBridge(int gray, boolean blue){//tells if under bidge or not (basic version)
         int minColor = (int)(gray*1.3);//number 1.3 worked on old robot in Lab. Expect change with new robot
         if(color.blue() > minColor && blue){
             return true;
