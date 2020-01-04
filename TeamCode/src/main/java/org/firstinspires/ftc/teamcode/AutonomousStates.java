@@ -114,7 +114,7 @@ public class AutonomousStates extends Library
     public void init()
     {
         curState = "REACH_STARTING_LOCATION";
-        process = new AutonomousStates(States.valueOf(curState));a
+        process = new AutonomousStates(States.valueOf(curState));
     }
 
     public void loop()
