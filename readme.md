@@ -1,1 +1,1 @@
-This branch is code that we know functions 100% as intended and can be pushed to the phones at any time to run the robot. 
+This is a branch for the T-10 FTC Robotics Team to store finalized code so it can be pushed to robot phones to function immediately. This will be used for driver practice and competition settings. 
