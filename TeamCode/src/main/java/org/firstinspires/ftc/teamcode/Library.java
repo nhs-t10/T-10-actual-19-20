@@ -1,24 +1,25 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
-import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 public abstract class Library extends OpMode{
+    // mm the lift moves for each rotation of the lift motor
+    // TODO: measured as the diameter of the spool
+    final static int MM_PER_LIFT_ROTATION = 1;
+    private static final int TRACTION_SCALER = 1; //temp value will be changed // Used in driveForEncoders/slideForEncoders
     // Declare hardware devices
     public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
-    public static Servo platform, grabber;
     public static CRServo rotateGrabber;
     public static VoltageSensor voltageSensor;
+    // Initialize hardware devices and their zero behavior
     public static TouchSensor front1, front2;
     public static ColorSensor color;
-    private static final int TRACTION_SCALER = 1; //temp value will be changed // Used in driveForEncoders/slideForEncoders
-    // Initialize hardware devices and their zero behavior
-
     public DRIVING mode;
 
     // the rotation of the encoders is measured in steps
@@ -78,7 +79,7 @@ public abstract class Library extends OpMode{
 
     //Each method below uses inputs to dictate the robot's actions
     //(i.e gripSkystone, which determines weather the robot should grab or not)
-    public static void intake( boolean a, boolean b ){
+    /*public static void intake( boolean a, boolean b ){
         double num = 0.0;
 
         if( a ){
@@ -90,7 +91,7 @@ public abstract class Library extends OpMode{
 
         intakeOne.setPower(num);
         intakeTwo.setPower(num);
-    }
+    }*/
 
     public static void gripStone( boolean x ){
         if( x ){
@@ -102,9 +103,9 @@ public abstract class Library extends OpMode{
 
     public static void gripFoundation( boolean y ){
         if( y ){
-            platform.setPosition(0);
-        }else{
             platform.setPosition(1);
+        }else{
+            platform.setPosition(0);
         }
     }
 
@@ -120,7 +121,7 @@ public abstract class Library extends OpMode{
         }
     }
 
-    public static void gripRotate( float left, float right ){
+    /*public static void gripRotate( float left, float right ){
         if( right > left ){
             rotateGrabber.setPower(right);
         }else if( left > right ){
@@ -128,12 +129,7 @@ public abstract class Library extends OpMode{
         }else{
             rotateGrabber.setPower(0);
         }
-    }
-
-    public static boolean isSkystoneVisible(){
-        return true;
-    }
-
+    }*/
 
     //Drive is the central movement and robot handling method of the code
     //Its parameters are l (forward component), r (rotational component), and s (skating component)
@@ -152,8 +148,8 @@ public abstract class Library extends OpMode{
         }
 
         for( int i = 0; i < 4; i++ ){
-            if( sums[i] > 1f ){
-                sums[i] = 1f;
+            if( sums[i] > .9 ){
+                sums[i] = .9f;
             }
         }
 
@@ -189,62 +185,27 @@ public abstract class Library extends OpMode{
             driveForEncoders(startPos, getEncoderValue(), distGoal);
         }
 
+
         drive(0, 0, 0);
     }
 
-    public static void strafeForEncoders( float startPos, float curPos, float distGoal ){
-        if( Math.abs(curPos) - startPos < Math.abs(distGoal) ){
-            drive(0, distGoal / Math.abs(distGoal) * .5f, 0);
-            driveForEncoders(startPos, getEncoderValue(), distGoal);
+    public static void strafeForEncoders( float distanceInMM, boolean sensor ){
+
+        float startPosition = backLeft.getCurrentPosition();
+        float num = distanceInMM;
+
+        while( ( Math.abs(startPosition - ( backLeft.getCurrentPosition() + backRight.getCurrentPosition() - frontRight.getCurrentPosition() - frontLeft.getCurrentPosition() ) / 4f) < ( ( distanceInMM / 31.9f ) * 10 ) * 1120f * TRACTION_SCALER + startPosition ) && !sensor ){
+            drive(0, 0, -.5f * Math.abs(num) / distanceInMM);
+            if( startPosition - backLeft.getCurrentPosition() < ( ( distanceInMM / 31.9f ) * 10 ) * 1120f * TRACTION_SCALER + startPosition - ( distanceInMM * .20 ) ){
+                num *= .95;
+            }
         }
 
         drive(0, 0, 0);
     }
 
-    //    public static Float encoderHelper(float startPosition, float mm) {
-    //
-    ////        float travel = (startPosition - (backLeft.getCurrentPosition() + backRight.getCurrentPosition() - frontRight.getCurrentPosition() - frontLeft.getCurrentPosition()) / 4f);
-    ////        float compare = ((mm / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition;
-    ////        if (startPosition - ((backLeft.getCurrentPosition() + backRight.getCurrentPosition() + frontLeft.getCurrentPosition() + frontRight.getCurrentPosition()) / 4f) < ((mm / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition - (mm * .20)){
-    ////            travel *= .95;
-    ////        }
-    ////        if (travel <= compare)
-    ////            return travel;
-    ////        else
-    ////            return mm;
-    //    }
-
-
-    //drive method for auto using encoders
-    //float scalar to chose direction+power
-    //float distance in CM is the magnitude of the distance traveled left or right
-    //use this method if and only if no other sensors can be used to complete the motion
-    // public static void strafeForEncoders(float distanceInCM, float scalar)
-    // {
-    //     float startPosition = backLeft.getCurrentPosition();
-    //     while (Math.abs(startPosition - backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f * TRACTION_SCALER + startPosition)
-    //         drive(0, 0, scalar);
-
-    //     drive(0, 0, 0);
-    // }
-
-    //    public static void strafeForEncoders(float distanceInMM, boolean sensor){
-    //
-    //        float startPosition = (backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f;
-    //        float num = distanceInMM;
-    //
-    //        while((Math.abs(startPosition - (backLeft.getCurrentPosition()+backRight.getCurrentPosition()-frontRight.getCurrentPosition()-frontLeft.getCurrentPosition())/4f) < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition)
-    //                && !sensor){
-    //            drive(0, 0, .5f * Math.abs(num) / distanceInMM);
-    //            if(startPosition - backLeft.getCurrentPosition() < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition - (distanceInMM*.20)){
-    //                num *= .95;
-    //            }
-    //        }
-    //
-    //        drive(0, 0, 0);
-    //    }
-
-    public static void encodersInit(){//slap this in the init of classes that wanna use encoders
+    public static void encodersInit()//slap this in the init of classes that wanna use encoders
+    {
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -306,6 +267,49 @@ public abstract class Library extends OpMode{
     public static void moveLiftToPosition( float finalPos ){
         int finalPosInSteps = (int) ( ( finalPos / MM_PER_LIFT_ROTATION * ENCODER_STEPS_PER_ROTATION ) + 0.5 );
         rotateMotorToPosition(lift, finalPosInSteps);
+    }
+
+
+    // TODO: make this use a PID controller
+
+    public void hardwareInit(){
+        frontLeft = hardwareMap.dcMotor.get("m0");
+        frontRight = hardwareMap.dcMotor.get("m1");
+        backLeft = hardwareMap.dcMotor.get("m2");
+        backRight = hardwareMap.dcMotor.get("m3");
+
+        lift = hardwareMap.dcMotor.get("l0");
+        intakeOne = hardwareMap.dcMotor.get("l1");
+        intakeTwo = hardwareMap.dcMotor.get("l2");
+
+        platform = hardwareMap.servo.get("s0");
+        grabber = hardwareMap.servo.get("s1");
+        rotateGrabber = hardwareMap.crservo.get("s2");
+
+        color = hardwareMap.colorSensor.get("color1");
+        front1 = hardwareMap.touchSensor.get("touch1");
+        front2 = hardwareMap.touchSensor.get("touch2");
+
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //liftGivenControllerValues.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //liftGivenControllerValues.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        mode = DRIVING.Fast;
+    }
+
+    public enum DRIVING{
+        Slow, Medium, Fast;
+
+        public DRIVING getNext(){
+            return values()[( ordinal() + 1 ) % values().length];
+        } // change driving mode
     }
 
 
