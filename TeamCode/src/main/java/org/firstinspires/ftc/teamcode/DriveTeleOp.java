@@ -1,83 +1,96 @@
 package org.firstinspires.ftc.teamcode;
+
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "TeleOp")
-public class DriveTeleOp extends Library {
-	public void init() {
-		hardwareInit();
-		backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-	}
+public class DriveTeleOp extends Library{
+    public void init(){
+        hardwareInit();
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
 
-	public void loop() {
-		//Intake for gripFoundation, liftGivenControllerValues, and grabber values
-		boolean a = gamepad1.a;
-		boolean b = gamepad1.b;
-		boolean a2 = gamepad2.a;
-		boolean b2 = gamepad2.b;
-		boolean x = gamepad1.x;
-		boolean x2 = gamepad2.x;
-		boolean y = gamepad1.y;
-		boolean y2 = gamepad2.y;
-		boolean liftUp = gamepad1.right_bumper;
-		boolean liftDown = gamepad1.left_bumper;
-		boolean liftUp2 = gamepad2.right_bumper;
-		boolean liftDown2 = gamepad2.left_bumper;
-		boolean skystone = gamepad1.dpad_up;
+    public void loop(){
+        /*
+        //Intake for blocks | gamepad 1
+        boolean a = gamepad1.a;
+        //Output for blocks | gamepad 1
+        boolean b = gamepad1.b;
+        //Intake for blocks | gamepad 2
+        boolean a2 = gamepad2.a;
+        //Output for blocks | gamepad 2
+        boolean b2 = gamepad2.b;
+        */
 
-		//Intake for movement and rotation values
-		float linear = gamepad1.left_stick_y;
-		float side = gamepad1.left_stick_x;
-		float rotation = gamepad1.right_stick_x;
-//		float grabberLeft = gamepad1.right_trigger;
-//		float grabberRight = gamepad1.left_trigger;
-//		float grabberRight2 = gamepad2.left_trigger;
-//		float grabberLeft2 = gamepad2.right_trigger;
+        //Stone gripping | both gamepads
+        boolean x = gamepad1.x;
+        boolean x2 = gamepad2.x;
 
-		//If controller two gives any commands (true) than the robot will use those inputs
-		//Otherwise, it will use the inputs of controller one
-		if (a2 || b2)
-			intake(a2, b2);
+        //Hook control to grab foundation | both gamepads
+        boolean y = gamepad1.y;
+        boolean y2 = gamepad2.y;
 
-		else
-			intake(a, b);
+        //Lift controls | Both gamepads
+        boolean liftUp = gamepad1.right_bumper;
+        boolean liftDown = gamepad1.left_bumper;
+        boolean liftUp2 = gamepad2.right_bumper;
+        boolean liftDown2 = gamepad2.left_bumper;
+        //boolean skystone = gamepad1.dpad_up;
 
-		if (x2)
-			gripSkystone(true);
+        //Movement inputs
+        float linear = gamepad1.left_stick_y; //Forward and back
+        float side = gamepad1.left_stick_x; //Right and left
+        float rotation = gamepad1.right_stick_x; //Rotating in place
 
-		else
-			gripSkystone(x);
+        //If controller two gives any commands (true) than the robot will use those inputs
+        //Otherwise, it will use the inputs of controller one
 
-		if (y2)
-			gripFoundation(true);
+        /*if( a2 || b2 ){
+            intake(a2, b2);
+        }else{
+            intake(a, b);
+        }*/
 
-		else
-			gripFoundation(y);
+        if( x2 ){
+            gripStone(true);
+        }else{
+            gripStone(x);
+        }
 
-		if (liftUp2 || liftDown2)
-			liftGivenControllerValues(liftUp2, liftDown2);
+        if( y2 ){
+            gripFoundation(true);
+        }else{
+            gripFoundation(y);
+        }
 
-		else
-			liftGivenControllerValues(liftUp, liftDown);
+        if( liftUp2 || liftDown2 ){
+            liftGivenControllerValues(liftUp2, liftDown2);
+        }else{
+            liftGivenControllerValues(liftUp, liftDown);
+        }
 
-//		if (grabberRight2 != 0 || grabberLeft2 != 0)
-//			gRotate(grabberLeft2, grabberRight2);
-//
-//		else
-//			gRotate(grabberLeft, grabberRight);
+        /*(if (grabberRight2 != 0 || grabberLeft2 != 0)
+        	gRotate(grabberLeft2, grabberRight2);
 
-		if(gamepad1.right_stick_button)
-			mode = mode.getNext();
+           else
+        	gRotate(grabberLeft, grabberRight);*/
 
-		if(mode == DRIVING.Slow)
-			drive(linear/2, rotation/2, side/2); // slow driving
+        if( gamepad1.right_stick_button ){
+            mode = mode.getNext();
+        }
 
-		if(mode == DRIVING.Medium)
-			drive(linear/1.5f, rotation/1.5f, side/1.5f); // medium driving
+        if( mode == DRIVING.Slow ){
+            drive(linear / 2, rotation / 2, side / 2); // slow driving
+        }
 
-		if(mode == DRIVING.Fast)
-			drive(linear, rotation, side); // fast driving
+        if( mode == DRIVING.Medium ){
+            drive(linear / 1.5f, rotation / 1.5f, side / 1.5f); // medium driving
+        }
 
-		telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
-	}
+        if( mode == DRIVING.Fast ){
+            drive(linear, rotation, side); // fast driving
+        }
+
+        telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
+    }
 }

@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-@TeleOp(name="trip test")//do not delete this test class used by sasha
+//@TeleOp(name="trip test")
 public class testauto extends Library{
     public void init() {
         hardwareInit();
