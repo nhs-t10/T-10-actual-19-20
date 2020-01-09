@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+
+import org.firstinspires.ftc.robotcontroller.external.samples.SensorREVColorDistance;
 
 public abstract class Library extends OpMode {
     // Declare hardware devices
@@ -16,6 +19,7 @@ public abstract class Library extends OpMode {
     public static VoltageSensor voltageSensor;
     public static TouchSensor front1, front2;
     public static ColorSensor color;
+    public static DistanceSensor distance;
     private static final int TRACTION_SCALER = 1; //temp value will be changed // Used in driveForEncoders/slideForEncoders
     // Initialize hardware devices and their zero behavior
 
@@ -51,6 +55,7 @@ public abstract class Library extends OpMode {
         color = hardwareMap.colorSensor.get("color1");
         front1 = hardwareMap.touchSensor.get("touch1");
         front2 = hardwareMap.touchSensor.get("touch2");
+        distance = hardwareMap.get(DistanceSensor.class, "distance1");
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
