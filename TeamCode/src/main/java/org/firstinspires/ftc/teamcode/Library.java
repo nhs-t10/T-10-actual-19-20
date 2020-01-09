@@ -166,33 +166,19 @@ public abstract class Library extends OpMode{
         telemetry.addData("Back Right", sums[3]); */
     }
 
-    //drive method for auto using encoders
-    //float scalar to chose direction+power
-    //float distance in CM is the magnitude of the distance traveled forwards or backwards
-    //use this method if and only if no other sensors can be used to complete the motion
-    //    public static void driveForEncoders(float distanceInCM, float scalar){
-    //        float startPosition = (backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f;
-    //        while(Math.abs((backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f) < (distanceInCM / 31.9f) * 1120f + startPosition){
-    //            drive(scalar, 0, 0);
-    //        }
-    //
-    //        drive(0, 0, 0);
-    //    }
+    public static void encodersInit()//slap this in the init of classes that wanna use encoders
+    {
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
     public static Float getEncoderValue(){
         return ( backLeft.getCurrentPosition() + frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backRight.getCurrentPosition() ) / 4f;
     }
 
-    public static void driveForEncoders( float startPos, float curPos, float distGoal ){
-        if( Math.abs(curPos) - startPos < Math.abs(distGoal) ){
-            drive(distGoal / Math.abs(distGoal) * .5f, 0, 0);
-            driveForEncoders(startPos, getEncoderValue(), distGoal);
-        }
-
-
-        drive(0, 0, 0);
-    }
-
-    public static void strafeForEncoders( float distanceInMM, boolean sensor ){
+    /*public static void strafeForEncoders( float distanceInMM, boolean sensor ){
 
         float startPosition = backLeft.getCurrentPosition();
         float num = distanceInMM;
@@ -205,42 +191,37 @@ public abstract class Library extends OpMode{
         }
 
         drive(0, 0, 0);
-    }
+    }*/
 
-    public static void encodersInit()//slap this in the init of classes that wanna use encoders
-    {
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
 
     //it does what you think it does
-    //returns the precentage of the destination its at
+    //returns the percentage of the destination its at
     //75 100 85 .6 95 .3
     //how to use:
     /*
-    int SCALAR=1;
-    encodersDriveForButNoLoops(START_POS, GOAL, SCALAR)
+    int SCALAR = 1;
      */
-    public static float encodersDriveForButNoLoops( float startPos, float goal, float scalar/*that's right losers its back*/ ){
-        if( goal == 0 ){
+    public static float encodersDriveForButNoLoops(float startPos, float goalPos, float scalar){
+        if(goalPos == 0)
             return 1f;
-        }
+
         drive(scalar, scalar, scalar);
-        return ( getEncoderValue() - startPos ) / goal;
+        return (getEncoderValue() - startPos) / goalPos;
     }
 
-    public static boolean isUnderBridge( int gray, boolean blue ){//tells if under bidge or not (basic version)
-        int minColor = (int) ( gray * 1.3 );//number 1.3 worked on old robot in Lab. Expect change with new robot
-        if( color.blue() > minColor && blue ){
+    //tells if under bridge or not (basic version)
+    public static boolean isUnderBridge(int gray, boolean blue)
+    {
+        //number 1.3 worked on old robot in Lab. Expect change with new robot
+        int minColor = (int) (gray * 1.3);
+
+        if (color.blue() > minColor && blue)
             return true;
-        }
-        if( color.red() > minColor && !blue ){
+
+        if(color.red() > minColor && !blue)
             return true;
-        }else{
-            return false;
-        }
+
+        return false;
     }
 
 
@@ -252,7 +233,8 @@ public abstract class Library extends OpMode{
      * @param motor    the target motor that will be rotating
      * @param finalPos desired final rotation of the motor in encoder steps, can be positive or negative
      */
-    public static void rotateMotorToPosition( DcMotor motor, float finalPos ){
+
+    /*public static void rotateMotorToPosition(DcMotor motor, float finalPos){
 
         // TODO: may cause overshooting, should probably be changed
         if( finalPos > 0 && motor.getCurrentPosition() < finalPos ){
@@ -260,21 +242,11 @@ public abstract class Library extends OpMode{
         }else if( finalPos < 0 && motor.getCurrentPosition() > finalPos ){
             motor.setPower(-0.9);
         }
-    }
+    }*/
 
     /**
      * moves the stone lift to a target position
      *
      * @param finalPos target lift position in mm
      */
-    public static void moveLiftToPosition( float finalPos ){
-        int finalPosInSteps = (int) ( ( finalPos / MM_PER_LIFT_ROTATION * ENCODER_STEPS_PER_ROTATION ) + 0.5 );
-        rotateMotorToPosition(lift, finalPosInSteps);
-    }
-
-
-
-
-
-
 }
