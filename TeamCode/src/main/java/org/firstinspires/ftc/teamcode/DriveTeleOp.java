@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "TeleOp")
 public class DriveTeleOp extends Library{
-    
+
     public void init(){
         hardwareInit();
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
