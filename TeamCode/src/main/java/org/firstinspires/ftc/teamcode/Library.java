@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 public abstract class Library extends OpMode{
     // mm the lift moves for each rotation of the lift motor
@@ -21,6 +22,7 @@ public abstract class Library extends OpMode{
     // Initialize hardware devices and their zero behavior
     public static TouchSensor front1, front2;
     public static ColorSensor color;
+    public static DistanceSensor distance;
     public DRIVING mode;
 
     // the rotation of the encoders is measured in steps
@@ -52,6 +54,7 @@ public abstract class Library extends OpMode{
         rotateGrabber = hardwareMap.crservo.get("s2");
 
         color = hardwareMap.colorSensor.get("color1");
+        distance = hardwareMap.get(DistanceSensor.class, "distance1");
         front1 = hardwareMap.touchSensor.get("touch1");
         front2 = hardwareMap.touchSensor.get("touch2");
 
