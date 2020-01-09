@@ -4,11 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Blue Platform Auto")//do not delete this test class used by sasha
-public class BluePlatformAuto extends Library {
+@Autonomous(name="Blue Platform Park")//do not delete this test class used by sasha
+public class BluePlatformPark extends Library {
 
     enum State{
-        TO_FOUNDATION, FROM_FOUNDATION, PARKING, END
+        PARKING, END
     }
     State currentstate;
     int gray, blue;
@@ -18,7 +18,7 @@ public class BluePlatformAuto extends Library {
     @Override public void init(){
         hardwareInit();
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);// we may use more motor encoders but some of the encoders have weird values
-        currentstate = State.TO_FOUNDATION;
+        currentstate = State.PARKING;
         gray = color.blue();
         blue = (int)(gray*1.2);
     }
@@ -26,12 +26,6 @@ public class BluePlatformAuto extends Library {
         /*
         Loop constantly checks state, and then executes a command based on this.
         */
-        if(currentstate == State.TO_FOUNDATION){
-            ToFoundation();
-        }
-        if(currentstate == State.FROM_FOUNDATION){
-            FromFoundation();
-        }
         if(currentstate == State.PARKING){
             Parking();
         }
@@ -46,43 +40,12 @@ public class BluePlatformAuto extends Library {
         telemetry.addData("State: ", currentstate);
     }
 
-    public void ToFoundation(){
-        if(!moving){
-            clock.reset();
-            moving = true;
-        } else if(clock.seconds() < 1.4){ //color.blue()<blue
-            drive(.75f,0,0);
-        }
-        else{
-            moving = false;
-            drive(0,0,0);
-            currentstate = State.FROM_FOUNDATION;
-        }
-    }
-
-    public void FromFoundation(){
-        gripFoundation(true);
-        if (!moving){
-            clock.reset();
-            moving = true;
-        } else if(clock.seconds() < 2){
-            //wait for 2 seconds for grabber
-        } else if(clock.seconds() > 2 && clock.seconds() < 3.5){ //(!front1.isPressed()||!front2.isPressed())
-            drive(-.75f,0,0);//drives until touching wall
-        }
-        else{
-            moving = false;
-            drive(0,0,0);
-            currentstate = State.PARKING;
-        }
-    }
-
     public void Parking(){
-        gripFoundation(false);
+        grabber.setPosition(0);
         if(!moving){
             clock.reset();
             moving = true;
-        } else if(color.blue()< blue || clock.seconds() < 1.5){
+        } else if((color.blue()< blue || clock.seconds() < 1.5)){
             drive(0,0,.5f);
         }
         else{
