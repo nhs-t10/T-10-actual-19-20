@@ -16,6 +16,7 @@ public abstract class Library extends OpMode{
     // Declare hardware devices
     public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
     public static CRServo rotateGrabber;
+    public static Servo platform,grabber;
     public static VoltageSensor voltageSensor;
     // Initialize hardware devices and their zero behavior
     public static TouchSensor front1, front2;
@@ -27,7 +28,6 @@ public abstract class Library extends OpMode{
 
     // mm the lift moves for each rotation of the lift motor
     // TODO: measured as the diameter of the spool
-    final static int MM_PER_LIFT_ROTATION = 1;
 
     public enum DRIVING{
         Slow, Medium, Fast;
@@ -270,47 +270,8 @@ public abstract class Library extends OpMode{
     }
 
 
-    // TODO: make this use a PID controller
 
-    public void hardwareInit(){
-        frontLeft = hardwareMap.dcMotor.get("m0");
-        frontRight = hardwareMap.dcMotor.get("m1");
-        backLeft = hardwareMap.dcMotor.get("m2");
-        backRight = hardwareMap.dcMotor.get("m3");
 
-        lift = hardwareMap.dcMotor.get("l0");
-        intakeOne = hardwareMap.dcMotor.get("l1");
-        intakeTwo = hardwareMap.dcMotor.get("l2");
-
-        platform = hardwareMap.servo.get("s0");
-        grabber = hardwareMap.servo.get("s1");
-        rotateGrabber = hardwareMap.crservo.get("s2");
-
-        color = hardwareMap.colorSensor.get("color1");
-        front1 = hardwareMap.touchSensor.get("touch1");
-        front2 = hardwareMap.touchSensor.get("touch2");
-
-        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //liftGivenControllerValues.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //liftGivenControllerValues.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        mode = DRIVING.Fast;
-    }
-
-    public enum DRIVING{
-        Slow, Medium, Fast;
-
-        public DRIVING getNext(){
-            return values()[( ordinal() + 1 ) % values().length];
-        } // change driving mode
-    }
 
 
 }
