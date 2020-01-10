@@ -45,7 +45,7 @@ public abstract class GeneralAutonomous extends Library
 
     public static void moveToFoundation()
     {
-        strafeForEncoders(getEncoderValue(), getEncoderValue(), Quarry_To_Foundation_Side_Distance);
+        strafeForEncoders(getEncoderValue(), getEncoderValue(), Quarry_To_Foundation_Side_Distance * scalar);
         liftFor(numOfStones * (STONE_HEIGHT_WITHOUT_NUBS + STONE_NUB_HEIGHT));
         driveForEncoders(getEncoderValue(), getEncoderValue(), Starting_To_Quarry_Distance);
     }
@@ -64,7 +64,7 @@ public abstract class GeneralAutonomous extends Library
         gripStone(false);
 
         liftFor(STONE_NUB_HEIGHT + 10);
-        strafeForEncoders(getEncoderValue(), getEncoderValue(), 100);
+        strafeForEncoders(getEncoderValue(), getEncoderValue(), 100 * scalar);
 
         liftFor(numOfStones * -(STONE_HEIGHT_WITHOUT_NUBS + STONE_NUB_HEIGHT));
     }
