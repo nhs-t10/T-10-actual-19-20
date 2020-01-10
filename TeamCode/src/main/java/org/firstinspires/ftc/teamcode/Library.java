@@ -54,27 +54,9 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
 
 public abstract class Library extends OpMode {
-    // IMPORTANT:  For Phone Camera, set 1) the camera source and 2) the orientation, based on how your phone is mounted:
-    // 1) Camera Source.  Valid choices are:  BACK (behind screen) or FRONT (selfie side)
-    // 2) Phone Orientation. Choices are: PHONE_IS_PORTRAIT = true (portrait) or PHONE_IS_PORTRAIT = false (landscape)
-    //
-    // NOTE: If you are running on a CONTROL HUB, with only one USB WebCam, you must select CAMERA_CHOICE = BACK; and PHONE_IS_PORTRAIT = false;
-    //
+    // Orient phone matrix
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
     private static final boolean PHONE_IS_PORTRAIT = false  ;
-
-    /*
-     * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
-     * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
-     * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
-     * web site at https://developer.vuforia.com/license-manager.
-     *
-     * Vuforia license keys are always 380 characters long, and look as if they contain mostly
-     * random data. As an example, here is a example of a fragment of a valid key:
-     *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
-     * Once you've obtained a license key, copy the string from the Vuforia web site
-     * and paste it in to your code on the next line, between the double quotes.
-     */
     private static final String VUFORIA_KEY =
             "AUlk7Uf/////AAABmQgYG9UqckAptIBX1t3NyKw2UKIX1soSTNHPNtD0M7fh+tziRX+LBq3QsczDz4ZOIPVhTBSHiN2wfr7iJnQgMHgs4JyyxcrfeMfVUY5QB5JvwovcRntoojMFvLXX4SCRPTeA6rIADVqyJSBEqjFiy8CoU2cdxBZUvSDue69pgWdd5wvD07Ezt1NJ7OHHa8qCZdF/4f9I5wljgAGS2CmXg8IV6bgrC7K1cFDzGlPLH4Zmhlv0fkoC58wD82dEPxkLCVE2098RGFZiM36yb8IgSniPiaHwl1XH7Swnpzd9086Y+vs+ak1JMhgg3UUQqc1pQFt5xCCXV3FmNZ1Vn2knbcPtTo8IWRP3ZjFa5IGqoft4";
 
@@ -110,26 +92,8 @@ public abstract class Library extends OpMode {
     public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
     public static Servo platform, grabber;
     public static CRServo rotateGrabber;
-    public static VoltageSensor voltageSensor;
     public static TouchSensor front1, front2;
     public static ColorSensor color;
-    private static final int TRACTION_SCALER = 1; //temp value will be changed // Used in driveForEncoders/slideForEncoders
-    // Initialize hardware devices and their zero behavior
-
-    public DRIVING mode;
-
-    // the rotation of the encoders is measured in steps
-    final static int ENCODER_STEPS_PER_ROTATION = 1120;
-
-    // mm the lift moves for each rotation of the lift motor
-    // TODO: measured as the diameter of the spool
-    final static int MM_PER_LIFT_ROTATION = 1;
-    public enum DRIVING{
-        Slow, Medium, Fast;
-        public DRIVING getNext(){
-            return values()[(ordinal() + 1) % values().length];
-        } // change driving mode
-    }
 
     public void hardwareInit(){
         frontLeft = hardwareMap.dcMotor.get("m0");
@@ -155,12 +119,8 @@ public abstract class Library extends OpMode {
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //liftGivenControllerValues.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //liftGivenControllerValues.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        mode = DRIVING.Fast;
 
         /* Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
          * We can pass Vuforia the handle to a camera preview resource (on the RC phone);
@@ -211,24 +171,25 @@ public abstract class Library extends OpMode {
         allTrackables.addAll(targetsSkyStone);
 
         /* In order for localization to work, we need to tell the system where each target is on the field, and
-         * where the phone resides on the robot.  These specifications are in the form of <em>transformation matrices.</em>
-         * Transformation matrices are a central, important concept in the math here involved in localization.
-         * See <a href="https://en.wikipedia.org/wiki/Transformation_matrix">Transformation Matrix</a>
-         * for detailed information. Commonly, you'll encounter transformation matrices as instances
-         * of the {@link OpenGLMatrix} class.
-         *
-         * If you are standing in the Red Alliance Station looking towards the center of the field,
-         *     - The X axis runs from your left to the right. (positive from the center to the right)
-         *     - The Y axis runs from the Red Alliance Station towards the other side of the field
-         *       where the Blue Alliance Station is. (Positive is from the center, towards the BlueAlliance station)
-         *     - The Z axis runs from the floor, upwards towards the ceiling.  (Positive is above the floor)
-         *
-         * Before being transformed, each target image is conceptually located at the origin of the field's
-         *  coordinate system (the center of the field), facing up */
+           where the phone resides on the robot.  These specifications are in the form of <em>transformation matrices.</em>
+           Transformation matrices are a central, important concept in the math here involved in localization.
+           See <a href="https://en.wikipedia.org/wiki/Transformation_matrix">Transformation Matrix</a>
+           for detailed information. Commonly, you'll encounter transformation matrices as instances
+           of the {@link OpenGLMatrix} class.
 
-        // Set the position of the Stone Target.  Since it's not fixed in position, assume it's at the field origin.
-        // Rotated it to to face forward, and raised it to sit on the ground correctly.
-        // This can be used for generic target-centric approach algorithms
+           If you are standing in the Red Alliance Station looking towards the center of the field,
+               - The X axis runs from your left to the right. (positive from the center to the right)
+               - The Y axis runs from the Red Alliance Station towards the other side of the field
+                 where the Blue Alliance Station is. (Positive is from the center, towards the BlueAlliance station)
+               - The Z axis runs from the floor, upwards towards the ceiling.  (Positive is above the floor)
+
+           Before being transformed, each target image is conceptually located at the origin of the field's
+           coordinate system (the center of the field), facing up */
+
+        /* Set the position of the Stone Target.  Since it's not fixed in position, assume it's at the field origin.
+           Rotated it to to face forward, and raised it to sit on the ground correctly.
+           This can be used for generic target-centric approach algorithms */
+
         stoneTarget.setLocation(OpenGLMatrix
                 .translation(0, 0, stoneZ)
                 .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, -90)));
@@ -284,19 +245,6 @@ public abstract class Library extends OpMode {
                 .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, -90)));
 
         // Create a transformation matrix describing where the phone is on the robot.
-        //
-        // NOTE !!!!  It's very important that you turn OFF your phone's Auto-Screen-Rotation option.
-        // Lock it into Portrait for these numbers to work.
-        //
-        // Info:  The coordinate frame for the robot looks the same as the field.
-        // The robot's "forward" direction is facing out along X axis, with the LEFT side facing out along the Y axis.
-        // Z is UP on the robot.  This equates to a bearing angle of Zero degrees.
-        //
-        // The phone starts out lying flat, with the screen facing Up and with the physical top of the phone
-        // pointing to the LEFT side of the Robot.
-        // The two examples below assume that the camera is facing forward out the front of the robot.
-
-        // We need to rotate the camera around it's long axis to bring the correct camera forward.
         if (CAMERA_CHOICE == BACK)
             phoneYRotate = -90;
         else
@@ -320,79 +268,60 @@ public abstract class Library extends OpMode {
         for (VuforiaTrackable trackable : allTrackables)
             ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, parameters.cameraDirection);
 
-        // WARNING:
-        // In this sample, we do not wait for PLAY to be pressed.  Target Tracking is started immediately when INIT is pressed.
-        // This sequence is used to enable the new remote DS Camera Preview feature to be used with this sample.
-        // CONSEQUENTLY do not put any driving commands in this loop.
-        // To restore the normal opmode structure, just un-comment the following line:
-
-        // waitForStart();
-
-        // Note: To use the remote camera preview:
-        // AFTER you hit Init on the Driver Station, use the "options menu" to select "Camera Stream"
-        // Tap the preview window to receive a fresh image.
-
         targetsSkyStone.activate();
     }
 
     //Each method below uses inputs to dictate the robot's actions
     //(i.e gripSkystone, which determines weather the robot should grab or not)
-    public static void intake(boolean a, boolean b){
+    public static void intake(boolean a, boolean b)
+    {
         double num = 0.0;
 
-        if (a){
+        if (a)
             num = .5;
-        }
-        if (b){
+
+        if (b)
             num = -.5;
-        }
 
         intakeOne.setPower(num);
         intakeTwo.setPower(num);
     }
 
-    public static void gripStone(boolean x){
-        if(x){
+    public static void gripStone(boolean x)
+    {
+        if(x)
             grabber.setPosition(1);
-        }else{
+
+        else
             grabber.setPosition(0);
-        }
     }
 
-    public static void gripFoundation(boolean y){
-        if(y){
+    public static void gripFoundation(boolean y)
+    {
+        if(y)
             platform.setPosition(1);
-        }else{
+
+        else
             platform.setPosition(0);
-        }
     }
 
-    public static void liftGivenControllerValues(boolean up, boolean down){
-        if(up){
+    public static void liftGivenControllerValues(boolean up, boolean down)
+    {
+        if(up)
             lift.setPower(.5);
-        }
-        if(down){
+
+        if(down)
             lift.setPower(-.5);
-        }
-        if(!up && !down){
+
+        if(!up && !down)
             lift.setPower(0);
-        }
     }
 
-    public static void gripRotate(float left, float right)
+    public static boolean isUnderBridge(int gray, boolean blue)
     {
-        if(right > left){
-            rotateGrabber.setPower(right);
-        }else if(left > right){
-            rotateGrabber.setPower(-left);
-        }else{
-            rotateGrabber.setPower(0);
-        }
-    }
+        int minColor = (int)(gray*1.3);
 
-    public static boolean isUnderBridge()
-    {
-        return false;
+        return (color.blue() > minColor && blue) || (color.red() > minColor && !blue);
     }
 
     public static boolean isSkystoneVisible()
@@ -425,27 +354,24 @@ public abstract class Library extends OpMode {
     }
 
 
-    //Drive is the central movement and robot handling method of the code
-    //Its parameters are l (forward component), r (rotational component), and s (skating component)
-    //The method creates a list of the sums of each parameter multiplied by the i index of the
-    //forward, rotational and horizontal multiplier arrays
-    //Any resulting values above .9 are rounded down to .9 (any higher value might cause the robot
-    //to crash) and used to set the power of each of the motors
+    /* Drive is the central movement and robot handling method of the code
+       Its parameters are l (forward component), r (rotational component), and s (skating component)
+       The method creates a list of the sums of each parameter multiplied by the i index of the
+       forward, rotational and horizontal multiplier arrays
+       Any resulting values above .9 are rounded down to .9 (any higher value might cause the robot
+       to crash) and used to set the power of each of the motors */
     public static void drive(float l, float r, float s){
         float[] sums = new float[4];
         float[] forwardMultiplier = {-1f, 1f, -1f, 1f};
         float[] rotationalMultiplier = {1f, 1f, 1f, 1f};
         float[] horizontalMultiplier = {1f, 1f, -1f, -1f};
 
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 4; i++)
             sums[i] += forwardMultiplier[i] * l + rotationalMultiplier[i] * r + horizontalMultiplier[i] * s;
-        }
 
-        for(int i = 0; i < 4; i++){
-            if (sums[i] > .9){
+        for(int i = 0; i < 4; i++)
+            if (sums[i] > .9)
                 sums[i] = .9f;
-            }
-        }
 
         frontLeft.setPower(sums[0]);
         frontRight.setPower(sums[1]);
@@ -457,90 +383,31 @@ public abstract class Library extends OpMode {
         telemetry.addData("Back Right", sums[3]); */
     }
 
-    //drive method for auto using encoders
-    //float scalar to chose direction+power
-    //float distance in CM is the magnitude of the distance traveled forwards or backwards
-    //use this method if and only if no other sensors can be used to complete the motion
-    public static void driveForEncoders(float distanceInCM, float scalar){
-        float startPosition = (backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f;
-        while(Math.abs((backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f) < (distanceInCM / 31.9f) * 1120f + startPosition){
-            drive(scalar, 0, 0);
+    public static float getEncoderValue()
+    {
+        return (backLeft.getCurrentPosition() + frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backRight.getCurrentPosition()) / 4f;
+    }
+
+    public static void driveForEncoders(float initEncoderValue, float curEncoderValue, float distanceGoal)
+    {
+        if (Math.abs(curEncoderValue - initEncoderValue) < Math.abs(distanceGoal))
+        {
+            drive(.5f, 0, 0);
+            strafeForEncoders(initEncoderValue, getEncoderValue(), distanceGoal);
         }
 
         drive(0, 0, 0);
     }
 
-    //drive method for auto using encoders
-    //float scalar to chose direction+power
-    //float distance in CM is the magnitude of the distance traveled left or right
-    //use this method if and only if no other sensors can be used to complete the motion
-    // public static void strafeForEncoders(float distanceInCM, float scalar)
-    // {
-    //     float startPosition = backLeft.getCurrentPosition();
-    //     while (Math.abs(startPosition - backLeft.getCurrentPosition()) < (distanceInCM / 31.9f) * 1120f * TRACTION_SCALER + startPosition)
-    //         drive(0, 0, scalar);
-
-    //     drive(0, 0, 0);
-    // }
-
-    public static void strafeForEncoders(float distanceInMM, boolean sensor){
-
-        float startPosition = (backLeft.getCurrentPosition()+frontLeft.getCurrentPosition()+frontRight.getCurrentPosition()+backRight.getCurrentPosition())/4f;
-        float num = distanceInMM;
-
-        while((Math.abs(startPosition - (backLeft.getCurrentPosition()+backRight.getCurrentPosition()-frontRight.getCurrentPosition()-frontLeft.getCurrentPosition())/4f) < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition)
-                && !sensor){
-            drive(0, 0, .5f * Math.abs(num) / distanceInMM);
-            if(startPosition - backLeft.getCurrentPosition() < ((distanceInMM / 31.9f) * 10) * 1120f * TRACTION_SCALER + startPosition - (distanceInMM*.20)){
-                num *= .95;
-            }
+    public static void strafeForEncoders(float initEncoderValue, float curEncoderValue, float distanceGoal)
+    {
+        if (Math.abs(curEncoderValue - initEncoderValue) < Math.abs(distanceGoal / 1120))
+        {
+            drive(0, .5f, 0);
+            strafeForEncoders(initEncoderValue, getEncoderValue(), distanceGoal);
         }
 
         drive(0, 0, 0);
-    }
-
-    public static void encodersInit(){//slap this in the init of classes that wanna use encoders
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-    public static boolean underBridge(int gray, boolean blue){//tells if under bidge or not (basic version)
-        int minColor = (int)(gray*1.3);//number 1.3 worked on old robot in Lab. Expect change with new robot
-        if(color.blue() > minColor && blue){
-            return true;
-        }if(color.red() > minColor && !blue){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-
-
-    // TODO: make this use a PID controller
-    /* needs to be called every time through loop
-     * @param motor the target motor that will be rotating
-     * @param finalPos desired final rotation of the motor in encoder steps, can be positive or negative */
-
-    public static void rotateMotorToPosition(DcMotor motor, float finalPos){
-
-        // TODO: may cause overshooting, should probably be changed
-        if(finalPos > 0 && motor.getCurrentPosition() < finalPos){
-            motor.setPower(0.9);
-        }
-
-        else if(finalPos < 0 && motor.getCurrentPosition() > finalPos){
-            motor.setPower(-0.9);
-        }
-    }
-
-    /* moves the stone lift to a target position
-     * @param finalPos target lift position in mm */
-    public static void moveLiftToPosition(float finalPos){
-        int finalPosInSteps = (int)((finalPos / MM_PER_LIFT_ROTATION * ENCODER_STEPS_PER_ROTATION) + 0.5);
-        rotateMotorToPosition(lift, finalPosInSteps);
     }
 
     public static void rotateFor(float angle)
@@ -549,5 +416,10 @@ public abstract class Library extends OpMode {
             drive(0, 0, .5f);
 
         drive(0, 0, 0);
+    }
+
+    public static void liftFor(float distanceGoal)
+    {
+
     }
 }

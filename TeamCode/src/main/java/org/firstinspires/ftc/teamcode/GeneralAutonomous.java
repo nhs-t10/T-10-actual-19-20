@@ -39,14 +39,14 @@ public abstract class GeneralAutonomous extends Library
     public static void pickUpStone()
     {
         gripStone(true);
-        moveLiftToPosition(10);
+        liftFor(10);
         driveForEncoders(getEncoderValue(), getEncoderValue(), -Starting_To_Quarry_Distance);
     }
 
     public static void moveToFoundation()
     {
         strafeForEncoders(getEncoderValue(), getEncoderValue(), Quarry_To_Foundation_Side_Distance);
-        moveLiftToPosition(numOfStones * (STONE_HEIGHT_WITHOUT_NUBS + STONE_NUB_HEIGHT));
+        liftFor(numOfStones * (STONE_HEIGHT_WITHOUT_NUBS + STONE_NUB_HEIGHT));
         driveForEncoders(getEncoderValue(), getEncoderValue(), Starting_To_Quarry_Distance);
     }
 
@@ -60,26 +60,19 @@ public abstract class GeneralAutonomous extends Library
 
     public static void placeStone()
     {
-        moveLiftToPosition(-STONE_NUB_HEIGHT - 10);
+        liftFor(-STONE_NUB_HEIGHT - 10);
         gripStone(false);
 
-        moveLiftToPosition(STONE_NUB_HEIGHT + 10);
+        liftFor(STONE_NUB_HEIGHT + 10);
         strafeForEncoders(getEncoderValue(), getEncoderValue(), 100);
 
-        moveLiftToPosition(numOfStones * -(STONE_HEIGHT_WITHOUT_NUBS + STONE_NUB_HEIGHT));
-    }
-
-    public static void moveToBridge()
-    {
-        while (!isUnderBridge())
-            drive(0, .5f, 0);
-
-        drive(0, 0, 0);
+        liftFor(numOfStones * -(STONE_HEIGHT_WITHOUT_NUBS + STONE_NUB_HEIGHT));
     }
 
     public abstract void reachStartingLocation();
+    public abstract void moveUnderBridge();
 
-    public static void main()
+    public static int main()
     {
         int pos = getQuarryConfiguration();
         driveToQuarry();
@@ -88,5 +81,7 @@ public abstract class GeneralAutonomous extends Library
         moveToFoundation();
         dragPlatform();
         placeStone();
+
+        return pos;
     }
 }
