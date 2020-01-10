@@ -473,7 +473,7 @@ public abstract class Library extends OpMode {
         targetsSkyStone.activate();
     }
 
-    public boolean isSkystoneVisible()
+    public static boolean isSkystoneVisible()
     {
         targetVisible = false;
         for (VuforiaTrackable trackable : allTrackables)
