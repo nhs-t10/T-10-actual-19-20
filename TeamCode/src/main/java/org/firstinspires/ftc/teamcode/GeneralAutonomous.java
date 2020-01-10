@@ -14,19 +14,21 @@ public abstract class GeneralAutonomous extends Library
 
     public GeneralAutonomous(int numOfStones, int scalar)
     {
+        hardwareInit();
+
         this.numOfStones = numOfStones;
         this.scalar = scalar;
     }
 
     public static int getQuarryConfiguration()
     {
-        for (int stone = 0; stone < 3; stone++)
-        {
-            if(isSkystoneVisible())
-                return stone;
-
-            strafeForEncoders(getEncoderValue(), getEncoderValue(), STONE_LENGTH);
-        }
+//        for (int stone = 0; stone < 3; stone++)
+//        {
+//            if(isSkystoneVisible())
+//                return stone;
+//
+//            strafeForEncoders(getEncoderValue(), getEncoderValue(), STONE_LENGTH);
+//        }
 
         return 3;
     }
