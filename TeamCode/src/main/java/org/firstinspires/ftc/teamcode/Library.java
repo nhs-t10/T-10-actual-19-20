@@ -17,7 +17,7 @@ public abstract class Library extends OpMode{
     private static final int TRACTION_SCALER = 1; //temp value will be changed // Used in driveForEncoders/slideForEncoders
     // Declare hardware devices
     public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
-    public static Servo platform, grabber;
+    public static Servo platform, grabber, grabber2;
     public static CRServo rotateGrabber;
     public static VoltageSensor voltageSensor;
     // Initialize hardware devices and their zero behavior
@@ -52,8 +52,10 @@ public abstract class Library extends OpMode{
     public static void gripStone( boolean x ){
         if( x ){
             grabber.setPosition(1);
+            grabber2.setPosition(0);
         }else{
             grabber.setPosition(0);
+            grabber2.setPosition(1);
         }
     }
 
@@ -206,7 +208,7 @@ public abstract class Library extends OpMode{
 
         platform = hardwareMap.servo.get("s0");
         grabber = hardwareMap.servo.get("s1");
-        rotateGrabber = hardwareMap.crservo.get("s2");
+        grabber2 = hardwareMap.servo.get("s2");
 
         color = hardwareMap.colorSensor.get("color1");
         front1 = hardwareMap.touchSensor.get("touch1");
