@@ -203,8 +203,8 @@ public abstract class Library extends OpMode{
         backRight = hardwareMap.dcMotor.get("m3");
 
         lift = hardwareMap.dcMotor.get("l0");
-        intakeOne = hardwareMap.dcMotor.get("l1");
-        intakeTwo = hardwareMap.dcMotor.get("l2");
+//        intakeOne = hardwareMap.dcMotor.get("l1");
+//        intakeTwo = hardwareMap.dcMotor.get("l2");
 
         platform = hardwareMap.servo.get("s0");
         grabber = hardwareMap.servo.get("s1");
