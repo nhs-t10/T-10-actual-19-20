@@ -174,7 +174,8 @@ public abstract class Library extends OpMode{
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public static Float getEncoderValue(){
+    public static Float getEncoderValue()
+    {
         return ( backLeft.getCurrentPosition() + frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backRight.getCurrentPosition() ) / 4f;
     }
 
@@ -212,16 +213,8 @@ public abstract class Library extends OpMode{
     //tells if under bridge or not (basic version)
     public static boolean isUnderBridge(int gray, boolean blue)
     {
-        //number 1.3 worked on old robot in Lab. Expect change with new robot
-        int minColor = (int) (gray * 1.3);
-
-        if (color.blue() > minColor && blue)
-            return true;
-
-        if(color.red() > minColor && !blue)
-            return true;
-
-        return false;
+        int minColor = (int)(gray*1.3);
+        return (color.blue() > minColor && blue) || (color.red() > minColor && !blue);
     }
 
 
