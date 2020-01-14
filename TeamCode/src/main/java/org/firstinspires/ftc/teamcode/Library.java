@@ -9,11 +9,25 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
+import java.awt.Point;
+
 public abstract class Library extends OpMode{
     // mm the lift moves for each rotation of the lift motor
     // TODO: measured as the diameter of the spool
     final static int MM_PER_LIFT_ROTATION = 1;
     private static final int TRACTION_SCALER = 1; //temp value will be changed // Used in driveForEncoders/slideForEncoders
+
+    // the rotation of the encoders is measured in steps
+    final static int ENCODER_STEPS_PER_ROTATION = 1120;
+
+    //positions of major field elements (in mm)
+    //assuming bottom left (0,0) is red quarry
+    //TODO: add image for clarification
+
+    //other measurements of field elements (in mm)
+    public static final float STONE_WIDTH = 
+
+
     // Declare hardware devices
     public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
     public static CRServo rotateGrabber;
@@ -25,11 +39,6 @@ public abstract class Library extends OpMode{
     public static DistanceSensor distance;
     public DRIVING mode;
 
-    // the rotation of the encoders is measured in steps
-    final static int ENCODER_STEPS_PER_ROTATION = 1120;
-
-    // mm the lift moves for each rotation of the lift motor
-    // TODO: measured as the diameter of the spool
 
     public enum DRIVING{
         Slow, Medium, Fast;
