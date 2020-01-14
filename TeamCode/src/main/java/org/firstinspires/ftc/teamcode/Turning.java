@@ -9,44 +9,51 @@ public class Turning
 
     //double prevError = 0.0;
     double sumError = 0.0;
-    double prevTime = 0.0;
     final double P = 0.03;
     double savedTime;
 
+    //Different possible states during turning
     enum state
     {
-        IDLE,TURNING,TRAVELING_IN_A_LINEAR_FASHION;
+        IDLE, TURNING, TRAVELING_IN_A_LINEAR_FASHION
     }
 
+    //Turning object: Has a destination and a current event (state)
     public Turning()
     {
         destination = 0;
         currentEvent = state.IDLE;
     }
 
+    //Setting the destination in degrees
     public void setDestination(float degrees)
     {
         savedTime = getCurrTime();
 
+        //If the degrees are more than 180 it sets the destination to the smallest reference angle
+        //Ex: 200 degrees becomes -160 degrees because they are the same turn, -160 is just shorter
         if (degrees > 180)
             destination = degrees - 360;
-        else
-            destination = degrees;
 
-        prevTime = getCurrTime();
+        //Otherwise, the destination just becomes the entered degrees
         destination = degrees;
         currentEvent = state.TURNING;
     }
 
+    //I still don't know what skewnting is
     public void startSkewnting()
     {
         destination = currentAngle;
         currentEvent = state.TRAVELING_IN_A_LINEAR_FASHION;
     }
 
+
     public void updateDrive(imuData data)
     {
+        //Setting the current angle
         currentAngle = data.getAngle();
+
+        //Finding the error
         double error = getError();
         pComponent = error * P;
 
@@ -55,11 +62,11 @@ public class Turning
             if (getCurrTime() - savedTime > 2000)
                 stopTurning();
             else
-                Library.drive(0f, (float) (pComponent), 0f);
+                Library.drive(0f, (float) pComponent, 0f);
         }
 
         else if (currentEvent == state.TRAVELING_IN_A_LINEAR_FASHION)
-            Library.drive(0.5f, (float) (pComponent), 0f);
+            Library.drive(0.5f, (float) pComponent, 0f);
     }
 
     public void stopTurning()
