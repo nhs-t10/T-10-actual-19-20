@@ -72,7 +72,6 @@ public abstract class GeneralAutonomous extends Library
     }
 
     public abstract void reachStartingLocation();
-    public abstract void moveUnderBridge();
 
     public static int main()
     {

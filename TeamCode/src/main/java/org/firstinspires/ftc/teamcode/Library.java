@@ -562,10 +562,7 @@ public abstract class Library extends OpMode {
 
     public static void rotateFor(float angle)
     {
-        for (int i = 0; i < angle * 10; i++)
-            drive(0, 0, .5f);
 
-        drive(0, 0, 0);
     }
 
     public static void liftFor(float distanceGoal)
