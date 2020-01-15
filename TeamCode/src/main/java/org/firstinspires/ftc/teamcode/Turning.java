@@ -40,8 +40,7 @@ public class Turning
         currentEvent = state.TURNING;
     }
 
-    //I still don't know what skewnting is
-    public void startSkewnting()
+    public void startSkewing()
     {
         destination = currentAngle;
         currentEvent = state.TRAVELING_IN_A_LINEAR_FASHION;
@@ -76,7 +75,7 @@ public class Turning
         Library.drive(0f, 0f, 0f);
     }
 
-    public void stopSkewednting()
+    public void stopSkewing()
     {
         currentEvent = state.IDLE;
         Library.drive(0,0,0);
