@@ -232,9 +232,9 @@ public abstract class Library extends OpMode{
     /**
      * needs to be called every time through loop
      *
-     * @param motor    the target motor that will be rotating
-     * @param finalPos desired final rotation of the motor in encoder steps, can be positive or negative
-     */
+     * param motor    the target motor that will be rotating
+     * param finalPos desired final rotation of the motor in encoder steps, can be positive or negative
+     **/
 
     /*public static void rotateMotorToPosition(DcMotor motor, float finalPos){
 
@@ -245,6 +245,15 @@ public abstract class Library extends OpMode{
             motor.setPower(-0.9);
         }
     }*/
+
+    public static void rotateFor(int degreesInRadians)
+    {
+        float start = getEncoderValue();
+        if(degreesInRadians>getEncoderValue()-getEncoderValue())
+        {
+            drive(0,(Math.abs(degreesInRadians))/(degreesInRadians),0);
+        }
+    }
 
     /**
      * moves the stone lift to a target position
