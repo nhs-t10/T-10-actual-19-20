@@ -10,7 +10,7 @@ public class AutoSelection extends Library{
     public void init(){}
 
     private Auto[] autos = Auto.values();
-    int stones = -1; boolean foundation = Boolean.valueOf(null); boolean park = Boolean.valueOf(null);
+    int stones = -1; int foundation = -1; int park = -1;
 
     public void init_loop(){
         boolean up = gamepad1.dpad_up;
@@ -48,12 +48,12 @@ public class AutoSelection extends Library{
                     telemetry.addLine("down for no foundation");
 
                     if (up) {
-                        foundation = true;
+                        foundation = 1;
                     }
                     else if (down){
-                        foundation = false;
+                        foundation = 0;
                     }
-                    if (foundation != Boolean.valueOf(null))
+                    if (foundation != -1)
                         auto = Auto.PARKING;
                     break;
                 case PARKING:
@@ -61,12 +61,12 @@ public class AutoSelection extends Library{
                     telemetry.addLine("down for no parking");
 
                     if (up) {
-                        park = true;
+                        park = 1;
                     }
                     else if (down) {
-                        park = false;
+                        park = 0;
                     }
-                    if (park != Boolean.valueOf(null))
+                    if (park != -1)
                         auto = Auto.FINAL;
                     break;
                 case FINAL:
