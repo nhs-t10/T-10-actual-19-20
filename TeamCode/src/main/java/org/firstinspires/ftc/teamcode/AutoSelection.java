@@ -41,7 +41,7 @@ public class AutoSelection extends Library{
                     else if (left) {
                         stones = 3;
                     }
-                    if (stones > -1)
+                    if (stones >= 0)
                         auto = Auto.FOUNDATION;
                     break;
                 case FOUNDATION:
@@ -58,7 +58,7 @@ public class AutoSelection extends Library{
                         foundation = 0;
                         foundationB = false;
                     }
-                    if (foundation != -1)
+                    if (foundation >= 0)
                         auto = Auto.PARKING;
                     break;
                 case PARKING:
@@ -75,13 +75,13 @@ public class AutoSelection extends Library{
                         park = 0;
                         parkB = false;
                     }
-                    if (park != -1)
+                    if (park >= 0)
                         auto = Auto.FINAL;
                     break;
                 case FINAL:
                     telemetry.addLine(stones + " Stones");
-                    telemetry.addLine(foundation + " : will do foundation");
-                    telemetry.addLine(park + " : will do parking");
+                    telemetry.addLine(foundationB + " : will do foundation");
+                    telemetry.addLine(parkB + " : will do parking");
                     auto = Auto.VIBE;
                     break;
 
