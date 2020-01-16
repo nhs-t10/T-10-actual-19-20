@@ -47,11 +47,11 @@ public class AutoTest extends Library {
         telemetry.addData("back right:",backRight.getCurrentPosition());
 
         if(stat == State.ROLLIN&&encoderObject.driveCondition(stat)){
-            encoderObject.setGoalAndStart(getEncoderValue(),100,1);
+            encoderObject.setGoalAndStart(getEncoderValue(),encoderObject.convertToTicks(100),1);
         }
         if(stat == State.ZOOMIN&&encoderObject.driveCondition(stat))
         {
-            encoderObject.setGoalAndStart(getEncoderValue(),-100,2);
+            encoderObject.setGoalAndStart(getEncoderValue(),encoderObject.convertToTicks(-100),2);
 
         }
 
@@ -105,7 +105,7 @@ public class AutoTest extends Library {
 
         public float convertToTicks(float distanceInCm)//this will do stuff soon
         {
-            return 0;
+            return distanceInCm*1120/36;//probably is wrong but oh well
         }
     }
 }
