@@ -13,10 +13,7 @@ public class AutoSelection extends Library{
     int stones = -1; int foundation = -1; int park = -1; boolean foundationB; boolean parkB;
 
     public void init_loop(){
-        boolean up = gamepad1.dpad_up;
-        boolean down = gamepad1.dpad_down;
-        boolean right = gamepad1.dpad_right;
-        boolean left = gamepad1.dpad_left;
+
 
             switch (auto) {
                 case STONE:
@@ -24,6 +21,10 @@ public class AutoSelection extends Library{
                     telemetry.addLine("right for 1 Stone");
                     telemetry.addLine("down for 2 Stone");
                     telemetry.addLine("left for 3 Stone");
+                    boolean up = gamepad1.dpad_up;
+                    boolean down = gamepad1.dpad_down;
+                    boolean right = gamepad1.dpad_right;
+                    boolean left = gamepad1.dpad_left;
 
                     if (up) {
                         stones = 0;
@@ -46,6 +47,8 @@ public class AutoSelection extends Library{
                 case FOUNDATION:
                     telemetry.addLine("up for yes foundation");
                     telemetry.addLine("down for no foundation");
+                    up = gamepad1.dpad_up;
+                    down = gamepad1.dpad_down;
 
                     if (up) {
                         foundation = 1;
@@ -61,6 +64,8 @@ public class AutoSelection extends Library{
                 case PARKING:
                     telemetry.addLine("up for yes parking");
                     telemetry.addLine("down for no parking");
+                    up = gamepad1.dpad_up;
+                    down = gamepad1.dpad_down;
 
                     if (up) {
                         park = 1;
