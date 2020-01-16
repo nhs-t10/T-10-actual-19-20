@@ -4,20 +4,19 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "Auto Selections")
 public class AutoSelection extends Library{
-    public enum Auto {STONE, FOUNDATION, PARKING}
+    public enum Auto {STONE, FOUNDATION, PARKING, FINAL}
 
     public void init(){}
 
     private Auto[] autos = Auto.values();
-    private int stones = 0;
-    private boolean foundation = false;
-    private boolean park = false;
+    int stones = 0; boolean foundation = false; boolean park = false;
 
     public void init_loop(){
         boolean up = gamepad1.dpad_up;
         boolean down = gamepad1.dpad_down;
         boolean right = gamepad1.dpad_right;
         boolean left = gamepad1.dpad_left;
+        boolean a = gamepad1.a;
 
         for (Auto types : autos){
             switch (types) {
@@ -42,7 +41,8 @@ public class AutoSelection extends Library{
                     else if (left) {
                         stones = 3;
                     }
-                    break;
+                    if (a)
+                        break;
                 case FOUNDATION:
                     telemetry.addLine("up for yes foundation");
                     telemetry.addLine("down for no foundation");
@@ -53,7 +53,8 @@ public class AutoSelection extends Library{
                     else if (down){
                         foundation = false;
                     }
-                    break;
+                    if (a)
+                        break;
                 case PARKING:
                     telemetry.addLine("up for yes parking");
                     telemetry.addLine("down for no parking");
@@ -64,12 +65,18 @@ public class AutoSelection extends Library{
                     else if (down) {
                         park = false;
                     }
-                    break;
+                    if (a){
+                        break;
+                    }
+                case FINAL:
+                    telemetry.addLine(stones + " Stones");
+                    telemetry.addLine(foundation + " : will do foundation");
+                    telemetry.addLine(park + " : will do parking");
+                    stop();
+
             }
         }
-        telemetry.addLine(stones + " Stones");
-        telemetry.addLine(foundation + " : will do foundation");
-        telemetry.addLine(park + " : will do parking");
+
     }
     public void loop(){}
 }
