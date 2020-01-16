@@ -7,14 +7,19 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
+
 @TeleOp(name = "imu test")
 public class TestIMU extends Library
 {
+    imuData imu;
+    Turning turner;
     double angleTurned = 0;
 
     public void init()
     {
         hardwareInit();
+        imu = new imuData(hardwareMap);
+        turner = new Turning();
     }
 
     public void loop()

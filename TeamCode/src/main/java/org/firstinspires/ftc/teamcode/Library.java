@@ -25,11 +25,6 @@ public abstract class Library extends OpMode{
     public static DistanceSensor distance;
     public DRIVING mode;
 
-    //TEST
-    imuData imu;
-    Turning turner;
-
-
     // the rotation of the encoders is measured in steps
     final static int ENCODER_STEPS_PER_ROTATION = 1120;
 
@@ -75,10 +70,6 @@ public abstract class Library extends OpMode{
         intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         mode = DRIVING.Fast;
-
-        //TEST
-        imu = new imuData(hardwareMap);
-        turner = new Turning();
     }
 
     public static void driveUntil( boolean sensor, int l, int r, int s ){
