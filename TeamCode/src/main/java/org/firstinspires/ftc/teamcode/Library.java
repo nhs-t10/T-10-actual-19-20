@@ -60,6 +60,7 @@ public abstract class Library extends OpMode{
 
 //        color = hardwareMap.colorSensor.get("color1");
         distance = hardwareMap.get(DistanceSensor.class, "distance1");
+
         front1 = hardwareMap.touchSensor.get("touch1");
         front2 = hardwareMap.touchSensor.get("touch2");
 
@@ -68,11 +69,11 @@ public abstract class Library extends OpMode{
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //liftGivenControllerValues.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //liftGivenControllerValues.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         mode = DRIVING.Fast;
 
@@ -105,33 +106,33 @@ public abstract class Library extends OpMode{
         intakeTwo.setPower(num);
     }*/
 
-    public static void gripStone( boolean x ){
-        if( x ){
-            grabber.setPosition(1);
-        }else{
-            grabber.setPosition(0);
-        }
-    }
+//    public static void gripStone( boolean x ){
+//        if( x ){
+//            grabber.setPosition(1);
+//        }else{
+//            grabber.setPosition(0);
+//        }
+//    }
 
-    public static void gripFoundation( boolean y ){
-        if( y ){
-            platform.setPosition(1);
-        }else{
-            platform.setPosition(0);
-        }
-    }
+//    public static void gripFoundation( boolean y ){
+//        if( y ){
+//            platform.setPosition(1);
+//        }else{
+//            platform.setPosition(0);
+//        }
+//    }
 
-    public static void liftGivenControllerValues( boolean up, boolean down ){
-        if( up ){
-            lift.setPower(.5);
-        }
-        if( down ){
-            lift.setPower(-.5);
-        }
-        if( !up && !down ){
-            lift.setPower(0);
-        }
-    }
+//    public static void liftGivenControllerValues( boolean up, boolean down ){
+//        if( up ){
+//            lift.setPower(.5);
+//        }
+//        if( down ){
+//            lift.setPower(-.5);
+//        }
+//        if( !up && !down ){
+//            lift.setPower(0);
+//        }
+//    }
 
     /*public static void gripRotate( float left, float right ){
         if( right > left ){

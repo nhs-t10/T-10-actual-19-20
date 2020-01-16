@@ -75,9 +75,9 @@ public class DistanceSensors extends OpMode{
             intake(a, b);
         }*/
 
-                if( x2 ){
-                    while(distance.getDistance(DistanceUnit.CM) >= 2.5){
-                        drive(-.1f,0,0);
+                if( x ){
+                    while(distance.getDistance(DistanceUnit.CM) >= 5){
+                        drive(-.5f,0,0);
                     }
                     drive(0,0,0);
                 }
@@ -124,7 +124,7 @@ public class DistanceSensors extends OpMode{
         //        rotateGrabber = hardwareMap.crservo.get("s2");
 
         //        color = hardwareMap.colorSensor.get("color1");
-        distance = hardwareMap.get(DistanceSensor.class, "distance");
+        distance = hardwareMap.get(DistanceSensor.class, "distance1");
         //        front1 = hardwareMap.touchSensor.get("touch1");
         //        front2 = hardwareMap.touchSensor.get("touch2");
 

@@ -61,7 +61,7 @@ public class BluePlatformAuto extends Library {
     }
 
     public void FromFoundation(){
-        gripFoundation(true);
+//        gripFoundation(true);
         if (!moving){
             clock.reset();
             moving = true;
@@ -78,7 +78,7 @@ public class BluePlatformAuto extends Library {
     }
 
     public void Parking(){
-        gripFoundation(false);
+//        gripFoundation(false);
         if(!moving){
             clock.reset();
             moving = true;

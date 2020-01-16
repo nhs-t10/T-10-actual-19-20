@@ -52,21 +52,21 @@ public class DriveTeleOp extends Library{
         }*/
 
         if( x2 ){
-            gripStone(true);
+//            gripStone(true);
         }else{
-            gripStone(x);
+//            gripStone(x);
         }
 
         if( y2 ){
-            gripFoundation(true);
+//            gripFoundation(true);
         }else{
-            gripFoundation(y);
+//            gripFoundation(y);
         }
 
         if( liftUp2 || liftDown2 ){
-            liftGivenControllerValues(liftUp2, liftDown2);
+//            liftGivenControllerValues(liftUp2, liftDown2);
         }else{
-            liftGivenControllerValues(liftUp, liftDown);
+//            liftGivenControllerValues(liftUp, liftDown);
         }
 
         /*(if (grabberRight2 != 0 || grabberLeft2 != 0)
