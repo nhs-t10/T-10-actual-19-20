@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 public class Turning
 {
     double currentAngle;
-    double destination;
+    double destinationAngle;
     double pComponent;
     state currentEvent;
 
@@ -18,10 +18,10 @@ public class Turning
         IDLE, TURNING, TRAVELING_IN_A_LINEAR_FASHION
     }
 
-    //Turning object: Has a destination and a current event (state)
+    //Turning object: Has a destination angle and a current event (state)
     public Turning()
     {
-        destination = 0;
+        destinationAngle = 0;
         currentEvent = state.IDLE;
     }
 
@@ -30,21 +30,19 @@ public class Turning
     {
         savedTime = getCurrTime();
 
-        //If the degrees are more than 180 it sets the destination to the smallest reference angle
-        //Ex: 200 degrees becomes -160 degrees because they are the same turn, -160 is just shorter
         if (degrees > 180)
-            destination = degrees - 360;
+            destinationAngle = degrees - 360;
 
         //Otherwise, the destination just becomes the entered degrees
-        destination = degrees;
+        destinationAngle = degrees;
         currentEvent = state.TURNING;
     }
 
-    public void startSkewing()
+    /*public void startSkewing()
     {
-        destination = currentAngle;
+        destinationAngle = currentAngle;
         currentEvent = state.TRAVELING_IN_A_LINEAR_FASHION;
-    }
+    }*/
 
 
     public void updateDrive(imuData data)
@@ -58,10 +56,17 @@ public class Turning
 
         if (currentEvent == state.TURNING)
         {
-            if (getCurrTime() - savedTime > 2000)
-                stopTurning();
-            else
+            //if (getCurrTime() - savedTime > 2000)
+                //stopTurning();
+            //else
+                //Library.drive(0f, (float) pComponent, 0f);
+
+            while (currentAngle != destinationAngle)
+            {
                 Library.drive(0f, (float) pComponent, 0f);
+                currentAngle = data.getAngle();
+            }
+            stopTurning();
         }
 
         else if (currentEvent == state.TRAVELING_IN_A_LINEAR_FASHION)
@@ -75,15 +80,15 @@ public class Turning
         Library.drive(0f, 0f, 0f);
     }
 
-    public void stopSkewing()
+    /*public void stopSkewing()
     {
         currentEvent = state.IDLE;
         Library.drive(0,0,0);
-    }
+    }*/
 
     public double getError()
     {
-        return currentAngle - destination;
+        return currentAngle - destinationAngle;
     }
 
     public double getCurrTime()
