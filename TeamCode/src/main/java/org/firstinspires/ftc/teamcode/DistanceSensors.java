@@ -28,6 +28,9 @@ public class DistanceSensors extends OpMode{
     public static ColorSensor color;
     public static DistanceSensor distance;
     public Library.DRIVING mode;
+    boolean xToggle = false;
+    boolean aToggle = false;
+    boolean bToggle = false;
 
     public void init(){
         hardwareInit();
@@ -49,6 +52,8 @@ public class DistanceSensors extends OpMode{
         //Stone gripping | both gamepads
         boolean x = gamepad1.x;
         boolean x2 = gamepad2.x;
+        boolean b = gamepad1.b;
+        boolean a = gamepad1.a;
 
         //Hook control to grab foundation | both gamepads
         boolean y = gamepad1.y;
@@ -75,13 +80,53 @@ public class DistanceSensors extends OpMode{
             intake(a, b);
         }*/
 
+
                 if( x ){
+                    if(!xToggle){
+                        xToggle = true;
+                    }else{
+                        xToggle = false;
+                    }
+                }
+
+                if(xToggle){
                     if(distance.getDistance(DistanceUnit.CM) >= 20){
                         drive(.25f,0,0);
                     }else{
                         drive(0,0,0);
                     }
                 }
+
+        if(xToggle){
+            if(distance.getDistance(DistanceUnit.CM) >= 20){
+                drive(.25f,.25f,0);
+            }else{
+                drive(0,0,0);
+            }
+        }
+        if( a ){
+            if(!aToggle){
+                aToggle = true;
+            }else{
+                aToggle = false;
+            }
+        }
+
+        if(bToggle){
+            if(distance.getDistance(DistanceUnit.CM) >= 20){
+                drive(.25f,-.25f,0);
+            }else{
+                drive(0,0,0);
+            }
+        }
+        if( b ){
+            if(!bToggle){
+                bToggle = true;
+            }else{
+                bToggle = false;
+            }
+        }
+
 
         //        if( y2 ){
         //            gripFoundation(true);
