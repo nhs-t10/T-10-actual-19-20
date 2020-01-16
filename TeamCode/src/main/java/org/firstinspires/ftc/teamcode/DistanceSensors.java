@@ -150,7 +150,9 @@ public class DistanceSensors extends OpMode{
             mode = mode.getNext();
         }
 
-        drive(linear, rotation, side); // fast driving
+        if(!aToggle && !bToggle && !xToggle){
+            drive(linear, rotation, side); // fast driving
+        }
 
         telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
         telemetry.addData("Distance: ", distance.getDistance(DistanceUnit.CM));
