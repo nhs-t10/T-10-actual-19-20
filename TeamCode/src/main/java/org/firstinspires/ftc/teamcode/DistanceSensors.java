@@ -76,10 +76,11 @@ public class DistanceSensors extends OpMode{
         }*/
 
                 if( x ){
-                    while(distance.getDistance(DistanceUnit.CM) >= 20){
+                    if(distance.getDistance(DistanceUnit.CM) >= 20){
                         drive(.25f,0,0);
+                    }else{
+                        drive(0,0,0);
                     }
-                    drive(0,0,0);
                 }
 
         //        if( y2 ){
