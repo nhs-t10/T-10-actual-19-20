@@ -10,7 +10,7 @@ public class AutoSelection extends Library{
     public void init(){}
 
     private Auto[] autos = Auto.values();
-    int stones = -1; int foundation = -1; int park = -1;
+    int stones = -1; int foundation = -1; int park = -1; boolean foundationB; boolean parkB;
 
     public void init_loop(){
         boolean up = gamepad1.dpad_up;
@@ -49,9 +49,11 @@ public class AutoSelection extends Library{
 
                     if (up) {
                         foundation = 1;
+                        foundationB = true;
                     }
                     else if (down){
                         foundation = 0;
+                        foundationB = false;
                     }
                     if (foundation != -1)
                         auto = Auto.PARKING;
@@ -62,9 +64,11 @@ public class AutoSelection extends Library{
 
                     if (up) {
                         park = 1;
+                        parkB = true;
                     }
                     else if (down) {
                         park = 0;
+                        parkB = false;
                     }
                     if (park != -1)
                         auto = Auto.FINAL;
