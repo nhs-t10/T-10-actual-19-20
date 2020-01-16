@@ -16,10 +16,8 @@ public class AutoSelection extends Library{
         boolean down = gamepad1.dpad_down;
         boolean right = gamepad1.dpad_right;
         boolean left = gamepad1.dpad_left;
-        boolean a = gamepad1.a;
-
-        for (Auto types : autos){
-            switch (types) {
+        Auto auto = Auto.STONE;
+            switch (auto) {
                 case STONE:
                     telemetry.addLine("up for 0 Stone");
                     telemetry.addLine("right for 1 Stone");
@@ -41,8 +39,8 @@ public class AutoSelection extends Library{
                     else if (left) {
                         stones = 3;
                     }
-                    if (a)
-                        break;
+                    auto = Auto.FOUNDATION;
+                    break;
                 case FOUNDATION:
                     telemetry.addLine("up for yes foundation");
                     telemetry.addLine("down for no foundation");
@@ -53,8 +51,8 @@ public class AutoSelection extends Library{
                     else if (down){
                         foundation = false;
                     }
-                    if (a)
-                        break;
+                    auto = Auto.PARKING;
+                    break;
                 case PARKING:
                     telemetry.addLine("up for yes parking");
                     telemetry.addLine("down for no parking");
@@ -65,16 +63,14 @@ public class AutoSelection extends Library{
                     else if (down) {
                         park = false;
                     }
-                    if (a){
-                        break;
-                    }
+                    auto = Auto.FINAL;
+                    break;
                 case FINAL:
                     telemetry.addLine(stones + " Stones");
                     telemetry.addLine(foundation + " : will do foundation");
                     telemetry.addLine(park + " : will do parking");
-                    stop();
+                    break;
 
-            }
         }
 
     }
