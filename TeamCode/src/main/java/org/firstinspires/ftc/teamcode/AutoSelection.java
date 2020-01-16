@@ -6,12 +6,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 public class AutoSelection extends Library{
     public enum Auto {STONE, FOUNDATION, PARKING, FINAL}
 
-    public void init(){}
+    //public void init(){}
 
     private Auto[] autos = Auto.values();
     int stones = 0; boolean foundation = false; boolean park = false;
 
-    public void init_loop(){
+    public void init(){
         boolean up = gamepad1.dpad_up;
         boolean down = gamepad1.dpad_down;
         boolean right = gamepad1.dpad_right;
