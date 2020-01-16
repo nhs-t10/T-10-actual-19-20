@@ -76,8 +76,8 @@ public class DistanceSensors extends OpMode{
         }*/
 
                 if( x ){
-                    while(distance.getDistance(DistanceUnit.CM) >= 5){
-                        drive(-.5f,0,0);
+                    while(distance.getDistance(DistanceUnit.CM) >= 20){
+                        drive(.25f,0,0);
                     }
                     drive(0,0,0);
                 }
