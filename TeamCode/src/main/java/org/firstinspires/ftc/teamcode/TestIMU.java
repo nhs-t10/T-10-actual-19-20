@@ -24,13 +24,23 @@ public class TestIMU extends Library
 
     public void loop()
     {
+        angleTurned = imu.getAngle();
+        telemetry.addData("Current Angle: ", angleTurned);
+
         if (gamepad1.a)
         {
-            turner.setDestination(90);
-            turner.updateDrive(imu);
-            angleTurned = imu.getAngle();
+            //turner.setDestination(90);
+            //turner.updateDrive(imu);
 
-            telemetry.addData("Current Angle: ", angleTurned);
+        }
+
+        if (gamepad1.b)
+        {
+            //turner.setDestination(-90);
+            //turner.updateDrive(imu);
+            //angleTurned = imu.getAngle();
+
+            //telemetry.addData("Current Angle: ", angleTurned);
         }
 
     }
