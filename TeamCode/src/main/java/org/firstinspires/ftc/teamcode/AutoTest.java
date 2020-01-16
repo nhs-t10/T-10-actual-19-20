@@ -52,13 +52,17 @@ public class AutoTest extends Library {
         if(stat == State.ZOOMIN&&encoderObject.driveCondition(stat))
         {
             encoderObject.setGoalAndStart(getEncoderValue(),encoderObject.convertToTicks(-100),2);
-
         }
 
 
 
     }
 
+
+    //how to use the mini-class:
+    //EncodersMethod NAME = new EncodersMethod();
+    //if(enum == State.STATE && encoderObject.driveCondition(enum)){
+    //NAME.setGoalAndStart(getEncoderValue(),NAME.convertToTicks(100),1); }
     private class EncodersMethod
     {
         float startPos;
