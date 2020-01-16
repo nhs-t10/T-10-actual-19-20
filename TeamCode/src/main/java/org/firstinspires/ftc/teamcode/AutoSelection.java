@@ -4,19 +4,20 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "Auto Selections")
 public class AutoSelection extends Library{
-    public enum Auto {STONE, FOUNDATION, PARKING, FINAL}
+    public enum Auto {STONE, FOUNDATION, PARKING, FINAL, VIBE}
 
-    //public void init(){}
+    Auto auto = Auto.STONE;
+    public void init(){}
 
     private Auto[] autos = Auto.values();
     int stones = 0; boolean foundation = false; boolean park = false;
 
-    public void init(){
+    public void init_loop(){
         boolean up = gamepad1.dpad_up;
         boolean down = gamepad1.dpad_down;
         boolean right = gamepad1.dpad_right;
         boolean left = gamepad1.dpad_left;
-        Auto auto = Auto.STONE;
+
             switch (auto) {
                 case STONE:
                     telemetry.addLine("up for 0 Stone");
@@ -69,7 +70,9 @@ public class AutoSelection extends Library{
                     telemetry.addLine(stones + " Stones");
                     telemetry.addLine(foundation + " : will do foundation");
                     telemetry.addLine(park + " : will do parking");
+                    auto = Auto.VIBE;
                     break;
+
 
         }
 
