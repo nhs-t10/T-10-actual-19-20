@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import java.util.*;
 
 @Autonomous(name = "Auto Selections")
 public class AutoSelection extends Library{
@@ -17,7 +16,7 @@ public class AutoSelection extends Library{
         boolean down = gamepad1.dpad_down;
         boolean right = gamepad1.dpad_right;
         boolean left = gamepad1.dpad_left;
-        Scanner f = new Scanner(System.in);
+
         for (Auto types : autos){
             switch (types) {
                 case STONE:
