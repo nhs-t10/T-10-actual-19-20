@@ -6,8 +6,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 public class AutoSelection extends Library{
     public enum Auto {STONE, FOUNDATION, PARKING}
 
-    public void init() {
+    public void init(){
         hardwareInit();
+    }
+    public void init_loop(){
         Auto[] autos = Auto.values();
         int stones = 0;
         boolean foundation = false;
