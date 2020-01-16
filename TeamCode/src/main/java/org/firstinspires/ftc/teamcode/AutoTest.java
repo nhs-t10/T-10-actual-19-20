@@ -33,19 +33,7 @@ public class AutoTest extends Library {
 
     public void loop()
     {
-
-        float linear = gamepad1.left_stick_y;
-        float side = gamepad1.left_stick_x;
-        float rotation = gamepad1.right_stick_x;
-        boolean a = gamepad1.a;
-        boolean b = gamepad1.b;
-        boolean liftUp = gamepad1.right_bumper;
-        boolean liftDown = gamepad1.left_bumper;
-        telemetry.addData("front left:",frontLeft.getCurrentPosition());
-        telemetry.addData("front right:",frontRight.getCurrentPosition());
-        telemetry.addData("back left:",backLeft.getCurrentPosition());
-        telemetry.addData("back right:",backRight.getCurrentPosition());
-
+        
         if(stat == State.ROLLIN&&encoderObject.driveCondition(stat)){
             encoderObject.setGoalAndStart(getEncoderValue(),encoderObject.convertToTicks(100),1);
         }
@@ -71,22 +59,22 @@ public class AutoTest extends Library {
         int receipt;
         public EncodersMethod()
         {
-            startPos=0;
-            goal=1000000000;
-            receipt =0;
+            startPos = 0;
+            goal = 1000000000;
+            receipt = 0;
         }
         public void slowDown()//this will do more later
         {
-            scalar=1;
+            scalar = 1;
         }
         public boolean driveCondition(State stateInput)
         {
 
             slowDown();
-            if(Math.abs(goal)<Math.abs(getEncoderValue()-startPos))
+            if(Math.abs(goal) < Math.abs(getEncoderValue() - startPos))
             {
                 drive(0,0,0);
-                goal+=10000000;//temp addition to allow the first iteration to happen
+                goal += 10000000;//temp addition to allow the first iteration to happen
                 stateInput.next();
                 return true;
             }else
@@ -99,10 +87,10 @@ public class AutoTest extends Library {
 
 
         public void setGoalAndStart(float startPos, float goal,int recieptCheck){
-            if( receipt !=recieptCheck)
+            if( receipt != recieptCheck)
             {
-                this.startPos=startPos;
-                this.goal=goal;
+                this.startPos = startPos;
+                this.goal = goal;
             }
 
         }
