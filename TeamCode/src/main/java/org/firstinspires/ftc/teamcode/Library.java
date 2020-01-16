@@ -50,15 +50,15 @@ public abstract class Library extends OpMode{
         backLeft = hardwareMap.dcMotor.get("m2");
         backRight = hardwareMap.dcMotor.get("m3");
 
-        lift = hardwareMap.dcMotor.get("l0");
-        intakeOne = hardwareMap.dcMotor.get("l1");
-        intakeTwo = hardwareMap.dcMotor.get("l2");
+//        lift = hardwareMap.dcMotor.get("l0");
+//        intakeOne = hardwareMap.dcMotor.get("l1");
+//        intakeTwo = hardwareMap.dcMotor.get("l2");
 
-        platform = hardwareMap.servo.get("s0");
-        grabber = hardwareMap.servo.get("s1");
-        rotateGrabber = hardwareMap.crservo.get("s2");
+//        platform = hardwareMap.servo.get("s0");
+//        grabber = hardwareMap.servo.get("s1");
+//        rotateGrabber = hardwareMap.crservo.get("s2");
 
-        color = hardwareMap.colorSensor.get("color1");
+//        color = hardwareMap.colorSensor.get("color1");
         distance = hardwareMap.get(DistanceSensor.class, "distance1");
         front1 = hardwareMap.touchSensor.get("touch1");
         front2 = hardwareMap.touchSensor.get("touch2");
