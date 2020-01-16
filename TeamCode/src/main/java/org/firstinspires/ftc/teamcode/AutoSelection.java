@@ -1,23 +1,24 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import java.util.*;
 
 @Autonomous(name = "Auto Selections")
 public class AutoSelection extends Library{
     public enum Auto {STONE, FOUNDATION, PARKING}
 
-    public void init() {
-        hardwareInit();
-        Auto[] autos = Auto.values();
-        int stones = 0;
-        boolean foundation = false;
-        boolean parking = false;
+    public void init(){}
+
+    private Auto[] autos = Auto.values();
+    private int stones = 0;
+    private boolean foundation = false;
+    private boolean park = false;
+
+    public void init_loop(){
         boolean up = gamepad1.dpad_up;
         boolean down = gamepad1.dpad_down;
         boolean right = gamepad1.dpad_right;
         boolean left = gamepad1.dpad_left;
-        Scanner f = new Scanner(System.in);
+
         for (Auto types : autos){
             switch (types) {
                 case STONE:
@@ -26,19 +27,19 @@ public class AutoSelection extends Library{
                     telemetry.addLine("down for 2 Stone");
                     telemetry.addLine("left for 3 Stone");
 
-                    if (up) { //change to up arrow for robot
+                    if (up) {
                         stones = 0;
                     }
 
-                    else if (right) { //change to right arrow
+                    else if (right) {
                         stones = 1;
                     }
 
-                    else if (down) { //change to down arrow
+                    else if (down) {
                         stones = 2;
                     }
 
-                    else if (left) { //change to left arrow
+                    else if (left) {
                         stones = 3;
                     }
                     break;
@@ -46,10 +47,10 @@ public class AutoSelection extends Library{
                     telemetry.addLine("up for yes foundation");
                     telemetry.addLine("down for no foundation");
 
-                    if (up) { //change to up arrow
+                    if (up) {
                         foundation = true;
                     }
-                    else if (down){ //change to down arrow
+                    else if (down){
                         foundation = false;
                     }
                     break;
@@ -57,18 +58,18 @@ public class AutoSelection extends Library{
                     telemetry.addLine("up for yes parking");
                     telemetry.addLine("down for no parking");
 
-                    if (up) { //change to up arrow
-                        parking = true;
+                    if (up) {
+                        park = true;
                     }
-                    else if (down) { //change to down arrow
-                        parking = false;
+                    else if (down) {
+                        park = false;
                     }
                     break;
             }
         }
-        telemetry.addLine(stones + " Stones"); //change to telemetry
+        telemetry.addLine(stones + " Stones");
         telemetry.addLine(foundation + " : will do foundation");
-        telemetry.addLine(parking + " : will do parking");
+        telemetry.addLine(park + " : will do parking");
     }
     public void loop(){}
 }
