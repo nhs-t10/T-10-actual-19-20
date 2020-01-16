@@ -29,9 +29,8 @@ public class TestIMU extends Library
 
         if (gamepad1.a)
         {
-            //turner.setDestination(90);
-            //turner.updateDrive(imu);
-
+            turner.setDestination(90);
+            turner.updateDrive(imu);
         }
 
         if (gamepad1.b)
