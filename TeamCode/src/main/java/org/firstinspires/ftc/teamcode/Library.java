@@ -75,8 +75,6 @@ public abstract class Library extends OpMode{
         mode = DRIVING.Fast;
 
         // Test
-        imu = new imuData(hardwareMap);
-        turner = new Turning();
     }
 
     public static void driveUntil( boolean sensor, int l, int r, int s ){

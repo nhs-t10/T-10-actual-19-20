@@ -2,8 +2,12 @@ package org.firstinspires.ftc.teamcode;
 
 public class IMUTest extends Library{
     double xAccel = 0;
+    imuData imu;
+    Turning turner;
     public void init()
     {
+        imu = new imuData(hardwareMap);
+        turner = new Turning();
         hardwareInit();
     }
 
