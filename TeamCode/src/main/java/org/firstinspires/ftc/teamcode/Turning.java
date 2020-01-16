@@ -1,7 +1,19 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class Turning
 {
+    Telemetry telemetry;
     double currentAngle;
     double destinationAngle;
     double pComponent;
@@ -45,7 +57,7 @@ public class Turning
     }*/
 
 
-    public void updateDrive(imuData data)
+    public float updateDrive(imuData data)
     {
         //Setting the current angle
         currentAngle = data.getAngle();
@@ -61,16 +73,16 @@ public class Turning
             //else
                 //Library.drive(0f, (float) pComponent, 0f);
 
-            while (currentAngle != destinationAngle)
-            {
+            if (error > 1)
                 Library.drive(0f, (float) pComponent, 0f);
-                currentAngle = data.getAngle();
-            }
-            stopTurning();
+            else
+                stopTurning();
         }
 
         else if (currentEvent == state.TRAVELING_IN_A_LINEAR_FASHION)
             Library.drive(0.5f, (float) pComponent, 0f);
+
+        return (float) currentAngle;
     }
 
     public void stopTurning()
