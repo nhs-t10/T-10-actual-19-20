@@ -6,7 +6,6 @@ public class SkystoneDetectorTestClass extends Library
 {
     float startEncoderValue;
     private static final float QUARRYGOAL = 10f;
-    private static final float SIDEWALL = 20f;
 
     public void init()
     {
