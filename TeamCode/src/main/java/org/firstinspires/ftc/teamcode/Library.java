@@ -162,11 +162,11 @@ public abstract class Library extends OpMode{
         }
 
         for( int i = 0; i < 4; i++ ){
-            if( sums[i] > .9 ){
-                sums[i] = .9f;
+            if( sums[i] > 1 ){
+                sums[i] = 1f;
             }
-            if( sums[i] < -.9 ){
-                sums[i] = -.9f;
+            if( sums[i] < -1 ){
+                sums[i] = -1f;
             }
         }
 
