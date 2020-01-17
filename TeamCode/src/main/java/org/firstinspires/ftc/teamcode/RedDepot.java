@@ -17,7 +17,6 @@ public class RedDepot extends Library {
 
     @Override public void init(){
         hardwareInit();
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);// we may use more motor encoders but some of the encoders have weird values
         currentstate = State.PARKING;
         gray = color.red();
         red = (int)(gray*1.2);
