@@ -156,6 +156,9 @@ public abstract class Library extends OpMode{
             if( sums[i] > .9 ){
                 sums[i] = .9f;
             }
+            if( sums[i] < -.9 ){
+                sums[i] = -.9f;
+            }
         }
 
         frontLeft.setPower(sums[0]);
