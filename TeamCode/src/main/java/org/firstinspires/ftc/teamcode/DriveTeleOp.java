@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class DriveTeleOp extends Library{
     public void init(){
         hardwareInit();
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     float[] sums;
     public void loop(){

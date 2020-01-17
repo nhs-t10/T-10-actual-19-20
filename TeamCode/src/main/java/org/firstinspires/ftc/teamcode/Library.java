@@ -78,8 +78,8 @@ public abstract class Library extends OpMode{
         mode = DRIVING.Fast;
 
         //TEST
-        imu = new imuData(hardwareMap);
-        turner = new Turning();
+        //imu = new imuData(hardwareMap);
+        //turner = new Turning();
     }
 
     public static void driveUntil( boolean sensor, int l, int r, int s ){
@@ -177,13 +177,13 @@ public abstract class Library extends OpMode{
         return sums;
     }
 
-    public static void encodersInit()//slap this in the init of classes that wanna use encoders
-    {
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
+//    public static void encodersInit()//slap this in the init of classes that wanna use encoders
+//    {
+//        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//    }
 
     public static Float getEncoderValue()
     {

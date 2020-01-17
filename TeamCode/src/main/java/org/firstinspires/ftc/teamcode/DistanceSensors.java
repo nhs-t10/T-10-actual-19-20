@@ -34,7 +34,6 @@ public class DistanceSensors extends OpMode{
 
     public void init(){
         hardwareInit();
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void loop(){
