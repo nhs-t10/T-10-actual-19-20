@@ -31,10 +31,12 @@ public abstract class Library extends OpMode{
     // mm the lift moves for each rotation of the lift motor
     // TODO: measured as the diameter of the spool
 
-    public enum DRIVING{
+    public enum DRIVING
+    {
         Slow, Medium, Fast;
 
-        public DRIVING getNext(){
+        public DRIVING getNext()
+        {
             return values()[( ordinal() + 1 ) % values().length];
         } // change driving mode
     }
@@ -72,13 +74,13 @@ public abstract class Library extends OpMode{
         mode = DRIVING.Fast;
     }
 
-    public static void driveUntil( boolean sensor, int l, int r, int s ){
-        if( !sensor ){
-            drive(l, r, s);
-        }else{
-            drive(0, 0, 0);
-        }
-    }
+//    public static void driveUntil( boolean sensor, int l, int r, int s ){
+//        if( !sensor ){
+//            drive(l, r, s);
+//        }else{
+//            drive(0, 0, 0);
+//        }
+//    }
 
     //Each method below uses inputs to dictate the robot's actions
     //(i.e gripSkystone, which determines weather the robot should grab or not)
