@@ -5,8 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class SkystoneDetectorTestClass extends Library
 {
     float startEncoderValue;
-    private static float QUARRYGOAL = 10f;
-    private static float SIDEWALL = 20f;
+    private static final float QUARRYGOAL = 10f;
 
     public void init()
     {
