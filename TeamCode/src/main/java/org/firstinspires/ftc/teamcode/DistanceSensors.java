@@ -91,15 +91,15 @@ public class DistanceSensors extends OpMode{
 
                 if(xToggle){
                     if(distance.getDistance(DistanceUnit.CM) >= 20){
-                        drive(.25f,0,0);
+                        drive(.25f,.05f,0);
                     }else{
                         drive(0,0,0);
                     }
                 }
 
-        if(xToggle){
+        if(aToggle){
             if(distance.getDistance(DistanceUnit.CM) >= 20){
-                drive(.25f,.25f,0);
+                drive(.25f,.1f,0);
             }else{
                 drive(0,0,0);
             }
@@ -114,7 +114,7 @@ public class DistanceSensors extends OpMode{
 
         if(bToggle){
             if(distance.getDistance(DistanceUnit.CM) >= 20){
-                drive(.25f,-.25f,0);
+                drive(.25f,.15f,0);
             }else{
                 drive(0,0,0);
             }
@@ -156,6 +156,9 @@ public class DistanceSensors extends OpMode{
 
         telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
         telemetry.addData("Distance: ", distance.getDistance(DistanceUnit.CM));
+        telemetry.addData("A: ", aToggle);
+        telemetry.addData("B: ", bToggle);
+        telemetry.addData("X: ", xToggle);
     }
     public void hardwareInit(){
         frontLeft = hardwareMap.dcMotor.get("m0");

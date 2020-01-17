@@ -150,7 +150,8 @@ public abstract class Library extends OpMode{
     //forward, rotational and horizontal multiplier arrays
     //Any resulting values above .9 are rounded down to .9 (any higher value might cause the robot
     //to crash) and used to set the power of each of the motors
-    public static void drive( float l, float r, float s ){
+    public static float[] drive( float l, float r, float s ){
+        s = -s; //sideways is inversed
         float[] sums = new float[4];
         float[] forwardMultiplier = { -1f, 1f, -1f, 1f };
         float[] rotationalMultiplier = { 1f, 1f, 1f, 1f };
@@ -164,16 +165,16 @@ public abstract class Library extends OpMode{
             if( sums[i] > .9 ){
                 sums[i] = .9f;
             }
+            if( sums[i] < -.9 ){
+                sums[i] = -.9f;
+            }
         }
 
         frontLeft.setPower(sums[0]);
         frontRight.setPower(sums[1]);
         backLeft.setPower(sums[2]);
         backRight.setPower(sums[3]);
-        /* telemetry.addData("Front Left", sums[0]);
-        telemetry.addData("Front Right", sums[1]);
-        telemetry.addData("Back Left", sums[2]);
-        telemetry.addData("Back Right", sums[3]); */
+        return sums;
     }
 
     public static void encodersInit()//slap this in the init of classes that wanna use encoders

@@ -9,7 +9,7 @@ public class DriveTeleOp extends Library{
         hardwareInit();
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-
+    float[] sums;
     public void loop(){
         /*
         //Intake for blocks | gamepad 1
@@ -41,6 +41,7 @@ public class DriveTeleOp extends Library{
         float linear = gamepad1.left_stick_y; //Forward and back
         float side = gamepad1.left_stick_x; //Right and left
         float rotation = gamepad1.right_stick_x; //Rotating in place
+
 
         //If controller two gives any commands (true) than the robot will use those inputs
         //Otherwise, it will use the inputs of controller one
@@ -80,16 +81,21 @@ public class DriveTeleOp extends Library{
         }
 
         if( mode == DRIVING.Slow ){
-            drive(linear / 2, rotation / 2, side / 2); // slow driving
+            sums = drive(linear / 2, rotation / 2, side / 2); // slow driving
         }
 
         if( mode == DRIVING.Medium ){
-            drive(linear / 1.5f, rotation / 1.5f, side / 1.5f); // medium driving
+            sums = drive(linear / 1.5f, rotation / 1.5f, side / 1.5f); // medium driving
         }
 
         if( mode == DRIVING.Fast ){
-            drive(linear, rotation, side); // fast driving
+            sums = drive(linear, rotation, side); // fast driving
         }
+
+        telemetry.addData("Front Left", sums[0]);
+        telemetry.addData("Front Right", sums[1]);
+        telemetry.addData("Back Left", sums[2]);
+        telemetry.addData("Back Right", sums[3]);
 
         telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
     }
