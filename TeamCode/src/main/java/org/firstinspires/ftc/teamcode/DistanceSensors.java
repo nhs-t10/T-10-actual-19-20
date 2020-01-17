@@ -90,7 +90,7 @@ public class DistanceSensors extends OpMode{
 
                 if(xToggle){
                     if(distance.getDistance(DistanceUnit.CM) >= 20){
-                        drive(.25f,.05f,0);
+                        drive(.25f,0,0);
                     }else{
                         drive(0,0,0);
                     }
@@ -98,7 +98,7 @@ public class DistanceSensors extends OpMode{
 
         if(aToggle){
             if(distance.getDistance(DistanceUnit.CM) >= 20){
-                drive(.25f,.1f,0);
+                drive(.25f,.05f,0);
             }else{
                 drive(0,0,0);
             }
@@ -113,7 +113,7 @@ public class DistanceSensors extends OpMode{
 
         if(bToggle){
             if(distance.getDistance(DistanceUnit.CM) >= 20){
-                drive(.25f,.15f,0);
+                drive(.25f,-.05f,0);
             }else{
                 drive(0,0,0);
             }
