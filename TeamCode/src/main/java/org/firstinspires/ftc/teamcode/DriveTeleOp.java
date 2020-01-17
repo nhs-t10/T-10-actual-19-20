@@ -9,7 +9,8 @@ public class DriveTeleOp extends Library
 		hardwareInit();
 	}
 
-	public void loop(){
+	public void loop()
+    {
 		//Intake for gripFoundation, liftGivenControllerValues, and grabber values
 		boolean a = gamepad1.a;
 		boolean b = gamepad1.b;

@@ -478,8 +478,8 @@ public abstract class Library extends OpMode {
         targetVisible = false;
         for (VuforiaTrackable trackable : allTrackables)
         {
-
-            if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible()) {
+            if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible())
+            {
                 targetVisible = true;
 
                 // getUpdatedRobotLocation() will return null if no new information is available since
@@ -492,7 +492,8 @@ public abstract class Library extends OpMode {
             }
 
             // Provide feedback as to where the robot is located (if we know).
-            if (targetVisible) {
+            if (targetVisible)
+            {
                 // express position (translation) of robot in inches.
                 VectorF translation = lastLocation.getTranslation();
 
@@ -510,7 +511,8 @@ public abstract class Library extends OpMode {
        forward, rotational and horizontal multiplier arrays
        Any resulting values above .9 are rounded down to .9 (any higher value might cause the robot
        to crash) and used to set the power of each of the motors */
-    public static void drive(float l, float r, float s){
+    public static void drive(float l, float r, float s)
+    {
         float[] sums = new float[4];
         float[] forwardMultiplier = {-1f, 1f, -1f, 1f};
         float[] rotationalMultiplier = {1f, 1f, 1f, 1f};
