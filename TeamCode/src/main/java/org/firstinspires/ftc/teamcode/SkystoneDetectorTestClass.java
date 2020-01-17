@@ -5,7 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class SkystoneDetectorTestClass extends Library
 {
     float startEncoderValue;
-    private static final float QUARRYGOAL = 10f;
+    private static float QUARRYGOAL = 10f;
+    private static float SIDEWALL = 10f;
 
     public void init()
     {
@@ -27,7 +28,7 @@ public class SkystoneDetectorTestClass extends Library
             telemetry.addLine("Skystone is not visible");
     }
 
-    public float drive(float goal, boolean strafe)
+    public float driveFor(float goal, boolean strafe)
     {
         if (getEncoderValue() - QUARRYGOAL < startEncoderValue)
         {
