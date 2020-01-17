@@ -33,7 +33,7 @@ public class AutoTest extends Library {
 
     public void loop()
     {
-        
+
         if(stat == State.ROLLIN&&encoderObject.driveCondition(stat)){
             encoderObject.setGoalAndStart(getEncoderValue(),encoderObject.convertToTicks(100),1);
         }
@@ -48,9 +48,9 @@ public class AutoTest extends Library {
 
 
     //how to use the mini-class:
-    //EncodersMethod NAME = new EncodersMethod();
-    //if(enum == State.STATE && encoderObject.driveCondition(enum)){
-    //NAME.setGoalAndStart(getEncoderValue(),NAME.convertToTicks(100),1); }
+    //EncodersMethod NAME = new EncodersMethod();     //this creates an object of the class, which allows you to use the methods
+    //if(enum == State.STATE && encoderObject.driveCondition(enum)){                  //this is the if statement, which checks if the state is correct and the goal hasn't been reached
+    //NAME.setGoalAndStart(getEncoderValue(),NAME.convertToTicks(100),MOVEMENT_NUM); }         //this is where you put your directions in(how far you want to move and shit
     private class EncodersMethod
     {
         float startPos;
@@ -60,33 +60,33 @@ public class AutoTest extends Library {
         public EncodersMethod()
         {
             startPos = 0;
-            goal = 1000000000;
+            goal = 1000000000;//so that the code enters the loop during the first iteration
             receipt = 0;
         }
-        public void slowDown()//this will do more later
+        public void slowDown()//this will be used later
         {
             scalar = 1;
         }
-        public boolean driveCondition(State stateInput)
+        public boolean driveCondition(State stateInput)//method that you will use, this is used as a condition, which will move the robot
         {
 
             slowDown();
             if(Math.abs(goal) < Math.abs(getEncoderValue() - startPos))
             {
                 drive(0,0,0);
-                goal += 10000000;//temp addition to allow the first iteration to happen
+                goal += 10000000;//this allows the first iteration happen
                 stateInput.next();
-                return true;
+                return false;
             }else
             {
                 drive(scalar,0,0);
-                return false;
+                return true;
             }
 
         }
 
 
-        public void setGoalAndStart(float startPos, float goal,int recieptCheck){
+        public void setGoalAndStart(float startPos, float goal,int recieptCheck){ //use this method to set the destination of your travel
             if( receipt != recieptCheck)
             {
                 this.startPos = startPos;
@@ -95,7 +95,7 @@ public class AutoTest extends Library {
 
         }
 
-        public float convertToTicks(float distanceInCm)//this will do stuff soon
+        public float convertToTicks(float distanceInCm)//converts centimeters to encoders ticks so it can be used in start goal
         {
             return distanceInCm*1120/36;//probably is wrong but oh well
         }
