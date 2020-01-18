@@ -11,7 +11,7 @@ public class SkystoneDetectorTestClass extends Library
     public void init()
     {
         startEncoderValue = getEncoderValue();
-        initSkysone();
+        hardwareInit();
     }
 
     public void loop()
