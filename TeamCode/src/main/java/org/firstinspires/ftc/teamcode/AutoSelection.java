@@ -45,7 +45,7 @@ public class AutoSelection extends Library{
 
                     try
                     {
-                        Thread.sleep(500);
+                        Thread.sleep(300);
                     }
 
                     catch (InterruptedException ie) { }
@@ -76,7 +76,7 @@ public class AutoSelection extends Library{
 
                     try
                     {
-                        Thread.sleep(500);
+                        Thread.sleep(300);
                     }
 
                     catch (InterruptedException ie) { }
@@ -106,7 +106,7 @@ public class AutoSelection extends Library{
 
                     try
                     {
-                        Thread.sleep(500);
+                        Thread.sleep(300);
                     }
 
                     catch (InterruptedException ie) { }
