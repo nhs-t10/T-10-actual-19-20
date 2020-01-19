@@ -77,6 +77,7 @@ public abstract class Library extends OpMode{
 
         mode = DRIVING.Fast;
 
+
         //TEST
         //imu = new imuData(hardwareMap);
         //turner = new Turning();
@@ -142,7 +143,19 @@ public abstract class Library extends OpMode{
         }else{
             rotateGrabber.setPower(0);
         }
-    }*/
+}*/
+
+    public static void driveInit(){
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
 
     //Drive is the central movement and robot handling method of the code
     //Its parameters are l (forward component), r (rotational component), and s (skating component)
