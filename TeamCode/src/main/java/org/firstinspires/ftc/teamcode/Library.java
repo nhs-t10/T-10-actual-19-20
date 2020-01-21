@@ -77,9 +77,10 @@ public abstract class Library extends OpMode{
 
         mode = DRIVING.Fast;
 
+
         //TEST
-        imu = new imuData(hardwareMap);
-        turner = new Turning();
+        //imu = new imuData(hardwareMap);
+        //turner = new Turning();
     }
 
     public static void driveUntil( boolean sensor, int l, int r, int s ){
@@ -155,7 +156,19 @@ public abstract class Library extends OpMode{
         }else{
             rotateGrabber.setPower(0);
         }
-    }*/
+}*/
+
+    public static void driveInit(){
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
 
     //Drive is the central movement and robot handling method of the code
     //Its parameters are l (forward component), r (rotational component), and s (skating component)
@@ -163,7 +176,8 @@ public abstract class Library extends OpMode{
     //forward, rotational and horizontal multiplier arrays
     //Any resulting values above .9 are rounded down to .9 (any higher value might cause the robot
     //to crash) and used to set the power of each of the motors
-    public static void drive( float l, float r, float s ){
+    public static float[] drive( float l, float r, float s ){
+        s = -s; //sideways is inversed
         float[] sums = new float[4];
         float[] forwardMultiplier = { -1f, 1f, -1f, 1f };
         float[] rotationalMultiplier = { 1f, 1f, 1f, 1f };
@@ -174,8 +188,10 @@ public abstract class Library extends OpMode{
         }
 
         for( int i = 0; i < 4; i++ ){
-            if( sums[i] > .9 ){
-                sums[i] = .9f;
+            if( sums[i] > 1 ){
+                sums[i] = 1f;
+            }else if( sums[i] < -1 ){
+                sums[i] = -1f;
             }
         }
 
@@ -183,19 +199,16 @@ public abstract class Library extends OpMode{
         frontRight.setPower(sums[1]);
         backLeft.setPower(sums[2]);
         backRight.setPower(sums[3]);
-        /* telemetry.addData("Front Left", sums[0]);
-        telemetry.addData("Front Right", sums[1]);
-        telemetry.addData("Back Left", sums[2]);
-        telemetry.addData("Back Right", sums[3]); */
+        return sums;
     }
 
-    public static void encodersInit()//slap this in the init of classes that wanna use encoders
-    {
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
+//    public static void encodersInit()//slap this in the init of classes that wanna use encoders
+//    {
+//        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//    }
 
     public static Float getEncoderValue()
     {
