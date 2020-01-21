@@ -53,12 +53,7 @@ public class DriveTeleOp extends Library{
             intake(a, b);
         }
 
-        if( c ){
-            lowerIntake(true);
-        }
-        else{
-            lowerIntake(false);
-        }
+        lowerIntake(c);
 
         if( x2 ){
 //            gripStone(true);
