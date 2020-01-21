@@ -17,7 +17,7 @@ public abstract class Library extends OpMode{
     // Declare hardware devices
     public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
     public static CRServo rotateGrabber;
-    public static Servo platform,grabber;
+    public static Servo platform,grabber, intake1, intake2;
     public static VoltageSensor voltageSensor;
     // Initialize hardware devices and their zero behavior
     public static TouchSensor front1, front2;
@@ -92,27 +92,40 @@ public abstract class Library extends OpMode{
 
     //Each method below uses inputs to dictate the robot's actions
     //(i.e gripSkystone, which determines weather the robot should grab or not)
-    /*public static void intake( boolean a, boolean b ){
+    public static void intake( boolean a, boolean b ){
         double num = 0.0;
 
         if( a ){
             num = .5;
         }
-        if( b ){
+        else if( b ){
             num = -.5;
+        }
+        else{
+            num = 0;
         }
 
         intakeOne.setPower(num);
         intakeTwo.setPower(num);
-    }*/
+    }
 
-//    public static void gripStone( boolean x ){
-//        if( x ){
-//            grabber.setPosition(1);
-//        }else{
-//            grabber.setPosition(0);
-//        }
-//    }
+    public static void lowerIntake( boolean x ){
+        if( x ){
+            intake1.setPosition(1);
+            intake2.setPosition(1);
+        }else{
+            intake1.setPosition(0);
+            intake2.setPosition(0);
+        }
+    }
+
+    public static void gripStone( boolean x ){
+        if( x ){
+            grabber.setPosition(1);
+        }else{
+            grabber.setPosition(0);
+        }
+    }
 
 //    public static void gripFoundation( boolean y ){
 //        if( y ){
