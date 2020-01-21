@@ -89,9 +89,10 @@ public abstract class Library extends OpMode {
 
     // Declare hardware devices
     public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
-    public static Servo platform, grabber;
-    public static CRServo rotateGrabber;
     public static TouchSensor front1, front2;
+    public static Servo platform, grabber;
+    public static DistanceSensor distance;
+    public static CRServo rotateGrabber;
     public static ColorSensor color;
 
     public void hardwareInit()
