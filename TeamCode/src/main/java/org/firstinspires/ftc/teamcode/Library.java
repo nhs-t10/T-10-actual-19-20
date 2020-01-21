@@ -31,11 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
@@ -43,21 +44,20 @@ import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 
-import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.YZX;
+import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
 
 public abstract class Library extends OpMode {
     // Orient phone matrix
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
-    private static final boolean PHONE_IS_PORTRAIT = false  ;
-    private static final String VUFORIA_KEY =
-            "AUlk7Uf/////AAABmQgYG9UqckAptIBX1t3NyKw2UKIX1soSTNHPNtD0M7fh+tziRX+LBq3QsczDz4ZOIPVhTBSHiN2wfr7iJnQgMHgs4JyyxcrfeMfVUY5QB5JvwovcRntoojMFvLXX4SCRPTeA6rIADVqyJSBEqjFiy8CoU2cdxBZUvSDue69pgWdd5wvD07Ezt1NJ7OHHa8qCZdF/4f9I5wljgAGS2CmXg8IV6bgrC7K1cFDzGlPLH4Zmhlv0fkoC58wD82dEPxkLCVE2098RGFZiM36yb8IgSniPiaHwl1XH7Swnpzd9086Y+vs+ak1JMhgg3UUQqc1pQFt5xCCXV3FmNZ1Vn2knbcPtTo8IWRP3ZjFa5IGqoft4";
+    private static final boolean PHONE_IS_PORTRAIT = false;
+    private static final String VUFORIA_KEY = "AUlk7Uf/////AAABmQgYG9UqckAptIBX1t3NyKw2UKIX1soSTNHPNtD0M7fh+tziRX+LBq3QsczDz4ZOIPVhTBSHiN2wfr7iJnQgMHgs4JyyxcrfeMfVUY5QB5JvwovcRntoojMFvLXX4SCRPTeA6rIADVqyJSBEqjFiy8CoU2cdxBZUvSDue69pgWdd5wvD07Ezt1NJ7OHHa8qCZdF/4f9I5wljgAGS2CmXg8IV6bgrC7K1cFDzGlPLH4Zmhlv0fkoC58wD82dEPxkLCVE2098RGFZiM36yb8IgSniPiaHwl1XH7Swnpzd9086Y+vs+ak1JMhgg3UUQqc1pQFt5xCCXV3FmNZ1Vn2knbcPtTo8IWRP3ZjFa5IGqoft4";
 
     // Since ImageTarget trackables use mm to specifiy their dimensions, we must use mm for all the physical dimension.
     // We will define some constants and conversions here
