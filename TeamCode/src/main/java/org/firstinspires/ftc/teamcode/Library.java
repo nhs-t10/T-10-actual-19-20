@@ -325,7 +325,7 @@ public abstract class Library extends OpMode {
         return (color.blue() > minColor && blue) || (color.red() > minColor && !blue);
     }
 
-    public void initSkysone()
+    public void initSkystone()
     {
         /* Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
          * We can pass Vuforia the handle to a camera preview resource (on the RC phone);
