@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name = "TeleOp")
 public class DriveTeleOp extends Library
 {
+	boolean subroutine;
+
 	public void init()
 	{
 		hardwareInit();
@@ -11,6 +13,22 @@ public class DriveTeleOp extends Library
 
 	public void loop()
     {
+    	if (isSkystoneVisible() && distance.getDistance(DistanceUnit.CM) > 5)
+		{
+			subroutine = true;
+			drive(.5f, 0, 0);
+
+			return;
+		}
+
+    	if (subroutine)
+		{
+			gripStone(false);
+			driveForEncoders(getEncoderValue(), getEncoderValue(), -50);
+
+			subroutine = true;
+		}
+
 		//Intake for gripFoundation, liftGivenControllerValues, and grabber values
 		boolean a = gamepad1.a;
 		boolean b = gamepad1.b;
