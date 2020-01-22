@@ -57,32 +57,38 @@ public class Turning
     }*/
 
 
-    public float updateDrive(imuData data)
+    public double[] updateDrive(imuData imu)
     {
         //Setting the current angle
-        currentAngle = data.getAngle();
+        currentAngle = imu.getAngle();
 
         //Finding the error
         double error = getError();
-        pComponent = error * P;
+        pComponent = error * P * 0.5;
+
+        double stateTest = 0.0;
 
         if (currentEvent == state.TURNING)
         {
-            //if (getCurrTime() - savedTime > 2000)
-                //stopTurning();
-            //else
-                //Library.drive(0f, (float) pComponent, 0f);
-
-            if (error > 1)
-                Library.drive(0f, (float) pComponent, 0f);
-            else
+            if (getCurrTime() - savedTime > 2000)
                 stopTurning();
+            else
+                Library.drive(0f, (float) pComponent, 0f);
+
+            /*if (error < 1.0)
+                stopTurning();
+            else
+                Library.drive(0f, (float) pComponent, 0f);*/
         }
 
         else if (currentEvent == state.TRAVELING_IN_A_LINEAR_FASHION)
-            Library.drive(0.5f, (float) pComponent, 0f);
+        {
+            stateTest = 1.0;
+            Library.drive(0f, (float) pComponent, 0f);
+        }
 
-        return (float) currentAngle;
+        double[] array = {destinationAngle, stateTest, currentAngle, error};
+        return array;
     }
 
     public void stopTurning()
