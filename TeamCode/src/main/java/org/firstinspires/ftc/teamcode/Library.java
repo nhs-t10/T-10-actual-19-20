@@ -110,7 +110,7 @@ public abstract class Library extends OpMode {
         grabber = hardwareMap.servo.get("s1");
         rotateGrabber = hardwareMap.crservo.get("s2");
         distance = hardwareMap.get(DistanceSensor.class, "distance1");
-        
+
         color = hardwareMap.colorSensor.get("color1");
         front1 = hardwareMap.touchSensor.get("touch1");
         front2 = hardwareMap.touchSensor.get("touch2");
