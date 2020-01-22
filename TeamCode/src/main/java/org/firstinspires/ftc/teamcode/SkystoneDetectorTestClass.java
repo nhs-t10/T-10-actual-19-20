@@ -11,15 +11,17 @@ public class SkystoneDetectorTestClass extends Library
     public void init()
     {
         startEncoderValue = getEncoderValue();
-        hardwareInit();
+        initSkysone();
+//      hardwareInit();
+
     }
 
     public void loop()
     {
-        QUARRYGOAL = driveFor(QUARRYGOAL, false);
-
-        if (QUARRYGOAL == 0)
-            SIDEWALL = driveFor(SIDEWALL, true);
+//        QUARRYGOAL = driveFor(QUARRYGOAL, false);
+//
+//        if (QUARRYGOAL == 0)
+//            SIDEWALL = driveFor(SIDEWALL, true);
 
         if (isSkystoneVisible())
             telemetry.addLine("Skystone is visible");
@@ -28,20 +30,20 @@ public class SkystoneDetectorTestClass extends Library
             telemetry.addLine("Skystone is not visible");
     }
 
-    public float driveFor(float goal, boolean strafe)
-    {
-        if (getEncoderValue() - QUARRYGOAL < startEncoderValue)
-        {
-            if( strafe )
-                drive(0, ( getEncoderValue() - startEncoderValue ) / SIDEWALL * .6f + .3f, 0);
-            else
-                drive(( getEncoderValue() - startEncoderValue ) / QUARRYGOAL * .6f + .3f, 0, 0);
-
-            return goal;
-        }
-
-        startEncoderValue = getEncoderValue();
-        drive(0, 0, 0);
-        return 0;
-    }
+//    public float driveFor(float goal, boolean strafe)
+//    {
+//        if (getEncoderValue() - QUARRYGOAL < startEncoderValue)
+//        {
+//            if( strafe )
+//                drive(0, ( getEncoderValue() - startEncoderValue ) / SIDEWALL * .6f + .3f, 0);
+//            else
+//                drive(( getEncoderValue() - startEncoderValue ) / QUARRYGOAL * .6f + .3f, 0, 0);
+//
+//            return goal;
+//        }
+//
+//        startEncoderValue = getEncoderValue();
+//        drive(0, 0, 0);
+//        return 0;
+//    }
 }
