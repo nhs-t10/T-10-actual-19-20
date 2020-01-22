@@ -109,7 +109,7 @@ public abstract class Library extends OpMode{
 //        grabber = hardwareMap.servo.get("s1");
 //        rotateGrabber = hardwareMap.crservo.get("s2");
 
-//        color = hardwareMap.colorSensor.get("color1");
+        color = hardwareMap.colorSensor.get("color");
         distance = hardwareMap.get(DistanceSensor.class, "distance1");
 
         front1 = hardwareMap.touchSensor.get("touch1");
@@ -375,7 +375,7 @@ public abstract class Library extends OpMode{
     //Any resulting values above .9 are rounded down to .9 (any higher value might cause the robot
     //to crash) and used to set the power of each of the motors
     public static float[] drive( float l, float r, float s ){
-        s = -s; //sideways is inversed
+        s = -s; //sideways is inverted
         float[] sums = new float[4];
         float[] forwardMultiplier = { -1f, 1f, -1f, 1f };
         float[] rotationalMultiplier = { 1f, 1f, 1f, 1f };

@@ -11,20 +11,24 @@ public class BlueBlockAuto extends Library {
         SCAN, SLIDE, MOVE, TRAVEL, PARK, END
     }
     State currentstate;
-    //int gray, blue;
+    int gray, blue;
+
     ElapsedTime clock = new ElapsedTime();
-    //boolean moving = false;
+    boolean moving = false;
 
     @Override public void init(){
         hardwareInit();
         currentstate = State.SCAN;
-        //gray = color.blue();
-        //blue = (int)(gray*1.2);
+        blue = color.blue();
+        gray = (color.red() + color.blue() + color.green()) / 3;
     }
     public void loop(){
         /*
         Loop constantly checks state, and then executes a command based on this.
         */
+        clock.reset();
+        while (clock.milliseconds() < 0.2)
+            drive(.5f, 0, 0);
         if(currentstate == State.SCAN){
             scan();
         }
@@ -38,7 +42,7 @@ public class BlueBlockAuto extends Library {
             travel();
         }
         if(currentstate == State.PARK){
-            travel();
+            park();
         }
         if(currentstate == State.END){
             Stop();
@@ -53,22 +57,43 @@ public class BlueBlockAuto extends Library {
 
     public void scan(){
         //isSkystoneVisible, then either slide left or move forward
+        if(isSkystoneVisible()){
+            currentstate = State.MOVE;
+        }
+        else{
+            currentstate = State.SLIDE;
+        }
     }
 
     public void slide(){
         //only do if skystone is not immediately visible
+        clock.reset();
+        while (clock.milliseconds() < 500)
+            drive(0, 0, .5f);
+        currentstate = State.SCAN;
     }
 
     public void move(){
         //move forward to skystone (will need tweaking to make sure that skystone is always visible)
+        clock.reset();
+        while (clock.seconds() > 2)
+            drive(-.5f, 0, 0);
     }
 
     public void travel(){
         //back up a small amount, then slide left to cross the barrier
+        clock.reset();
+        while (clock.seconds() < 3)
+            drive(0, 0, .5f);
+        currentstate = State.PARK;
     }
 
     public void park(){
         //slide right and use color sensor to stop on blue line
+        clock.reset();
+        while (gray > blue)
+            drive(0, 0, -.5f);
+        currentstate = State.PARK;
     }
 
     public void Stop(){
