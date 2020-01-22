@@ -304,8 +304,8 @@ public abstract class Library extends OpMode{
             num = 0;
         }
 
-        intakeOne.setPower(num);
-        intakeTwo.setPower(num);
+        //intakeOne.setPower(num);
+        //intakeTwo.setPower(num);
     }
 
     public static void lowerIntake( boolean x ){
