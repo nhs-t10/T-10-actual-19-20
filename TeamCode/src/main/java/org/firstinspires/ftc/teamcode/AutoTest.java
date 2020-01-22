@@ -39,7 +39,7 @@ public class AutoTest extends Library {
     {
 
         if(stat == State.ROLLIN&&encoderObject.driveCondition(stat)){
-            encoderObject.setGoalAndStart(getEncoderValue(),encoderObject.convertToTicks(100),1);
+            encoderObject.setGoalAndStart(getEncoderValue(),encoderObject.convertToTicks(100 ),1);
         }
         if(stat == State.ZOOMIN&&encoderObject.driveCondition(stat))
         {

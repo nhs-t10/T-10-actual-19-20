@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
@@ -70,7 +69,6 @@ public abstract class Library extends OpMode{
     public static Servo platform,grabber, intake1, intake2;
     public static VoltageSensor voltageSensor;
     // Initialize hardware devices and their zero behavior
-    public static TouchSensor front1, front2;
     public static ColorSensor color;
     public static DistanceSensor distance;
     public DRIVING mode;
