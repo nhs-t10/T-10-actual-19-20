@@ -49,6 +49,7 @@ public abstract class Library extends OpMode{
         frontRight = hardwareMap.dcMotor.get("m1");
         backLeft = hardwareMap.dcMotor.get("m2");
         backRight = hardwareMap.dcMotor.get("m3");
+        driveInit();
 
 //        lift = hardwareMap.dcMotor.get("l0");
 //        intakeOne = hardwareMap.dcMotor.get("l1");
