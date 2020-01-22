@@ -112,8 +112,8 @@ public abstract class Library extends OpMode{
         color = hardwareMap.colorSensor.get("color1");
         distance = hardwareMap.get(DistanceSensor.class, "distance1");
 
-        front1 = hardwareMap.touchSensor.get("touch1");
-        front2 = hardwareMap.touchSensor.get("touch2");
+        //front1 = hardwareMap.touchSensor.get("touch1");
+        //front2 = hardwareMap.touchSensor.get("touch2");
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
