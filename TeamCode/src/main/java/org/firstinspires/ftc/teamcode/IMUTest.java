@@ -17,6 +17,7 @@ public class IMUTest extends Library{
         //imuData imu = new imuData(hardwareMap);
         if (gamepad1.a) {
             turner.setDestination(90);
+            // issue with .updateDrive(imu)
             turner.updateDrive(imu);
             xAccel = imu.getXAcceleration();
             telemetry.addData("Current Horizontal Acceleration: ", xAccel);
