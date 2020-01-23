@@ -46,6 +46,7 @@ public class BlueBlockAuto extends Library{
             Stop();
         }
 
+        telemetry.addData("skystone is visible: ", isSkystoneVisible());
         telemetry.addData("Blue reading: ", color.blue());
         //        telemetry.addData("Gray color: ", gray);
         //        telemetry.addData("Blue color: ", blue);
