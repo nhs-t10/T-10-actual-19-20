@@ -14,18 +14,30 @@ public class TestIMU extends Library
     Turning turner;
     double angleTurned = 0;
     double[] array;
+    state curState;
+
+    enum state
+    {
+        PlEASE_WORK
+    }
 
     public void init()
     {
         hardwareInit();
         imu = new imuData(hardwareMap);
         turner = new Turning();
-
+        curState = state.PlEASE_WORK;
     }
 
     ElapsedTime clock = new ElapsedTime();
 
     public void loop()
+    {
+        if (curState == state.PlEASE_WORK)
+            turn();
+    }
+
+    public void turn()
     {
         angleTurned = imu.getAngle();
         array = new double[4];
