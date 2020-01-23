@@ -74,6 +74,8 @@ public class AutoTest extends Library {
         public boolean driveCondition(State stateInput)//method that you will use, this is used as a condition, which will move the robot
         {
 
+            telemetry.addData("goal",(goal));
+            telemetry.addData("current pos",getEncoderValue() - startPos);
             slowDown();
             if(Math.abs(goal) < Math.abs(getEncoderValue() - startPos))
             {
@@ -83,7 +85,7 @@ public class AutoTest extends Library {
                 return false;
             }else
             {
-                drive(scalar,0,0);
+                drive(-scalar,0,0);
                 return true;
             }
 
