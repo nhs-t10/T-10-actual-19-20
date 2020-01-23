@@ -25,7 +25,7 @@ public class BlueBlockAuto extends Library{
         */
         clock.reset();
         while( clock.milliseconds() < 0.2 ){
-            drive(.5f, 0, 0);
+            drive(-.5f, 0, 0);
         }
         if( currentstate == State.SCAN ){
             scan();
@@ -66,7 +66,7 @@ public class BlueBlockAuto extends Library{
         //only do if skystone is not immediately visible
         clock.reset();
         while( clock.milliseconds() < 500 ){
-            drive(0, 0, .5f);
+            drive(0, 0, -.5f);
         }
         currentstate = State.SCAN;
     }
@@ -83,7 +83,7 @@ public class BlueBlockAuto extends Library{
         //back up a small amount, then slide left to cross the barrier
         clock.reset();
         while( clock.seconds() < 3 ){
-            drive(0, 0, .5f);
+            drive(0, 0, -.5f);
         }
         currentstate = State.PARK;
     }
@@ -92,7 +92,7 @@ public class BlueBlockAuto extends Library{
         //slide right and use color sensor to stop on blue line
         clock.reset();
         while( gray > blue ){
-            drive(0, 0, -.5f);
+            drive(0, 0, .5f);
         }
         currentstate = State.PARK;
     }
