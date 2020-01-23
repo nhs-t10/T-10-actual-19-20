@@ -23,6 +23,11 @@ public class BluePlatformAuto extends Library {
         gray = color.blue();
         blue = (int)(gray*1.3);
     }
+    public void init_loop(){
+        telemetry.addData("Red:", color.red());
+        telemetry.addData("Green:", color.green());
+        telemetry.addData("Blue:", color.blue());
+    }
     public void loop(){
         /*
         Loop constantly checks state, and then executes a command based on this.
