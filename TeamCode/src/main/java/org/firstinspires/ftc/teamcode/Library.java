@@ -372,7 +372,7 @@ public abstract class Library extends OpMode{
     //forward, rotational and horizontal multiplier arrays
     //Any resulting values above .9 are rounded down to .9 (any higher value might cause the robot
     //to crash) and used to set the power of each of the motors
-    public static float[] drive( float l, float r, float s ){
+    public static float[] drive(float l, float r, float s){
         s = -s; //sideways is inverted
         float[] sums = new float[4];
         float[] forwardMultiplier = { -1f, 1f, -1f, 1f };

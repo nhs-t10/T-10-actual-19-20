@@ -9,7 +9,7 @@ public class DriveTeleOp extends Library{
         hardwareInit();
         driveInit();
     }
-    float[] sums;
+    private float[] sums;
     public void loop(){
 
         //Intake for blocks | gamepad 1
