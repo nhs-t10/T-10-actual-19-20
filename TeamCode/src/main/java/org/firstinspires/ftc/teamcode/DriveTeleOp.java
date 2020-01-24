@@ -7,20 +7,21 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class DriveTeleOp extends Library{
     public void init(){
         hardwareInit();
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        driveInit();
     }
-    float[] sums;
+    private float[] sums;
     public void loop(){
-        /*
+
         //Intake for blocks | gamepad 1
         boolean a = gamepad1.a;
+        boolean c = gamepad1.right_bumper;
+        boolean v = gamepad1.left_bumper;
         //Output for blocks | gamepad 1
         boolean b = gamepad1.b;
         //Intake for blocks | gamepad 2
         boolean a2 = gamepad2.a;
         //Output for blocks | gamepad 2
         boolean b2 = gamepad2.b;
-        */
 
         //Stone gripping | both gamepads
         boolean x = gamepad1.x;
@@ -46,16 +47,23 @@ public class DriveTeleOp extends Library{
         //If controller two gives any commands (true) than the robot will use those inputs
         //Otherwise, it will use the inputs of controller one
 
-        /*if( a2 || b2 ){
+        if( a2 || b2 ){
             intake(a2, b2);
         }else{
             intake(a, b);
-        }*/
+        }
+
+        lowerIntake(c);
 
         if( x2 ){
 //            gripStone(true);
         }else{
 //            gripStone(x);
+        }
+        if( x2 ){
+            //            gripStone(true);
+        }else{
+            //            gripStone(x);
         }
 
         if( y2 ){
