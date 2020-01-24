@@ -7,43 +7,39 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous (name = "Cheifetz imu test")
-public class TestIMU extends Library
-{
+@Autonomous(name = "Cheifetz imu test")
+public class TestIMU extends Library{
     imuData imu;
     Turning turner;
     double angleTurned = 0;
     double[] array;
     state curState;
 
-    enum state
-    {
+    enum state{
         PlEASE_WORK
     }
 
-    public void init()
-    {
+    public void init(){
         hardwareInit();
         imu = new imuData(hardwareMap);
         turner = new Turning();
         curState = state.PlEASE_WORK;
+        clock.reset();
     }
 
     ElapsedTime clock = new ElapsedTime();
 
-    public void loop()
-    {
-        if (curState == state.PlEASE_WORK)
+    public void loop(){
+        if( curState == state.PlEASE_WORK ){
             turn();
+        }
     }
 
-    public void turn()
-    {
+    public void turn(){
         angleTurned = imu.getAngle();
         array = new double[4];
 
-        if (clock.seconds() < 5)
-        {
+        if( clock.seconds() < 5 ){
             turner.setDestination(90);
             turner.updateDrive(imu);
             array = turner.updateDrive(imu);
@@ -55,5 +51,6 @@ public class TestIMU extends Library
 
         angleTurned = imu.getAngle();
         telemetry.addData("Current Angle YES: ", angleTurned);
+        telemetry.addData("Clock:", clock.seconds());
     }
 }
