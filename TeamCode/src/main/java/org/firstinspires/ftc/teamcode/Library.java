@@ -106,8 +106,8 @@ public abstract class Library extends OpMode{
 //        platform = hardwareMap.servo.get("s0");
 //        grabber = hardwareMap.servo.get("s1");
 //        rotateGrabber = hardwareMap.crservo.get("s2");
-        
-        color = hardwareMap.colorSensor.get("color1");
+
+        color = hardwareMap.get(ColorSensor.class, "color1");
         distance = hardwareMap.get(DistanceSensor.class, "distance1");
 
         //front1 = hardwareMap.touchSensor.get("touch1");
