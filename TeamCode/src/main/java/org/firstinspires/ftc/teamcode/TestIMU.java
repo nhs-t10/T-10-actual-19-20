@@ -45,6 +45,7 @@ public class TestIMU extends Library{
         if( started && clock.seconds() < 1 ){
             turner.setDestination(45);
         }
+
         if( started && clock.seconds() > 1 && clock.seconds() < 10 ){
             array = turner.updateDrive(imu);
             telemetry.addData("Destination Angle: ", array[0]);

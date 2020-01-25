@@ -60,7 +60,7 @@ public class DistanceSensors extends Library{
 
         if(aToggle){
             if(hsvValues[0] < 140){
-                drive(0,0,.25f);
+                drive(0,0,.6f);
             }else{
                 drive(0,0,0);
             }
@@ -75,7 +75,7 @@ public class DistanceSensors extends Library{
 
         if(bToggle){
             if(hsvValues[0] > 100){
-                drive(0,0,-.25f);
+                drive(0,0,-.6f);
             }else{
                 drive(0,0,0);
             }
