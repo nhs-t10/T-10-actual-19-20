@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.graphics.Color;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -9,17 +11,16 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public class BlueBlockAuto extends Library{
 
     private State currentstate;
-    private int gray, blue;
     private ElapsedTime clock = new ElapsedTime();
     boolean moving = false;
+    private final double SCALE_FACTOR = 255;
+    private float[] hsvValues = {0F, 0F, 0F};
 
     @Override
     public void init(){
         hardwareInit();
         vuforiaInit();
         currentstate = State.SCAN;
-        blue = color.blue();
-        gray = ( color.red() + color.blue() + color.green() ) / 3;
     }
 
     public void loop(){
@@ -49,12 +50,7 @@ public class BlueBlockAuto extends Library{
             Stop();
         }
 
-        telemetry.addData("skystone is visible: ", isSkystoneVisible());
-        telemetry.addData("Blue reading: ", color.blue());
-        //        telemetry.addData("Gray color: ", gray);
-        //        telemetry.addData("Blue color: ", blue);
-        //        telemetry.addData("Millis since run: ", clock.seconds());
-        telemetry.addData("State: ", currentstate);
+        Telemetry();
     }
 
     public void scan(){
@@ -68,43 +64,63 @@ public class BlueBlockAuto extends Library{
 
     public void slide(){
         //only do if skystone is not immediately visible
-        clock.reset();
-        while( clock.milliseconds() < 500 ){
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(clock.milliseconds() < 500){
             drive(0, 0, -.5f);
+        }else{
+            drive(0,0,0);
+            moving = false;
+            currentstate = State.SCAN;
         }
-        currentstate = State.SCAN;
     }
 
     public void move(){
         //move forward to skystone (will need tweaking to make sure that skystone is always visible)
-        clock.reset();
-        while(distance.getDistance(DistanceUnit.INCH)<=18){
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(distance.getDistance(DistanceUnit.INCH)<=18){
             drive(.5f, 0, 0);
+        }else{
+            rotateFor((float) Math.PI);
+            drive(0,0,0);
+            moving = false;
+            currentstate = State.TRAVEL;
         }
-        rotateFor((float) Math.PI);
-        currentstate = State.TRAVEL;
     }
 
     public void travel(){
         //back up a small amount, then slide left to cross the barrier
-        clock.reset();
-        while( clock.seconds() < 3 ){
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(clock.seconds() < 3){
             drive(0, 0, .5f);
+        }else{
+            drive(0,0,0);
+            moving = false;
+            currentstate = State.PARK;
         }
-        currentstate = State.PARK;
     }
 
     public void park(){
         //slide right and use color sensor to stop on blue line
-        clock.reset();
-        gray = ( color.red() + color.blue() + color.green() ) / 3;
-        blue = color.blue();
-        while( gray > blue ){
-            drive(0, 0, -.5f);
-            gray = ( color.red() + color.blue() + color.green() ) / 3;
-            blue = color.blue();
+        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(distance.getDistance(DistanceUnit.CM)>5){
+            drive(.5f,0,0);
+        }else if(hsvValues[0] < 140 /*|| clock.seconds() < 1.5*/){
+            drive(0,0,-.4f);
         }
-        currentstate = State.END;
+        else{
+            moving = false;
+            drive(0,0,0);
+            currentstate = State.END;
+        }
     }
 
     public void Stop(){
@@ -114,4 +130,22 @@ public class BlueBlockAuto extends Library{
     enum State{
         SCAN, SLIDE, MOVE, TRAVEL, PARK, END
     }
+
+    private void Telemetry(){
+        telemetry.addData("skystone is visible: ", isSkystoneVisible());
+
+        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
+        telemetry.addData("Red: ", color.red());
+        telemetry.addData("Green: ", color.green());
+        telemetry.addData("Blue: ", color.blue());
+        telemetry.addData("Light: ",color.alpha());
+        telemetry.addData("Hue: ", hsvValues[0]);
+        telemetry.addData("Saturation: ", hsvValues[1]);
+        telemetry.addData("Value: ", hsvValues[2]);
+
+        telemetry.addData("Millis since State Start: ", clock.seconds());
+        telemetry.addData("State: ", currentstate);
+        telemetry.addData("Distamce: ", distance.getDistance(DistanceUnit.CM));
+    }
+
 }
