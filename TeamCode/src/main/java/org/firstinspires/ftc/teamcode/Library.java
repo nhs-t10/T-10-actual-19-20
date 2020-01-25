@@ -71,6 +71,7 @@ public abstract class Library extends OpMode{
     // Initialize hardware devices and their zero behavior
     public static ColorSensor color;
     public static DistanceSensor distance;
+    //public static DistanceSensor BLDistance, BRDistance;
     public DRIVING mode;
 
     //TEST
@@ -109,6 +110,8 @@ public abstract class Library extends OpMode{
 
         color = hardwareMap.get(ColorSensor.class, "color1");
         distance = hardwareMap.get(DistanceSensor.class, "distance1");
+        //BLDistance = hardwareMap.get(DistanceSensor.class, "BackLeftDistance");
+        //BRDistance = hardwareMap.get(DistanceSensor.class, "BackRightDistance");
 
         //front1 = hardwareMap.touchSensor.get("touch1");
         //front2 = hardwareMap.touchSensor.get("touch2");
