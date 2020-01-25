@@ -92,6 +92,9 @@ public class DistanceSensors extends Library{
                 drive(0, 0, -.35f);
                 blue = color.red();
                 gray = ( color.red() + color.blue() + color.green() ) / 3;
+            }else{
+                drive(0,0, 0);
+                bToggle = false;
             }
         }
 
