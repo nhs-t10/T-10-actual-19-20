@@ -10,7 +10,6 @@ public class DriveTeleOp extends Library{
     public void init()
     {
         hardwareInit();
-        driveInit();
     }
     private float[] sums;
     public void loop(){
