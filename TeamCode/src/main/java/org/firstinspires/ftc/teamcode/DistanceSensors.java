@@ -16,7 +16,6 @@ public class DistanceSensors extends Library{
 
     public void init(){
         hardwareInit();
-        driveInit();
     }
 
     public void loop(){
@@ -55,14 +54,16 @@ public class DistanceSensors extends Library{
                 drive(.25f,0,0);
             }else{
                 drive(0,0,0);
+                xToggle = false;
             }
         }
 
         if(aToggle){
-            if(hsvValues[0] < 140){
+            if(hsvValues[0] < 140){ //hsvValues[0] < 140 this is blue
                 drive(0,0,.6f);
             }else{
                 drive(0,0,0);
+                aToggle = false;
             }
         }
         if( a ){
@@ -74,10 +75,11 @@ public class DistanceSensors extends Library{
         }
 
         if(bToggle){
-            if(hsvValues[0] > 100){
+            if(hsvValues[0] > 100){ //hsvValues[0] > 100 this is red
                 drive(0,0,-.6f);
             }else{
                 drive(0,0,0);
+                bToggle = false;
             }
         }
         if( b ){

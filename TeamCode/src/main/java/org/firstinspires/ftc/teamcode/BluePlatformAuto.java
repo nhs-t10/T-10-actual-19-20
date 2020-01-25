@@ -2,11 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import android.app.Activity;
 import android.graphics.Color;
-import android.view.View;
-
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Autonomous(name="Blue Platform Auto")//do not delete this test class used by sasha
@@ -16,7 +12,6 @@ public class BluePlatformAuto extends Library {
         TO_FOUNDATION, FROM_FOUNDATION, PARKING, END
     }
     private State currentstate;
-    private int gray, blue;
     private ElapsedTime clock = new ElapsedTime();
     private boolean moving = false;
     private final double SCALE_FACTOR = 255;
@@ -25,18 +20,9 @@ public class BluePlatformAuto extends Library {
     @Override public void init(){
         hardwareInit();
         currentstate = State.TO_FOUNDATION;
-        gray = color.blue();
-        blue = (int)(gray*1.3);
     }
     public void init_loop(){
-        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
-        telemetry.addData("Red: ", color.red());
-        telemetry.addData("Green: ", color.green());
-        telemetry.addData("Blue: ", color.blue());
-        telemetry.addData("Light: ",color.alpha());
-        telemetry.addData("Hue: ", hsvValues[0]);
-        telemetry.addData("Saturation: ", hsvValues[1]);
-        telemetry.addData("Value: ", hsvValues[2]);
+        Telemetry();
     }
     public void loop(){
         /*
@@ -55,18 +41,7 @@ public class BluePlatformAuto extends Library {
             Stop();
         }
 
-        Color.RGBToHSV((int) (color.red() * SCALE_FACTOR), (int) (color.green() * SCALE_FACTOR), (int) (color.blue() * SCALE_FACTOR), hsvValues);
-        telemetry.addData("Red:", color.red());
-        telemetry.addData("Green:", color.green());
-        telemetry.addData("Blue:", color.blue());
-        telemetry.addData("Light",color.alpha());
-        telemetry.addData("Hue", hsvValues[0]);
-
-        telemetry.addData("Gray color: ", gray);
-        telemetry.addData("Blue color: ", blue);
-        telemetry.addData("Millis since run: ", clock.seconds());
-        telemetry.addData("State: ", currentstate);
-        telemetry.addData("Distamce: ", distance.getDistance(DistanceUnit.CM));
+        Telemetry();
     }
 
     private void ToFoundation(){
@@ -103,13 +78,14 @@ public class BluePlatformAuto extends Library {
 
     private void Parking(){
 //        gripFoundation(false);
+        Color.RGBToHSV((int) (color.red() * SCALE_FACTOR), (int) (color.green() * SCALE_FACTOR), (int) (color.blue() * SCALE_FACTOR), hsvValues);
         if(!moving){
             clock.reset();
             moving = true;
         }else if(distance.getDistance(DistanceUnit.CM)>5){
             drive(.5f,0,0);
-        }else if(color.blue()< blue /*|| clock.seconds() < 1.5*/){
-            drive(0,0,.75f);
+        }else if(hsvValues[0] < 140 /*|| clock.seconds() < 1.5*/){
+            drive(0,0,.4f);
         }
         else{
             moving = false;
@@ -118,10 +94,26 @@ public class BluePlatformAuto extends Library {
         }
     }
 
+    private void Telemetry(){
+        Color.RGBToHSV((int) (color.red() * SCALE_FACTOR), (int) (color.green() * SCALE_FACTOR), (int) (color.blue() * SCALE_FACTOR), hsvValues);
+        telemetry.addData("Red: ", color.red());
+        telemetry.addData("Green: ", color.green());
+        telemetry.addData("Blue: ", color.blue());
+        telemetry.addData("Light: ",color.alpha());
+        telemetry.addData("Hue: ", hsvValues[0]);
+        telemetry.addData("Saturation: ", hsvValues[1]);
+        telemetry.addData("Value: ", hsvValues[2]);
+
+        telemetry.addData("Millis since State Start: ", clock.seconds());
+        telemetry.addData("State: ", currentstate);
+        telemetry.addData("Distamce: ", distance.getDistance(DistanceUnit.CM));
+    }
+
     private void Stop(){
         moving = false;
         drive(0,0,0);
     }
+
 }
 
 
