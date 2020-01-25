@@ -5,12 +5,16 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "TeleOp")
 public class DriveTeleOp extends Library{
-    public void init(){
+    boolean subroutine;
+
+    public void init()
+    {
         hardwareInit();
         driveInit();
     }
     private float[] sums;
     public void loop(){
+
 
         //Intake for blocks | gamepad 1
         boolean a = gamepad1.a;
@@ -53,7 +57,7 @@ public class DriveTeleOp extends Library{
             intake(a, b);
         }
 
-        lowerIntake(c);
+//        lowerIntake(c);
 
         if( x2 ){
 //            gripStone(true);

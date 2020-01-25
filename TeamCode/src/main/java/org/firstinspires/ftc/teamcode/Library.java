@@ -100,8 +100,8 @@ public abstract class Library extends OpMode{
         driveInit();
 
 //        lift = hardwareMap.dcMotor.get("l0");
-//        intakeOne = hardwareMap.dcMotor.get("l1");
-//        intakeTwo = hardwareMap.dcMotor.get("l2");
+        intakeOne = hardwareMap.dcMotor.get("i1");
+        intakeTwo = hardwareMap.dcMotor.get("i2");
 
 //        platform = hardwareMap.servo.get("s0");
 //        grabber = hardwareMap.servo.get("s1");
@@ -121,8 +121,8 @@ public abstract class Library extends OpMode{
         //lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //liftGivenControllerValues.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //liftGivenControllerValues.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         mode = DRIVING.Fast;
 
@@ -302,19 +302,19 @@ public abstract class Library extends OpMode{
             num = 0;
         }
 
-        //intakeOne.setPower(num);
-        //intakeTwo.setPower(num);
+        intakeOne.setPower(num);
+        intakeTwo.setPower(-num);
     }
 
-    public static void lowerIntake( boolean x ){
-        if( x ){
-            intake1.setPosition(1);
-            intake2.setPosition(1);
-        }else{
-            intake1.setPosition(0);
-            intake2.setPosition(0);
-        }
-    }
+//    public static void lowerIntake( boolean x ){
+//        if( x ){
+//            intake1.setPosition(1);
+//            intake2.setPosition(1);
+//        }else{
+//            intake1.setPosition(0);
+//            intake2.setPosition(0);
+//        }
+//    }
 
 //    public static void gripStone( boolean x ){
 //        if( x ){
