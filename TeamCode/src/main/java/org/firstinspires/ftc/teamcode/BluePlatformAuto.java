@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -12,10 +15,12 @@ public class BluePlatformAuto extends Library {
     enum State{
         TO_FOUNDATION, FROM_FOUNDATION, PARKING, END
     }
-    State currentstate;
-    int gray, blue;
-    ElapsedTime clock = new ElapsedTime();
-    boolean moving = false;
+    private State currentstate;
+    private int gray, blue;
+    private ElapsedTime clock = new ElapsedTime();
+    private boolean moving = false;
+    private final double SCALE_FACTOR = 255;
+    private float[] hsvValues = {0F, 0F, 0F};
 
     @Override public void init(){
         hardwareInit();
@@ -24,9 +29,14 @@ public class BluePlatformAuto extends Library {
         blue = (int)(gray*1.3);
     }
     public void init_loop(){
-        telemetry.addData("Red:", color.red());
-        telemetry.addData("Green:", color.green());
-        telemetry.addData("Blue:", color.blue());
+        Color.RGBToHSV((int) (color.red() * SCALE_FACTOR), (int) (color.green() * SCALE_FACTOR), (int) (color.blue() * SCALE_FACTOR), hsvValues);
+        telemetry.addData("Red: ", color.red());
+        telemetry.addData("Green: ", color.green());
+        telemetry.addData("Blue: ", color.blue());
+        telemetry.addData("Light: ",color.alpha());
+        telemetry.addData("Red Hue: ", hsvValues[0]);
+        telemetry.addData("Green Hue: ", hsvValues[1]);
+        telemetry.addData("Blue Hue: ", hsvValues[2]);
     }
     public void loop(){
         /*
@@ -45,7 +55,13 @@ public class BluePlatformAuto extends Library {
             Stop();
         }
 
-        telemetry.addData("Blue reading: ", color.blue());
+        Color.RGBToHSV((int) (color.red() * SCALE_FACTOR), (int) (color.green() * SCALE_FACTOR), (int) (color.blue() * SCALE_FACTOR), hsvValues);
+        telemetry.addData("Red:", color.red());
+        telemetry.addData("Green:", color.green());
+        telemetry.addData("Blue:", color.blue());
+        telemetry.addData("Light",color.alpha());
+        telemetry.addData("Hue", hsvValues[0]);
+
         telemetry.addData("Gray color: ", gray);
         telemetry.addData("Blue color: ", blue);
         telemetry.addData("Millis since run: ", clock.seconds());
@@ -53,7 +69,7 @@ public class BluePlatformAuto extends Library {
         telemetry.addData("Distamce: ", distance.getDistance(DistanceUnit.CM));
     }
 
-    public void ToFoundation(){
+    private void ToFoundation(){
         if(!moving){
             clock.reset();
             moving = true;
@@ -67,7 +83,7 @@ public class BluePlatformAuto extends Library {
         }
     }//distance reading to the platform is 90cm
 
-    public void FromFoundation(){
+    private void FromFoundation(){
 //        gripFoundation(true);
         if (!moving){
             clock.reset();
@@ -85,7 +101,7 @@ public class BluePlatformAuto extends Library {
         }
     }//wall reading is about 1cm
 
-    public void Parking(){
+    private void Parking(){
 //        gripFoundation(false);
         if(!moving){
             clock.reset();
@@ -102,7 +118,7 @@ public class BluePlatformAuto extends Library {
         }
     }
 
-    public void Stop(){
+    private void Stop(){
         moving = false;
         drive(0,0,0);
     }
