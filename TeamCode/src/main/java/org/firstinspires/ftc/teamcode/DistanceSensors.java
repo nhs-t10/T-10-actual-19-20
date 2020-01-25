@@ -1,20 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
-        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
         import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-        import com.qualcomm.robotcore.hardware.DcMotor;
-        import com.qualcomm.robotcore.hardware.DistanceSensor;
-        import com.qualcomm.robotcore.util.ElapsedTime;
         import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-        import com.qualcomm.robotcore.hardware.CRServo;
-        import com.qualcomm.robotcore.hardware.ColorSensor;
-        import com.qualcomm.robotcore.hardware.DcMotor;
-        import com.qualcomm.robotcore.hardware.Servo;
-        import com.qualcomm.robotcore.hardware.TouchSensor;
-        import com.qualcomm.robotcore.hardware.VoltageSensor;
-        import com.qualcomm.robotcore.hardware.DistanceSensor;
+        import android.graphics.Color;
 
 
 @TeleOp(name = "Distance Sensors")
@@ -23,6 +11,8 @@ public class DistanceSensors extends Library{
     boolean xToggle = false;
     boolean aToggle = false;
     boolean bToggle = false;
+    private final double SCALE_FACTOR = 255;
+    private float[] hsvValues = {0F, 0F, 0F};
 
     public void init(){
         hardwareInit();
@@ -41,10 +31,7 @@ public class DistanceSensors extends Library{
         boolean y2 = gamepad2.y;
 
         //Lift controls | Both gamepads
-        boolean liftUp = gamepad1.right_bumper;
-        boolean liftDown = gamepad1.left_bumper;
-        boolean liftUp2 = gamepad2.right_bumper;
-        boolean liftDown2 = gamepad2.left_bumper;
+        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
         //boolean skystone = gamepad1.dpad_up;
 
         //Movement inputs
@@ -72,8 +59,8 @@ public class DistanceSensors extends Library{
         }
 
         if(aToggle){
-            if(distance.getDistance(DistanceUnit.CM) >= 20){
-                drive(.25f,.05f,0);
+            if(hsvValues[0] < 140){
+                drive(0,0,.25f);
             }else{
                 drive(0,0,0);
             }
@@ -87,8 +74,8 @@ public class DistanceSensors extends Library{
         }
 
         if(bToggle){
-            if(distance.getDistance(DistanceUnit.CM) >= 20){
-                drive(.25f,-.05f,0);
+            if(hsvValues[0] > 100){
+                drive(0,0,-.25f);
             }else{
                 drive(0,0,0);
             }

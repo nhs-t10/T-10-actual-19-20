@@ -29,14 +29,14 @@ public class BluePlatformAuto extends Library {
         blue = (int)(gray*1.3);
     }
     public void init_loop(){
-        Color.RGBToHSV((int) (color.red() * SCALE_FACTOR), (int) (color.green() * SCALE_FACTOR), (int) (color.blue() * SCALE_FACTOR), hsvValues);
+        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
         telemetry.addData("Red: ", color.red());
         telemetry.addData("Green: ", color.green());
         telemetry.addData("Blue: ", color.blue());
         telemetry.addData("Light: ",color.alpha());
-        telemetry.addData("Red Hue: ", hsvValues[0]);
-        telemetry.addData("Green Hue: ", hsvValues[1]);
-        telemetry.addData("Blue Hue: ", hsvValues[2]);
+        telemetry.addData("Hue: ", hsvValues[0]);
+        telemetry.addData("Saturation: ", hsvValues[1]);
+        telemetry.addData("Value: ", hsvValues[2]);
     }
     public void loop(){
         /*
