@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 @Autonomous(name = "Blue Block Auto")
 public class BlueBlockAuto extends Library{
 
@@ -23,10 +25,10 @@ public class BlueBlockAuto extends Library{
         /*
         Loop constantly checks state, and then executes a command based on this.
         */
-        clock.reset();
-        while( clock.milliseconds() < 0.2 ){
-            drive(-.5f, 0, 0);
-        }
+//        clock.reset();
+//        while( clock.milliseconds() < 0.2 ){
+//            drive(1.5f, 0, 0);
+//        }
         if( currentstate == State.SCAN ){
             scan();
         }
@@ -75,16 +77,18 @@ public class BlueBlockAuto extends Library{
     public void move(){
         //move forward to skystone (will need tweaking to make sure that skystone is always visible)
         clock.reset();
-        while( clock.seconds() > 2 ){
-            drive(-.5f, 0, 0);
+        while(distance.getDistance(DistanceUnit.INCH)<=18){
+            drive(.5f, 0, 0);
         }
+        rotateFor((float) Math.PI);
+        currentstate = State.TRAVEL;
     }
 
     public void travel(){
         //back up a small amount, then slide left to cross the barrier
         clock.reset();
         while( clock.seconds() < 3 ){
-            drive(0, 0, -.5f);
+            drive(0, 0, .5f);
         }
         currentstate = State.PARK;
     }
@@ -92,10 +96,12 @@ public class BlueBlockAuto extends Library{
     public void park(){
         //slide right and use color sensor to stop on blue line
         clock.reset();
+        gray = ( color.red() + color.blue() + color.green() ) / 3;
         while( gray > blue ){
-            drive(0, 0, .5f);
+            drive(0, 0, -.5f);
+            gray = ( color.red() + color.blue() + color.green() ) / 3;
         }
-        currentstate = State.PARK;
+        currentstate = State.END;
     }
 
     public void Stop(){

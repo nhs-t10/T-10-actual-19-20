@@ -39,8 +39,10 @@ public class TestIMU extends Library{
         angleTurned = imu.getAngle();
         array = new double[4];
 
-        if( clock.seconds() < 5 ){
+        if( clock.seconds() < 1 ){
             turner.setDestination(90);
+        }
+        if( clock.seconds() > 1 && clock.seconds() < 10 ){
             turner.updateDrive(imu);
             array = turner.updateDrive(imu);
             telemetry.addData("Destination Angle: ", array[0]);

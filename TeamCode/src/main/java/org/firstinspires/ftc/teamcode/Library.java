@@ -469,7 +469,7 @@ public abstract class Library extends OpMode{
         }
     }*/
 
-    public static void rotateFor(int degreesInRadians)
+    public static void rotateFor(float degreesInRadians)
     {
         float start = getEncoderValue();
         if(degreesInRadians>getEncoderValue()-getEncoderValue())
