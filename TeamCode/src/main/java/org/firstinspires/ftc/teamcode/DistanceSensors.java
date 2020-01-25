@@ -11,14 +11,12 @@ public class DistanceSensors extends Library{
     boolean xToggle = false;
     boolean aToggle = false;
     boolean bToggle = false;
-    private int gray, blue;
     private final double SCALE_FACTOR = 255;
     private float[] hsvValues = {0F, 0F, 0F};
 
     public void init(){
         hardwareInit();
-        blue = color.blue();
-        gray = ( color.red() + color.blue() + color.green() ) / 3;
+
     }
 
     public void loop(){
@@ -85,7 +83,7 @@ public class DistanceSensors extends Library{
                 bToggle = false;
             }
         }
-        
+
         if( b ){
             if(!bToggle){
                 bToggle = true;
