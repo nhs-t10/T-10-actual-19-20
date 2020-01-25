@@ -472,7 +472,7 @@ public abstract class Library extends OpMode{
     public static void rotateFor(float degreesInRadians)
     {
         float start = getEncoderValue();
-        if(degreesInRadians>getEncoderValue()-start)
+        if(degreesInRadians>getEncoderValue() - start)
         {
             drive(0,(Math.abs(degreesInRadians))/(degreesInRadians),0);
         }

@@ -9,5 +9,6 @@ public class radiansbad extends Library{
     }
     public void loop(){
         rotateFor((float) Math.PI);
+        stop();
     }
 }
