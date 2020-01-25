@@ -16,6 +16,7 @@ public class DistanceSensors extends Library{
 
     public void init(){
         hardwareInit();
+
     }
 
     public void loop(){
@@ -82,6 +83,7 @@ public class DistanceSensors extends Library{
                 bToggle = false;
             }
         }
+
         if( b ){
             if(!bToggle){
                 bToggle = true;
