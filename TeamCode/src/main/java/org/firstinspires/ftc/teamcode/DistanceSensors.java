@@ -17,7 +17,7 @@ public class DistanceSensors extends Library{
 
     public void init(){
         hardwareInit();
-        blue = color.blue();
+        blue = color.red();
         gray = ( color.red() + color.blue() + color.green() ) / 3;
     }
 
@@ -86,11 +86,11 @@ public class DistanceSensors extends Library{
 //            }
 //        }
         if (bToggle){
-            blue = color.blue();
+            blue = color.red();
             gray = ( color.red() + color.blue() + color.green() ) / 3;
             if (gray > blue){
-                drive(0, 0, -.6f);
-                blue = color.blue();
+                drive(0, 0, -.35f);
+                blue = color.red();
                 gray = ( color.red() + color.blue() + color.green() ) / 3;
             }
         }
