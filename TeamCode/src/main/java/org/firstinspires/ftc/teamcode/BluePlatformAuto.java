@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import android.graphics.Color;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name="Blue Platform Auto")//do not delete this test class used by sasha
+@Autonomous(name="Blue Platform Auto")
 public class BluePlatformAuto extends Library {
 
     enum State{
@@ -48,7 +48,7 @@ public class BluePlatformAuto extends Library {
         if(!moving){
             clock.reset();
             moving = true;
-        } else if(distance.getDistance(DistanceUnit.CM)<=80){ //color.blue()<blue
+        } else if(distance.getDistance(DistanceUnit.CM)<=80){
             drive(-.75f,0,0);
         }
         else{
@@ -78,7 +78,7 @@ public class BluePlatformAuto extends Library {
 
     private void Parking(){
 //        gripFoundation(false);
-        Color.RGBToHSV((int) (color.red() * SCALE_FACTOR), (int) (color.green() * SCALE_FACTOR), (int) (color.blue() * SCALE_FACTOR), hsvValues);
+        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
         if(!moving){
             clock.reset();
             moving = true;
@@ -95,7 +95,7 @@ public class BluePlatformAuto extends Library {
     }
 
     private void Telemetry(){
-        Color.RGBToHSV((int) (color.red() * SCALE_FACTOR), (int) (color.green() * SCALE_FACTOR), (int) (color.blue() * SCALE_FACTOR), hsvValues);
+        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
         telemetry.addData("Red: ", color.red());
         telemetry.addData("Green: ", color.green());
         telemetry.addData("Blue: ", color.blue());
