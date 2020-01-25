@@ -98,9 +98,11 @@ public class BlueBlockAuto extends Library{
         //slide right and use color sensor to stop on blue line
         clock.reset();
         gray = ( color.red() + color.blue() + color.green() ) / 3;
+        blue = color.blue();
         while( gray > blue ){
             drive(0, 0, -.5f);
             gray = ( color.red() + color.blue() + color.green() ) / 3;
+            blue = color.blue();
         }
         currentstate = State.END;
     }
