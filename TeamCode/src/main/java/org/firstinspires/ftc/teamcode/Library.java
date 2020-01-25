@@ -99,13 +99,13 @@ public abstract class Library extends OpMode{
         backRight = hardwareMap.dcMotor.get("m3");
         driveInit();
 
-//        lift = hardwareMap.dcMotor.get("l0");
+        //        lift = hardwareMap.dcMotor.get("l0");
         intakeOne = hardwareMap.dcMotor.get("i1");
         intakeTwo = hardwareMap.dcMotor.get("i2");
 
-//        platform = hardwareMap.servo.get("s0");
-//        grabber = hardwareMap.servo.get("s1");
-//        rotateGrabber = hardwareMap.crservo.get("s2");
+        //        platform = hardwareMap.servo.get("s0");
+        //        grabber = hardwareMap.servo.get("s1");
+        //        rotateGrabber = hardwareMap.crservo.get("s2");
 
         color = hardwareMap.get(ColorSensor.class, "color1");
         distance = hardwareMap.get(DistanceSensor.class, "distance1");
@@ -127,6 +127,9 @@ public abstract class Library extends OpMode{
         mode = DRIVING.Fast;
 
 
+    }
+
+    public void vuforiaInit(){
         //TEST
         //imu = new imuData(hardwareMap);
         //turner = new Turning();

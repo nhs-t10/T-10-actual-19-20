@@ -16,6 +16,7 @@ public class BlueBlockAuto extends Library{
     @Override
     public void init(){
         hardwareInit();
+        vuforiaInit();
         currentstate = State.SCAN;
         blue = color.blue();
         gray = ( color.red() + color.blue() + color.green() ) / 3;

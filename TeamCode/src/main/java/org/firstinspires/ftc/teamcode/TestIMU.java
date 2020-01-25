@@ -14,6 +14,7 @@ public class TestIMU extends Library{
     double angleTurned = 0;
     double[] array;
     state curState;
+    boolean started = false;
 
     enum state{
         PlEASE_WORK
@@ -24,7 +25,6 @@ public class TestIMU extends Library{
         imu = new imuData(hardwareMap);
         turner = new Turning();
         curState = state.PlEASE_WORK;
-        clock.reset();
     }
 
     ElapsedTime clock = new ElapsedTime();
@@ -38,11 +38,15 @@ public class TestIMU extends Library{
     public void turn(){
         angleTurned = imu.getAngle();
         array = new double[4];
-
-        if( clock.seconds() < 1 ){
-            turner.setDestination(90);
+        if(!started){
+            started = true;
+            clock.reset();
         }
-        if( clock.seconds() > 1 && clock.seconds() < 10 ){
+        if( started && clock.seconds() < 1 ){
+            turner.setDestination(45);
+        }
+
+        if( started && clock.seconds() > 1 && clock.seconds() < 10 ){
             array = turner.updateDrive(imu);
             telemetry.addData("Destination Angle: ", array[0]);
             telemetry.addData("Current State (0.0 good, 1.0 bad): ", array[1]);
