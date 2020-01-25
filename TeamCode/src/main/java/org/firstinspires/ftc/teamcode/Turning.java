@@ -71,7 +71,7 @@ public class Turning{
         double stateTest = 0.0;
 
         if( currentEvent == state.TURNING ){
-            if( getCurrTime() - savedTime > 2000 ){
+            if( getError() < 1 ){
                 stopTurning();
             }else{
                 Library.drive(0f, (float) pComponent, 0f);
@@ -83,7 +83,6 @@ public class Turning{
                 Library.drive(0f, (float) pComponent, 0f);*/
         }else if( currentEvent == state.TRAVELING_IN_A_LINEAR_FASHION ){
             stateTest = 1.0;
-            Library.drive(0f, (float) pComponent, 0f);
         }
 
         double[] array = { destinationAngle, stateTest, currentAngle, error };
