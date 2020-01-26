@@ -7,8 +7,8 @@ public class AutoSelection extends Library{
     //public enum Auto {STONE, FOUNDATION, PARKING, FINAL, VIBE}
     public enum Auto {COLOR, TYPE, VIBE}
     int stones = -1; int foundation = -1; int park = -1; int color = -1; int type = -1;
-    String Color, Type;
-    boolean up, down, left, right, foundationB, parkB;
+    private String Color, Type;
+    private boolean up, down, left, right, foundationB, parkB;
     //Auto auto = Auto.STONE;
     Auto auto = Auto.COLOR;
 
