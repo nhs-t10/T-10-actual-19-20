@@ -49,6 +49,7 @@ public class SmoothingTest extends Library
             telemetry.addData("End Accelerations:", imu.getZAcceleration());
             telemetry.addData("Current Velocity:", imu.getZVelocity());
         }
+        telemetry.addData("Current time (millis):", test.getClockTime());
     }
 
 }
