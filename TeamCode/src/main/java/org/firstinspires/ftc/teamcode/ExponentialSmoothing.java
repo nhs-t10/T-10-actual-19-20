@@ -87,7 +87,7 @@ public class ExponentialSmoothing {
     // preCondition; targetAcceleration should be larger than current (up to 2.0)
     public void smallAcceleration(double targetAccel, imuData imu) {
         //float current = (float) clock.milliseconds();
-        double partStep = (imu.getXAcceleration() + aVal * (targetAccel - imu.getXAcceleration()) ) / maxAccel;
+        double partStep = (imu.getXAcceleration() + aVal * (targetAccel - imu.getXAcceleration()) ) / maxAccel + 0.2;
         Library.drive( (float) -partStep, 0f, 0f);
         updateClock();
     }

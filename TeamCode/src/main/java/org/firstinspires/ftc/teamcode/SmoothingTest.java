@@ -16,7 +16,7 @@ public class SmoothingTest extends Library
     double angleTurned = 0;
     ExponentialSmoothing test;
     double timeCheck = 0;
-    double goalAccel = 0.1;
+    double goalAccel = 0.5;
     double checkAccel = 0.008;
 
     public void init()
