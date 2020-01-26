@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -16,7 +17,7 @@ public class SmoothingTest extends Library
     double angleTurned = 0;
     ExponentialSmoothing test;
     //double timeCheck = 0;
-    double goalAccel = 1.0;
+    double goalAccel = 1.5;
     double checkAccel = 0.008;
     double accel;
     double velocity;
@@ -25,14 +26,14 @@ public class SmoothingTest extends Library
     {
         hardwareInit();
         imu = new imuData(hardwareMap);
+        imu.initImu();
         turner = new Turning();
         test = new ExponentialSmoothing();
-
-
     }
 
     public void loop() {
         if (test.getClockTime() < 3000) {
+
             test.smallAcceleration(goalAccel, imu);
             goalAccel += checkAccel;
 //            timeCheck += 10;

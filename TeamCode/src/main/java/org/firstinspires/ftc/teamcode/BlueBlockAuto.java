@@ -55,11 +55,17 @@ public class BlueBlockAuto extends Library{
 
     public void scan(){
         //is Sky stone Visible, then either slide left or move forward
-        if( isSkystoneVisible() ){
-            currentstate = State.MOVE;
-        }else{
-            currentstate = State.SLIDE;
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(clock.seconds() < 1){
+            if( isSkystoneVisible() ){
+                currentstate = State.MOVE;
+            }else{
+                currentstate = State.SLIDE;
+            }
         }
+
     }
 
     public void slide(){
