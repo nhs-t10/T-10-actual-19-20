@@ -12,28 +12,26 @@ public class ExponentialSmoothing {
     double goodPercent = 0.01;
     double maxAccel = 0.9 * 2;
     //float goodEncodeValue = 10;
-    ElapsedTime clock = new ElapsedTime();
-    double currentTime;
+    ElapsedTime clock;
 
     // clock methods; to run with the time loops in auto or teleop
     // ------------------------------------------------------------------------------------------
 
     // constructor, to run the time calculations
     public ExponentialSmoothing(){
-        resetClock();
-        currentTime = clock.milliseconds();
+        clock = new ElapsedTime();
     }
 
     // returns the current clock value, useful for specific time intervals for smoothing
     public double getClockTime(){
-        return currentTime;
+        return clock.milliseconds();
     }
 
     // updates the current value of the instance variable currentTime with the current millisecond value
     // for: keeping track of how much time the loop has been running
-    public void updateClock(){
-        currentTime = clock.milliseconds();
-    }
+//    public void updateClock(){
+//        currentTime = clock.milliseconds();
+//    }
 
     // method used to reset the time, to have set the start of a loop as milliseconds zero
     private void resetClock(){
@@ -68,7 +66,7 @@ public class ExponentialSmoothing {
         else if(goal - futureValue < 0){
             decelerateToValue(imu, goal);
         }
-        updateClock();
+        //updateClock();
     }
    /*
 
@@ -98,7 +96,7 @@ public class ExponentialSmoothing {
         double currentAcc = imu.getZAcceleration(); double futureAcc = currentAcc - aVal * (currentAcc);
         double inputVal = futureAcc / maxAccel;
         Library.drive((float) -inputVal, 0f, 0f);
-        updateClock();
+        //updateClock();
     }
 
     // decelrate to a target acceleration -> one that is less than the current speed, and non zero
@@ -106,6 +104,6 @@ public class ExponentialSmoothing {
         double currentAcc = imu.getZAcceleration(); double futureAcc = currentAcc - aVal * (currentAcc - targetAccel);
         double inputVal = futureAcc / maxAccel;
         Library.drive((float) -inputVal, 0f, 0f);
-        updateClock();
+        //updateClock();
     }
 }
