@@ -32,11 +32,11 @@ public class TestIMU extends Library{
 
     public void loop(){
         if( curState == state.PlEASE_WORK ){
-            turn();
+            turn(90);
         }
     }
 
-    public void turn(){
+    public void turn(int degrees){
         angleTurned = imu.getAngle();
         array = new double[4];
         if(!started){
@@ -44,7 +44,7 @@ public class TestIMU extends Library{
             clock.reset();
         }
         if( started && clock.seconds() < 1 ){
-            turner.setDestination(imu, 45);
+            turner.setDestination(imu, degrees);
         }
 
         if( started && clock.seconds() > 1 && clock.seconds() < 10 ){
