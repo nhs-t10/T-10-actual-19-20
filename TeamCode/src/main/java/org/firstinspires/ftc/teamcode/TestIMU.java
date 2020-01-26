@@ -44,7 +44,7 @@ public class TestIMU extends Library{
             clock.reset();
         }
         if( started && clock.seconds() < 1 ){
-            turner.setDestination(45);
+            turner.setDestination(imu, 45);
         }
 
         if( started && clock.seconds() > 1 && clock.seconds() < 10 ){
