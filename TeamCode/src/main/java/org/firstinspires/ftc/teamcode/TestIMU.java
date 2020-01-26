@@ -23,6 +23,7 @@ public class TestIMU extends Library{
     public void init(){
         hardwareInit();
         imu = new imuData(hardwareMap);
+        imu.initImu();
         turner = new Turning();
         curState = state.PlEASE_WORK;
     }

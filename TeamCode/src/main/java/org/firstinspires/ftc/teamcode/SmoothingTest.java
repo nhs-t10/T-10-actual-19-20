@@ -50,7 +50,7 @@ public class SmoothingTest extends Library
             telemetry.addData("Smoothed Acceleration:", accel);
             telemetry.addData("Current Velocity:", velocity);
         } else if (test.getClockTime() < 9000) {
-            test.decelerate(imu);
+            test.decelerateToValue(imu, 0);
 //            timeCheck += 100;
             //test.updateClock();
             accel = imu.getZAcceleration();
