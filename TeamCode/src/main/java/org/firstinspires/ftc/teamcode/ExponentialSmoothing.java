@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class ExponentialSmoothing {
     double aVal = 0.3;
     double vVal = 0.2;
-    //double goodPercent = 0.01;
+    double goodPercent = 0.01;
     double maxAccel = 0.9 * 2;
     //float goodEncodeValue = 10;
     ElapsedTime clock = new ElapsedTime();
@@ -51,11 +51,17 @@ public class ExponentialSmoothing {
         double currentVel = imu.getXVelocity();
         if(goal == currentAcc){
             futureValue = (aVal * (goal - currentAcc) + currentAcc) / maxAccel;
-            Library.drive((float) futureValue, 0f, 0f);
+            Library.drive((float) -futureValue, 0f, 0f);
         }
         if (goal - currentAcc > 0) {
-            futureValue = (aVal * (goal - currentAcc) + vVal * (goalVelocity - currentVel) + currentAcc) / maxAccel;
-            Library.drive((float) futureValue, 0f, 0f);
+            if( (goal - currentAcc) / goal <= goodPercent){
+                futureValue = (goal - currentAcc) / maxAccel;
+                Library.drive((float) -futureValue, 0f, 0f);
+            }
+            else {
+                futureValue = (aVal * (goal - currentAcc) + vVal * (goalVelocity - currentVel) + currentAcc) / maxAccel;
+                Library.drive((float) -futureValue, 0f, 0f);
+            }
         }
         else if (goal == 0){
             Library.drive(0f, 0f, 0f); }
@@ -82,7 +88,7 @@ public class ExponentialSmoothing {
     public void smallAcceleration(double targetAccel, imuData imu) {
         //float current = (float) clock.milliseconds();
         double partStep = (imu.getXAcceleration() + aVal * (targetAccel - imu.getXAcceleration()) ) / maxAccel;
-        Library.drive( (float) partStep, 0f, 0f);
+        Library.drive( (float) -partStep, 0f, 0f);
         updateClock();
     }
 
@@ -91,7 +97,7 @@ public class ExponentialSmoothing {
     public void decelerate(imuData imu) {
         double currentAcc = imu.getXAcceleration(); double futureAcc = currentAcc - aVal * (currentAcc);
         double inputVal = futureAcc / maxAccel;
-        Library.drive((float) inputVal, 0f, 0f);
+        Library.drive((float) -inputVal, 0f, 0f);
         updateClock();
     }
 
@@ -99,7 +105,7 @@ public class ExponentialSmoothing {
     public void decelerateToValue(imuData imu, double targetAccel) {
         double currentAcc = imu.getXAcceleration(); double futureAcc = currentAcc - aVal * (currentAcc - targetAccel);
         double inputVal = futureAcc / maxAccel;
-        Library.drive((float) inputVal, 0f, 0f);
+        Library.drive((float) -inputVal, 0f, 0f);
         updateClock();
     }
 }
