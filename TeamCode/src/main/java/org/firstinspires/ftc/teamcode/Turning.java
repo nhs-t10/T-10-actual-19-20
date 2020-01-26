@@ -57,8 +57,8 @@ public class Turning{
         currentAngle = imu.getAngle();
 
         //Finding the error
-        double error = Math.abs(getError());
-        pComponent = error * P;
+        double absError = Math.abs(getError());
+        pComponent = absError * P;
         if( pComponent > .5f ){
             pComponent = .5f;
         }
@@ -69,7 +69,7 @@ public class Turning{
         double stateTest = 0.0;
 
         if( currentEvent == state.TURNING ){
-            if( getError() < 1 ){
+            if( absError < 1 ){
                 stopTurning();
             }else{
                 Library.drive(0f, (float) pComponent, 0f);
@@ -79,7 +79,7 @@ public class Turning{
             stateTest = 1.0;
         }
 
-        double[] array = { destinationAngle, stateTest, currentAngle, error };
+        double[] array = { destinationAngle, stateTest, currentAngle, absError };
         return array;
     }
 
