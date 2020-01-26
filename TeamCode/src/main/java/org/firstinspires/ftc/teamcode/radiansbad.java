@@ -1,15 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.vuforia.Vuforia;
 
-@TeleOp(name = "180 degrees")
+@TeleOp(name = "skyston")
 public class radiansbad extends Library{
     public void init(){
         hardwareInit();
+        vuforiaInit();
     }
 
     public void loop(){
-        rotateFor((float) Math.PI);
-        stop();
+       telemetry.addData("", isSkystoneVisible());
     }
 }

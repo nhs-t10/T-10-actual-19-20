@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 // for future work; finish working on these methods; use acceleration for smoothing, also maybe distance sensor for error
 public class ExponentialSmoothing {
     double aVal = 0.3;
-    double vVal = 0.02;
+    double vVal = 0.2;
     double goodPercent = 0.01;
     double maxAccel = 0.9 * 2;
     //float goodEncodeValue = 10;
@@ -89,21 +89,22 @@ public class ExponentialSmoothing {
         double partStep = (imu.getZAcceleration() + aVal * (targetAccel - imu.getZAcceleration()) ) / maxAccel;
         Library.drive( (float) -partStep, 0f, 0f);
         //updateClock();
+
     }
 
 
     // decelerate strictly going to zero, in slow steps
     public void decelerate(imuData imu) {
         double currentAcc = imu.getZAcceleration(); double futureAcc = currentAcc + aVal * (-currentAcc) + 0.2;
-        double inputVal = futureAcc;
+        double inputVal = futureAcc + vVal * (imu.getZVelocity());
         Library.drive((float) -inputVal, 0f, 0f);
         //updateClock();
     }
 
     // decelrate to a target acceleration -> one that is less than the current speed, and non zero
     public void decelerateToValue(imuData imu, double targetAccel) {
-        double currentAcc = imu.getZAcceleration(); double futureAcc = currentAcc - aVal * (currentAcc - targetAccel) + 0.1;
-        double inputVal = futureAcc / maxAccel;
+        double currentAcc = imu.getZAcceleration(); double futureAcc = currentAcc - aVal * (currentAcc - targetAccel) + 0.2;
+        double inputVal = futureAcc + vVal * (imu.getZVelocity());
         Library.drive((float) -inputVal, 0f, 0f);
         //updateClock();
     }

@@ -17,7 +17,7 @@ public class DistanceSensors extends Library{
 
     public void init(){
         hardwareInit();
-
+        vuforiaInit();
     }
 
     public void loop(){
