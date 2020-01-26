@@ -6,17 +6,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
+@SuppressWarnings("all")
 @Autonomous(name = "Blue Block Auto")
 public class BlueBlockAuto extends Library{
 
     private final double SCALE_FACTOR = 255;
     private boolean moving = false;
-    private imuData imu;
-    private Turning turner;
-    TestIMU.state curState;
     private boolean started = false;
-    private State currentstate;
+    private State currentState;
     private ElapsedTime clock = new ElapsedTime();
     private float[] hsvValues = { 0F, 0F, 0F };
 
@@ -24,7 +21,7 @@ public class BlueBlockAuto extends Library{
     public void init(){
         hardwareInit();
         vuforiaInit();
-        currentstate = State.SCAN;
+        currentState = State.SCAN;
     }
 
     public void loop(){
@@ -35,22 +32,22 @@ public class BlueBlockAuto extends Library{
         //        while( clock.milliseconds() < 0.2 ){
         //            drive(1.5f, 0, 0);
         //        }
-        if( currentstate == State.SCAN ){
+        if( currentState == State.SCAN ){
             scan();
         }
-        if( currentstate == State.SLIDE ){
+        if( currentState == State.SLIDE ){
             slide();
         }
-        if( currentstate == State.MOVE ){
+        if( currentState == State.MOVE ){
             move();
         }
-        if( currentstate == State.TRAVEL ){
+        if( currentState == State.TRAVEL ){
             travel();
         }
-        if( currentstate == State.PARK ){
+        if( currentState == State.PARK ){
             park();
         }
-        if( currentstate == State.END ){
+        if( currentState == State.END ){
             Stop();
         }
 
@@ -64,9 +61,9 @@ public class BlueBlockAuto extends Library{
             moving = true;
         }else if( clock.seconds() < 1 ){
             if( isSkystoneVisible() ){
-                currentstate = State.MOVE;
+                currentState = State.MOVE;
             }else{
-                currentstate = State.SLIDE;
+                currentState = State.SLIDE;
             }
         }
 
@@ -82,7 +79,7 @@ public class BlueBlockAuto extends Library{
         }else{
             drive(0, 0, 0);
             moving = false;
-            currentstate = State.SCAN;
+            currentState = State.SCAN;
         }
     }
 
@@ -99,7 +96,7 @@ public class BlueBlockAuto extends Library{
             //            gripStone(true);
             //            lift.setPower(0.0001);
             moving = false;
-            currentstate = State.TRAVEL;
+            currentState = State.TRAVEL;
         }
     }
 
@@ -115,7 +112,7 @@ public class BlueBlockAuto extends Library{
             //            lift.setPower(0);
             //            gripStone(false);
             moving = false;
-            currentstate = State.PARK;
+            currentState = State.PARK;
         }
     }
 
@@ -132,7 +129,7 @@ public class BlueBlockAuto extends Library{
         }else{
             moving = false;
             drive(0, 0, 0);
-            currentstate = State.END;
+            currentState = State.END;
         }
     }
 
@@ -167,7 +164,7 @@ public class BlueBlockAuto extends Library{
         telemetry.addData("Value: ", hsvValues[2]);
 
         telemetry.addData("Millis since State Start: ", clock.seconds());
-        telemetry.addData("State: ", currentstate);
+        telemetry.addData("State: ", currentState);
         telemetry.addData("Distamce: ", distance.getDistance(DistanceUnit.CM));
     }
 
