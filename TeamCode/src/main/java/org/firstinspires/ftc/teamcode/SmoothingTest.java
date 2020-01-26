@@ -34,20 +34,20 @@ public class SmoothingTest extends Library
             goalAccel += checkAccel;
             timeCheck += 10;
             test.updateClock();
-            telemetry.addData("Starting Accelerations:", imu.getXAcceleration());
-            telemetry.addData("Current Velocity:", imu.getXVelocity());
+            telemetry.addData("Starting Accelerations:", imu.getZAcceleration());
+            telemetry.addData("Current Velocity:", imu.getZVelocity());
         } else if (test.getClockTime() < 2000 && test.getClockTime() >= timeCheck) {
             test.smoothing(1.4, 1.4, imu);
             timeCheck += 10;
             test.updateClock();
-            telemetry.addData("Smoothed Acceleration:", imu.getXAcceleration());
-            telemetry.addData("Current Velocity:", imu.getXVelocity());
+            telemetry.addData("Smoothed Acceleration:", imu.getZAcceleration());
+            telemetry.addData("Current Velocity:", imu.getZVelocity());
         } else if (test.getClockTime() < 3000 && test.getClockTime() >= timeCheck) {
             test.decelerate(imu);
             timeCheck += 10;
             test.updateClock();
-            telemetry.addData("End Accelerations:", imu.getXAcceleration());
-            telemetry.addData("Current Velocity:", imu.getXVelocity());
+            telemetry.addData("End Accelerations:", imu.getZAcceleration());
+            telemetry.addData("Current Velocity:", imu.getZVelocity());
         }
     }
 

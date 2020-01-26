@@ -47,8 +47,8 @@ public class ExponentialSmoothing {
     // goal is a positive target acceleration; potentially add in PID
     public void smoothing(double goal, double goalVelocity, imuData imu) {
         //double dist = Library.distance.getDistance(DistanceUnit.CM);
-        double currentAcc = imu.getXAcceleration(); double futureValue = 0;
-        double currentVel = imu.getXVelocity();
+        double currentAcc = imu.getZAcceleration(); double futureValue = 0;
+        double currentVel = imu.getZVelocity();
         if(goal == currentAcc){
             futureValue = (aVal * (goal - currentAcc) + currentAcc) / maxAccel;
             Library.drive((float) -futureValue, 0f, 0f);
@@ -87,7 +87,7 @@ public class ExponentialSmoothing {
     // preCondition; targetAcceleration should be larger than current (up to 2.0)
     public void smallAcceleration(double targetAccel, imuData imu) {
         //float current = (float) clock.milliseconds();
-        double partStep = (imu.getXAcceleration() + aVal * (targetAccel - imu.getXAcceleration()) ) / maxAccel + 0.2;
+        double partStep = (imu.getZAcceleration() + aVal * (targetAccel - imu.getZAcceleration()) ) / maxAccel + 0.2;
         Library.drive( (float) -partStep, 0f, 0f);
         updateClock();
     }
@@ -95,7 +95,7 @@ public class ExponentialSmoothing {
 
     // decelerate strictly going to zero, in slow steps
     public void decelerate(imuData imu) {
-        double currentAcc = imu.getXAcceleration(); double futureAcc = currentAcc - aVal * (currentAcc);
+        double currentAcc = imu.getZAcceleration(); double futureAcc = currentAcc - aVal * (currentAcc);
         double inputVal = futureAcc / maxAccel;
         Library.drive((float) -inputVal, 0f, 0f);
         updateClock();
@@ -103,7 +103,7 @@ public class ExponentialSmoothing {
 
     // decelrate to a target acceleration -> one that is less than the current speed, and non zero
     public void decelerateToValue(imuData imu, double targetAccel) {
-        double currentAcc = imu.getXAcceleration(); double futureAcc = currentAcc - aVal * (currentAcc - targetAccel);
+        double currentAcc = imu.getZAcceleration(); double futureAcc = currentAcc - aVal * (currentAcc - targetAccel);
         double inputVal = futureAcc / maxAccel;
         Library.drive((float) -inputVal, 0f, 0f);
         updateClock();
