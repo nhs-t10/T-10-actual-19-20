@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 // for future work; finish working on these methods; use acceleration for smoothing, also maybe distance sensor for error
 public class ExponentialSmoothing {
     double aVal = 0.3;
-    double vVal = 0.2;
+    double vVal = 0.02;
     double goodPercent = 0.01;
     double maxAccel = 0.9 * 2;
     //float goodEncodeValue = 10;
