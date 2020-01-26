@@ -113,5 +113,7 @@ public class DistanceSensors extends Library{
         telemetry.addData("A: ", aToggle);
         telemetry.addData("B: ", bToggle);
         telemetry.addData("X: ", xToggle);
+        telemetry.addData("Y: ", yToggle);
+        telemetry.addData("Skystone: ", isSkystoneVisible());
     }
 }
