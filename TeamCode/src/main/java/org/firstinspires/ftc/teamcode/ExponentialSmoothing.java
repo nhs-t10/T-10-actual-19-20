@@ -20,6 +20,7 @@ public class ExponentialSmoothing {
     // constructor, to run the time calculations
     public ExponentialSmoothing(){
         clock = new ElapsedTime();
+        resetClock();
     }
 
     // returns the current clock value, useful for specific time intervals for smoothing
