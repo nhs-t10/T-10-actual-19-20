@@ -38,8 +38,11 @@ public class Turning{
     public void setDestination(imuData imu, float degrees){
         destinationAngle = imu.getAngle() + degrees;
 
-        if( degrees > 180 ){
+        if( destinationAngle >= 180 ){
             destinationAngle -= 360;
+        }
+        else if (destinationAngle < -180){
+            destinationAngle = 360 - destinationAngle;
         }
 
         currentEvent = state.TURNING;
