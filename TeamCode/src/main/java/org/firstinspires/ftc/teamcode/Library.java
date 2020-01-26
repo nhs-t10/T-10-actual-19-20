@@ -71,6 +71,7 @@ public abstract class Library extends OpMode{
     // Initialize hardware devices and their zero behavior
     public static ColorSensor color;
     public static DistanceSensor distance;
+    //public static DistanceSensor BLDistance, BRDistance;
     public DRIVING mode;
 
     //TEST
@@ -99,16 +100,18 @@ public abstract class Library extends OpMode{
         backRight = hardwareMap.dcMotor.get("m3");
         driveInit();
 
-//        lift = hardwareMap.dcMotor.get("l0");
-//        intakeOne = hardwareMap.dcMotor.get("l1");
-//        intakeTwo = hardwareMap.dcMotor.get("l2");
+        //        lift = hardwareMap.dcMotor.get("l0");
+        intakeOne = hardwareMap.dcMotor.get("i1");
+        intakeTwo = hardwareMap.dcMotor.get("i2");
 
-//        platform = hardwareMap.servo.get("s0");
-//        grabber = hardwareMap.servo.get("s1");
-//        rotateGrabber = hardwareMap.crservo.get("s2");
-        
-        color = hardwareMap.colorSensor.get("color1");
+        //        platform = hardwareMap.servo.get("s0");
+        //        grabber = hardwareMap.servo.get("s1");
+        //        rotateGrabber = hardwareMap.crservo.get("s2");
+
+        color = hardwareMap.get(ColorSensor.class, "color1");
         distance = hardwareMap.get(DistanceSensor.class, "distance1");
+        //BLDistance = hardwareMap.get(DistanceSensor.class, "BackLeftDistance");
+        //BRDistance = hardwareMap.get(DistanceSensor.class, "BackRightDistance");
 
         //front1 = hardwareMap.touchSensor.get("touch1");
         //front2 = hardwareMap.touchSensor.get("touch2");
@@ -121,12 +124,15 @@ public abstract class Library extends OpMode{
         //lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //liftGivenControllerValues.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //liftGivenControllerValues.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         mode = DRIVING.Fast;
 
 
+    }
+
+    public void vuforiaInit(){
         //TEST
         //imu = new imuData(hardwareMap);
         //turner = new Turning();
@@ -302,19 +308,19 @@ public abstract class Library extends OpMode{
             num = 0;
         }
 
-        //intakeOne.setPower(num);
-        //intakeTwo.setPower(num);
+        intakeOne.setPower(num);
+        intakeTwo.setPower(-num);
     }
 
-    public static void lowerIntake( boolean x ){
-        if( x ){
-            intake1.setPosition(1);
-            intake2.setPosition(1);
-        }else{
-            intake1.setPosition(0);
-            intake2.setPosition(0);
-        }
-    }
+//    public static void lowerIntake( boolean x ){
+//        if( x ){
+//            intake1.setPosition(1);
+//            intake2.setPosition(1);
+//        }else{
+//            intake1.setPosition(0);
+//            intake2.setPosition(0);
+//        }
+//    }
 
 //    public static void gripStone( boolean x ){
 //        if( x ){
@@ -469,10 +475,10 @@ public abstract class Library extends OpMode{
         }
     }*/
 
-    public static void rotateFor(int degreesInRadians)
+    public static void rotateFor(float degreesInRadians)
     {
         float start = getEncoderValue();
-        if(degreesInRadians>getEncoderValue()-getEncoderValue())
+        if(degreesInRadians>getEncoderValue() - start)
         {
             drive(0,(Math.abs(degreesInRadians))/(degreesInRadians),0);
         }

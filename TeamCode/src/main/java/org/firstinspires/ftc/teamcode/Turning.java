@@ -11,8 +11,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class Turning
-{
+public class Turning{
     Telemetry telemetry;
     double currentAngle;
     double destinationAngle;
@@ -25,25 +24,23 @@ public class Turning
     double savedTime;
 
     //Different possible states during turning
-    enum state
-    {
+    enum state{
         IDLE, TURNING, TRAVELING_IN_A_LINEAR_FASHION
     }
 
     //Turning object: Has a destination angle and a current event (state)
-    public Turning()
-    {
+    public Turning(){
         destinationAngle = 0;
         currentEvent = state.IDLE;
     }
 
     //Setting the destination in degrees
-    public void setDestination(float degrees)
-    {
+    public void setDestination( float degrees ){
         savedTime = getCurrTime();
 
-        if (degrees > 180)
+        if( degrees > 180 ){
             destinationAngle = degrees - 360;
+        }
 
         //Otherwise, the destination just becomes the entered degrees
         destinationAngle = degrees;
@@ -57,42 +54,42 @@ public class Turning
     }*/
 
 
-    public double[] updateDrive(imuData imu)
-    {
+    public double[] updateDrive( imuData imu ){
         //Setting the current angle
         currentAngle = imu.getAngle();
 
         //Finding the error
         double error = getError();
-        pComponent = error * P * 0.5;
+        pComponent = error * P;
+        if( pComponent > .5f ){
+            pComponent = .5f;
+        }
+        if( pComponent < -.5f ){
+            pComponent = -.5f;
+        }
 
         double stateTest = 0.0;
 
-        if (currentEvent == state.TURNING)
-        {
-            if (getCurrTime() - savedTime > 2000)
+        if( currentEvent == state.TURNING ){
+            if( getError() < 1 ){
                 stopTurning();
-            else
+            }else{
                 Library.drive(0f, (float) pComponent, 0f);
+            }
 
             /*if (error < 1.0)
                 stopTurning();
             else
                 Library.drive(0f, (float) pComponent, 0f);*/
-        }
-
-        else if (currentEvent == state.TRAVELING_IN_A_LINEAR_FASHION)
-        {
+        }else if( currentEvent == state.TRAVELING_IN_A_LINEAR_FASHION ){
             stateTest = 1.0;
-            Library.drive(0f, (float) pComponent, 0f);
         }
 
-        double[] array = {destinationAngle, stateTest, currentAngle, error};
+        double[] array = { destinationAngle, stateTest, currentAngle, error };
         return array;
     }
 
-    public void stopTurning()
-    {
+    public void stopTurning(){
         currentEvent = state.IDLE;
         sumError = 0.0;
         Library.drive(0f, 0f, 0f);
@@ -104,13 +101,11 @@ public class Turning
         Library.drive(0,0,0);
     }*/
 
-    public double getError()
-    {
+    public double getError(){
         return currentAngle - destinationAngle;
     }
 
-    public double getCurrTime()
-    {
+    public double getCurrTime(){
         return System.currentTimeMillis();
     }
 }

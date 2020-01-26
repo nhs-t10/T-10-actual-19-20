@@ -1,20 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
-        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-        import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-        import com.qualcomm.robotcore.hardware.DcMotor;
-        import com.qualcomm.robotcore.hardware.DistanceSensor;
-        import com.qualcomm.robotcore.util.ElapsedTime;
-        import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-        import com.qualcomm.robotcore.hardware.CRServo;
-        import com.qualcomm.robotcore.hardware.ColorSensor;
-        import com.qualcomm.robotcore.hardware.DcMotor;
-        import com.qualcomm.robotcore.hardware.Servo;
-        import com.qualcomm.robotcore.hardware.TouchSensor;
-        import com.qualcomm.robotcore.hardware.VoltageSensor;
-        import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import android.graphics.Color;
 
 
 @TeleOp(name = "Distance Sensors")
@@ -23,37 +11,27 @@ public class DistanceSensors extends Library{
     boolean xToggle = false;
     boolean aToggle = false;
     boolean bToggle = false;
+    boolean yToggle = false;
+    private final double SCALE_FACTOR = 255;
+    private float[] hsvValues = {0F, 0F, 0F};
 
     public void init(){
         hardwareInit();
-        driveInit();
+
     }
 
     public void loop(){
-        //Stone gripping | both gamepads
         boolean x = gamepad1.x;
-        boolean x2 = gamepad2.x;
         boolean b = gamepad1.b;
         boolean a = gamepad1.a;
-
-        //Hook control to grab foundation | both gamepads
         boolean y = gamepad1.y;
-        boolean y2 = gamepad2.y;
 
-        //Lift controls | Both gamepads
-        boolean liftUp = gamepad1.right_bumper;
-        boolean liftDown = gamepad1.left_bumper;
-        boolean liftUp2 = gamepad2.right_bumper;
-        boolean liftDown2 = gamepad2.left_bumper;
-        //boolean skystone = gamepad1.dpad_up;
+        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
 
         //Movement inputs
         float linear = gamepad1.left_stick_y; //Forward and back
         float side = gamepad1.left_stick_x; //Right and left
         float rotation = gamepad1.right_stick_x; //Rotating in place
-
-        //If controller two gives any commands (true) than the robot will use those inputs
-        //Otherwise, it will use the inputs of controller one
 
         if( x ){
             if(!xToggle){
@@ -68,14 +46,16 @@ public class DistanceSensors extends Library{
                 drive(.25f,0,0);
             }else{
                 drive(0,0,0);
+                xToggle = false;
             }
         }
 
         if(aToggle){
-            if(distance.getDistance(DistanceUnit.CM) >= 20){
-                drive(.25f,.05f,0);
+            if(hsvValues[0] < 140){ //hsvValues[0] < 140 this is blue
+                drive(0,0,.4f);
             }else{
                 drive(0,0,0);
+                aToggle = false;
             }
         }
         if( a ){
@@ -87,12 +67,14 @@ public class DistanceSensors extends Library{
         }
 
         if(bToggle){
-            if(distance.getDistance(DistanceUnit.CM) >= 20){
-                drive(.25f,-.05f,0);
+            if(hsvValues[0] > 100){ //hsvValues[0] > 100 this is red
+                drive(0,0,-.4f);
             }else{
                 drive(0,0,0);
+                bToggle = false;
             }
         }
+
         if( b ){
             if(!bToggle){
                 bToggle = true;
@@ -101,11 +83,28 @@ public class DistanceSensors extends Library{
             }
         }
 
+        if(yToggle){
+            if(isSkystoneVisible()){ 
+                drive(0,0,-.4f);
+            }else{
+                drive(0,0,0);
+                bToggle = false;
+            }
+        }
+
+        if( y ){
+            if(!yToggle){
+                yToggle = true;
+            }else{
+                yToggle = false;
+            }
+        }
+
         if( gamepad1.right_stick_button ){
             mode = mode.getNext();
         }
 
-        if(!aToggle && !bToggle && !xToggle){
+        if(!aToggle && !bToggle && !xToggle && !yToggle){
             drive(linear, rotation, side); // fast driving
         }
 
@@ -114,5 +113,7 @@ public class DistanceSensors extends Library{
         telemetry.addData("A: ", aToggle);
         telemetry.addData("B: ", bToggle);
         telemetry.addData("X: ", xToggle);
+        telemetry.addData("Y: ", yToggle);
+        telemetry.addData("Skystone: ", isSkystoneVisible());
     }
 }

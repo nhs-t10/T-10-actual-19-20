@@ -1,32 +1,28 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
+import android.graphics.Color;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name="Blue Platform Auto")//do not delete this test class used by sasha
+@Autonomous(name="Blue Platform Auto")
 public class BluePlatformAuto extends Library {
 
     enum State{
         TO_FOUNDATION, FROM_FOUNDATION, PARKING, END
     }
-    State currentstate;
-    int gray, blue;
-    ElapsedTime clock = new ElapsedTime();
-    boolean moving = false;
+    private State currentstate;
+    private ElapsedTime clock = new ElapsedTime();
+    private boolean moving = false;
+    private final double SCALE_FACTOR = 255;
+    private float[] hsvValues = {0F, 0F, 0F};
 
     @Override public void init(){
         hardwareInit();
         currentstate = State.TO_FOUNDATION;
-        gray = color.blue();
-        blue = (int)(gray*1.3);
     }
     public void init_loop(){
-        telemetry.addData("Red:", color.red());
-        telemetry.addData("Green:", color.green());
-        telemetry.addData("Blue:", color.blue());
+        Telemetry();
     }
     public void loop(){
         /*
@@ -45,19 +41,14 @@ public class BluePlatformAuto extends Library {
             Stop();
         }
 
-        telemetry.addData("Blue reading: ", color.blue());
-        telemetry.addData("Gray color: ", gray);
-        telemetry.addData("Blue color: ", blue);
-        telemetry.addData("Millis since run: ", clock.seconds());
-        telemetry.addData("State: ", currentstate);
-        telemetry.addData("Distamce: ", distance.getDistance(DistanceUnit.CM));
+        Telemetry();
     }
 
-    public void ToFoundation(){
+    private void ToFoundation(){
         if(!moving){
             clock.reset();
             moving = true;
-        } else if(distance.getDistance(DistanceUnit.CM)<=80){ //color.blue()<blue
+        } else if(distance.getDistance(DistanceUnit.CM)<=80){
             drive(-.75f,0,0);
         }
         else{
@@ -67,7 +58,7 @@ public class BluePlatformAuto extends Library {
         }
     }//distance reading to the platform is 90cm
 
-    public void FromFoundation(){
+    private void FromFoundation(){
 //        gripFoundation(true);
         if (!moving){
             clock.reset();
@@ -85,15 +76,16 @@ public class BluePlatformAuto extends Library {
         }
     }//wall reading is about 1cm
 
-    public void Parking(){
+    private void Parking(){
 //        gripFoundation(false);
+        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
         if(!moving){
             clock.reset();
             moving = true;
         }else if(distance.getDistance(DistanceUnit.CM)>5){
             drive(.5f,0,0);
-        }else if(color.blue()< blue /*|| clock.seconds() < 1.5*/){
-            drive(0,0,.75f);
+        }else if(hsvValues[0] < 140 /*|| clock.seconds() < 1.5*/){
+            drive(0,0,.4f);
         }
         else{
             moving = false;
@@ -102,10 +94,26 @@ public class BluePlatformAuto extends Library {
         }
     }
 
-    public void Stop(){
+    private void Telemetry(){
+        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
+        telemetry.addData("Red: ", color.red());
+        telemetry.addData("Green: ", color.green());
+        telemetry.addData("Blue: ", color.blue());
+        telemetry.addData("Light: ",color.alpha());
+        telemetry.addData("Hue: ", hsvValues[0]);
+        telemetry.addData("Saturation: ", hsvValues[1]);
+        telemetry.addData("Value: ", hsvValues[2]);
+
+        telemetry.addData("Millis since State Start: ", clock.seconds());
+        telemetry.addData("State: ", currentstate);
+        telemetry.addData("Distamce: ", distance.getDistance(DistanceUnit.CM));
+    }
+
+    private void Stop(){
         moving = false;
         drive(0,0,0);
     }
+
 }
 
 

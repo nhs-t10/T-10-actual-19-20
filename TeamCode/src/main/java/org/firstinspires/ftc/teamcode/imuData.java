@@ -61,4 +61,11 @@ public class imuData
     {
         return imu.getVelocity().zVeloc;
     }
+
+    public double getXAcceleration() { return imu.getAcceleration().xAccel; }
+
+    public double getYAcceleration() { return imu.getAcceleration().yAccel; }
+
+    public double getZAcceleration() { return imu.getAcceleration().zAccel; }
+
 }

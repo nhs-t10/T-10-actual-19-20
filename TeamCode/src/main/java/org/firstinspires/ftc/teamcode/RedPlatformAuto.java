@@ -1,25 +1,28 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import android.graphics.Color;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name="Red Platform Auto")//do not delete this test class used by sasha
+@Autonomous(name="Red Platform Auto")
 public class RedPlatformAuto extends Library {
 
     enum State{
         TO_FOUNDATION, FROM_FOUNDATION, PARKING, END
     }
-    State currentstate;
-    int gray, red;
-    ElapsedTime clock = new ElapsedTime();
-    boolean moving = false;
+    private State currentstate;
+    private ElapsedTime clock = new ElapsedTime();
+    private boolean moving = false;
+    private final double SCALE_FACTOR = 255;
+    private float[] hsvValues = {0F, 0F, 0F};
 
     @Override public void init(){
         hardwareInit();
         currentstate = State.TO_FOUNDATION;
-        gray = color.red();
-        red = (int)(gray*1.2);
+    }
+    public void init_loop(){
+        Telemetry();
     }
     public void loop(){
         /*
@@ -38,51 +41,51 @@ public class RedPlatformAuto extends Library {
             Stop();
         }
 
-        telemetry.addData("Red reading: ", color.red());
-        telemetry.addData("Gray color: ", gray);
-        telemetry.addData("Red color: ", red);
-        telemetry.addData("Millis since run: ", clock.seconds());
-        telemetry.addData("State: ", currentstate);
+        Telemetry();
     }
 
-    public void ToFoundation(){
+    private void ToFoundation(){
         if(!moving){
             clock.reset();
             moving = true;
-        } else if(clock.seconds() < 1.4){ //color.blue()<blue
-            drive(.75f,0,0);
+        } else if(distance.getDistance(DistanceUnit.CM)<=80){
+            drive(-.75f,0,0);
         }
         else{
             moving = false;
             drive(0,0,0);
             currentstate = State.FROM_FOUNDATION;
         }
-    }
+    }//distance reading to the platform is 90cm
 
-    public void FromFoundation(){
-//        gripFoundation(true);
+    private void FromFoundation(){
+        //gripFoundation(true);
         if (!moving){
             clock.reset();
             moving = true;
         } else if(clock.seconds() < 2){
             //wait for 2 seconds for grabber
-        } else if(clock.seconds() > 2 && clock.seconds() < 3.5){ //(!front1.isPressed()||!front2.isPressed())
-            drive(-.75f,0,0);//drives until touching wall
-        }
-        else{
+        } else if(clock.seconds() > 2 && (distance.getDistance(DistanceUnit.CM) >= 30)){ //(!front1.isPressed()||!front2.isPressed())
+            drive(.75f,0,0);//drives until touching wall
+        }else if(distance.getDistance(DistanceUnit.CM) >= 5){ //(!front1.isPressed()||!front2.isPressed())
+            drive((float)(distance.getDistance(DistanceUnit.CM)/60+.1),0,0);//drives until touching wall
+        }else{
             moving = false;
             drive(0,0,0);
             currentstate = State.PARKING;
         }
-    }
+    }//wall reading is about 1cm
 
-    public void Parking(){
-//        gripFoundation(false);
+    private void Parking(){
+        //        gripFoundation(false);
+        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
         if(!moving){
             clock.reset();
             moving = true;
-        } else if(color.red()< red || clock.seconds() < 1.5){
-            drive(0,0,.5f);
+        }else if(distance.getDistance(DistanceUnit.CM)>5){
+            drive(.5f,0,0);
+        }else if(hsvValues[0] > 100 /*|| clock.seconds() < 1.5*/){
+            drive(0,0,-.4f);
         }
         else{
             moving = false;
@@ -91,10 +94,26 @@ public class RedPlatformAuto extends Library {
         }
     }
 
-    public void Stop(){
+    private void Telemetry(){
+        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
+        telemetry.addData("Red: ", color.red());
+        telemetry.addData("Green: ", color.green());
+        telemetry.addData("Blue: ", color.blue());
+        telemetry.addData("Light: ",color.alpha());
+        telemetry.addData("Hue: ", hsvValues[0]);
+        telemetry.addData("Saturation: ", hsvValues[1]);
+        telemetry.addData("Value: ", hsvValues[2]);
+
+        telemetry.addData("Millis since State Start: ", clock.seconds());
+        telemetry.addData("State: ", currentstate);
+        telemetry.addData("Distamce: ", distance.getDistance(DistanceUnit.CM));
+    }
+
+    private void Stop(){
         moving = false;
         drive(0,0,0);
     }
+
 }
 
 

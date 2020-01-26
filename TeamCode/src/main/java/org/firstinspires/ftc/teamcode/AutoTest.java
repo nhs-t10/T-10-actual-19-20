@@ -76,6 +76,7 @@ public class AutoTest extends Library {
 
             telemetry.addData("goal",(goal));
             telemetry.addData("current pos",getEncoderValue() - startPos);
+            telemetry.update();
             slowDown();
             if(Math.abs(goal) < Math.abs(getEncoderValue() - startPos))
             {
