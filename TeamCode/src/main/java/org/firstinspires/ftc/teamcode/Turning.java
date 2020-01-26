@@ -35,15 +35,13 @@ public class Turning{
     }
 
     //Setting the destination in degrees
-    public void setDestination( float degrees ){
-        savedTime = getCurrTime();
+    public void setDestination(imuData imu, float degrees){
+        destinationAngle = imu.getAngle() + degrees;
 
         if( degrees > 180 ){
-            destinationAngle = degrees - 360;
+            destinationAngle -= 360;
         }
 
-        //Otherwise, the destination just becomes the entered degrees
-        destinationAngle = degrees;
         currentEvent = state.TURNING;
     }
 
@@ -59,7 +57,7 @@ public class Turning{
         currentAngle = imu.getAngle();
 
         //Finding the error
-        double error = getError();
+        double error = Math.abs(getError());
         pComponent = error * P;
         if( pComponent > .5f ){
             pComponent = .5f;
@@ -76,12 +74,8 @@ public class Turning{
             }else{
                 Library.drive(0f, (float) pComponent, 0f);
             }
-
-            /*if (error < 1.0)
-                stopTurning();
-            else
-                Library.drive(0f, (float) pComponent, 0f);*/
-        }else if( currentEvent == state.TRAVELING_IN_A_LINEAR_FASHION ){
+        }
+        else if( currentEvent == state.TRAVELING_IN_A_LINEAR_FASHION ){
             stateTest = 1.0;
         }
 
