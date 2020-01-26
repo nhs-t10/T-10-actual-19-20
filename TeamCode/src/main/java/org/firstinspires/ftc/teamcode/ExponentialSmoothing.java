@@ -94,7 +94,7 @@ public class ExponentialSmoothing {
 
     // decelerate strictly going to zero, in slow steps
     public void decelerate(imuData imu) {
-        double currentAcc = imu.getZAcceleration(); double futureAcc = currentAcc - aVal * (currentAcc);
+        double currentAcc = imu.getZAcceleration(); double futureAcc = currentAcc - (vVal * currentAcc);
         double inputVal = futureAcc;
         Library.drive((float) -inputVal, 0f, 0f);
         //updateClock();
