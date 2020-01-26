@@ -20,7 +20,7 @@ public class Turning{
 
     //double prevError = 0.0;
     double sumError = 0.0;
-    final double P = 0.03;
+    final double P = 0.02;
     double savedTime;
 
     //Different possible states during turning
@@ -69,7 +69,7 @@ public class Turning{
         double stateTest = 0.0;
 
         if( currentEvent == state.TURNING ){
-            if( absError < 1 ){
+            if( absError < 3 ){
                 stopTurning();
             }else{
                 Library.drive(0f, (float) pComponent, 0f);
