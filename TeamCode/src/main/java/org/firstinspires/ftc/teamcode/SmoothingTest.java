@@ -15,7 +15,7 @@ public class SmoothingTest extends Library
     Turning turner;
     double angleTurned = 0;
     ExponentialSmoothing test;
-    double timeCheck = 0;
+    //double timeCheck = 0;
     double goalAccel = 1.0;
     double checkAccel = 0.008;
 
@@ -29,20 +29,20 @@ public class SmoothingTest extends Library
     }
 
     public void loop() {
-        if (test.getClockTime() < 3000 && test.getClockTime() >= timeCheck) {
+        if (test.getClockTime() < 3000) {
             test.smallAcceleration(goalAccel, imu);
             goalAccel += checkAccel;
             timeCheck += 10;
             //test.updateClock();
-            telemetry.addData("Starting Accelerations:", imu.getZAcceleration());
-            telemetry.addData("Current Velocity:", imu.getZVelocity());
-        } else if (test.getClockTime() < 6000 && test.getClockTime() >= timeCheck) {
+            telemetry.addData("Starting Accelerations:", imu.getXAcceleration());
+            telemetry.addData("Current Velocity:", imu.getXVelocity());
+        } else if (test.getClockTime() < 6000) {
             test.smoothing(1.6, 1.6, imu);
             timeCheck += 10;
             //test.updateClock();
-            telemetry.addData("Smoothed Acceleration:", imu.getZAcceleration());
-            telemetry.addData("Current Velocity:", imu.getZVelocity());
-        } else if (test.getClockTime() < 9000 && test.getClockTime() >= timeCheck) {
+            telemetry.addData("Smoothed Acceleration:", imu.getYAcceleration());
+            telemetry.addData("Current Velocity:", imu.getYVelocity());
+        } else if (test.getClockTime()) {
             test.decelerate(imu);
             timeCheck += 100;
             //test.updateClock();
