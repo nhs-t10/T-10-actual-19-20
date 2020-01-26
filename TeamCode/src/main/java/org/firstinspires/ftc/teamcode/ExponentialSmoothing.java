@@ -87,7 +87,7 @@ public class ExponentialSmoothing {
         //float current = (float) clock.milliseconds();
         double partStep = (imu.getZAcceleration() + aVal * (targetAccel - imu.getZAcceleration()) ) / maxAccel + 0.2;
         Library.drive( (float) -partStep, 0f, 0f);
-        updateClock();
+        //updateClock();
     }
 
 
