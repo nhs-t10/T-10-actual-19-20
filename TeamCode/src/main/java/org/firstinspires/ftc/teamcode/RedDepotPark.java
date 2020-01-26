@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -46,9 +45,14 @@ public class RedDepotPark extends Library {
         }else if(distance.getDistance(DistanceUnit.CM)>5){
             drive(.5f,0,0);
         }else if(hsvValues[0] > 100 /*|| clock.seconds() < 1.5*/){
-            drive(0,0,-.4f);
+            drive(0,0,.4f);
+        }else{
+            moving = false;
+            drive(0,0,0);
+            currentstate = State.END;
         }
-        else{
+
+        if(hsvValues[0] <= 100){
             moving = false;
             drive(0,0,0);
             currentstate = State.END;
@@ -75,10 +79,3 @@ public class RedDepotPark extends Library {
         telemetry.addData("Distamce: ", distance.getDistance(DistanceUnit.CM));
     }
 }
-
-
-//drive with encoders distance to foundation + overshoot
-//move foundation gripper servo(s)
-//drive back until touch sensor is pressed
-//if it hasn't been pressed by distance to wall + overshoot
-//backtrack overshoot

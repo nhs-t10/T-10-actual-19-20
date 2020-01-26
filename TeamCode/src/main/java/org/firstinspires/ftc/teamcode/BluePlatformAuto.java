@@ -92,6 +92,12 @@ public class BluePlatformAuto extends Library {
             drive(0,0,0);
             currentstate = State.END;
         }
+
+        if(hsvValues[0] >= 140){
+            moving = false;
+            drive(0,0,0);
+            currentstate = State.END;
+        }
     }
 
     private void Telemetry(){
@@ -113,12 +119,4 @@ public class BluePlatformAuto extends Library {
         moving = false;
         drive(0,0,0);
     }
-
 }
-
-
-//drive with encoders distance to foundation + overshoot
-//move foundation gripper servo(s)
-//drive back until touch sensor is pressed
-//if it hasn't been pressed by distance to wall + overshoot
-//backtrack overshoot
