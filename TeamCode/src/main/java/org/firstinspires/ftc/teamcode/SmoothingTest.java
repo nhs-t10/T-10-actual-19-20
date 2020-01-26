@@ -29,20 +29,20 @@ public class SmoothingTest extends Library
     }
 
     public void loop() {
-        if (test.getClockTime() < 1000 && test.getClockTime() >= timeCheck) {
+        if (test.getClockTime() < 3000 && test.getClockTime() >= timeCheck) {
             test.smallAcceleration(goalAccel, imu);
             goalAccel += checkAccel;
             timeCheck += 10;
             //test.updateClock();
             telemetry.addData("Starting Accelerations:", imu.getZAcceleration());
             telemetry.addData("Current Velocity:", imu.getZVelocity());
-        } else if (test.getClockTime() < 2000 && test.getClockTime() >= timeCheck) {
+        } else if (test.getClockTime() < 6000 && test.getClockTime() >= timeCheck) {
             test.smoothing(1.4, 1.4, imu);
             timeCheck += 10;
             //test.updateClock();
             telemetry.addData("Smoothed Acceleration:", imu.getZAcceleration());
             telemetry.addData("Current Velocity:", imu.getZVelocity());
-        } else if (test.getClockTime() < 3000 && test.getClockTime() >= timeCheck) {
+        } else if (test.getClockTime() < 9000 && test.getClockTime() >= timeCheck) {
             test.decelerate(imu);
             timeCheck += 10;
             //test.updateClock();
