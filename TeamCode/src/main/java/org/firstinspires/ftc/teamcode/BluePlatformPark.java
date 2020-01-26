@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name="Blue Depot")//do not delete this test class used by sasha
+@Autonomous(name="Blue Platform Park")//do not delete this test class used by sasha
 public class BluePlatformPark extends Library {
 
     enum State{
