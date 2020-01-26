@@ -32,7 +32,7 @@ public class TestIMU extends Library{
 
     public void loop(){
         if( curState == state.PlEASE_WORK ){
-            turn(90);
+            turn(-90);
         }
     }
 

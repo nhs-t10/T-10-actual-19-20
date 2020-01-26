@@ -60,8 +60,18 @@ public class Turning{
         currentAngle = imu.getAngle();
 
         //Finding the error
-        double absError = Math.abs(getError());
-        pComponent = absError * P;
+        double error = getError();
+        /*This turnAngle is so that the robot turns the right direction and considers the
+         *rotation system of IMU (-180 to 180)
+         */
+        double turnAngle = - error;
+        if( turnAngle > 180 ){
+            turnAngle -= 360;
+        }
+        else if (turnAngle < -180){
+            turnAngle += 360;
+        }
+        pComponent = turnAngle * P;
         if( pComponent > .5f ){
             pComponent = .5f;
         }
@@ -72,7 +82,7 @@ public class Turning{
         double stateTest = 0.0;
 
         if( currentEvent == state.TURNING ){
-            if( absError < 3 ){
+            if( Math.abs(error) < 3 ){
                 stopTurning();
             }else{
                 Library.drive(0f, (float) pComponent, 0f);
@@ -82,7 +92,7 @@ public class Turning{
             stateTest = 1.0;
         }
 
-        double[] array = { destinationAngle, stateTest, currentAngle, absError };
+        double[] array = { destinationAngle, stateTest, currentAngle, error };
         return array;
     }
 
