@@ -6,11 +6,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name="encoders testing")//do not delete this test class used by sasha
 public class AutoTest extends Library {
-    public final int DRIVE_TO_PLATFORM = 100;
-    public final float DRIVE_SPEED = .8f;
 
     EncodersMethod encoderObject = new EncodersMethod();
-
+    EncodersMethod encoderObjectTwo = new EncodersMethod();
     enum State
     {
         VIBIN, ROLLIN, ZOOMIN;
@@ -25,25 +23,27 @@ public class AutoTest extends Library {
 
     @Override public void init() {
         hardwareInit();
+
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
     }
-
-
 
 
     public void loop()
     {
 
         if(stat == State.ROLLIN&&encoderObject.driveCondition(stat)){
-            encoderObject.setGoalAndStart(getEncoderValue(),encoderObject.convertToTicks(100 ),1);
+            encoderObject.setGoalAndStart(encoderObject.convertToTicks(100 ),1);
         }
         if(stat == State.ZOOMIN&&encoderObject.driveCondition(stat))
         {
-            encoderObject.setGoalAndStart(getEncoderValue(),encoderObject.convertToTicks(-100),2);
+            encoderObject.setGoalAndStart(encoderObject.convertToTicks(-100),2);
         }
 
 
@@ -57,13 +57,11 @@ public class AutoTest extends Library {
     //NAME.setGoalAndStart(getEncoderValue(),NAME.convertToTicks(100),MOVEMENT_NUM); }         //this is where you put your directions in(how far you want to move and shit
     private class EncodersMethod
     {
-        float startPos;
         float goal;
         float scalar;
         int receipt;
         public EncodersMethod()
         {
-            startPos = 0;
             goal = 1000000000;//so that the code enters the loop during the first iteration
             receipt = 0;
         }
@@ -75,10 +73,10 @@ public class AutoTest extends Library {
         {
 
             telemetry.addData("goal",(goal));
-            telemetry.addData("current pos",getEncoderValue() - startPos);
-            telemetry.update();
+            telemetry.addData("current pos",getEncoderValue());
+            telemetry.addData("encoder values", getEncoderValue());
             slowDown();
-            if(Math.abs(goal) < Math.abs(getEncoderValue() - startPos))
+            if(Math.abs(goal) > Math.abs(getEncoderValue()))
             {
                 drive(0,0,0);
                 goal += 10000000;//this allows the first iteration happen
@@ -93,10 +91,13 @@ public class AutoTest extends Library {
         }
 
 
-        public void setGoalAndStart(float startPos, float goal,int recieptCheck){ //use this method to set the destination of your travel
+        public void setGoalAndStart(float goal,int recieptCheck){ //use this method to set the destination of your travel
             if( receipt != recieptCheck)
             {
-                this.startPos = startPos;
+                frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 this.goal = goal;
             }
 
