@@ -6,156 +6,170 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
+@SuppressWarnings("all")
 @Autonomous(name = "Blue Block Auto")
 public class BlueBlockAuto extends Library{
 
-    private State currentstate;
-    private ElapsedTime clock = new ElapsedTime();
-    boolean moving = false;
     private final double SCALE_FACTOR = 255;
-    private float[] hsvValues = {0F, 0F, 0F};
+    private boolean moving = false;
+    private boolean started = false;
+    private State currentState;
+    private ElapsedTime clock = new ElapsedTime();
+    private float[] hsvValues = { 0F, 0F, 0F };
 
     @Override
     public void init(){
         hardwareInit();
         vuforiaInit();
-        currentstate = State.SCAN;
+        currentState = State.SCAN;
     }
 
     public void loop(){
         /*
         Loop constantly checks state, and then executes a command based on this.
         */
-//        clock.reset();
-//        while( clock.milliseconds() < 0.2 ){
-//            drive(1.5f, 0, 0);
-//        }
-        if( currentstate == State.SCAN ){
+        //        clock.reset();
+        //        while( clock.milliseconds() < 0.2 ){
+        //            drive(1.5f, 0, 0);
+        //        }
+        if( currentState == State.SCAN ){
             scan();
         }
-        if( currentstate == State.SLIDE ){
+        if( currentState == State.SLIDE ){
             slide();
         }
-        if( currentstate == State.MOVE ){
+        if( currentState == State.MOVE ){
             move();
         }
-        if( currentstate == State.TRAVEL ){
+        if( currentState == State.TRAVEL ){
             travel();
         }
-        if( currentstate == State.PARK ){
+        if( currentState == State.PARK ){
             park();
         }
-        if( currentstate == State.END ){
+        if( currentState == State.END ){
             Stop();
         }
 
         Telemetry();
     }
 
-    public void scan(){
+    private void scan(){
         //is Sky stone Visible, then either slide left or move forward
-        if(!moving){
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(clock.seconds() < 1){
+        }else if( clock.seconds() < 1 ){
             if( isSkystoneVisible() ){
-                currentstate = State.MOVE;
+                currentState = State.MOVE;
             }else{
-                currentstate = State.SLIDE;
+                currentState = State.SLIDE;
             }
         }
 
     }
 
-    public void slide(){
+    private void slide(){
         //only do if skystone is not immediately visible
-        if(!moving){
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(clock.milliseconds() < 50){
+        }else if( clock.milliseconds() < 50 ){
             drive(0, 0, -.5f);
         }else{
-            drive(0,0,0);
+            drive(0, 0, 0);
             moving = false;
-            currentstate = State.SCAN;
+            currentState = State.SCAN;
         }
     }
 
-    public void move(){
+    private void move(){
         //move forward to skystone (will need tweaking to make sure that skystone is always visible)
-        if(!moving){
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(distance.getDistance(DistanceUnit.INCH)<=18){
+        }else if( distance.getDistance(DistanceUnit.INCH) <= 18 ){
             drive(.5f, 0, 0);
         }else{
-//            turn(180);
-            drive(0,0,0);
-//            gripStone(true);
-//            lift.setPower(0.0001);
+            turn();
+            drive(0, 0, 0);
+            //            gripStone(true);
+            //            lift.setPower(0.0001);
             moving = false;
-            currentstate = State.TRAVEL;
+            currentState = State.TRAVEL;
         }
     }
 
-    public void travel(){
+    private void travel(){
         //back up a small amount, then slide left to cross the barrier
-        if(!moving){
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(clock.seconds() < 2){
+        }else if( clock.seconds() < 2 ){
             drive(0, 0, .5f);
         }else{
-            drive(0,0,0);
-//            lift.setPower(0);
-//            gripStone(false);
+            drive(0, 0, 0);
+            //            lift.setPower(0);
+            //            gripStone(false);
             moving = false;
-            currentstate = State.PARK;
+            currentState = State.PARK;
         }
     }
 
-    public void park(){
+    private void park(){
         //slide right and use color sensor to stop on blue line
-        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
-        if(!moving){
+        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(distance.getDistance(DistanceUnit.CM)>5){
-            drive(.5f,0,0);
-        }else if(hsvValues[0] < 140 /*|| clock.seconds() < 1.5*/){
-            drive(0,0,-.4f);
-        }
-        else{
+        }else if( distance.getDistance(DistanceUnit.CM) > 5 ){
+            drive(.5f, 0, 0);
+        }else if( hsvValues[0] < 140 /*|| clock.seconds() < 1.5*/ ){
+            drive(0, 0, -.4f);
+        }else{
             moving = false;
-            drive(0,0,0);
-            currentstate = State.END;
+            drive(0, 0, 0);
+            currentState = State.END;
         }
     }
 
-    public void Stop(){
+    private void Stop(){
         drive(0, 0, 0);
     }
 
-    enum State{
-        SCAN, SLIDE, MOVE, TRAVEL, PARK, END
+    private void turn(){
+
+        if( !started ){
+            started = true;
+            clock.reset();
+        }
+        if( started && clock.seconds() < 1 ){
+            turner.setDestination(imu, 180);
+        }
+        if( started && clock.seconds() > 1 && clock.seconds() < 10 ){
+            turner.updateDrive(imu);
+        }
     }
 
     private void Telemetry(){
         telemetry.addData("skystone is visible: ", isSkystoneVisible());
 
-        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
+        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
         telemetry.addData("Red: ", color.red());
         telemetry.addData("Green: ", color.green());
         telemetry.addData("Blue: ", color.blue());
-        telemetry.addData("Light: ",color.alpha());
+        telemetry.addData("Light: ", color.alpha());
         telemetry.addData("Hue: ", hsvValues[0]);
         telemetry.addData("Saturation: ", hsvValues[1]);
         telemetry.addData("Value: ", hsvValues[2]);
 
         telemetry.addData("Millis since State Start: ", clock.seconds());
-        telemetry.addData("State: ", currentstate);
+        telemetry.addData("State: ", currentState);
         telemetry.addData("Distamce: ", distance.getDistance(DistanceUnit.CM));
+    }
+
+    enum State{
+        SCAN, SLIDE, MOVE, TRAVEL, PARK, END
     }
 
 }
