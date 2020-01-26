@@ -4,10 +4,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "Auto Selections")
 public class AutoSelection extends Library{
-    public enum Auto {STONE, FOUNDATION, PARKING, FINAL, VIBE}
-    int stones = -1; int foundation = -1; int park = -1;
+    //public enum Auto {STONE, FOUNDATION, PARKING, FINAL, VIBE}
+    public enum Auto {COLOR, TYPE, VIBE}
+    int stones = -1; int foundation = -1; int park = -1; int color = -1; int type = -1;
+    String Color, Type;
     boolean up, down, left, right, foundationB, parkB;
-    Auto auto = Auto.STONE;
+    //Auto auto = Auto.STONE;
+    Auto auto = Auto.COLOR;
 
     public void init(){}
 
@@ -18,9 +21,8 @@ public class AutoSelection extends Library{
         right = gamepad1.dpad_right;
         left = gamepad1.dpad_left;
 
-        switch (auto)
-        {
-            case STONE:
+        switch (auto){
+            /*case STONE:
             {
                 telemetry.addLine("up for 0 Stone");
                 telemetry.addLine("right for 1 Stone");
@@ -120,9 +122,68 @@ public class AutoSelection extends Library{
                     telemetry.addLine(parkB + " : will do parking");
                     auto = Auto.VIBE;
 
-                default:
+                default:*/
+            case COLOR:
+                {
+                telemetry.addLine("UP for BLUE side");
+                telemetry.addLine("DOWN for RED side");
+
+                if( up )
+                    Color = "red";
+
+                else if( down )
+                    Color = "blue";
+
+                if( color > -1 ){
+                    auto = Auto.TYPE;
+
+                    try{
+                        Thread.sleep(300);
+                    }catch( InterruptedException ie ){
+                    }
+                }
+
+                break;
             }
 
+            case TYPE:
+                {
+                telemetry.addLine("UP for BLOCK");
+                telemetry.addLine("DOWN for FOUNDATION");
+
+                if( up )
+                    Type = "block";
+
+                else if( down )
+                    Type = "blue";
+
+                if( color > -1 ){
+                    auto = Auto.VIBE;
+
+                    try{
+                        Thread.sleep(300);
+                    }catch( InterruptedException ie ){
+                    }
+                }
+
+                break;
+            }
+        }
     }
-    public void loop(){}
+    public void loop(){
+        if (Color.equals("red") && Type.equals("foundation")){
+            //            redFoundation();
+        }
+
+        else if (Color.equals("blue") && Type.equals("foundation")){
+            //            blueFoundation();
+        }
+
+        else if (Color.equals("red") && Type.equals("block")){
+            //            redBlock();
+        }
+        else if (Color.equals("blue") && Type.equals("block")){
+            //            blueBlock();
+        }
+    }
 }

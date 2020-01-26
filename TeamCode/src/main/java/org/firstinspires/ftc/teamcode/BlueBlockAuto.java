@@ -90,8 +90,10 @@ public class BlueBlockAuto extends Library{
         }else if(distance.getDistance(DistanceUnit.INCH)<=18){
             drive(.5f, 0, 0);
         }else{
-            rotateFor((float) Math.PI);
+//            turn(180);
             drive(0,0,0);
+//            gripStone(true);
+//            lift.setPower(0.0001);
             moving = false;
             currentstate = State.TRAVEL;
         }
@@ -106,6 +108,8 @@ public class BlueBlockAuto extends Library{
             drive(0, 0, .5f);
         }else{
             drive(0,0,0);
+//            lift.setPower(0);
+//            gripStone(false);
             moving = false;
             currentstate = State.PARK;
         }
