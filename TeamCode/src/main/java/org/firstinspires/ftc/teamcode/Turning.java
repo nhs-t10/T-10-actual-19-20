@@ -42,7 +42,7 @@ public class Turning{
             destinationAngle -= 360;
         }
         else if (destinationAngle < -180){
-            destinationAngle = 360 - destinationAngle;
+            destinationAngle += 360;
         }
 
         currentEvent = state.TURNING;
