@@ -41,10 +41,10 @@ public class AutoTest extends Library {
         if(stat == State.ROLLIN&&encoderObject.driveCondition(stat)){
             encoderObject.setGoalAndStart(encoderObject.convertToTicks(100 ),1);
         }
-        if(stat == State.ZOOMIN&&encoderObject.driveCondition(stat))
-        {
-            encoderObject.setGoalAndStart(encoderObject.convertToTicks(-100),2);
-        }
+//        if(stat == State.ZOOMIN&&encoderObject.driveCondition(stat))
+//        {
+//            encoderObject.setGoalAndStart(encoderObject.convertToTicks(-100),2);
+//        }
 
 
 
@@ -59,7 +59,9 @@ public class AutoTest extends Library {
     {
         float goal;
         float scalar;
-        int receipt;
+        int receipt = 0;
+        boolean isDone = false;
+        int receiptTest = 0;
         public EncodersMethod()
         {
             goal = 1000000000;//so that the code enters the loop during the first iteration
@@ -74,17 +76,21 @@ public class AutoTest extends Library {
 
             telemetry.addData("goal",(goal));
             telemetry.addData("current pos",getEncoderValue());
-            telemetry.addData("encoder values", getEncoderValue());
+            telemetry.addData("is done?", isDone);
+            telemetry.addData("recapt", receiptTest);
             slowDown();
-            if(Math.abs(goal) > Math.abs(getEncoderValue()))
+            if(Math.abs(goal) < Math.abs(getEncoderValue()))
             {
+                isDone=true;
                 drive(0,0,0);
                 goal += 10000000;//this allows the first iteration happen
                 stateInput.next();
                 return false;
             }else
             {
-                drive(-scalar,0,0);
+
+                isDone=false;
+                drive(-1,0,0);
                 return true;
             }
 
@@ -94,10 +100,16 @@ public class AutoTest extends Library {
         public void setGoalAndStart(float goal,int recieptCheck){ //use this method to set the destination of your travel
             if( receipt != recieptCheck)
             {
+                receiptTest++;
+                receipt = recieptCheck;
                 frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 this.goal = goal;
             }
 
