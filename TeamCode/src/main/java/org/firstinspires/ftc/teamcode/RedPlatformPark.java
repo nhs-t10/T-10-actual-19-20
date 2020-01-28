@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name="Red Depot Park")
+@Autonomous(name="Red Platform Park")
 public class RedPlatformPark extends Library {
 
     enum State{
@@ -42,21 +42,21 @@ public class RedPlatformPark extends Library {
         if(!moving){
             clock.reset();
             moving = true;
+        }else if(hsvValues[0] <= 100){
+            moving = false;
+            drive(0,0,0);
+            currentstate = State.END;
+        }else if(hsvValues[0] > 100){
+            drive(0,0,-.3f);
         }else if(distance.getDistance(DistanceUnit.CM)>5){
-            drive(.5f,0,0);
-        }else if(hsvValues[0] > 100 /*|| clock.seconds() < 1.5*/){
-            drive(0,0,-.4f);
+            drive(.4f,0,0);
         }else{
             moving = false;
             drive(0,0,0);
             currentstate = State.END;
         }
 
-        if(hsvValues[0] <= 100){
-            moving = false;
-            drive(0,0,0);
-            currentstate = State.END;
-        }
+
     }
 
     public void Stop(){

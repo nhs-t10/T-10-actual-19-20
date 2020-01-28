@@ -42,18 +42,15 @@ public class BlueDepotPark extends Library {
         if(!moving){
             clock.reset();
             moving = true;
-        }else if(distance.getDistance(DistanceUnit.CM)>5){
-            drive(.5f,0,0);
-        }else if(hsvValues[0] < 130 /*|| clock.seconds() < 1.5*/){
-            drive(0,0,-.4f);
-        }
-        else{
+        }else if(hsvValues[0] >= 130 || clock.seconds()>=2){
             moving = false;
             drive(0,0,0);
             currentstate = State.END;
-        }
-
-        if(hsvValues[0] >= 130){
+        }else if(hsvValues[0] < 130){
+            drive(0,0,-.3f);
+        }else if(distance.getDistance(DistanceUnit.CM)>5){
+            drive(.4f,0,0);
+        }else{
             moving = false;
             drive(0,0,0);
             currentstate = State.END;

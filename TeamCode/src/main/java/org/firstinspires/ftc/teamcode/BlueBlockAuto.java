@@ -125,17 +125,21 @@ public class BlueBlockAuto extends Library{
 
     private void park(){
         //slide right and use color sensor to stop on blue line
-        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
-        if( !moving ){
+        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
+        if(!moving){
             clock.reset();
             moving = true;
-        }else if( distance.getDistance(DistanceUnit.CM) > 5 ){
-            drive(.5f, 0, 0);
-        }else if( hsvValues[0] < 130 /*|| clock.seconds() < 1.5*/ ){
-            drive(0, 0, -.4f);
+        }else if(hsvValues[0] >= 130 || clock.seconds()>=2){
+            moving = false;
+            drive(0,0,0);
+            currentState = State.END;
+        }else if(hsvValues[0] < 130){
+            drive(0,0,.3f);
+        }else if(distance.getDistance(DistanceUnit.CM)>5){
+            drive(.4f,0,0);
         }else{
             moving = false;
-            drive(0, 0, 0);
+            drive(0,0,0);
             currentState = State.END;
         }
     }
