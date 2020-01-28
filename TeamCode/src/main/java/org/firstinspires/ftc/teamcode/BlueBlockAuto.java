@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @SuppressWarnings("all")
-//@Autonomous(name = "Blue Block Auto")
+@Autonomous(name = "Blue Block Auto")
 public class BlueBlockAuto extends Library{
 
     private final double SCALE_FACTOR = 255;
@@ -152,7 +152,7 @@ public class BlueBlockAuto extends Library{
             turner.setDestination(imu, 180);
         }
         if( started && clock.seconds() > 1 && clock.seconds() < 10 ){
-            turner.updateDrive(imu);
+            turner.updateAndDrive(imu);
         }
     }
 
