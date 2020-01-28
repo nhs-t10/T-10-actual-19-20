@@ -98,6 +98,8 @@ public class BlueBlockAuto extends Library{
             drive(0, 0, 0);
             //            gripStone(true);
             //            lift.setPower(0.0001);
+            drive(1, 0, 0);
+            drive(0, 0, 0);
             moving = false;
             currentState = State.TRAVEL;
         }
