@@ -6,7 +6,7 @@ public class JoeyEncoderClass
     float destinationPos;
     float currentPos;
     double pComponent;
-    final double P = .07;
+    final double P = .03;
     public JoeyEncoderClass()
     {
         startPos = 0;
@@ -31,7 +31,7 @@ public class JoeyEncoderClass
         //Finding the error
         double error = destinationPos - currentPos;
 
-        pComponent = currentPos * P;
+        pComponent = error * P;
         if( pComponent > .5f ){
             pComponent = .5f;
         }
