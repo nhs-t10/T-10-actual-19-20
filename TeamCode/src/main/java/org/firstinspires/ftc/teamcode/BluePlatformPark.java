@@ -46,14 +46,14 @@ public class BluePlatformPark extends Library {
             moving = false;
             drive(0,0,0);
             currentstate = State.END;
-        }else if(hsvValues[0] < 130){
-            drive(0,0,.3f);
-        }else if(distance.getDistance(DistanceUnit.CM)>5){
-            drive(.4f,0,0);
+        }else if(clock.seconds()>=1.5){
+            drive(0, 0, -.2f);
         }else{
-            moving = false;
-            drive(0,0,0);
-            currentstate = State.END;
+            drive(0,0,.3f);
+        }
+
+        if(distance.getDistance(DistanceUnit.CM)>8){
+            drive(.3f,0,0);
         }
     }
 
