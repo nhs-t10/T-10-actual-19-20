@@ -42,14 +42,14 @@ public class RedDepotPark extends Library {
         if(!moving){
             clock.reset();
             moving = true;
-        }else if(hsvValues[0] <= 100 || clock.seconds()>=2){
+        }else if(hsvValues[0] <= 100 || clock.seconds()>=4){
             moving = false;
             drive(0,0,0);
             currentState = State.END;
-        }else if(clock.seconds()>=1.5){
-            drive(0, 0, -.2f);
+        }else if(clock.seconds()>=3){
+            drive(0, 0, -.3f);
         }else{
-            drive(0,0,.3f);
+            drive(0,0,.4f);
         }
 
         if(distance.getDistance(DistanceUnit.CM)>8){
