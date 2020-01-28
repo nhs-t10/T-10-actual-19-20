@@ -9,6 +9,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @SuppressWarnings("all")
 @Autonomous(name = "Blue Block Auto")
 public class BlueBlockAuto extends Library{
+    imuData imu;
+    Turning turner;
 
     private final double SCALE_FACTOR = 255;
     private boolean moving = false;
