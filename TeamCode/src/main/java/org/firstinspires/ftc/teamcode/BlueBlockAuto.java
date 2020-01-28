@@ -7,10 +7,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @SuppressWarnings("all")
-@Autonomous(name = "Blue Block Auto")
+//@Autonomous(name = "Blue Block Auto")
 public class BlueBlockAuto extends Library{
-    imuData imu;
-    OldTurning turner;
+    Turning turner;
 
     private final double SCALE_FACTOR = 255;
     private boolean moving = false;
@@ -24,11 +23,10 @@ public class BlueBlockAuto extends Library{
         hardwareInit();
         vuforiaInit();
         currentState = State.SCAN;
+        turner = new Turning();
+        turner.initImuTurning(hardwareMap);
     }
 
-    public void blueBlock(){
-        loop();
-    }
     public void loop(){
         /*
         Loop constantly checks state, and then executes a command based on this.
@@ -96,7 +94,7 @@ public class BlueBlockAuto extends Library{
         }else if( distance.getDistance(DistanceUnit.INCH) <= 18 ){
             drive(.5f, 0, 0);
         }else{
-            turn();
+            turner.turnDegrees(180);
             drive(0, 0, 0);
             //            gripStone(true);
             //            lift.setPower(0.0001);
@@ -146,20 +144,6 @@ public class BlueBlockAuto extends Library{
 
     private void Stop(){
         drive(0, 0, 0);
-    }
-
-    private void turn(){
-
-        if( !started ){
-            started = true;
-            clock.reset();
-        }
-        if( started && clock.seconds() < 1 ){
-            turner.setDestination(imu, 180);
-        }
-        if( started && clock.seconds() > 1 && clock.seconds() < 10 ){
-            turner.updateAndDrive(imu);
-        }
     }
 
     private void Telemetry(){
