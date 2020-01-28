@@ -13,7 +13,7 @@ public class RedDepotPark extends Library {
     enum State{
         PARKING, END
     }
-    State currentstate;
+    State currentState;
     ElapsedTime clock = new ElapsedTime();
     boolean moving = false;
     private final double SCALE_FACTOR = 255;
@@ -21,16 +21,16 @@ public class RedDepotPark extends Library {
 
     @Override public void init(){
         hardwareInit();
-        currentstate = State.PARKING;
+        currentState = State.PARKING;
     }
     public void loop(){
         /*
         Loop constantly checks state, and then executes a command based on this.
         */
-        if(currentstate == State.PARKING){
+        if( currentState == State.PARKING){
             Parking();
         }
-        if(currentstate == State.END){
+        if( currentState == State.END){
             Stop();
         }
 
@@ -42,18 +42,18 @@ public class RedDepotPark extends Library {
         if(!moving){
             clock.reset();
             moving = true;
-        }else if(hsvValues[0] <= 100){
+        }else if(hsvValues[0] <= 100 || clock.seconds()>=2){
             moving = false;
             drive(0,0,0);
-            currentstate = State.END;
-        }else if(hsvValues[0] > 100){
-            drive(0,0,.3f);
-        }else if(distance.getDistance(DistanceUnit.CM)>5){
-            drive(.4f,0,0);
+            currentState = State.END;
+        }else if(clock.seconds()>=1.5){
+            drive(0, 0, -.2f);
         }else{
-            moving = false;
-            drive(0,0,0);
-            currentstate = State.END;
+            drive(0,0,.3f);
+        }
+
+        if(distance.getDistance(DistanceUnit.CM)>8){
+            drive(.3f,0,0);
         }
     }
 
@@ -73,7 +73,7 @@ public class RedDepotPark extends Library {
         telemetry.addData("Value: ", hsvValues[2]);
 
         telemetry.addData("Millis since State Start: ", clock.seconds());
-        telemetry.addData("State: ", currentstate);
+        telemetry.addData("State: ", currentState);
         telemetry.addData("Distamce: ", distance.getDistance(DistanceUnit.CM));
     }
 }

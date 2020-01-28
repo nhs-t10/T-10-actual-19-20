@@ -13,7 +13,7 @@ public class BluePlatformPark extends Library {
     enum State{
         PARKING, END
     }
-    State currentstate;
+    State currentState;
     ElapsedTime clock = new ElapsedTime();
     boolean moving = false;
     private final double SCALE_FACTOR = 255;
@@ -21,16 +21,16 @@ public class BluePlatformPark extends Library {
 
     @Override public void init(){
         hardwareInit();
-        currentstate = State.PARKING;
+        currentState = State.PARKING;
     }
     public void loop(){
         /*
         Loop constantly checks state, and then executes a command based on this.
         */
-        if(currentstate == State.PARKING){
+        if( currentState == State.PARKING){
             Parking();
         }
-        if(currentstate == State.END){
+        if( currentState == State.END){
             Stop();
         }
 
@@ -45,7 +45,7 @@ public class BluePlatformPark extends Library {
         }else if(hsvValues[0] >= 130 || clock.seconds()>=2){
             moving = false;
             drive(0,0,0);
-            currentstate = State.END;
+            currentState = State.END;
         }else if(clock.seconds()>=1.5){
             drive(0, 0, -.2f);
         }else{
@@ -73,7 +73,7 @@ public class BluePlatformPark extends Library {
         telemetry.addData("Value: ", hsvValues[2]);
 
         telemetry.addData("Millis since State Start: ", clock.seconds());
-        telemetry.addData("State: ", currentstate);
+        telemetry.addData("State: ", currentState);
         telemetry.addData("Distamce: ", distance.getDistance(DistanceUnit.CM));
     }
 }
