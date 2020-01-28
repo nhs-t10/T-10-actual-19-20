@@ -46,9 +46,4 @@ public class JoeyEncoderClass
         double[] array = { destinationPos, currentPos, error };
         return array;
     }
-
-    public float convertToTicks(float distanceInCm)//converts centimeters to encoders ticks so it can be used in start goal
-    {
-        return distanceInCm*1140;//probably is wrong but oh well
-    }
 }

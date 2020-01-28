@@ -33,7 +33,7 @@ public class JoeyEncoderTest extends Library {
 
     public void loop()
     {
-        drive(4);
+        drive(0.5f);
     }
 
     public void drive(float cm){
