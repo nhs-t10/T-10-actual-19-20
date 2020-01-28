@@ -6,7 +6,7 @@ public class JoeyEncoderClass
     float destinationPos;
     float currentPos;
     double pComponent;
-    final double P = .03;
+    final double P = .01;
     public JoeyEncoderClass()
     {
         startPos = 0;
@@ -21,7 +21,7 @@ public class JoeyEncoderClass
 
     //Add code here that converts cm to encoders
     public float cmToEncoders(float cm){
-        return cm;
+        return cm*1140;
     }
 
     public double[] updateAndDrive(  ){
@@ -49,6 +49,6 @@ public class JoeyEncoderClass
 
     public float convertToTicks(float distanceInCm)//converts centimeters to encoders ticks so it can be used in start goal
     {
-        return distanceInCm*1120/36;//probably is wrong but oh well
+        return distanceInCm*1140;//probably is wrong but oh well
     }
 }

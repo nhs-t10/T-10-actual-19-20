@@ -7,8 +7,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="Joey Encoder Test")//do not delete this test class used by sasha
 public class JoeyEncoderTest extends Library {
-    public final int DRIVE_TO_PLATFORM = 100;
-    public final float DRIVE_SPEED = .8f;
 
     JoeyEncoderClass encoderObject = new JoeyEncoderClass();
     double angleTurned = 0;
@@ -35,7 +33,7 @@ public class JoeyEncoderTest extends Library {
 
     public void loop()
     {
-        drive(100);
+        drive(4);
     }
 
     public void drive(float cm){
