@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-public class Turning{
+public class TurningBetter {
     double currentAngle;
     double destinationAngle;
     double pComponent;
@@ -17,7 +17,7 @@ public class Turning{
     }
 
     //Turning object: Has a destination angle and a current event (state)
-    public Turning(){
+    public TurningBetter(){
         destinationAngle = 0;
         currentEvent = state.IDLE;
     }
@@ -41,7 +41,6 @@ public class Turning{
         destinationAngle = currentAngle;
         currentEvent = state.TRAVELING_IN_A_LINEAR_FASHION;
     }*/
-
 
     public double[] updateAndDrive( imuData imu ){
         //Setting the current angle
@@ -83,6 +82,8 @@ public class Turning{
         double[] array = { destinationAngle, stateTest, currentAngle, error };
         return array;
     }
+
+
 
     public void stopTurning(){
         currentEvent = state.IDLE;
