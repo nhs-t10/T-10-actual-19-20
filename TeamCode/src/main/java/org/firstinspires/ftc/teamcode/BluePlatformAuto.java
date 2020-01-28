@@ -82,11 +82,11 @@ public class BluePlatformAuto extends Library {
         if(!moving){
             clock.reset();
             moving = true;
-        }else if(hsvValues[0] >= 130 || clock.seconds()>=4){
+        }else if(hsvValues[0] >= 130 || clock.seconds()>=6){
             moving = false;
             drive(0,0,0);
             currentState = State.END;
-        }else if(clock.seconds()>=3){
+        }else if(clock.seconds()>=5){
             drive(0, 0, -.3f);
         }else{
             drive(0,0,.4f);
