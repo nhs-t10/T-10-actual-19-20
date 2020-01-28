@@ -7,25 +7,27 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class TestTurningBetter extends Library{
     imuData imu;
     TurningBetter turner;
-    //state curState;
+    state curState;
 
-    /*enum state{
+    enum state{
         PlEASE_WORK
-    }*/
+    }
 
     public void init(){
         hardwareInit();
         imu = new imuData(hardwareMap);
         imu.initImu();
         turner = new TurningBetter();
-        //curState = state.PlEASE_WORK;
+        curState = state.PlEASE_WORK;
     }
 
     ElapsedTime clock = new ElapsedTime();
     double curClock;
 
     public void loop(){
-        curClock = turner.turnBetter(imu, 90);
-        telemetry.addData("Destination Angle: ", curClock);
+        if (curState == state.PlEASE_WORK) {
+            curClock = turner.turnBetter(imu, 90);
+            telemetry.addData("Destination Angle: ", curClock);   
+        }
     }
 }
