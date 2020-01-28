@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @SuppressWarnings("all")
-@Autonomous(name = "Blue Block Auto")
+//@Autonomous(name = "Blue Block Auto")
 public class BlueBlockAuto extends Library{
 
     private final double SCALE_FACTOR = 255;
@@ -24,6 +24,9 @@ public class BlueBlockAuto extends Library{
         currentState = State.SCAN;
     }
 
+    public void blueBlock(){
+        loop();
+    }
     public void loop(){
         /*
         Loop constantly checks state, and then executes a command based on this.
