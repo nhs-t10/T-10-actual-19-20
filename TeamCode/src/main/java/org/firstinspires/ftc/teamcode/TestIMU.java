@@ -32,7 +32,7 @@ public class TestIMU extends Library{
 
     public void loop(){
         if( curState == state.PlEASE_WORK ){
-            turn(-90);
+            turn(360);
         }
     }
 
@@ -48,7 +48,7 @@ public class TestIMU extends Library{
         }
 
         if( started && clock.seconds() > 1 && clock.seconds() < 10 ){
-            array = turner.updateDrive(imu);
+            array = turner.updateAndDrive(imu);
             telemetry.addData("Destination Angle: ", array[0]);
             telemetry.addData("Current Turn State (0.0 good, 1.0 bad): ", array[1]);
             telemetry.addData("Current Angle: ", array[2]);
