@@ -7,8 +7,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @SuppressWarnings("all")
-//@Autonomous(name = "Blue Block Auto")
+@Autonomous(name = "Blue Block Auto")
 public class BlueBlockAuto extends Library{
+    imuData imu;
+    Turning turner;
 
     private final double SCALE_FACTOR = 255;
     private boolean moving = false;
@@ -98,6 +100,8 @@ public class BlueBlockAuto extends Library{
             drive(0, 0, 0);
             //            gripStone(true);
             //            lift.setPower(0.0001);
+            drive(1, 0, 0);
+            drive(0, 0, 0);
             moving = false;
             currentState = State.TRAVEL;
         }
@@ -121,18 +125,22 @@ public class BlueBlockAuto extends Library{
 
     private void park(){
         //slide right and use color sensor to stop on blue line
-        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
-        if( !moving ){
+        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
+        if(!moving){
             clock.reset();
             moving = true;
-        }else if( distance.getDistance(DistanceUnit.CM) > 5 ){
-            drive(.5f, 0, 0);
-        }else if( hsvValues[0] < 140 /*|| clock.seconds() < 1.5*/ ){
-            drive(0, 0, -.4f);
-        }else{
+        }else if(hsvValues[0] >= 130 || clock.seconds()>=2){
             moving = false;
-            drive(0, 0, 0);
+            drive(0,0,0);
             currentState = State.END;
+        }else if(clock.seconds()>=1.5){
+            drive(0, 0, -.2f);
+        }else{
+            drive(0,0,.3f);
+        }
+
+        if(distance.getDistance(DistanceUnit.CM)>8){
+            drive(.3f,0,0);
         }
     }
 
@@ -150,7 +158,7 @@ public class BlueBlockAuto extends Library{
             turner.setDestination(imu, 180);
         }
         if( started && clock.seconds() > 1 && clock.seconds() < 10 ){
-            turner.updateDrive(imu);
+            turner.updateAndDrive(imu);
         }
     }
 
