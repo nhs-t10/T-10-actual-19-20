@@ -1,19 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-
 
 
 @Autonomous(name = "Leroy smoothing test")
 public class SmoothingTest extends Library
 {
     imuData imu;
-    Turning turner;
+    OldTurning turner;
     double angleTurned = 0;
     ExponentialSmoothing test;
     //double timeCheck = 0;
@@ -27,7 +21,7 @@ public class SmoothingTest extends Library
         hardwareInit();
         imu = new imuData(hardwareMap);
         imu.initImu();
-        turner = new Turning();
+        turner = new OldTurning();
         test = new ExponentialSmoothing();
     }
 

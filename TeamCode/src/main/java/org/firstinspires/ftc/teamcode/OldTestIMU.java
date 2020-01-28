@@ -1,16 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name = "Cheifetz imu test")
-public class TestIMU extends Library{
+public class OldTestIMU extends Library{
     imuData imu;
-    Turning turner;
+    OldTurning turner;
     double angleTurned = 0;
     double[] array;
     state curState;
@@ -24,7 +20,7 @@ public class TestIMU extends Library{
         hardwareInit();
         imu = new imuData(hardwareMap);
         imu.initImu();
-        turner = new Turning();
+        turner = new OldTurning();
         curState = state.PlEASE_WORK;
     }
 

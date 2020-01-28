@@ -117,7 +117,7 @@ public class AutoTest extends Library {
 
         public float convertToTicks(float distanceInCm)//converts centimeters to encoders ticks so it can be used in start goal
         {
-            return distanceInCm*1120/36;//probably is wrong but oh well
+            return distanceInCm*537.6f/25.5f;
         }
     }
 }
