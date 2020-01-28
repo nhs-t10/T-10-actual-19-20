@@ -1,25 +1,25 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 public class TurningBetter {
     double currentAngle;
     double destinationAngle;
     double pComponent;
-    state currentEvent;
+    double angleTurned = 0;
+    boolean started = false;
 
     //double prevError = 0.0;
     double sumError = 0.0;
     final double P = 0.02;
-//    double savedTime;
+    //double savedTime;
 
-    //Different possible states during turning
-    enum state{
-        IDLE, TURNING, TRAVELING_IN_A_LINEAR_FASHION
-    }
+    ElapsedTime clock = new ElapsedTime();
 
-    //Turning object: Has a destination angle and a current event (state)
+    //Turning object: Has a destination angle
     public TurningBetter(){
         destinationAngle = 0;
-        currentEvent = state.IDLE;
     }
 
     //Setting the destination in degrees
@@ -32,25 +32,17 @@ public class TurningBetter {
         else if (destinationAngle < -180){
             destinationAngle += 360;
         }
-
-        currentEvent = state.TURNING;
     }
 
-    /*public void startSkewing()
-    {
-        destinationAngle = currentAngle;
-        currentEvent = state.TRAVELING_IN_A_LINEAR_FASHION;
-    }*/
-
-    public double[] updateAndDrive( imuData imu ){
+    public void updateAndDrive( imuData imu ){
         //Setting the current angle
         currentAngle = imu.getAngle();
 
         //Finding the error
-        double error = getError();
+        double error = currentAngle - destinationAngle;
+
         /*This turnAngle is so that the robot turns the right direction and considers the
-         *rotation system of IMU (-180 to 180)
-         */
+         *rotation system of IMU (-180 to 180)*/
         double turnAngle = - error;
         if( turnAngle > 180 ){
             turnAngle -= 360;
@@ -58,6 +50,8 @@ public class TurningBetter {
         else if (turnAngle < -180){
             turnAngle += 360;
         }
+
+        //Figuring out the P component
         pComponent = turnAngle * P;
         if( pComponent > .5f ){
             pComponent = .5f;
@@ -66,42 +60,39 @@ public class TurningBetter {
             pComponent = -.5f;
         }
 
-        double stateTest = 0.0;
+        //Actual turning
+        /*if( Math.abs(error) > 3 ) { //Possibly change to 2
+            Library.drive(0f, (float) pComponent, 0f);
+        }*/
 
-        if( currentEvent == state.TURNING ){
-            if( Math.abs(error) < 3 ){
-                stopTurning();
-            }else{
-                Library.drive(0f, (float) pComponent, 0f);
-            }
+        if( Math.abs(error) < 3 ) {  //Possibly change to 2
+            stopTurning();
         }
-        else if( currentEvent == state.TRAVELING_IN_A_LINEAR_FASHION ){
-            stateTest = 1.0;
+        else {
+            Library.drive(0f, (float) pComponent, 0f);
         }
-
-        double[] array = { destinationAngle, stateTest, currentAngle, error };
-        return array;
     }
 
+    public double turnBetter(imuData imu, int degrees){
+        angleTurned = imu.getAngle();
+        if(!started){
+            started = true;
+            clock.reset();
+        }
 
+        if( started && clock.seconds() < 1 ){
+            setDestination(imu, degrees);
+        }
+        if( started && clock.seconds() > 1 && clock.seconds() < 10 ){
+           updateAndDrive(imu);
+        }
+
+        angleTurned = imu.getAngle();
+        return clock.seconds();
+    }
 
     public void stopTurning(){
-        currentEvent = state.IDLE;
         sumError = 0.0;
         Library.drive(0f, 0f, 0f);
-    }
-
-    /*public void stopSkewing()
-    {
-        currentEvent = state.IDLE;
-        Library.drive(0,0,0);
-    }*/
-
-    public double getError(){
-        return currentAngle - destinationAngle;
-    }
-
-    public double getCurrTime(){
-        return System.currentTimeMillis();
     }
 }
