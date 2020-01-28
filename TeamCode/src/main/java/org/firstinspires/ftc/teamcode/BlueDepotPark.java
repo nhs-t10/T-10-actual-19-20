@@ -44,7 +44,7 @@ public class BlueDepotPark extends Library {
             moving = true;
         }else if(distance.getDistance(DistanceUnit.CM)>5){
             drive(.5f,0,0);
-        }else if(hsvValues[0] < 140 /*|| clock.seconds() < 1.5*/){
+        }else if(hsvValues[0] < 130 /*|| clock.seconds() < 1.5*/){
             drive(0,0,-.4f);
         }
         else{
@@ -53,7 +53,7 @@ public class BlueDepotPark extends Library {
             currentstate = State.END;
         }
 
-        if(hsvValues[0] >= 140){
+        if(hsvValues[0] >= 130){
             moving = false;
             drive(0,0,0);
             currentstate = State.END;
