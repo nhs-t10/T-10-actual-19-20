@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @SuppressWarnings("all")
-//@Autonomous(name = "Blue Block Auto")
+@Autonomous(name = "Blue Block Auto")
 public class BlueBlockAuto extends Library{
     Turning turner;
 
