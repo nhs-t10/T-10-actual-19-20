@@ -76,7 +76,7 @@ public abstract class Library extends OpMode{
 
     //TEST
     imuData imu;
-    OldTurning turner;
+    Turning turner;
 
 
     // the rotation of the encoders is measured in steps
@@ -135,7 +135,7 @@ public abstract class Library extends OpMode{
     public void vuforiaInit(){
         //TEST
         //imu = new imuData(hardwareMap);
-        //turner = new OldTurning();
+        //turner = new Turning();
 
         /* Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
          * We can pass Vuforia the handle to a camera preview resource (on the RC phone);

@@ -13,24 +13,22 @@ public class Turning {
     boolean started = false;
     ElapsedTime clock = new ElapsedTime();
 
+    //imu and Turning objects
     imuData imu;
-    //Turning turner;
+    Turning turner;
 
-    //OldTurning object: Has a destination angle
+    //Turning object: Has a destination angle
     public Turning(){
         destinationAngle = 0;
     }
 
-    public void initImuTurning(HardwareMap hardwareMap)
-    {
+    //This method allows turnDegrees() to be called from anywhere without having to
+    //define new imuData and Turning objects
+    public void initImuAndTurning(HardwareMap hardwareMap) {
         imu = new imuData(hardwareMap);
         imu.initImu();
+        turner = new Turning();
     }
-
-//    public void initTurning(HardwareMap hardwareMap) {
-//        turner = new Turning();
-//        turner.initImuTurning(hardwareMap);
-//    }
 
     //Setting the destination in degrees
     public void setDestination(imuData imu, float degrees){

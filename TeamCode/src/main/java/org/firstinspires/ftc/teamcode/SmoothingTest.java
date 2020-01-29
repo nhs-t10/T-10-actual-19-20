@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 public class SmoothingTest extends Library
 {
     imuData imu;
-    OldTurning turner;
+    Turning turner;
     double angleTurned = 0;
     ExponentialSmoothing test;
     //double timeCheck = 0;
@@ -19,7 +19,7 @@ public class SmoothingTest extends Library
         hardwareInit();
         imu = new imuData(hardwareMap);
         imu.initImu();
-        turner = new OldTurning();
+        turner = new Turning();
         test = new ExponentialSmoothing();
     }
 
