@@ -161,7 +161,7 @@ public class AutoSelection extends Library{
                 }
 
                 else if( down ){
-                    Type = "blue";
+                    Type = "foundation";
                     type++;
                 }
 
