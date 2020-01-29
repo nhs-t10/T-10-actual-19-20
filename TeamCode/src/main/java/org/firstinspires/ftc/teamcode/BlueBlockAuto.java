@@ -44,9 +44,9 @@ public class BlueBlockAuto extends Library{
         if( currentState == State.MOVE ){
             move();
         }
-        if( currentState == State.TRAVEL ){
-            travel();
-        }
+//        if( currentState == State.TRAVEL ){
+//            travel();
+//        }
         if( currentState == State.PARK ){
             park();
         }
@@ -101,25 +101,25 @@ public class BlueBlockAuto extends Library{
             drive(1, 0, 0);
             drive(0, 0, 0);
             moving = false;
-            currentState = State.TRAVEL;
-        }
-    }
-
-    private void travel(){
-        //back up a small amount, then slide left to cross the barrier
-        if( !moving ){
-            clock.reset();
-            moving = true;
-        }else if( clock.seconds() < 2 ){
-            drive(0, 0, .5f);
-        }else{
-            drive(0, 0, 0);
-            //            lift.setPower(0);
-            //            gripStone(false);
-            moving = false;
             currentState = State.PARK;
         }
     }
+
+//    private void travel(){
+//        //back up a small amount, then slide left to cross the barrier
+//        if( !moving ){
+//            clock.reset();
+//            moving = true;
+//        }else if( clock.seconds() < 2 ){
+//            drive(0, 0, .5f);
+//        }else{
+//            drive(0, 0, 0);
+//            //            lift.setPower(0);
+//            //            gripStone(false);
+//            moving = false;
+//            currentState = State.PARK;
+//        }
+//    }
 
     private void park(){
         //slide right and use color sensor to stop on blue line
@@ -130,11 +130,13 @@ public class BlueBlockAuto extends Library{
         }else if(hsvValues[0] >= 130 || clock.seconds()>=6){
             moving = false;
             drive(0,0,0);
+            //lift.setPower(0);
+            //gripStone(false);
             currentState = State.END;
         }else if(clock.seconds()>=5){
-            drive(0, 0, -.3f);
+            drive(0, 0, .3f);
         }else{
-            drive(0,0,.4f);
+            drive(0,0,-.4f);
         }
 
         if(distance.getDistance(DistanceUnit.CM)>8){
