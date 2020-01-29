@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-    /* st' = α * (xt) +(1 - α) * st−1 [equation lol] */
+/* st' = α * (xt) +(1 - α) * st−1 [equation lol] */
 
 //import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -12,28 +12,27 @@ public class ExponentialSmoothing {
     double goodPercent = 0.01;
     double maxAccel = 0.9 * 2;
     //float goodEncodeValue = 10;
-    ElapsedTime clock = new ElapsedTime();
-    double currentTime;
+    ElapsedTime clock;
 
     // clock methods; to run with the time loops in auto or teleop
     // ------------------------------------------------------------------------------------------
 
     // constructor, to run the time calculations
     public ExponentialSmoothing(){
+        clock = new ElapsedTime();
         resetClock();
-        currentTime = clock.milliseconds();
     }
 
     // returns the current clock value, useful for specific time intervals for smoothing
     public double getClockTime(){
-        return currentTime;
+        return clock.milliseconds();
     }
 
     // updates the current value of the instance variable currentTime with the current millisecond value
     // for: keeping track of how much time the loop has been running
-    public void updateClock(){
-        currentTime = clock.milliseconds();
-    }
+//    public void updateClock(){
+//        currentTime = clock.milliseconds();
+//    }
 
     // method used to reset the time, to have set the start of a loop as milliseconds zero
     private void resetClock(){
@@ -47,8 +46,8 @@ public class ExponentialSmoothing {
     // goal is a positive target acceleration; potentially add in PID
     public void smoothing(double goal, double goalVelocity, imuData imu) {
         //double dist = Library.distance.getDistance(DistanceUnit.CM);
-        double currentAcc = imu.getXAcceleration(); double futureValue = 0;
-        double currentVel = imu.getXVelocity();
+        double currentAcc = imu.getZAcceleration(); double futureValue = 0;
+        double currentVel = imu.getZVelocity();
         if(goal == currentAcc){
             futureValue = (aVal * (goal - currentAcc) + currentAcc) / maxAccel;
             Library.drive((float) -futureValue, 0f, 0f);
@@ -68,44 +67,45 @@ public class ExponentialSmoothing {
         else if(goal - futureValue < 0){
             decelerateToValue(imu, goal);
         }
-        updateClock();
+        //updateClock();
     }
-    /*
+   /*
 
-        //import clock
-        //float curTime = getTime()
-        //if (getTime() > curTime + 10 && condition)
-        //{
-            //do stuff
-            //curtime = getTime();
-        //}
-    }
-     */
+       //import clock
+       //float curTime = getTime()
+       //if (getTime() > curTime + 10 && condition)
+       //{
+           //do stuff
+           //curtime = getTime();
+       //}
+   }
+    */
 
     // startAcceleration() is a method intended to avoid jerk upon the first instance of motion by the robot.
     // targetMotorValue should be below 0.9
     // preCondition; targetAcceleration should be larger than current (up to 2.0)
     public void smallAcceleration(double targetAccel, imuData imu) {
         //float current = (float) clock.milliseconds();
-        double partStep = (imu.getXAcceleration() + aVal * (targetAccel - imu.getXAcceleration()) ) / maxAccel;
+        double partStep = (imu.getZAcceleration() + aVal * (targetAccel - imu.getZAcceleration()) ) / maxAccel;
         Library.drive( (float) -partStep, 0f, 0f);
-        updateClock();
+        //updateClock();
+
     }
 
 
     // decelerate strictly going to zero, in slow steps
     public void decelerate(imuData imu) {
-        double currentAcc = imu.getXAcceleration(); double futureAcc = currentAcc - aVal * (currentAcc);
-        double inputVal = futureAcc / maxAccel;
+        double currentAcc = imu.getZAcceleration(); double futureAcc = currentAcc + aVal * (-currentAcc) + 0.2;
+        double inputVal = futureAcc + vVal * (imu.getZVelocity());
         Library.drive((float) -inputVal, 0f, 0f);
-        updateClock();
+        //updateClock();
     }
 
     // decelrate to a target acceleration -> one that is less than the current speed, and non zero
     public void decelerateToValue(imuData imu, double targetAccel) {
-        double currentAcc = imu.getXAcceleration(); double futureAcc = currentAcc - aVal * (currentAcc - targetAccel);
-        double inputVal = futureAcc / maxAccel;
+        double currentAcc = imu.getZAcceleration(); double futureAcc = currentAcc - aVal * (currentAcc - targetAccel) + 0.2;
+        double inputVal = futureAcc + vVal * (imu.getZVelocity());
         Library.drive((float) -inputVal, 0f, 0f);
-        updateClock();
+        //updateClock();
     }
 }
