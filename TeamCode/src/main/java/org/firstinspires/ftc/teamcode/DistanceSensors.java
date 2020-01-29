@@ -40,9 +40,8 @@ public class DistanceSensors extends Library{
                 xToggle = false;
             }
         }
-
         if(xToggle){
-            if( distanceLeft.getDistance(DistanceUnit.CM) >= 20){
+            if(distanceLeft.getDistance(DistanceUnit.CM) >= 20 || distanceLeft.getDistance(DistanceUnit.CM) >= 20){
                 drive(.25f,0,0);
             }else{
                 drive(0,0,0);
@@ -50,14 +49,6 @@ public class DistanceSensors extends Library{
             }
         }
 
-        if(aToggle){
-            if(hsvValues[0] < 140){ //hsvValues[0] < 140 this is blue
-                drive(0,0,.4f);
-            }else{
-                drive(0,0,0);
-                aToggle = false;
-            }
-        }
         if( a ){
             if(!aToggle){
                 aToggle = true;
@@ -65,13 +56,12 @@ public class DistanceSensors extends Library{
                 aToggle = false;
             }
         }
-
-        if(bToggle){
-            if(hsvValues[0] > 100){ //hsvValues[0] > 100 this is red
-                drive(0,0,-.4f);
+        if(aToggle){
+            if(hsvValues[0] < 140){ //hsvValues[0] < 140 this is blue
+                drive(0,0,.4f);
             }else{
                 drive(0,0,0);
-                bToggle = false;
+                aToggle = false;
             }
         }
 
@@ -82,9 +72,8 @@ public class DistanceSensors extends Library{
                 bToggle = false;
             }
         }
-
-        if(yToggle){
-            if(isSkystoneVisible()){
+        if(bToggle){
+            if(hsvValues[0] > 100){ //hsvValues[0] > 100 this is red
                 drive(0,0,-.4f);
             }else{
                 drive(0,0,0);
@@ -99,9 +88,13 @@ public class DistanceSensors extends Library{
                 yToggle = false;
             }
         }
-
-        if( gamepad1.right_stick_button ){
-            mode = mode.getNext();
+        if(yToggle){
+            if(isSkystoneVisible()){
+                drive(0,0,-.4f);
+            }else{
+                drive(0,0,0);
+                bToggle = false;
+            }
         }
 
         if(!aToggle && !bToggle && !xToggle && !yToggle){
@@ -109,7 +102,9 @@ public class DistanceSensors extends Library{
         }
 
         telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
-        telemetry.addData("Distance: ", distanceLeft.getDistance(DistanceUnit.CM));
+        telemetry.addData("Distance Left: ", distanceLeft.getDistance(DistanceUnit.CM));
+        telemetry.addData("Distance Right: ", distanceRight.getDistance(DistanceUnit.CM));
+        telemetry.addData("A: ", aToggle);
         telemetry.addData("A: ", aToggle);
         telemetry.addData("B: ", bToggle);
         telemetry.addData("X: ", xToggle);

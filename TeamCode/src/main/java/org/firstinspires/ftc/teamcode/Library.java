@@ -64,14 +64,13 @@ public abstract class Library extends OpMode{
     final static int MM_PER_LIFT_ROTATION = 1;
     private static final int TRACTION_SCALER = 1; //temp value will be changed // Used in driveForEncoders/slideForEncoders
     // Declare hardware devices
-    public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, liftLeft, liftRight;
-    public static CRServo rotateGrabber;
-    public static Servo foundationLeft, foundationRight, grabber, intake1, intake2, Left, grabber1, grabber2;
+    public static DcMotor frontLeft, frontRight, backLeft, backRight, liftLeft, liftRight;
+    //public static CRServo rotateGrabber;
+    public static Servo foundationLeft, foundationRight, grabber1, grabber2;
     public static VoltageSensor voltageSensor;
     // Initialize hardware devices and their zero behavior
     public static ColorSensor color;
     public static DistanceSensor distanceLeft, distanceRight;
-    //public static DistanceSensor BLDistance, BRDistance;
     public DRIVING mode;
 
     //TEST
@@ -102,23 +101,15 @@ public abstract class Library extends OpMode{
 
         liftLeft = hardwareMap.dcMotor.get("l0");
         liftRight = hardwareMap.dcMotor.get("l1");
-        //        intakeOne = hardwareMap.dcMotor.get("i1");
-        //        intakeTwo = hardwareMap.dcMotor.get("i2");
 
-        //        foundationLeft = hardwareMap.servo.get("s0");
-        //        grabber = hardwareMap.servo.get("s1");
-        //        rotateGrabber = hardwareMap.crservo.get("s2");
         grabber1 = hardwareMap.servo.get("s0");
         grabber2 = hardwareMap.servo.get("s1");
-        //        foundationRight = hardwareMap.servo.get("s2");
-        //        foundationLeft = hardwareMap.servo.get("s3");
-
-
+//        foundationRight = hardwareMap.servo.get("s2");
+//        foundationLeft = hardwareMap.servo.get("s3");
 
         color = hardwareMap.get(ColorSensor.class, "color0");
         distanceLeft = hardwareMap.get(DistanceSensor.class, "distance0");
         distanceRight = hardwareMap.get(DistanceSensor.class, "distance1");
-
         //front1 = hardwareMap.touchSensor.get("touch1");
         //front2 = hardwareMap.touchSensor.get("touch2");
 
@@ -127,17 +118,10 @@ public abstract class Library extends OpMode{
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        //lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //liftGivenControllerValues.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //liftGivenControllerValues.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         mode = DRIVING.Fast;
-
-
     }
 
     public void vuforiaInit(){
@@ -301,35 +285,6 @@ public abstract class Library extends OpMode{
         }
     }
 
-    //Each method below uses inputs to dictate the robot's actions
-    //(i.e gripSkystone, which determines weather the robot should grab or not)
-    //    public static void intake( boolean a, boolean b ){
-    //        double num = 0.0;
-    //
-    //        if( a ){
-    //            num = .5;
-    //        }
-    //        else if( b ){
-    //            num = -.5;
-    //        }
-    //        else{
-    //            num = 0;
-    //        }
-    //
-    //        intakeOne.setPower(num);
-    //        intakeTwo.setPower(-num);
-    //    }
-
-    //    public static void lowerIntake( boolean x ){
-    //        if( x ){
-    //            intake1.setPosition(1);
-    //            intake2.setPosition(1);
-    //        }else{
-    //            intake1.setPosition(0);
-    //            intake2.setPosition(0);
-    //        }
-    //    }
-
     public static void gripStone( boolean x ){
         if( x ){
             grabber1.setPosition(1);
@@ -364,16 +319,6 @@ public abstract class Library extends OpMode{
             liftRight.setPower(0);
         }
     }
-
-    /*public static void gripRotate( float left, float right ){
-        if( right > left ){
-            rotateGrabber.setPower(right);
-        }else if( left > right ){
-            rotateGrabber.setPower(-left);
-        }else{
-            rotateGrabber.setPower(0);
-        }
-}*/
 
     public static void driveInit(){
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

@@ -55,24 +55,14 @@ public class DriveTeleOp extends Library{
         boolean liftDown = gamepad1.left_bumper;
         boolean liftUp2 = gamepad2.right_bumper;
         boolean liftDown2 = gamepad2.left_bumper;
-        //boolean skystone = gamepad1.dpad_up;
 
         //Movement inputs
         float linear = gamepad1.left_stick_y; //Forward and back
         float side = gamepad1.left_stick_x; //Right and left
         float rotation = gamepad1.right_stick_x; //Rotating in place
 
-
         //If controller two gives any commands (true) than the robot will use those inputs
         //Otherwise, it will use the inputs of controller one
-
-//        if( a2 || b2 ){
-//            intake(a2, b2);
-//        }else{
-//            intake(a, b);
-//        }
-
-        //        lowerIntake(c);
 
         if( x2 ){
                         gripStone(true);
@@ -92,25 +82,15 @@ public class DriveTeleOp extends Library{
                         liftGivenControllerValues(liftUp, liftDown);
         }
 
-        /*(if (grabberRight2 != 0 || grabberLeft2 != 0)
-        	gRotate(grabberLeft2, grabberRight2);
-
-           else
-        	gRotate(grabberLeft, grabberRight);*/
-
         if( gamepad1.right_stick_button ){
             mode = mode.getNext();
         }
 
         if( mode == DRIVING.Slow ){
             sums = drive(linear / 2, rotation / 2, side / 2); // slow driving
-        }
-
-        if( mode == DRIVING.Medium ){
+        }else if( mode == DRIVING.Medium ){
             sums = drive(linear / 1.5f, rotation / 1.5f, side / 1.5f); // medium driving
-        }
-
-        if( mode == DRIVING.Fast ){
+        }else if( mode == DRIVING.Fast ){
             sums = drive(linear, rotation, side); // fast driving
         }
 
