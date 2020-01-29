@@ -191,7 +191,7 @@ public class AutoSelection extends Library{
             //            redBlock();
         }
         else if (Color.equals("blue") && Type.equals("block")){
-            BB.loop();
+            BB.start();
         }
     }
 }
