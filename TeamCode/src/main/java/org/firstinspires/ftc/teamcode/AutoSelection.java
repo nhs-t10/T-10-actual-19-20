@@ -124,23 +124,26 @@ public class AutoSelection extends Library{
                     auto = Auto.VIBE;
 
                 default:*/
-            case COLOR:
-                {
+            case COLOR:{
                 telemetry.addLine("UP for BLUE side");
                 telemetry.addLine("DOWN for RED side");
 
-                if( up )
+                if( up ){
                     Color = "red";
+                    color++;
+                }
 
-                else if( down )
+                else if( down ){
                     Color = "blue";
+                    color++;
+                }
 
                 if( color > -1 ){
                     auto = Auto.TYPE;
 
                     try{
                         Thread.sleep(300);
-                    }catch( InterruptedException ie ){
+                    }catch(Exception ie){
                     }
                 }
 
@@ -152,13 +155,17 @@ public class AutoSelection extends Library{
                 telemetry.addLine("UP for BLOCK");
                 telemetry.addLine("DOWN for FOUNDATION");
 
-                if( up )
+                if( up ){
                     Type = "block";
+                    type++;
+                }
 
-                else if( down )
+                else if( down ){
                     Type = "blue";
+                    type++;
+                }
 
-                if( color > -1 ){
+                if( type > -1 ){
                     auto = Auto.VIBE;
 
                     try{
