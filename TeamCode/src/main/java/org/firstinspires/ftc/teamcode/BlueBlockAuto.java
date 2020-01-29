@@ -11,12 +11,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public class BlueBlockAuto extends Library{
     Turning turner;
 
-    private final double SCALE_FACTOR = 255;
-    private boolean moving = false;
-    private boolean started = false;
-    private State currentState;
-    private ElapsedTime clock = new ElapsedTime();
-    private float[] hsvValues = { 0F, 0F, 0F };
+    final double SCALE_FACTOR = 255;
+    boolean moving = false;
+    boolean started = false;
+    State currentState;
+    ElapsedTime clock = new ElapsedTime();
+    float[] hsvValues = { 0F, 0F, 0F };
+
 
     @Override
     public void init(){
