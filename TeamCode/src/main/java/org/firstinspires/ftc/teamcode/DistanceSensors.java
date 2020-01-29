@@ -68,11 +68,22 @@ public class DistanceSensors extends OpMode{
         //If controller two gives any commands (true) than the robot will use those inputs
         //Otherwise, it will use the inputs of controller one
 
+<<<<<<< Updated upstream
         /*if( a2 || b2 ){
             intake(a2, b2);
         }else{
             intake(a, b);
         }*/
+=======
+        if(xToggle){
+            if( distanceLeft.getDistance(DistanceUnit.CM) >= 20){
+                drive(.25f,0,0);
+            }else{
+                drive(0,0,0);
+                xToggle = false;
+            }
+        }
+>>>>>>> Stashed changes
 
                 if( x2 ){
                     while(distance.getDistance(DistanceUnit.CM) >= 2.5){
@@ -106,7 +117,16 @@ public class DistanceSensors extends OpMode{
         drive(linear, rotation, side); // fast driving
 
         telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
+<<<<<<< Updated upstream
         telemetry.addData("Distance: ", distance.getDistance(DistanceUnit.CM));
+=======
+        telemetry.addData("Distance: ", distanceLeft.getDistance(DistanceUnit.CM));
+        telemetry.addData("A: ", aToggle);
+        telemetry.addData("B: ", bToggle);
+        telemetry.addData("X: ", xToggle);
+        telemetry.addData("Y: ", yToggle);
+        telemetry.addData("Skystone: ", isSkystoneVisible());
+>>>>>>> Stashed changes
     }
     public void hardwareInit(){
         frontLeft = hardwareMap.dcMotor.get("m0");

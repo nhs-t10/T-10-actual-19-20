@@ -50,7 +50,19 @@ public class BluePlatformPark extends Library {
         else{
             moving = false;
             drive(0,0,0);
+<<<<<<< Updated upstream
             currentstate = State.END;
+=======
+            currentState = State.END;
+        }else if(clock.seconds()>=5){
+            drive(0, 0, -.3f);
+        }else{
+            drive(0,0,.4f);
+        }
+
+        if( distanceLeft.getDistance(DistanceUnit.CM)>8 || distanceRight.getDistance(DistanceUnit.CM)>8){
+            drive(.3f,0,0);
+>>>>>>> Stashed changes
         }
     }
 
@@ -61,8 +73,17 @@ public class BluePlatformPark extends Library {
 }
 
 
+<<<<<<< Updated upstream
 //drive with encoders distance to foundation + overshoot
 //move foundation gripper servo(s)
 //drive back until touch sensor is pressed
 //if it hasn't been pressed by distance to wall + overshoot
 //backtrack overshoot
+=======
+        telemetry.addData("Millis since State Start: ", clock.seconds());
+        telemetry.addData("State: ", currentState);
+        telemetry.addData("Distance Left: ", distanceLeft.getDistance(DistanceUnit.CM));
+        telemetry.addData("Distance Right: ", distanceRight.getDistance(DistanceUnit.CM));
+    }
+}
+>>>>>>> Stashed changes

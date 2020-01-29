@@ -44,11 +44,21 @@ public class DriveTeleOp extends Library{
         //If controller two gives any commands (true) than the robot will use those inputs
         //Otherwise, it will use the inputs of controller one
 
+<<<<<<< Updated upstream
         /*if( a2 || b2 ){
             intake(a2, b2);
         }else{
             intake(a, b);
         }*/
+=======
+        if( a2 || b2 ){
+//            intake(a2, b2);
+        }else{
+//            intake(a, b);
+        }
+
+//        lowerIntake(c);
+>>>>>>> Stashed changes
 
         if( x2 ){
             gripStone(true);
