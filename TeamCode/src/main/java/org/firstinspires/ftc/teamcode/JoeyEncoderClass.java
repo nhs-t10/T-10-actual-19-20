@@ -29,7 +29,7 @@ public class JoeyEncoderClass
         currentPos = Library.getEncoderValue();
 
         //Finding the error
-        double error = currentPos - destinationPos;
+        double error = destinationPos - currentPos;
 
         pComponent = error * P;
         if( pComponent > .5f ){
@@ -43,7 +43,7 @@ public class JoeyEncoderClass
             Library.drive( (float) pComponent, 0,0f);
         }
 
-        double[] array = { destinationPos, currentPos, error };
+        double[] array = { destinationPos, currentPos, error, pComponent };
         return array;
     }
 }
