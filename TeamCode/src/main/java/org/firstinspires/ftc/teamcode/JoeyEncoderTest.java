@@ -52,6 +52,7 @@ public class JoeyEncoderTest extends Library {
             telemetry.addData("Destination Location: ", array[0]);
             telemetry.addData("Current Location: ", array[1]);
             telemetry.addData("Error: ", array[2]);
+            telemetry.addData("P componenet: ", array[3]);
         }
         telemetry.addData("Time: ", clock.seconds());
     }

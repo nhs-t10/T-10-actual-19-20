@@ -21,7 +21,7 @@ public class JoeyEncoderClass
 
     //Add code here that converts cm to encoders
     public float cmToEncoders(float cm){
-        return cm*1140;
+        return cm*1000;
     }
 
     public double[] updateAndDrive(  ){
@@ -43,7 +43,7 @@ public class JoeyEncoderClass
             Library.drive( (float) pComponent, 0,0f);
         }
 
-        double[] array = { destinationPos, currentPos, error };
+        double[] array = { destinationPos, currentPos, error, pComponent };
         return array;
     }
 }
