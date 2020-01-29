@@ -6,7 +6,7 @@ public class JoeyEncoderClass
     float destinationPos;
     float currentPos;
     double pComponent;
-    final double P = .01;
+    final double P = .001;
     public JoeyEncoderClass()
     {
         startPos = 0;
