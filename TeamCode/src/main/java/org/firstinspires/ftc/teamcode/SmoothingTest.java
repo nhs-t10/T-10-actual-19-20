@@ -12,7 +12,7 @@ public class SmoothingTest extends Library
     ExponentialSmoothing test;
     //double timeCheck = 0;
     double goalAccel = 1.5;
-    double checkAccel = 0.008;
+    double checkAccel = 0.000;
 
     public void init()
     {
