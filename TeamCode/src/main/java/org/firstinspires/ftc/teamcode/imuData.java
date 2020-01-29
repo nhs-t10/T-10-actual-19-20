@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.hardware.bosch.NaiveAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
@@ -24,7 +25,7 @@ public class imuData
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
         parameters.loggingEnabled = true;
         parameters.loggingTag = "IMU";
-        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+        //parameters.accelerationIntegrationAlgorithm = new NaiveAccelerationIntegrator();
 
         imu.initialize(parameters);
     }
