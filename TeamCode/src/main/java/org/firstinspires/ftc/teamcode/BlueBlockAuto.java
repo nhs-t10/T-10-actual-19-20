@@ -18,7 +18,6 @@ public class BlueBlockAuto extends Library{
     ElapsedTime clock = new ElapsedTime();
     float[] hsvValues = { 0F, 0F, 0F };
 
-
     @Override
     public void init(){
         hardwareInit();
