@@ -6,16 +6,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @Autonomous(name = "Turning Test")
 public class TestTurning extends Library{
 
-    //Turning turner;
+    Turning turner;
     public void init(){
         hardwareInit();
-//        turner = new Turning();
-//        turner.initImuTurning(hardwareMap);
-        new Turning().initTurning(hardwareMap);
+        turner = new Turning();
+        turner.initImuTurning(hardwareMap);
     }
 
     public void loop(){
-        new Turning().turnDegrees(180);
-        //turner.turnDegrees(180);
+        turner.turnDegrees(180);
     }
 }
