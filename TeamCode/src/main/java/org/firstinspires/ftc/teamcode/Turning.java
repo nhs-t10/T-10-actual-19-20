@@ -69,18 +69,18 @@ public class Turning {
         }
     }
 
-    public void turnDegrees (int degrees){
+    public void turnDegrees (int degrees) {
         angleTurned = imu.getAngle();
-        if(!started){
+        if (!started) {
             started = true;
             clock.reset();
         }
 
-        if( started && clock.seconds() < 1 ){
+        if (started && clock.seconds() < 1) {
             setDestination(imu, degrees);
         }
-        if( started && clock.seconds() > 1 && clock.seconds() < 4){
-           updateAndDrive();
+        else if (started && clock.seconds() < 7) {
+            updateAndDrive();
         }
 
         angleTurned = imu.getAngle();

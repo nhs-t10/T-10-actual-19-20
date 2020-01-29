@@ -13,9 +13,6 @@ public class TestTurning extends Library{
         turner.initImuTurning(hardwareMap);
     }
 
-    //ElapsedTime clock = new ElapsedTime();
-    //boolean turned;
-
     public void loop(){
         turner.turnDegrees(180);
     }
