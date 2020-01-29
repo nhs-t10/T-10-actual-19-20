@@ -74,7 +74,7 @@ public class RedDepotPark extends Library {
 
         telemetry.addData("Millis since State Start: ", clock.seconds());
         telemetry.addData("State: ", currentState);
-        telemetry.addData("Distance Left: ", distanceLeft.getDistance(DistanceUnit.CM));
-        telemetry.addData("Distance Right: ", distanceRight.getDistance(DistanceUnit.CM));
+        telemetry.addData("Distamce Left: ", distanceLeft.getDistance(DistanceUnit.CM));
+        telemetry.addData("Distamce Right: ", distanceRight.getDistance(DistanceUnit.CM));
     }
 }

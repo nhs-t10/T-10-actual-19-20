@@ -30,9 +30,9 @@ public class ExponentialSmoothing {
 
     // updates the current value of the instance variable currentTime with the current millisecond value
     // for: keeping track of how much time the loop has been running
-//    public void updateClock(){
-//        currentTime = clock.milliseconds();
-//    }
+    //    public void updateClock(){
+    //        currentTime = clock.milliseconds();
+    //    }
 
     // method used to reset the time, to have set the start of a loop as milliseconds zero
     private void resetClock(){

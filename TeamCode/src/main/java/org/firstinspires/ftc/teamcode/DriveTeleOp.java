@@ -1,25 +1,46 @@
 package org.firstinspires.ftc.teamcode;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "TeleOp")
 public class DriveTeleOp extends Library{
-    public void init(){
-        hardwareInit();
-    }
+    boolean subroutine;
 
+    public void init()
+    {
+        hardwareInit();
+        driveInit();
+    }
+    private float[] sums;
     public void loop(){
-        /*
+
+        if (isSkystoneVisible() && distanceLeft.getDistance(DistanceUnit.CM) > 10)
+        {
+            subroutine = true;
+            drive(.5f, 0, 0);
+
+            return;
+        }
+
+        if (subroutine && distanceLeft.getDistance(DistanceUnit.CM) < 11)
+        {
+            telemetry.addLine("Stone should be placed");
+            drive(0, 0, 0);
+
+            subroutine = true;
+        }
+
         //Intake for blocks | gamepad 1
         boolean a = gamepad1.a;
+        boolean c = gamepad1.right_bumper;
+        boolean v = gamepad1.left_bumper;
         //Output for blocks | gamepad 1
         boolean b = gamepad1.b;
         //Intake for blocks | gamepad 2
         boolean a2 = gamepad2.a;
         //Output for blocks | gamepad 2
         boolean b2 = gamepad2.b;
-        */
 
         //Stone gripping | both gamepads
         boolean x = gamepad1.x;
@@ -41,41 +62,34 @@ public class DriveTeleOp extends Library{
         float side = gamepad1.left_stick_x; //Right and left
         float rotation = gamepad1.right_stick_x; //Rotating in place
 
+
         //If controller two gives any commands (true) than the robot will use those inputs
         //Otherwise, it will use the inputs of controller one
 
-<<<<<<< Updated upstream
-        /*if( a2 || b2 ){
-            intake(a2, b2);
-        }else{
-            intake(a, b);
-        }*/
-=======
-        if( a2 || b2 ){
+//        if( a2 || b2 ){
 //            intake(a2, b2);
-        }else{
+//        }else{
 //            intake(a, b);
-        }
+//        }
 
-//        lowerIntake(c);
->>>>>>> Stashed changes
+        //        lowerIntake(c);
 
         if( x2 ){
-            gripStone(true);
+                        gripStone(true);
         }else{
-            gripStone(x);
+                        gripStone(x);
         }
 
         if( y2 ){
-            gripFoundation(true);
+            //            gripFoundation(true);
         }else{
-            gripFoundation(y);
+            //            gripFoundation(y);
         }
 
         if( liftUp2 || liftDown2 ){
-            liftGivenControllerValues(liftUp2, liftDown2);
+                        liftGivenControllerValues(liftUp2, liftDown2);
         }else{
-            liftGivenControllerValues(liftUp, liftDown);
+                        liftGivenControllerValues(liftUp, liftDown);
         }
 
         /*(if (grabberRight2 != 0 || grabberLeft2 != 0)
@@ -89,16 +103,21 @@ public class DriveTeleOp extends Library{
         }
 
         if( mode == DRIVING.Slow ){
-            drive(linear / 2, rotation / 2, side / 2); // slow driving
+            sums = drive(linear / 2, rotation / 2, side / 2); // slow driving
         }
 
         if( mode == DRIVING.Medium ){
-            drive(linear / 1.5f, rotation / 1.5f, side / 1.5f); // medium driving
+            sums = drive(linear / 1.5f, rotation / 1.5f, side / 1.5f); // medium driving
         }
 
         if( mode == DRIVING.Fast ){
-            drive(linear, rotation, side); // fast driving
+            sums = drive(linear, rotation, side); // fast driving
         }
+
+        telemetry.addData("Front Left", sums[0]);
+        telemetry.addData("Front Right", sums[1]);
+        telemetry.addData("Back Left", sums[2]);
+        telemetry.addData("Back Right", sums[3]);
 
         telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
     }

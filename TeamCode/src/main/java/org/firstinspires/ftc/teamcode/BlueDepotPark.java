@@ -34,7 +34,7 @@ public class BlueDepotPark extends Library {
             Stop();
         }
 
-       Telemetry();
+        Telemetry();
     }
 
     public void Parking(){
@@ -63,18 +63,18 @@ public class BlueDepotPark extends Library {
     }
 
     private void Telemetry(){
-        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
+        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
         telemetry.addData("Red: ", color.red());
         telemetry.addData("Green: ", color.green());
         telemetry.addData("Blue: ", color.blue());
-        telemetry.addData("Light: ",color.alpha());
+        telemetry.addData("Light: ", color.alpha());
         telemetry.addData("Hue: ", hsvValues[0]);
         telemetry.addData("Saturation: ", hsvValues[1]);
         telemetry.addData("Value: ", hsvValues[2]);
 
         telemetry.addData("Millis since State Start: ", clock.seconds());
         telemetry.addData("State: ", currentState);
-        telemetry.addData("Distance Left: ", distanceLeft.getDistance(DistanceUnit.CM));
-        telemetry.addData("Distance Right: ", distanceRight.getDistance(DistanceUnit.CM));
+        telemetry.addData("Distamce Left: ", distanceLeft.getDistance(DistanceUnit.CM));
+        telemetry.addData("Distamce Right: ", distanceRight.getDistance(DistanceUnit.CM));
     }
 }

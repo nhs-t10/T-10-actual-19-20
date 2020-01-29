@@ -1,94 +1,92 @@
 package org.firstinspires.ftc.teamcode;
 
-public class Turning
-{
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+public class Turning {
     double currentAngle;
-    double destination;
+    double destinationAngle;
     double pComponent;
-    state currentEvent;
+    double angleTurned = 0;
+    final double P = 0.02;
 
-    //double prevError = 0.0;
-    double sumError = 0.0;
-    final double P = 0.03;
-    double savedTime;
+    boolean started = false;
+    ElapsedTime clock = new ElapsedTime();
 
-    //Different possible states during turning
-    enum state
-    {
-        IDLE, TURNING, TRAVELING_IN_A_LINEAR_FASHION
+    //imu and Turning objects
+    imuData imu;
+    Turning turner;
+
+    //Turning object: Has a destination angle
+    public Turning(){
+        destinationAngle = 0;
     }
 
-    //Turning object: Has a destination and a current event (state)
-    public Turning()
-    {
-        destination = 0;
-        currentEvent = state.IDLE;
+    //This method allows turnDegrees() to be called from anywhere without having to
+    //define new imuData and Turning objects
+    public void initImuAndTurning(HardwareMap hardwareMap) {
+        imu = new imuData(hardwareMap);
+        imu.initImu();
+        turner = new Turning();
     }
 
     //Setting the destination in degrees
-    public void setDestination(float degrees)
-    {
-        savedTime = getCurrTime();
+    public void setDestination(imuData imu, float degrees){
+        destinationAngle = imu.getAngle() + degrees;
 
-        //If the degrees are more than 180 it sets the destination to the smallest reference angle
-        //Ex: 200 degrees becomes -160 degrees because they are the same turn, -160 is just shorter
-        if (degrees > 180)
-            destination = degrees - 360;
-
-        //Otherwise, the destination just becomes the entered degrees
-        destination = degrees;
-        currentEvent = state.TURNING;
+        if( destinationAngle > 180 ){
+            destinationAngle -= 360;
+        }
+        else if (destinationAngle < -180){
+            destinationAngle += 360;
+        }
     }
 
-    public void startSkewing()
-    {
-        destination = currentAngle;
-        currentEvent = state.TRAVELING_IN_A_LINEAR_FASHION;
-    }
-
-
-    public void updateDrive(imuData data)
-    {
+    public void updateAndDrive() {
         //Setting the current angle
-        currentAngle = data.getAngle();
+        currentAngle = imu.getAngle();
 
         //Finding the error
-        double error = getError();
-        pComponent = error * P;
+        double error = currentAngle - destinationAngle;
 
-        if (currentEvent == state.TURNING)
-        {
-            if (getCurrTime() - savedTime > 2000)
-                stopTurning();
-            else
-                Library.drive(0f, (float) pComponent, 0f);
-
+        /*This turnAngle is so that the robot turns the right direction and considers the
+         *rotation system of IMU (-180 to 180)*/
+        double turnAngle = -error;
+        if (turnAngle > 180) {
+            turnAngle -= 360;
+        } else if (turnAngle < -180) {
+            turnAngle += 360;
         }
 
-        else if (currentEvent == state.TRAVELING_IN_A_LINEAR_FASHION)
-            Library.drive(0.5f, (float) pComponent, 0f);
+        //Figuring out the P component
+        pComponent = turnAngle * P;
+        if (pComponent > .5f) {
+            pComponent = .5f;
+        }
+        if (pComponent < -.5f) {
+            pComponent = -.5f;
+        }
+
+        //Actual turning
+        if (Math.abs(error) > 2) {
+            Library.drive(0f, (float) pComponent, 0f);
+        }
     }
 
-    public void stopTurning()
-    {
-        currentEvent = state.IDLE;
-        sumError = 0.0;
-        Library.drive(0f, 0f, 0f);
-    }
+    public void turnDegrees (int degrees) {
+        angleTurned = imu.getAngle();
+        if (!started) {
+            started = true;
+            clock.reset();
+        }
 
-    public void stopSkewing()
-    {
-        currentEvent = state.IDLE;
-        Library.drive(0,0,0);
-    }
+        if (started && clock.seconds() < 1) {
+            setDestination(imu, degrees);
+        }
+        else if (started && clock.seconds() < 7) {
+            updateAndDrive();
+        }
 
-    public double getError()
-    {
-        return currentAngle - destination;
-    }
-
-    public double getCurrTime()
-    {
-        return System.currentTimeMillis();
+        angleTurned = imu.getAngle();
     }
 }
