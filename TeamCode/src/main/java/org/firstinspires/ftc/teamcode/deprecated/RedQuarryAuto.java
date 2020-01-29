@@ -56,7 +56,7 @@
 //
 //            case PICKUP_STONE:
 //                // rotate robot so that lift is facing forwards
-//                // drive remaining distance to quarry so that gripper is against stones
+//                // drive remaining distanceLeft to quarry so that gripper is against stones
 //                grip(true);
 //                liftDistance(DISTANCE_TO_LIFT_SKYSTONE_WHILE_TRAVELING);
 //                curState = "DRIVE_TO_TOP"
@@ -101,7 +101,7 @@
 //                break;
 //
 //            case PLACE_STONE:
-//                // not final distance lifted, think about placing multiple stones
+//                // not final distanceLeft lifted, think about placing multiple stones
 //                //liftDistance(-DISTANCE_TO_LIFT_SKYSTONE_WHILE_TRAVELING);
 //                moveLiftToPosition(0);
 //                grip(false);

@@ -5,7 +5,7 @@ package org.firstinspires.ftc.teamcode;
 //import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-// for future work; finish working on these methods; use acceleration for smoothing, also maybe distance sensor for error
+// for future work; finish working on these methods; use acceleration for smoothing, also maybe distanceLeft sensor for error
 public class ExponentialSmoothing {
     double aVal = 0.3;
     double vVal = 0.2;
@@ -45,7 +45,7 @@ public class ExponentialSmoothing {
     // method to return the smoothed value, in terms of the acceleration
     // goal is a positive target acceleration; potentially add in PID
     public void smoothing(double goal, double goalVelocity, imuData imu) {
-        //double dist = Library.distance.getDistance(DistanceUnit.CM);
+        //double dist = Library.distanceLeft.getDistance(DistanceUnit.CM);
         double currentAcc = imu.getZAcceleration(); double futureValue = 0;
         double currentVel = imu.getZVelocity();
         if(goal == currentAcc){

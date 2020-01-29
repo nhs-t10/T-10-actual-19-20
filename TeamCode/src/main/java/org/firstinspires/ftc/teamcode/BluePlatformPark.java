@@ -52,7 +52,7 @@ public class BluePlatformPark extends Library {
             drive(0,0,.4f);
         }
 
-        if(distance.getDistance(DistanceUnit.CM)>8){
+        if( distanceLeft.getDistance(DistanceUnit.CM)>8 || distanceRight.getDistance(DistanceUnit.CM)>8){
             drive(.3f,0,0);
         }
     }
@@ -74,6 +74,7 @@ public class BluePlatformPark extends Library {
 
         telemetry.addData("Millis since State Start: ", clock.seconds());
         telemetry.addData("State: ", currentState);
-        telemetry.addData("Distamce: ", distance.getDistance(DistanceUnit.CM));
+        telemetry.addData("Distamce Left: ", distanceLeft.getDistance(DistanceUnit.CM));
+        telemetry.addData("Distamce Right: ", distanceRight.getDistance(DistanceUnit.CM));
     }
 }

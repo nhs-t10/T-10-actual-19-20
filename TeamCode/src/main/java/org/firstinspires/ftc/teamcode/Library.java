@@ -64,13 +64,13 @@ public abstract class Library extends OpMode{
     final static int MM_PER_LIFT_ROTATION = 1;
     private static final int TRACTION_SCALER = 1; //temp value will be changed // Used in driveForEncoders/slideForEncoders
     // Declare hardware devices
-    public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
+    public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, liftLeft, liftRight;
     public static CRServo rotateGrabber;
-    public static Servo platform,grabber, intake1, intake2;
+    public static Servo foundationLeft, foundationRight, grabber, intake1, intake2, Left, grabber1, grabber2;
     public static VoltageSensor voltageSensor;
     // Initialize hardware devices and their zero behavior
     public static ColorSensor color;
-    public static DistanceSensor distance;
+    public static DistanceSensor distanceLeft, distanceRight;
     //public static DistanceSensor BLDistance, BRDistance;
     public DRIVING mode;
 
@@ -100,18 +100,24 @@ public abstract class Library extends OpMode{
         backRight = hardwareMap.dcMotor.get("m3");
         driveInit();
 
-        //        lift = hardwareMap.dcMotor.get("l0");
-        intakeOne = hardwareMap.dcMotor.get("i1");
-        intakeTwo = hardwareMap.dcMotor.get("i2");
+        liftLeft = hardwareMap.dcMotor.get("l0");
+        liftRight = hardwareMap.dcMotor.get("l1");
+        //        intakeOne = hardwareMap.dcMotor.get("i1");
+        //        intakeTwo = hardwareMap.dcMotor.get("i2");
 
-        //        platform = hardwareMap.servo.get("s0");
+        //        foundationLeft = hardwareMap.servo.get("s0");
         //        grabber = hardwareMap.servo.get("s1");
         //        rotateGrabber = hardwareMap.crservo.get("s2");
+        grabber1 = hardwareMap.servo.get("s0");
+        grabber2 = hardwareMap.servo.get("s1");
+//        foundationRight = hardwareMap.servo.get("s2");
+//        foundationLeft = hardwareMap.servo.get("s3");
 
-        color = hardwareMap.get(ColorSensor.class, "color1");
-        distance = hardwareMap.get(DistanceSensor.class, "distance1");
-        //BLDistance = hardwareMap.get(DistanceSensor.class, "BackLeftDistance");
-        //BRDistance = hardwareMap.get(DistanceSensor.class, "BackRightDistance");
+
+
+        color = hardwareMap.get(ColorSensor.class, "color0");
+        distanceLeft = hardwareMap.get(DistanceSensor.class, "distance0");
+        distanceRight = hardwareMap.get(DistanceSensor.class, "distance1");
 
         //front1 = hardwareMap.touchSensor.get("touch1");
         //front2 = hardwareMap.touchSensor.get("touch2");
@@ -122,6 +128,8 @@ public abstract class Library extends OpMode{
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //liftGivenControllerValues.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //liftGivenControllerValues.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -295,22 +303,22 @@ public abstract class Library extends OpMode{
 
     //Each method below uses inputs to dictate the robot's actions
     //(i.e gripSkystone, which determines weather the robot should grab or not)
-    public static void intake( boolean a, boolean b ){
-        double num = 0.0;
-
-        if( a ){
-            num = .5;
-        }
-        else if( b ){
-            num = -.5;
-        }
-        else{
-            num = 0;
-        }
-
-        intakeOne.setPower(num);
-        intakeTwo.setPower(-num);
-    }
+//    public static void intake( boolean a, boolean b ){
+//        double num = 0.0;
+//
+//        if( a ){
+//            num = .5;
+//        }
+//        else if( b ){
+//            num = -.5;
+//        }
+//        else{
+//            num = 0;
+//        }
+//
+//        intakeOne.setPower(num);
+//        intakeTwo.setPower(-num);
+//    }
 
 //    public static void lowerIntake( boolean x ){
 //        if( x ){
@@ -322,33 +330,40 @@ public abstract class Library extends OpMode{
 //        }
 //    }
 
-//    public static void gripStone( boolean x ){
-//        if( x ){
-//            grabber.setPosition(1);
-//        }else{
-//            grabber.setPosition(0);
-//        }
-//    }
+    public static void gripStone( boolean x ){
+        if( x ){
+            grabber1.setPosition(1);
+            grabber2.setPosition(1);
+        }else{
+            grabber1.setPosition(0);
+            grabber2.setPosition(0);
+        }
+    }
 
 //    public static void gripFoundation( boolean y ){
 //        if( y ){
-//            platform.setPosition(1);
+//            foundationRight.setPosition(1);
+//            foundationLeft.setPosition(1);
 //        }else{
-//            platform.setPosition(0);
+//            foundationRight.setPosition(0);
+//            foundationLeft.setPosition(0);
 //        }
 //    }
 
-//    public static void liftGivenControllerValues( boolean up, boolean down ){
-//        if( up ){
-//            lift.setPower(.5);
-//        }
-//        if( down ){
-//            lift.setPower(-.5);
-//        }
-//        if( !up && !down ){
-//            lift.setPower(0);
-//        }
-//    }
+    public static void liftGivenControllerValues( boolean up, boolean down ){
+        if( up ){
+            liftLeft.setPower(.5);
+            liftRight.setPower(-.5);
+        }
+        if( down ){
+            liftLeft.setPower(-.5);
+            liftRight.setPower(.5);
+        }
+        if( !up && !down ){
+            liftLeft.setPower(0);
+            liftRight.setPower(0);
+        }
+    }
 
     /*public static void gripRotate( float left, float right ){
         if( right > left ){

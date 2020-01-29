@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "TeleOp")
 public class DriveTeleOp extends Library{
@@ -16,7 +15,7 @@ public class DriveTeleOp extends Library{
     private float[] sums;
     public void loop(){
 
-        if (isSkystoneVisible() && distance.getDistance(DistanceUnit.CM) > 10)
+        if (isSkystoneVisible() && distanceLeft.getDistance(DistanceUnit.CM) > 10)
         {
             subroutine = true;
             drive(.5f, 0, 0);
@@ -24,7 +23,7 @@ public class DriveTeleOp extends Library{
             return;
         }
 
-        if (subroutine && distance.getDistance(DistanceUnit.CM) < 11)
+        if (subroutine && distanceLeft.getDistance(DistanceUnit.CM) < 11)
         {
             telemetry.addLine("Stone should be placed");
             drive(0, 0, 0);

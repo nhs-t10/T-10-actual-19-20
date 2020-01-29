@@ -91,7 +91,7 @@ public class BlueBlockAuto extends Library{
         if( !moving ){
             clock.reset();
             moving = true;
-        }else if( distance.getDistance(DistanceUnit.INCH) <= 18 ){
+        }else if( distanceLeft.getDistance(DistanceUnit.INCH) <= 18 ){
             drive(.5f, 0, 0);
         }else{
             turner.turnDegrees(180);
@@ -139,7 +139,7 @@ public class BlueBlockAuto extends Library{
             drive(0,0,-.4f);
         }
 
-        if(distance.getDistance(DistanceUnit.CM)>8){
+        if(distanceLeft.getDistance(DistanceUnit.CM)>8  || distanceRight.getDistance(DistanceUnit.CM)>8){
             drive(.3f,0,0);
         }
     }
@@ -162,7 +162,8 @@ public class BlueBlockAuto extends Library{
 
         telemetry.addData("Millis since State Start: ", clock.seconds());
         telemetry.addData("State: ", currentState);
-        telemetry.addData("Distamce: ", distance.getDistance(DistanceUnit.CM));
+        telemetry.addData("Distamce Left: ", distanceLeft.getDistance(DistanceUnit.CM));
+        telemetry.addData("Distamce Right: ", distanceRight.getDistance(DistanceUnit.CM));
     }
 
     enum State{

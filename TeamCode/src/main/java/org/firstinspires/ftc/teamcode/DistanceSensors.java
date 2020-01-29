@@ -42,7 +42,7 @@ public class DistanceSensors extends Library{
         }
 
         if(xToggle){
-            if(distance.getDistance(DistanceUnit.CM) >= 20){
+            if( distanceLeft.getDistance(DistanceUnit.CM) >= 20){
                 drive(.25f,0,0);
             }else{
                 drive(0,0,0);
@@ -109,7 +109,7 @@ public class DistanceSensors extends Library{
         }
 
         telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
-        telemetry.addData("Distance: ", distance.getDistance(DistanceUnit.CM));
+        telemetry.addData("Distance: ", distanceLeft.getDistance(DistanceUnit.CM));
         telemetry.addData("A: ", aToggle);
         telemetry.addData("B: ", bToggle);
         telemetry.addData("X: ", xToggle);

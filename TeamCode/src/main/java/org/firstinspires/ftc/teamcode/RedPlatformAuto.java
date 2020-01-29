@@ -48,7 +48,7 @@ public class RedPlatformAuto extends Library {
         if(!moving){
             clock.reset();
             moving = true;
-        } else if(distance.getDistance(DistanceUnit.CM)<=80){
+        } else if( distanceLeft.getDistance(DistanceUnit.CM)<=80){
             drive(-.75f,0,0);
         }
         else{
@@ -56,7 +56,7 @@ public class RedPlatformAuto extends Library {
             drive(0,0,0);
             currentState = State.FROM_FOUNDATION;
         }
-    }//distance reading to the platform is 90cm
+    }//distanceLeft reading to the platform is 90cm
 
     private void FromFoundation(){
         //gripFoundation(true);
@@ -65,10 +65,10 @@ public class RedPlatformAuto extends Library {
             moving = true;
         } else if(clock.seconds() < 2){
             //wait for 2 seconds for grabber
-        } else if(clock.seconds() > 2 && (distance.getDistance(DistanceUnit.CM) >= 30)){ //(!front1.isPressed()||!front2.isPressed())
+        } else if(clock.seconds() > 2 && ( distanceLeft.getDistance(DistanceUnit.CM) >= 30)){ //(!front1.isPressed()||!front2.isPressed())
             drive(.75f,0,0);//drives until touching wall
-        }else if(distance.getDistance(DistanceUnit.CM) >= 5){ //(!front1.isPressed()||!front2.isPressed())
-            drive((float)(distance.getDistance(DistanceUnit.CM)/60+.1),0,0);//drives until touching wall
+        }else if( distanceLeft.getDistance(DistanceUnit.CM) >= 5){ //(!front1.isPressed()||!front2.isPressed())
+            drive((float)( distanceLeft.getDistance(DistanceUnit.CM)/60+.1),0,0);//drives until touching wall
         }else{
             moving = false;
             drive(0,0,0);
@@ -92,7 +92,7 @@ public class RedPlatformAuto extends Library {
             drive(0,0,-.4f);
         }
 
-        if(distance.getDistance(DistanceUnit.CM)>8){
+        if( distanceLeft.getDistance(DistanceUnit.CM)>8 || distanceRight.getDistance(DistanceUnit.CM)>8){
             drive(.3f,0,0);
         }
     }
@@ -109,7 +109,8 @@ public class RedPlatformAuto extends Library {
 
         telemetry.addData("Millis since State Start: ", clock.seconds());
         telemetry.addData("State: ", currentState);
-        telemetry.addData("Distamce: ", distance.getDistance(DistanceUnit.CM));
+        telemetry.addData("Distamce Left: ", distanceLeft.getDistance(DistanceUnit.CM));
+        telemetry.addData("Distamce Right: ", distanceRight.getDistance(DistanceUnit.CM));
     }
 
     private void Stop(){
