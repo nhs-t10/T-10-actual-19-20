@@ -9,9 +9,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class JoeyEncoderTest extends Library{
 
     JoeyEncoderClass encoderObject = new JoeyEncoderClass();
-    double angleTurned = 0;
     double[] array;
-    boolean started = false;
+    //boolean started = false;
 
     enum State{
         Running;
@@ -30,10 +29,14 @@ public class JoeyEncoderTest extends Library{
     ElapsedTime clock = new ElapsedTime();
 
     public void loop(){
-        drive(5f);
+        array = encoderObject.driveForCM(20);
+        telemetry.addData("Destination Location: ", array[0]);
+        telemetry.addData("Current Location: ", array[1]);
+        telemetry.addData("Error: ", array[2]);
+        telemetry.addData("P componenet: ", array[3]);
     }
 
-    public void drive( float cm ){
+    /*public void drive( float cm ){
 
         array = new double[4];
         if( !started ){
@@ -52,5 +55,5 @@ public class JoeyEncoderTest extends Library{
             telemetry.addData("P componenet: ", array[3]);
         }
         telemetry.addData("Time: ", clock.seconds());
-    }
+    }*/
 }

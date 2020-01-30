@@ -47,7 +47,8 @@ public class JoeyEncoderClass{
         return array;
     }
 
-    public void driveForCM( int cm ){
+    public double[] driveForCM( int cm ){
+        double [] array = {};
         if( !started ){
             started = true;
             clock.reset();
@@ -56,7 +57,9 @@ public class JoeyEncoderClass{
         if( started && clock.seconds() < 1 ){
             setDestination(cm);
         }else if( started && clock.seconds() < 10 ){
-            updateAndDrive();
+            array = updateAndDrive();
+            return array;
         }
+        return array;
     }
 }
