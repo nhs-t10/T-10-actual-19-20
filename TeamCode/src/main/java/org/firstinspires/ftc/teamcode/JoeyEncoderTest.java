@@ -1,45 +1,42 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@TeleOp(name="Joey Encoder Test")//do not delete this test class used by sasha
-public class JoeyEncoderTest extends Library {
+@Autonomous(name = "Joey Encoder Test")//do not delete this test class used by sasha
+public class JoeyEncoderTest extends Library{
 
     JoeyEncoderClass encoderObject = new JoeyEncoderClass();
     double angleTurned = 0;
     double[] array;
     boolean started = false;
 
-    enum State
-    {
+    enum State{
         Running;
     }
 
 
-
-    @Override public void init() {
+    @Override
+    public void init(){
         hardwareInit();
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        State state = State.Running;
     }
 
     ElapsedTime clock = new ElapsedTime();
 
-    public void loop()
-    {
+    public void loop(){
         drive(0.5f);
     }
 
-    public void drive(float cm){
+    public void drive( float cm ){
 
         array = new double[4];
-        if(!started){
+        if( !started ){
             started = true;
             clock.reset();
         }
