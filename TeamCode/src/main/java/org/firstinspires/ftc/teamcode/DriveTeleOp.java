@@ -41,20 +41,21 @@ public class DriveTeleOp extends Library{
         //Otherwise, it will use the inputs of controller one
 
         if( x2 ){
-            gripStone(true);
+            gripStone(x2);
         }else{
             gripStone(x);
         }
 
-        if(a)
-            tapeMeasure.setPower(-1);
-        else if (b)
-            tapeMeasure.setPower(1);
-        else
-            tapeMeasure.setPower(0);
+//        if(a)
+//            tapeMeasure.setPower(-1);
+//        else if (b)
+//            tapeMeasure.setPower(1);
+//        else
+//            tapeMeasure.setPower(0);
+        tapeMeasure.setPower(1);
 
         if( y2 ){
-            gripFoundation(true);
+            gripFoundation(y2);
         }else{
             gripFoundation(y);
         }

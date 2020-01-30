@@ -23,8 +23,9 @@ public class BlueBlockAuto extends Library{
         hardwareInit();
         vuforiaInit();
         currentState = State.SCAN;
+        hardwareInit();
         turner = new Turning();
-        turner.initImuAndTurning(hardwareMap);
+        turner.initImu(hardwareMap);
     }
 
     public void loop(){
