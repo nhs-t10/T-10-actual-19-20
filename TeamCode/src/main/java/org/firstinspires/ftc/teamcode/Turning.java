@@ -79,7 +79,7 @@ public class Turning {
         if (started && clock.seconds() < 1) {
             setDestination(degrees);
         }
-        else if (started && clock.seconds() < 7) {
+        else if (started && clock.seconds() < 4) {
             updateAndDrive();
         }
 
