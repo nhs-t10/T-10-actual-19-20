@@ -30,7 +30,7 @@ public class JoeyEncoderTest extends Library{
     ElapsedTime clock = new ElapsedTime();
 
     public void loop(){
-        drive(0.5f);
+        drive(5f);
     }
 
     public void drive( float cm ){

@@ -21,7 +21,7 @@ public class JoeyEncoderClass
 
     //Add code here that converts cm to encoders
     public float cmToEncoders(float cm){
-        return cm*1000;
+        return cm*43;
     }
 
     public double[] updateAndDrive(  ){
