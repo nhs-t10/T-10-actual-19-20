@@ -42,7 +42,7 @@ public class RedPlatformPark extends Library {
         if(!moving){
             clock.reset();
             moving = true;
-        }else if(hsvValues[0] <= 100 || clock.seconds()>=6){
+        }else if(hsvValues[0] <= 60 || clock.seconds()>=6){
             moving = false;
             drive(0,0,0);
             currentState = State.END;
