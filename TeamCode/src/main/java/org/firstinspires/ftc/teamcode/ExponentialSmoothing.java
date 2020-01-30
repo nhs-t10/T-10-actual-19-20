@@ -35,7 +35,7 @@ public class ExponentialSmoothing {
 //    }
 
     // method used to reset the time, to have set the start of a loop as milliseconds zero
-    private void resetClock(){
+    public void resetClock(){
         clock.reset();
     }
 
