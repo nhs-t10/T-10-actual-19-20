@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "TeleOp")
 public class DriveTeleOp extends Library{
-    boolean subroutine;
+    private boolean subroutine;
 
     public void init()
     {
@@ -14,24 +14,7 @@ public class DriveTeleOp extends Library{
     }
     private float[] sums = new float[4];
     public void loop(){
-
-        if (isSkystoneVisible() && distanceLeft.getDistance(DistanceUnit.CM) > 10)
-        {
-            subroutine = true;
-            drive(.5f, 0, 0);
-
-            return;
-        }
-
-        if (subroutine && distanceLeft.getDistance(DistanceUnit.CM) < 11)
-        {
-            telemetry.addLine("Stone should be placed");
-            drive(0, 0, 0);
-
-            subroutine = true;
-        }
-
-        //tapemeasure code
+        //tape measure code
         boolean a = gamepad1.a;
         boolean b = gamepad1.b;
 
@@ -71,15 +54,15 @@ public class DriveTeleOp extends Library{
             tapeMeasure.setPower(0);
 
         if( y2 ){
-                       gripFoundation(true);
+            gripFoundation(true);
         }else{
-                       gripFoundation(y);
+            gripFoundation(y);
         }
 
         if( liftUp2 || liftDown2 ){
-                        liftGivenControllerValues(liftUp2, liftDown2);
+            liftGivenControllerValues(liftUp2, liftDown2);
         }else{
-                        liftGivenControllerValues(liftUp, liftDown);
+            liftGivenControllerValues(liftUp, liftDown);
         }
 
         if( gamepad1.right_stick_button ){

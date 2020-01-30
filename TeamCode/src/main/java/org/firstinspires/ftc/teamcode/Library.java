@@ -104,9 +104,9 @@ public abstract class Library extends OpMode{
 
         grabber1 = hardwareMap.servo.get("s0");
         grabber2 = hardwareMap.servo.get("s1");
-//        foundationRight = hardwareMap.servo.get("s2");
-//        foundationLeft = hardwareMap.servo.get("s3");
-        tapeMeasure = hardwareMap.crservo.get("s5");
+        foundationRight = hardwareMap.servo.get("s2");
+        foundationLeft = hardwareMap.servo.get("s3");
+        tapeMeasure = hardwareMap.crservo.get("s4");
 
         color = hardwareMap.get(ColorSensor.class, "color0");
         distanceLeft = hardwareMap.get(DistanceSensor.class, "distance0");
