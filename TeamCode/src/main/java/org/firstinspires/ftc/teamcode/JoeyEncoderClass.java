@@ -2,8 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class JoeyEncoderClass
-{
+public class JoeyEncoderClass{
     float startPos;
     float destinationPos;
     float currentPos;
@@ -13,8 +12,7 @@ public class JoeyEncoderClass
     boolean started;
     ElapsedTime clock = new ElapsedTime();
 
-    public JoeyEncoderClass()
-    {
+    public JoeyEncoderClass(){
         startPos = 0;
     }
 
@@ -49,16 +47,15 @@ public class JoeyEncoderClass
         return array;
     }
 
-    public void driveForCM (int cm) {
-        if (!started) {
+    public void driveForCM( int cm ){
+        if( !started ){
             started = true;
             clock.reset();
         }
 
-        if (started && clock.seconds() < 1) {
+        if( started && clock.seconds() < 1 ){
             setDestination(cm);
-        }
-        else if (started && clock.seconds() < 10) {
+        }else if( started && clock.seconds() < 10 ){
             updateAndDrive();
         }
     }
