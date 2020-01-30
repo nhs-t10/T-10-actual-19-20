@@ -96,8 +96,9 @@ public class BlueBlockAuto extends Library{
         }else{
             turner.turnDegrees(180);
             drive(0, 0, 0);
-            //            gripStone(true);
-            //            lift.setPower(0.0001);
+            gripStone(true);
+            liftRight.setPower(0.0001);
+            liftLeft.setPower(0.0001);
             drive(1, 0, 0);
             drive(0, 0, 0);
             moving = false;
@@ -130,8 +131,9 @@ public class BlueBlockAuto extends Library{
         }else if(hsvValues[0] >= 130 || clock.seconds()>=6){
             moving = false;
             drive(0,0,0);
-            //lift.setPower(0);
-            //gripStone(false);
+            liftRight   .setPower(0);
+            liftLeft.setPower(0);
+            gripStone(false);
             currentState = State.END;
         }else if(clock.seconds()>=5){
             drive(0, 0, .3f);
