@@ -1,14 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
-public class JoeyEncoderClass
-{
+public class JoeyEncoderClass{
     float startPos;
     float destinationPos;
     float currentPos;
     double pComponent;
     final double P = .001;
-    public JoeyEncoderClass()
-    {
+
+    public JoeyEncoderClass(){
         startPos = 0;
     }
 
@@ -20,11 +19,11 @@ public class JoeyEncoderClass
     }
 
     //Add code here that converts cm to encoders
-    public float cmToEncoders(float cm){
-        return cm*43;
+    public float cmToEncoders( float cm ){
+        return cm * 43;
     }
 
-    public double[] updateAndDrive(  ){
+    public double[] updateAndDrive(){
         //Setting the current angle
         currentPos = Library.getEncoderValue();
 
@@ -40,7 +39,7 @@ public class JoeyEncoderClass
         }
 
         if( Math.abs(error) > 10 ){
-            Library.drive( (float) pComponent, 0,0f);
+            Library.drive((float) pComponent, 0, 0f);
         }
 
         double[] array = { destinationPos, currentPos, error, pComponent };
