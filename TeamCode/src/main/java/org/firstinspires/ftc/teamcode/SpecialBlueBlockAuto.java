@@ -77,7 +77,7 @@ public class SpecialBlueBlockAuto extends Library
                 }
 
             case MOVE_TO_QUARRY:
-                if (getEncoderValue() - ticksPerInch * 60 > curEncoderValue)
+                if (getEncoderValue() - ticksPerInch * 120 > curEncoderValue)
                     drive(0, -.5f, 0);
 
                 else
@@ -87,7 +87,7 @@ public class SpecialBlueBlockAuto extends Library
                 }
 
             case SLIDE_TO_FOUNDATION:
-                if (getEncoderValue() - ticksPerInch * 30 > curEncoderValue)
+                if (getEncoderValue() - ticksPerInch * 108 > curEncoderValue)
                     drive(0, .5f, 0);
 
                 else
