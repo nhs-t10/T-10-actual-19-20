@@ -9,15 +9,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @SuppressWarnings("all")
 @Autonomous(name = "Blue Block Auto")
 public class BlueBlockAuto extends Library{
-    imuData imu;
     Turning turner;
 
-    private final double SCALE_FACTOR = 255;
-    private boolean moving = false;
-    private boolean started = false;
-    private State currentState;
-    private ElapsedTime clock = new ElapsedTime();
-    private float[] hsvValues = { 0F, 0F, 0F };
+    final double SCALE_FACTOR = 255;
+    boolean moving = false;
+    boolean started = false;
+    State currentState;
+    ElapsedTime clock = new ElapsedTime();
+    float[] hsvValues = { 0F, 0F, 0F };
 
     @Override
     public void init()
@@ -25,11 +24,10 @@ public class BlueBlockAuto extends Library{
         hardwareInit();
         vuforiaInit();
         currentState = State.SCAN;
+        turner = new Turning();
+        turner.initImuAndTurning(hardwareMap);
     }
 
-    public void blueBlock(){
-        loop();
-    }
     public void loop(){
         /*
         Loop constantly checks state, and then executes a command based on this.
@@ -47,9 +45,9 @@ public class BlueBlockAuto extends Library{
         if( currentState == State.MOVE ){
             move();
         }
-        if( currentState == State.TRAVEL ){
-            travel();
-        }
+//        if( currentState == State.TRAVEL ){
+//            travel();
+//        }
         if( currentState == State.PARK ){
             park();
         }
@@ -97,66 +95,58 @@ public class BlueBlockAuto extends Library{
         }else if( distance.getDistance(DistanceUnit.INCH) <= 18 ){
             drive(.5f, 0, 0);
         }else{
-            turn();
+            turner.turnDegrees(180);
             drive(0, 0, 0);
             //            gripStone(true);
             //            lift.setPower(0.0001);
             drive(1, 0, 0);
             drive(0, 0, 0);
             moving = false;
-            currentState = State.TRAVEL;
-        }
-    }
-
-    private void travel(){
-        //back up a small amount, then slide left to cross the barrier
-        if( !moving ){
-            clock.reset();
-            moving = true;
-        }else if( clock.seconds() < 2 ){
-            drive(0, 0, .5f);
-        }else{
-            drive(0, 0, 0);
-            //            lift.setPower(0);
-            //            gripStone(false);
-            moving = false;
             currentState = State.PARK;
         }
     }
 
+//    private void travel(){
+//        //back up a small amount, then slide left to cross the barrier
+//        if( !moving ){
+//            clock.reset();
+//            moving = true;
+//        }else if( clock.seconds() < 2 ){
+//            drive(0, 0, .5f);
+//        }else{
+//            drive(0, 0, 0);
+//            //            lift.setPower(0);
+//            //            gripStone(false);
+//            moving = false;
+//            currentState = State.PARK;
+//        }
+//    }
+
     private void park(){
         //slide right and use color sensor to stop on blue line
-        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
-        if( !moving ){
+        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
+        if(!moving){
             clock.reset();
             moving = true;
-        }else if( distance.getDistance(DistanceUnit.CM) > 5 ){
-            drive(.5f, 0, 0);
-        }else if( hsvValues[0] < 130 /*|| clock.seconds() < 1.5*/ ){
-            drive(0, 0, -.4f);
-        }else{
+        }else if(hsvValues[0] >= 130 || clock.seconds()>=6){
             moving = false;
-            drive(0, 0, 0);
+            drive(0,0,0);
+            //lift.setPower(0);
+            //gripStone(false);
             currentState = State.END;
+        }else if(clock.seconds()>=5){
+            drive(0, 0, .3f);
+        }else{
+            drive(0,0,-.4f);
+        }
+
+        if(distance.getDistance(DistanceUnit.CM)>8){
+            drive(.3f,0,0);
         }
     }
 
     private void Stop(){
         drive(0, 0, 0);
-    }
-
-    private void turn(){
-
-        if( !started ){
-            started = true;
-            clock.reset();
-        }
-        if( started && clock.seconds() < 1 ){
-            turner.setDestination(imu, 180);
-        }
-        if( started && clock.seconds() > 1 && clock.seconds() < 10 ){
-            turner.updateAndDrive(imu);
-        }
     }
 
     private void Telemetry(){

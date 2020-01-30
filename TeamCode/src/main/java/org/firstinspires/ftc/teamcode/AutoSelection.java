@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "Auto Selections")
-public class AutoSelection extends BlueBlockAuto{
+public class AutoSelection extends Library{
     //public enum Auto {STONE, FOUNDATION, PARKING, FINAL, VIBE}
     public enum Auto {COLOR, TYPE, VIBE}
     int stones = -1; int foundation = -1; int park = -1; int color = -1; int type = -1;
@@ -11,6 +11,7 @@ public class AutoSelection extends BlueBlockAuto{
     private boolean up, down, left, right, foundationB, parkB;
     //Auto auto = Auto.STONE;
     Auto auto = Auto.COLOR;
+    BlueBlockAuto BB = new BlueBlockAuto();
 
     public void init(){}
 
@@ -123,23 +124,26 @@ public class AutoSelection extends BlueBlockAuto{
                     auto = Auto.VIBE;
 
                 default:*/
-            case COLOR:
-                {
+            case COLOR:{
                 telemetry.addLine("UP for BLUE side");
                 telemetry.addLine("DOWN for RED side");
 
-                if( up )
+                if( up ){
                     Color = "red";
+                    color++;
+                }
 
-                else if( down )
+                else if( down ){
                     Color = "blue";
+                    color++;
+                }
 
                 if( color > -1 ){
                     auto = Auto.TYPE;
 
                     try{
                         Thread.sleep(300);
-                    }catch( InterruptedException ie ){
+                    }catch(Exception ie){
                     }
                 }
 
@@ -151,13 +155,17 @@ public class AutoSelection extends BlueBlockAuto{
                 telemetry.addLine("UP for BLOCK");
                 telemetry.addLine("DOWN for FOUNDATION");
 
-                if( up )
+                if( up ){
                     Type = "block";
+                    type++;
+                }
 
-                else if( down )
-                    Type = "blue";
+                else if( down ){
+                    Type = "foundation";
+                    type++;
+                }
 
-                if( color > -1 ){
+                if( type > -1 ){
                     auto = Auto.VIBE;
 
                     try{
@@ -183,7 +191,7 @@ public class AutoSelection extends BlueBlockAuto{
             //            redBlock();
         }
         else if (Color.equals("blue") && Type.equals("block")){
-            blueBlock();
+            BB.start();
         }
     }
 }

@@ -11,7 +11,7 @@ public class RedPlatformAuto extends Library {
     enum State{
         TO_FOUNDATION, FROM_FOUNDATION, PARKING, END
     }
-    private State currentstate;
+    private State currentState;
     private ElapsedTime clock = new ElapsedTime();
     private boolean moving = false;
     private final double SCALE_FACTOR = 255;
@@ -19,7 +19,7 @@ public class RedPlatformAuto extends Library {
 
     @Override public void init(){
         hardwareInit();
-        currentstate = State.TO_FOUNDATION;
+        currentState = State.TO_FOUNDATION;
     }
     public void init_loop(){
         Telemetry();
@@ -28,16 +28,16 @@ public class RedPlatformAuto extends Library {
         /*
         Loop constantly checks state, and then executes a command based on this.
         */
-        if(currentstate == State.TO_FOUNDATION){
+        if( currentState == State.TO_FOUNDATION){
             ToFoundation();
         }
-        if(currentstate == State.FROM_FOUNDATION){
+        if( currentState == State.FROM_FOUNDATION){
             FromFoundation();
         }
-        if(currentstate == State.PARKING){
+        if( currentState == State.PARKING){
             Parking();
         }
-        if(currentstate == State.END){
+        if( currentState == State.END){
             Stop();
         }
 
@@ -54,7 +54,7 @@ public class RedPlatformAuto extends Library {
         else{
             moving = false;
             drive(0,0,0);
-            currentstate = State.FROM_FOUNDATION;
+            currentState = State.FROM_FOUNDATION;
         }
     }//distance reading to the platform is 90cm
 
@@ -72,7 +72,7 @@ public class RedPlatformAuto extends Library {
         }else{
             moving = false;
             drive(0,0,0);
-            currentstate = State.PARKING;
+            currentState = State.PARKING;
         }
     }//wall reading is about 1cm
 
@@ -82,21 +82,18 @@ public class RedPlatformAuto extends Library {
         if(!moving){
             clock.reset();
             moving = true;
-        }else if(distance.getDistance(DistanceUnit.CM)>5){
-            drive(.5f,0,0);
-        }else if(hsvValues[0] > 100 /*|| clock.seconds() < 1.5*/){
+        }else if(hsvValues[0] <= 100 || clock.seconds()>=6){
+            moving = false;
+            drive(0,0,0);
+            currentState = State.END;
+        }else if(clock.seconds()>=5){
+            drive(0, 0, .3f);
+        }else{
             drive(0,0,-.4f);
         }
-        else{
-            moving = false;
-            drive(0,0,0);
-            currentstate = State.END;
-        }
 
-        if(hsvValues[0] <= 100){
-            moving = false;
-            drive(0,0,0);
-            currentstate = State.END;
+        if(distance.getDistance(DistanceUnit.CM)>8){
+            drive(.3f,0,0);
         }
     }
 
@@ -111,7 +108,7 @@ public class RedPlatformAuto extends Library {
         telemetry.addData("Value: ", hsvValues[2]);
 
         telemetry.addData("Millis since State Start: ", clock.seconds());
-        telemetry.addData("State: ", currentstate);
+        telemetry.addData("State: ", currentState);
         telemetry.addData("Distamce: ", distance.getDistance(DistanceUnit.CM));
     }
 

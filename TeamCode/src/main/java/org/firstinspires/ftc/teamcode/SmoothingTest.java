@@ -1,12 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-
 
 
 @Autonomous(name = "Leroy smoothing test")
@@ -19,8 +13,6 @@ public class SmoothingTest extends Library
     //double timeCheck = 0;
     double goalAccel = 1.5;
     double checkAccel = 0.008;
-    double accel;
-    double velocity;
 
     public void init()
     {
@@ -38,26 +30,32 @@ public class SmoothingTest extends Library
             goalAccel += checkAccel;
 //            timeCheck += 10;
             //test.updateClock();
-            accel = imu.getXAcceleration();
-            velocity = imu.getXVelocity();
-            telemetry.addData("Starting Accelerations:", accel);
-            telemetry.addData("Current Velocity:", velocity);
+            telemetry.addData("Starting Accelerations X:", imu.getXAcceleration());
+            telemetry.addData("Current Velocity X:", imu.getXVelocity());
+            telemetry.addData("Starting Accelerations Y:", imu.getYAcceleration());
+            telemetry.addData("Current Velocity Y:", imu.getYVelocity());
+            telemetry.addData("Starting Accelerations Z:", imu.getZAcceleration());
+            telemetry.addData("Current Velocity Z:", imu.getZVelocity());
         } else if (test.getClockTime() < 6000) {
             test.smoothing(1.6, 1.6, imu);
 //            timeCheck += 10;
             //test.updateClock();
-            accel = imu.getYAcceleration();
-            velocity = imu.getYVelocity();
-            telemetry.addData("Smoothed Acceleration:", accel);
-            telemetry.addData("Current Velocity:", velocity);
+            telemetry.addData("Smoothed Acceleration X:", imu.getXAcceleration());
+            telemetry.addData("Current Velocity X:", imu.getXVelocity());
+            telemetry.addData("Smoothed Acceleration Y:", imu.getYAcceleration());
+            telemetry.addData("Current Velocity Y:", imu.getYVelocity());
+            telemetry.addData("Smoothed Acceleration Z:", imu.getZAcceleration());
+            telemetry.addData("Current Velocity Z:", imu.getZVelocity());
         } else if (test.getClockTime() < 9000) {
             test.decelerateToValue(imu, 0);
 //            timeCheck += 100;
             //test.updateClock();
-            accel = imu.getZAcceleration();
-            velocity = imu.getZVelocity();
-            telemetry.addData("End Accelerations:", accel);
-            telemetry.addData("Current Velocity:", velocity);
+            telemetry.addData("End Accelerations X:", imu.getXAcceleration());
+            telemetry.addData("Current Velocity X:", imu.getXVelocity());
+            telemetry.addData("End Accelerations Y:", imu.getYAcceleration());
+            telemetry.addData("Current Velocity Y:", imu.getYVelocity());
+            telemetry.addData("End Accelerations Z:", imu.getZAcceleration());
+            telemetry.addData("Current Velocity Z:", imu.getZVelocity());
             telemetry.addData("I'm in here!", imu.getZAcceleration());
         }
         telemetry.addData("Current time (millis):", test.getClockTime());

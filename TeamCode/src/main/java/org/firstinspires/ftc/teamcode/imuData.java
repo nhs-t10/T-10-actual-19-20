@@ -3,20 +3,21 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
 
 public class imuData
 {
     static BNO055IMU imu;
     Orientation angle = new Orientation();
 
-    public imuData (HardwareMap hardwareMap)
-    {
+    public imuData (HardwareMap hardwareMap) {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         initImu();
     }
 
-    public void initImu()
-    {
+    public void initImu(){
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
@@ -25,26 +26,13 @@ public class imuData
         parameters.loggingEnabled = true;
         parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+        imu.startAccelerationIntegration(new Position(), new Velocity(), 1000 );
 
         imu.initialize(parameters);
     }
 
-    public float getAngle()
-    {
-        angle = imu.getAngularOrientation();
-        return angle.firstAngle;
-    }
-
-    public float getPitch()
-    {
-        angle = imu.getAngularOrientation();
-        return angle.secondAngle;
-    }
-
-    public float getRoll()
-    {
-        angle = imu.getAngularOrientation();
-        return angle.thirdAngle;
+    public float getAngle() {
+        return imu.getAngularOrientation().firstAngle;
     }
 
     public double getXVelocity()
