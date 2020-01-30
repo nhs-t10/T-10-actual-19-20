@@ -13,25 +13,21 @@ public class Turning {
     boolean started = false;
     ElapsedTime clock = new ElapsedTime();
 
-    //imu and Turning objects
+    //imu object
     imuData imu;
-    Turning turner;
 
     //Turning object: Has a destination angle
     public Turning(){
         destinationAngle = 0;
     }
 
-    //This method allows turnDegrees() to be called from anywhere without having to
-    //define new imuData and Turning objects
-    public void initImuAndTurning(HardwareMap hardwareMap) {
+    public void initImu(HardwareMap hardwareMap) {
         imu = new imuData(hardwareMap);
         imu.initImu();
-        turner = new Turning();
     }
 
     //Setting the destination in degrees
-    public void setDestination(imuData imu, float degrees){
+    public void setDestination(float degrees){
         destinationAngle = imu.getAngle() + degrees;
 
         if( destinationAngle > 180 ){
@@ -81,9 +77,9 @@ public class Turning {
         }
 
         if (started && clock.seconds() < 1) {
-            setDestination(imu, degrees);
+            setDestination(degrees);
         }
-        else if (started && clock.seconds() < 7) {
+        else if (started && clock.seconds() < 4) {
             updateAndDrive();
         }
 
