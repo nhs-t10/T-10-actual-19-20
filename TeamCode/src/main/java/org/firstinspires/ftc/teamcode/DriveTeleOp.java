@@ -46,13 +46,12 @@ public class DriveTeleOp extends Library{
             gripStone(x);
         }
 
-//        if(a)
-//            tapeMeasure.setPower(-1);
-//        else if (b)
-//            tapeMeasure.setPower(1);
-//        else
-//            tapeMeasure.setPower(0);
-        tapeMeasure.setPower(1);
+        if(a)
+            tapeMeasure.setPower(1);
+        else if (b)
+            tapeMeasure.setPower(-1);
+        else
+            tapeMeasure.setPower(0);
 
         if( y2 ){
             gripFoundation(y2);
