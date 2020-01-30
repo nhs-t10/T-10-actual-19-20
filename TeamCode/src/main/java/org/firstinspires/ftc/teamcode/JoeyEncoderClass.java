@@ -7,7 +7,7 @@ public class JoeyEncoderClass{
     float destinationPos;
     float currentPos;
     double pComponent;
-    final double P = .001;
+    final double P = .03;
 
     boolean started;
     ElapsedTime clock = new ElapsedTime();
