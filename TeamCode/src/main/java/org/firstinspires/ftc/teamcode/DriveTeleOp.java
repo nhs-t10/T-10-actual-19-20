@@ -31,16 +31,9 @@ public class DriveTeleOp extends Library{
             subroutine = true;
         }
 
-        //Intake for blocks | gamepad 1
+        //tapemeasure code
         boolean a = gamepad1.a;
-        boolean c = gamepad1.right_bumper;
-        boolean v = gamepad1.left_bumper;
-        //Output for blocks | gamepad 1
         boolean b = gamepad1.b;
-        //Intake for blocks | gamepad 2
-        boolean a2 = gamepad2.a;
-        //Output for blocks | gamepad 2
-        boolean b2 = gamepad2.b;
 
         //Stone gripping | both gamepads
         boolean x = gamepad1.x;
@@ -65,15 +58,22 @@ public class DriveTeleOp extends Library{
         //Otherwise, it will use the inputs of controller one
 
         if( x2 ){
-                        gripStone(true);
+            gripStone(true);
         }else{
-                        gripStone(x);
+            gripStone(x);
         }
 
+        if(a)
+            tapeMeasure.setPower(-1);
+        else if (b)
+            tapeMeasure.setPower(1);
+        else
+            tapeMeasure.setPower(0);
+
         if( y2 ){
-            //            gripFoundation(true);
+                       gripFoundation(true);
         }else{
-            //            gripFoundation(y);
+                       gripFoundation(y);
         }
 
         if( liftUp2 || liftDown2 ){
