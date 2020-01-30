@@ -12,7 +12,7 @@ public class DriveTeleOp extends Library{
         hardwareInit();
         driveInit();
     }
-    private float[] sums;
+    private float[] sums = new float[4];
     public void loop(){
 
         if (isSkystoneVisible() && distanceLeft.getDistance(DistanceUnit.CM) > 10)
