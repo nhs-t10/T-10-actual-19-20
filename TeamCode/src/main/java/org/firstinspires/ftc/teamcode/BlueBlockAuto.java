@@ -19,7 +19,8 @@ public class BlueBlockAuto extends Library{
     float[] hsvValues = { 0F, 0F, 0F };
 
     @Override
-    public void init(){
+    public void init()
+    {
         hardwareInit();
         vuforiaInit();
         currentState = State.SCAN;

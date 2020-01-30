@@ -26,7 +26,7 @@ public class JoeyEncoderClass
         destinationPos = startPos + cm * 43;
     }
 
-    public double[] updateAndDrive(  ){
+    public double[] updateAndDrive(){
         //Setting the current angle
         currentPos = Library.getEncoderValue();
 
@@ -42,7 +42,7 @@ public class JoeyEncoderClass
         }
 
         if( Math.abs(error) > 10 ){
-            Library.drive( (float) pComponent, 0,0f);
+            Library.drive((float) pComponent, 0, 0f);
         }
 
         double[] array = { destinationPos, currentPos, error, pComponent };

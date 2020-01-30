@@ -318,13 +318,14 @@ public abstract class Library extends OpMode{
 //        }
 //    }
 
-//    public static void gripStone( boolean x ){
-//        if( x ){
-//            grabber.setPosition(1);
-//        }else{
-//            grabber.setPosition(0);
-//        }
-//    }
+    public static void gripStone( boolean x )
+    {
+        if( x )
+            grabber.setPosition(1);
+
+        else
+            grabber.setPosition(0);
+    }
 
 //    public static void gripFoundation( boolean y ){
 //        if( y ){
