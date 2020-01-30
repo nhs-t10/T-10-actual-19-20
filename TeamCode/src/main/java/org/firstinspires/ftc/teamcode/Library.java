@@ -74,10 +74,6 @@ public abstract class Library extends OpMode{
     //public static DistanceSensor BLDistance, BRDistance;
     public DRIVING mode;
 
-    //TEST
-    imuData imu;
-    Turning turner;
-
 
     // the rotation of the encoders is measured in steps
     final static int ENCODER_STEPS_PER_ROTATION = 1120;
