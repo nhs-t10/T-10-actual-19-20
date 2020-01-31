@@ -308,8 +308,8 @@ public abstract class Library extends OpMode{
 
     public static void liftGivenControllerValues( boolean up, boolean down ){
         if( up ){
-            liftLeft.setPower(.35);
-            liftRight.setPower(-.35);
+            liftLeft.setPower(.5);
+            liftRight.setPower(-.5);
         }
         if( down ){
             liftLeft.setPower(-.15);
