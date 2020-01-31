@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "TeleOp")
-public class DriveTeleOp extends Library{
-    boolean subroutine;
+public class DriveTeleOp extends Library
+{
 
     public void init()
     {
@@ -14,24 +14,8 @@ public class DriveTeleOp extends Library{
         driveInit();
     }
     private float[] sums;
-    public void loop(){
-
-        if (isSkystoneVisible() && distance.getDistance(DistanceUnit.CM) > 10)
-        {
-            subroutine = true;
-            drive(.5f, 0, 0);
-
-            return;
-        }
-
-        if (subroutine && distance.getDistance(DistanceUnit.CM) < 11)
-        {
-            telemetry.addLine("Stone should be placed");
-            drive(0, 0, 0);
-
-            subroutine = true;
-        }
-
+    public void loop()
+    {
         //Intake for blocks | gamepad 1
         boolean a = gamepad1.a;
         boolean c = gamepad1.right_bumper;

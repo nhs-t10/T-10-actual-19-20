@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import android.graphics.Color;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -25,7 +24,7 @@ public class BlueBlockAuto extends Library{
         vuforiaInit();
         currentState = State.SCAN;
         turner = new Turning();
-        turner.initImuAndTurning(hardwareMap);
+//        turner.initImuAndTurning(hardwareMap);
     }
 
     public void loop(){
