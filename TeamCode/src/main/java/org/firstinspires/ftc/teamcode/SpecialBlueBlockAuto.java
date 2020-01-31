@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name = "Special Blue Block Auto")
 public class SpecialBlueBlockAuto extends Library
 {
-    imuData imu;
-    Turning turner;
     State currentState;
 
     long startTime;
