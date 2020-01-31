@@ -16,6 +16,7 @@ public class SpecialBlueBlockAuto extends Library
 
     public void init()
     {
+        vuforiaInit();
         hardwareInit();
         currentState = State.DRIVE_TO_QUARRY;
 
@@ -78,7 +79,7 @@ public class SpecialBlueBlockAuto extends Library
 
             case MOVE_TO_QUARRY:
                 if (getEncoderValue() - ticksPerInch * 120 > curEncoderValue)
-                    drive(0, -.5f, 0);
+                    drive(0, 0, -.5f);
 
                 else
                 {
@@ -88,7 +89,7 @@ public class SpecialBlueBlockAuto extends Library
 
             case SLIDE_TO_FOUNDATION:
                 if (getEncoderValue() - ticksPerInch * 108 > curEncoderValue)
-                    drive(0, .5f, 0);
+                    drive(0, 0, .5f);
 
                 else
                 {
@@ -122,7 +123,7 @@ public class SpecialBlueBlockAuto extends Library
 
             case MOVE_UNDER_BRIDGE:
                 if (!isUnderBridge(255, true))
-                    drive(0, .5f, 0);
+                    drive(0, 0, .5f);
 
                 else
                     drive(0, 0, 0);

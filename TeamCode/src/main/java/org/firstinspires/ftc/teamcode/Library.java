@@ -124,8 +124,6 @@ public abstract class Library extends OpMode{
         intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         mode = DRIVING.Fast;
-
-
     }
 
     public void vuforiaInit(){
