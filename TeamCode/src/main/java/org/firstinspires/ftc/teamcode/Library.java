@@ -65,7 +65,7 @@ public abstract class Library extends OpMode{
     private static final int TRACTION_SCALER = 1; //temp value will be changed // Used in driveForEncoders/slideForEncoders
     // Declare hardware devices
     public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
-    public static CRServo tapeMeasure;
+    //public static CRServo test;
     public static Servo platform,grabber, intake1, intake2;
     public static VoltageSensor voltageSensor;
     // Initialize hardware devices and their zero behavior
@@ -100,9 +100,8 @@ public abstract class Library extends OpMode{
         intakeOne = hardwareMap.dcMotor.get("i1");
         intakeTwo = hardwareMap.dcMotor.get("i2");
 
-        //        platform = hardwareMap.servo.get("s0");
-        //        grabber = hardwareMap.servo.get("s1");
-                tapeMeasure = hardwareMap.crservo.get("s5");
+//        intakeLiftLeft = hardwareMap.servo.get("s1");
+//        intakeLiftRight = hardwareMap.servo.get("s0");
 
         color = hardwareMap.get(ColorSensor.class, "color1");
         distance = hardwareMap.get(DistanceSensor.class, "distance1");
