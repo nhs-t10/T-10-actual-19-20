@@ -65,8 +65,8 @@ public abstract class Library extends OpMode{
     private static final int TRACTION_SCALER = 1; //temp value will be changed // Used in driveForEncoders/slideForEncoders
     // Declare hardware devices
     public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
-    public static CRServo intakeLiftLeft, intakeLiftRight;
-    public static Servo platform,grabber, intake1, intake2;
+//    public static CRServo ;
+    public static Servo platform,grabber, intake1, intake2, intakeLiftLeft, intakeLiftRight;
     public static VoltageSensor voltageSensor;
     // Initialize hardware devices and their zero behavior
     public static ColorSensor color;
@@ -100,8 +100,8 @@ public abstract class Library extends OpMode{
         intakeOne = hardwareMap.dcMotor.get("i1");
         intakeTwo = hardwareMap.dcMotor.get("i2");
 
-        intakeLiftLeft = hardwareMap.crservo.get("s1");
-        intakeLiftRight = hardwareMap.crservo.get("s0");
+        intakeLiftLeft = hardwareMap.servo.get("s1");
+        intakeLiftRight = hardwareMap.servo.get("s0");
 
         color = hardwareMap.get(ColorSensor.class, "color1");
         distance = hardwareMap.get(DistanceSensor.class, "distance1");
@@ -315,14 +315,14 @@ public abstract class Library extends OpMode{
 //        }
 //    }
 
-    public static void gripStone( boolean x )
-    {
-        if( x )
-            grabber.setPosition(1);
-
-        else
-            grabber.setPosition(0);
-    }
+//    public static void gripStone( boolean x )
+//    {
+//        if( x )
+//            grabber.setPosition(1);
+//
+//        else
+//            grabber.setPosition(0);
+//    }
 
 //    public static void gripFoundation( boolean y ){
 //        if( y ){
@@ -344,13 +344,13 @@ public abstract class Library extends OpMode{
 //        }
 //    }
 
-    public static void gripRotate( boolean x){
+    public static void liftIntake( boolean x){
         if( x ){
-            intakeLiftLeft.setPower(1);
-            intakeLiftRight.setPower(-1);
+            intakeLiftLeft.setPosition(1);
+            intakeLiftRight.setPosition(1);
         }else{
-            intakeLiftLeft.setPower(0);
-            intakeLiftRight.setPower(0);
+            intakeLiftLeft.setPosition(0);
+            intakeLiftRight.setPosition(0);
         }
     }
 

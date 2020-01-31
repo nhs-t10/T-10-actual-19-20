@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "TeleOp")
 public class DriveTeleOp extends Library
@@ -60,9 +58,9 @@ public class DriveTeleOp extends Library
 //        lowerIntake(c);
 
         if( x2 ){
-            gripRotate(true);
+            liftIntake(true);
         }else{
-            gripStone(x);
+            liftIntake(x);
         }
         if( x2 ){
             //            gripStone(true);
