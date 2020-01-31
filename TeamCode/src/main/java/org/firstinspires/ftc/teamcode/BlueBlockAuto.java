@@ -21,10 +21,10 @@ public class BlueBlockAuto extends Library{
     @Override
     public void init(){
         hardwareInit();
-        vuforiaInit();
         currentState = State.SCAN;
         turner = new Turning();
         turner.initImu(hardwareMap);
+        vuforiaInit();
     }
 
     public void loop(){
