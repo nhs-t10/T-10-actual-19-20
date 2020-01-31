@@ -65,7 +65,7 @@ public abstract class Library extends OpMode{
     private static final int TRACTION_SCALER = 1; //temp value will be changed // Used in driveForEncoders/slideForEncoders
     // Declare hardware devices
     public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
-    //public static CRServo test;
+    public static CRServo intakeLiftLeft, intakeLiftRight;
     public static Servo platform,grabber, intake1, intake2;
     public static VoltageSensor voltageSensor;
     // Initialize hardware devices and their zero behavior
@@ -100,8 +100,8 @@ public abstract class Library extends OpMode{
         intakeOne = hardwareMap.dcMotor.get("i1");
         intakeTwo = hardwareMap.dcMotor.get("i2");
 
-//        intakeLiftLeft = hardwareMap.servo.get("s1");
-//        intakeLiftRight = hardwareMap.servo.get("s0");
+        intakeLiftLeft = hardwareMap.crservo.get("s1");
+        intakeLiftRight = hardwareMap.crservo.get("s0");
 
         color = hardwareMap.get(ColorSensor.class, "color1");
         distance = hardwareMap.get(DistanceSensor.class, "distance1");
@@ -344,15 +344,15 @@ public abstract class Library extends OpMode{
 //        }
 //    }
 
-    /*public static void gripRotate( float left, float right ){
-        if( right > left ){
-            tapeMeasure.setPower(right);
-        }else if( left > right ){
-            tapeMeasure.setPower(-left);
+    public static void gripRotate( boolean x){
+        if( x ){
+            intakeLiftLeft.setPower(1);
+            intakeLiftRight.setPower(-1);
         }else{
-            tapeMeasure.setPower(0);
+            intakeLiftLeft.setPower(0);
+            intakeLiftRight.setPower(0);
         }
-}*/
+    }
 
     public static void driveInit(){
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
