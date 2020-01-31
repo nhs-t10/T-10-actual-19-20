@@ -59,7 +59,7 @@ public class RedPlatformAuto extends Library {
     }//distanceLeft reading to the platform is 90cm
 
     private void FromFoundation(){
-        //gripFoundation(true);
+        gripFoundation(true);
         if (!moving){
             clock.reset();
             moving = true;
@@ -77,7 +77,7 @@ public class RedPlatformAuto extends Library {
     }//wall reading is about 1cm
 
     private void Parking(){
-        //        gripFoundation(false);
+        gripFoundation(false);
         Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
         if(!moving){
             clock.reset();
