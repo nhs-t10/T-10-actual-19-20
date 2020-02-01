@@ -1,16 +1,25 @@
 package org.firstinspires.ftc.teamcode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "Backup Auto")
 public class BackupAuto extends Library
 {
     State curState;
-    float startEncoderValue = getEncoderValue();
+    Turning turner;
+    ElapsedTime clock;
 
+    float startEncoderValue = getEncoderValue();
     private static final double ticksPerCM = 194.13;
 
     public void init()
     {
+        curState = State.STRAFE_TO_FOUNDATION;
+
+        turner = new Turning();
+        turner.initImu(hardwareMap);
+
+        clock = new ElapsedTime();
         hardwareInit();
     }
 
@@ -19,22 +28,27 @@ public class BackupAuto extends Library
         switch (curState)
         {
             case STRAFE_TO_FOUNDATION:
-                if (startEncoderValue + ticksPerCM * 50 > getEncoderValue())
+                turner.turnDegrees(90);
+
+                if (startEncoderValue + ticksPerCM * 50 > getEncoderValue() && clock.seconds() > 5)
                     drive(0, .5f, 0);
 
-                else
+                else if (clock.seconds() > 5)
                 {
                     drive(0, 0, 0);
                     startEncoderValue = getEncoderValue();
 
+                    clock.reset();
                     curState = State.MOVE_TO_FOUNDATION;
                 }
 
             case MOVE_TO_FOUNDATION:
-                if (startEncoderValue + ticksPerCM * 25 > getEncoderValue())
+                turner.turnDegrees(-90);
+
+                if (startEncoderValue + ticksPerCM * 25 > getEncoderValue() && clock.seconds() > 5)
                     drive(.5f, 0, 0);
 
-                else
+                else if (clock.seconds() > 5)
                 {
                     drive(0, 0, 0);
                     gripFoundation(false);
@@ -53,20 +67,22 @@ public class BackupAuto extends Library
                     gripFoundation(false);
                     startEncoderValue = getEncoderValue();
 
+                    clock.reset();
                     curState = State.DRAG_FOUNDATION;
                 }
 
             case STRAFE_UNDER_BRIDGE:
-                if (startEncoderValue - ticksPerCM * 50 < getEncoderValue())
+                turner.turnDegrees(-90);
+
+                if (startEncoderValue - ticksPerCM * 50 < getEncoderValue() && clock.seconds() > 5)
                     drive(0, -.5f, 0);
 
-                else
+                else if (clock.seconds() > 5)
                     drive(0, 0, 0);
 
             default:
                 telemetry.addLine("Routine is completed");
         }
-
     }
 
     enum State
