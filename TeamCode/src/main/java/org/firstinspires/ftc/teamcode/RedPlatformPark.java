@@ -47,14 +47,26 @@ public class RedPlatformPark extends Library {
             drive(0,0,0);
             currentState = State.END;
         }else if(clock.seconds()>=5){
-            drive(0, 0, .3f);
+            drive(-.25f, 0, 0);
         }else{
-            drive(0,0,-.4f);
+            drive(.35f,0,0);
         }
-
-        if( distanceLeft.getDistance(DistanceUnit.CM)>8 || distanceRight.getDistance(DistanceUnit.CM)>8){
-            drive(.3f,0,0);
-        }
+//        if(!moving){
+//            clock.reset();
+//            moving = true;
+//        }else if(hsvValues[0] <= 60 || clock.seconds()>=6){
+//            moving = false;
+//            drive(0,0,0);
+//            currentState = State.END;
+//        }else if(clock.seconds()>=5){
+//            drive(0, 0, .3f);
+//        }else{
+//            drive(0,0,-.4f);
+//        }
+//
+//        if( distanceLeft.getDistance(DistanceUnit.CM)>8 || distanceRight.getDistance(DistanceUnit.CM)>8){
+//            drive(.3f,0,0);
+//        }
     }
 
     public void Stop(){
