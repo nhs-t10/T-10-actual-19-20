@@ -41,6 +41,8 @@ public class JoeyEncoderClass{
 
         if( Math.abs(error) > 10 ){
             Library.drive((float) pComponent, 0, 0f);
+        }else{
+            Library.drive(0, 0, 0);
         }
 
         double[] array = { destinationPos, currentPos, error, pComponent };

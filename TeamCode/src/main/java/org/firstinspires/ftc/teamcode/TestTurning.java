@@ -13,6 +13,6 @@ public class TestTurning extends Library {
     }
 
     public void loop(){
-        turner.turnDegrees(180);
+        turner.turnDegrees(90);
     }
 }
