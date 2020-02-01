@@ -48,7 +48,9 @@ public class RedPlatformAuto extends Library {
         if(!moving){
             clock.reset();
             moving = true;
-        } else if( distanceLeft.getDistance(DistanceUnit.CM)<=80){
+        }else if(clock.seconds()<.75){
+            drive(0,0,.5f);
+        }else if(distanceLeft.getDistance(DistanceUnit.CM)<=80||distanceRight.getDistance(DistanceUnit.CM)<=80){
             drive(-.75f,0,0);
         }
         else{
@@ -63,9 +65,9 @@ public class RedPlatformAuto extends Library {
         if (!moving){
             clock.reset();
             moving = true;
-        } else if(clock.seconds() < 2){
+        }else if(clock.seconds() < 2){
             //wait for 2 seconds for grabber
-        } else if(clock.seconds() > 2 && ( distanceLeft.getDistance(DistanceUnit.CM) >= 30)){ //(!front1.isPressed()||!front2.isPressed())
+        }else if(clock.seconds() > 2 && ( distanceLeft.getDistance(DistanceUnit.CM) >= 30)){ //(!front1.isPressed()||!front2.isPressed())
             drive(.75f,0,0);//drives until touching wall
         }else if( distanceLeft.getDistance(DistanceUnit.CM) >= 5){ //(!front1.isPressed()||!front2.isPressed())
             drive((float)( distanceLeft.getDistance(DistanceUnit.CM)/60+.1),0,0);//drives until touching wall
