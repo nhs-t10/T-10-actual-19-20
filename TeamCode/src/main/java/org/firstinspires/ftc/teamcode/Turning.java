@@ -8,7 +8,7 @@ public class Turning {
     double destinationAngle;
     double pComponent;
     double angleTurned = 0;
-    final double P = 0.02;
+    final double P = 0.01;
 
     boolean started = false;
     ElapsedTime clock = new ElapsedTime();
