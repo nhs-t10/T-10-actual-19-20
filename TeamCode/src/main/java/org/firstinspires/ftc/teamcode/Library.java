@@ -298,8 +298,8 @@ public abstract class Library extends OpMode{
 
     public static void gripFoundation( boolean y ){
         if( y ){
-            foundationRight.setPosition(1);
-            foundationLeft.setPosition(1);
+            foundationRight.setPosition(.4);
+            foundationLeft.setPosition(.4);
         }else{
             foundationRight.setPosition(0);
             foundationLeft.setPosition(0);
@@ -308,12 +308,12 @@ public abstract class Library extends OpMode{
 
     public static void liftGivenControllerValues( boolean up, boolean down ){
         if( up ){
-            liftLeft.setPower(.35);
-            liftRight.setPower(-.35);
+            liftLeft.setPower(.1);
+            liftRight.setPower(-.1);
         }
         if( down ){
-            liftLeft.setPower(-.15);
-            liftRight.setPower(.15);
+            liftLeft.setPower(-.5);
+            liftRight.setPower(.5);
         }
         if( !up && !down ){
             liftLeft.setPower(0);
