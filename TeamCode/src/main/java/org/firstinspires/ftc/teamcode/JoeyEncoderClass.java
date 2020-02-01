@@ -1,14 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
-public class JoeyEncoderClass
-{
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+public class JoeyEncoderClass{
     float startPos;
     float destinationPos;
     float currentPos;
     double pComponent;
-    final double P = .001;
-    public JoeyEncoderClass()
-    {
+    final double P = .03;
+
+    boolean started;
+    ElapsedTime clock = new ElapsedTime();
+
+    public JoeyEncoderClass(){
         startPos = 0;
     }
 
@@ -16,15 +20,11 @@ public class JoeyEncoderClass
         startPos = Library.getEncoderValue();
 
         //Otherwise, the destination just becomes the entered degrees
-        destinationPos = startPos + cmToEncoders(cm);
+        //Conversion from cm to encoders
+        destinationPos = startPos + cm * 43;
     }
 
-    //Add code here that converts cm to encoders
-    public float cmToEncoders(float cm){
-        return cm*1000;
-    }
-
-    public double[] updateAndDrive(  ){
+    public double[] updateAndDrive(){
         //Setting the current angle
         currentPos = Library.getEncoderValue();
 
@@ -40,10 +40,26 @@ public class JoeyEncoderClass
         }
 
         if( Math.abs(error) > 10 ){
-            Library.drive( (float) pComponent, 0,0f);
+            Library.drive((float) pComponent, 0, 0f);
         }
 
         double[] array = { destinationPos, currentPos, error, pComponent };
+        return array;
+    }
+
+    public double[] driveForCM( int cm ){
+        double [] array = {};
+        if( !started ){
+            started = true;
+            clock.reset();
+        }
+
+        if( started && clock.seconds() < 1 ){
+            setDestination(cm);
+        }else if( started && clock.seconds() < 10 ){
+            array = updateAndDrive();
+            return array;
+        }
         return array;
     }
 }
