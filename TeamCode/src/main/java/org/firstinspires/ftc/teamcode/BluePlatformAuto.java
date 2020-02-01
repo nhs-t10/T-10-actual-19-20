@@ -16,10 +16,13 @@ public class BluePlatformAuto extends Library {
     private boolean moving = false;
     private final double SCALE_FACTOR = 255;
     private float[] hsvValues = {0F, 0F, 0F};
+    private Turning turner;
 
     @Override public void init(){
         hardwareInit();
         currentState = State.TO_FOUNDATION;
+        turner = new Turning();
+        turner.initImu(hardwareMap);
     }
     public void init_loop(){
         Telemetry();
@@ -48,8 +51,8 @@ public class BluePlatformAuto extends Library {
         if(!moving){
             clock.reset();
             moving = true;
-        }else if(clock.seconds()<.75){
-            drive(0,0,-.5f);
+//        }else if(clock.seconds()<.75){
+//            drive(0,0,-.5f);
         }else if(distanceLeft.getDistance(DistanceUnit.CM)<=80||distanceRight.getDistance(DistanceUnit.CM)<=80){
             drive(-.75f,0,0);
         }
@@ -61,17 +64,23 @@ public class BluePlatformAuto extends Library {
     }//distanceLeft reading to the platform is 90cm
 
     private void FromFoundation(){
-        gripFoundation(true);
         if (!moving){
             clock.reset();
             moving = true;
+            gripFoundation(true);
         }else if(clock.seconds() < 2){
-            //wait for 2 seconds for grabber
+            gripFoundation(true);
         }else if(clock.seconds() > 2 && ( distanceLeft.getDistance(DistanceUnit.CM) >= 30)){ //(!front1.isPressed()||!front2.isPressed())
+            gripFoundation(true);
             drive(.75f,0,0);//drives until touching wall
         }else if( distanceLeft.getDistance(DistanceUnit.CM) >= 5){ //(!front1.isPressed()||!front2.isPressed())
+            gripFoundation(true);
             drive((float)( distanceLeft.getDistance(DistanceUnit.CM)/60+.1),0,0);//drives until touching wall
+        }else if(clock.seconds() < 13){ //this is to drive straight
+            gripFoundation(false);
+            turner.turnDegrees(-90);
         }else{
+            gripFoundation(false);
             moving = false;
             drive(0,0,0);
             currentState = State.PARKING;
@@ -79,7 +88,7 @@ public class BluePlatformAuto extends Library {
     }//wall reading is about 1cm
 
     private void Parking(){
-        gripFoundation(false);
+//        gripFoundation(false);
         Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
         if(!moving){
             clock.reset();
@@ -89,14 +98,26 @@ public class BluePlatformAuto extends Library {
             drive(0,0,0);
             currentState = State.END;
         }else if(clock.seconds()>=5){
-            drive(0, 0, -.3f);
+            drive(-.25f, 0, 0);
         }else{
-            drive(0,0,.4f);
+            drive(.35f,0,0);
         }
-
-        if( distanceLeft.getDistance(DistanceUnit.CM)>8 || distanceRight.getDistance(DistanceUnit.CM)>8){
-            drive(.3f,0,0);
-        }
+//        if(!moving){
+//            clock.reset();
+//            moving = true;
+//        }else if(hsvValues[0] >= 180 || clock.seconds()>=6){
+//            moving = false;
+//            drive(0,0,0);
+//            currentState = State.END;
+//        }else if(clock.seconds()>=5){
+//            drive(0, 0, -.3f);
+//        }else{
+//            drive(0,0,.4f);
+//        }
+//
+//        if( distanceLeft.getDistance(DistanceUnit.CM)>8 || distanceRight.getDistance(DistanceUnit.CM)>8){
+//            drive(.3f,0,0);
+//        }
     }
 
     private void Telemetry(){
