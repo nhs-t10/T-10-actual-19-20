@@ -30,7 +30,7 @@ public class imuData
     }
 
     public float getAngle() {
-        return imu.getAngularOrientation().firstAngle;
+        return imu.getAngularOrientation().thirdAngle;
     }
 
     public double getXVelocity()

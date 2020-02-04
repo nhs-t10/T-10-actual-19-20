@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class JoeyEncoderClass{
@@ -17,11 +18,10 @@ public class JoeyEncoderClass{
     }
 
     public void setDestination( float cm ){
-        startPos = Library.getEncoderValue();
 
         //Otherwise, the destination just becomes the entered degrees
         //Conversion from cm to encoders
-        destinationPos = startPos + cm * 43;
+        destinationPos = cm * 43;
     }
 
     public double[] updateAndDrive(){
@@ -50,7 +50,7 @@ public class JoeyEncoderClass{
     }
 
     public double[] driveForCM( int cm ){
-        double [] array = {};
+        double [] array = {0, 0, 0, 0};
         if( !started ){
             started = true;
             clock.reset();

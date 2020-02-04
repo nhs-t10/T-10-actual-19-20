@@ -1,22 +1,26 @@
 package org.firstinspires.ftc.teamcode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "TeleOp")
 public class DriveTeleOp extends Library{
     private boolean subroutine;
 
-    public void init()
-    {
+    public void init(){
         hardwareInit();
         driveInit();
     }
+
     private float[] sums = new float[4];
+
     public void loop(){
         //tape measure code
         boolean a = gamepad1.a;
+        boolean a2 = gamepad2.a;
         boolean b = gamepad1.b;
+        boolean b2 = gamepad2.b;
 
         //Stone gripping | both gamepads
         boolean x = gamepad1.x;
@@ -27,15 +31,15 @@ public class DriveTeleOp extends Library{
         boolean y2 = gamepad2.y;
 
         //Lift controls | Both gamepads
-        boolean liftUp = gamepad1.right_bumper;
-        boolean liftDown = gamepad1.left_bumper;
-        boolean liftUp2 = gamepad2.right_bumper;
-        boolean liftDown2 = gamepad2.left_bumper;
+        boolean liftUp = gamepad1.left_bumper;
+        boolean liftDown = gamepad1.right_bumper;
+        boolean liftUp2 = gamepad2.left_bumper;
+        boolean liftDown2 = gamepad2.right_bumper;
 
         //Movement inputs
         float linear = gamepad1.left_stick_y; //Forward and back
         float side = gamepad1.left_stick_x; //Right and left
-        float rotation = gamepad1.right_stick_x; //Rotating in place
+        float rotation = gamepad1.right_stick_x * .5f; //Rotating in place
 
         //If controller two gives any commands (true) than the robot will use those inputs
         //Otherwise, it will use the inputs of controller one
@@ -46,12 +50,13 @@ public class DriveTeleOp extends Library{
             gripStone(x);
         }
 
-        if(a)
+        if( a || a2){
             tapeMeasure.setPower(1);
-        else if (b)
+        }else if( b || b2 ){
             tapeMeasure.setPower(-1);
-        else
+        }else{
             tapeMeasure.setPower(0);
+        }
 
         if( y2 ){
             gripFoundation(y2);
