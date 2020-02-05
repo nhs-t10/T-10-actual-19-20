@@ -1,7 +1,8 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.deprecated;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "Blue Quarry Auto")
+import org.firstinspires.ftc.teamcode.Library;
+
 public class BlueQuarryAuto extends Library
 {
     State currentState;
