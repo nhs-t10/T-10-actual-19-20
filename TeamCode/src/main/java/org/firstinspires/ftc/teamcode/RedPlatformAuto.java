@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import android.graphics.Color;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name="Red Platform Auto")
 public class RedPlatformAuto extends Library {
 
     enum State{
