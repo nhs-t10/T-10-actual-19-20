@@ -31,10 +31,10 @@ public class DriveTeleOp extends Library{
         boolean y2 = gamepad2.y;
 
         //Lift controls | Both gamepads
-        boolean liftUp = gamepad1.left_bumper;
-        boolean liftDown = gamepad1.right_bumper;
-        boolean liftUp2 = gamepad2.left_bumper;
-        boolean liftDown2 = gamepad2.right_bumper;
+        boolean liftUp = gamepad1.right_bumper;
+        boolean liftDown = gamepad1.left_bumper;
+        boolean liftUp2 = gamepad2.right_bumper;
+        boolean liftDown2 = gamepad2.left_bumper;
 
         //Movement inputs
         float linear = gamepad1.left_stick_y; //Forward and back
