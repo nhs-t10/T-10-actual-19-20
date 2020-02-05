@@ -73,12 +73,9 @@ public class BluePlatformAuto extends Library {
         }else if(clock.seconds() > 2 && ( distanceLeft.getDistance(DistanceUnit.CM) >= 30)){ //(!front1.isPressed()||!front2.isPressed())
             gripFoundation(true);
             drive(.75f,0,0);//drives until touching wall
-        }else if( distanceLeft.getDistance(DistanceUnit.CM) >= 5){ //(!front1.isPressed()||!front2.isPressed())
+        }else if( distanceLeft.getDistance(DistanceUnit.CM) > 10){ //(!front1.isPressed()||!front2.isPressed())
             gripFoundation(true);
-            drive((float)( distanceLeft.getDistance(DistanceUnit.CM)/60+.1),0,0);//drives until touching wall
-        }else if(clock.seconds() < 13){ //this is to drive straight
-            gripFoundation(false);
-            turner.turnDegrees(-90);
+            drive((float)( distanceLeft.getDistance(DistanceUnit.CM)/100+.1),0,0);//drives until touching wall
         }else{
             gripFoundation(false);
             moving = false;
@@ -88,7 +85,7 @@ public class BluePlatformAuto extends Library {
     }//wall reading is about 1cm
 
     private void Parking(){
-//        gripFoundation(false);
+        gripFoundation(false);
         Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
         if(!moving){
             clock.reset();
@@ -98,26 +95,14 @@ public class BluePlatformAuto extends Library {
             drive(0,0,0);
             currentState = State.END;
         }else if(clock.seconds()>=5){
-            drive(-.25f, 0, 0);
+            drive(0, 0, -.3f);
         }else{
-            drive(.35f,0,0);
+            drive(0,0,.4f);
         }
-//        if(!moving){
-//            clock.reset();
-//            moving = true;
-//        }else if(hsvValues[0] >= 180 || clock.seconds()>=6){
-//            moving = false;
-//            drive(0,0,0);
-//            currentState = State.END;
-//        }else if(clock.seconds()>=5){
-//            drive(0, 0, -.3f);
-//        }else{
-//            drive(0,0,.4f);
-//        }
-//
-//        if( distanceLeft.getDistance(DistanceUnit.CM)>8 || distanceRight.getDistance(DistanceUnit.CM)>8){
-//            drive(.3f,0,0);
-//        }
+
+        if( distanceLeft.getDistance(DistanceUnit.CM)>8 || distanceRight.getDistance(DistanceUnit.CM)>8){
+            drive(.3f,0,0);
+        }
     }
 
     private void Telemetry(){
