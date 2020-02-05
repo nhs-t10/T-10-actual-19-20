@@ -22,7 +22,15 @@ public class AutoSelection extends Library{
     private boolean up, down, left, right, foundationB, parkB;
     //Auto auto = Auto.STONE;
     Auto auto = Auto.COLOR;
-    BlueBlockAuto BB = new BlueBlockAuto();
+
+    BluePlatformAuto BPA = new BluePlatformAuto();
+    BluePlatformPark BPP = new BluePlatformPark();
+    BlueDepotPark BDP = new BlueDepotPark();
+    BlueBlockAuto BBA = new BlueBlockAuto();
+
+    RedPlatformAuto RPA = new RedPlatformAuto();
+    RedPlatformPark RPP = new RedPlatformPark();
+    RedDepotPark RDP = new RedDepotPark();
 
     public void init(){}
 
@@ -75,23 +83,19 @@ public class AutoSelection extends Library{
 
                 if( up ){
                     Type = "blue platform auto";
-                    type++;
                 }
 
                 else if( down ){
                     Type = "blue platform park";
-                    type++;
                 }
                 else if( left ){
                     Type = "blue depot park";
-                    type++;
                 }
                 else if( right ){
                     Type = "blue block auto";
-                    type++;
                 }
 
-                if( type > -1 ){
+                if( !Type.equals("") ){
                     auto = Auto.VIBE;
                 }
 
@@ -107,23 +111,20 @@ public class AutoSelection extends Library{
 
                 if( up ){
                     Type = "red platform auto";
-                    type++;
                 }
 
                 else if( down ){
                     Type = "red platform park";
-                    type++;
                 }
                 else if( left ){
                     Type = "red depot park";
-                    type++;
                 }
 //                else if( right ){
 //                    Type = "red block auto";
 //                    type++;
 //                }
 
-                if( type > -1 ){
+                if( !Type.equals("") ){
                     auto = Auto.VIBE;
                 }
                 break;
@@ -131,19 +132,31 @@ public class AutoSelection extends Library{
         }
     }
     public void loop(){
-        if (Color.equals("red") && Type.equals("foundation")){
-            //            redFoundation();
+        if (Type.equals("blue platform auto")){
+            BPA.start();
         }
 
-        else if (Color.equals("blue") && Type.equals("foundation")){
-            //            blueFoundation();
+        else if (Type.equals("blue platform park")){
+            BPP.start();
         }
 
-        else if (Color.equals("red") && Type.equals("block")){
-            //            redBlock();
+        else if (Type.equals("blue depot park")){
+            BDP.start();
         }
-        else if (Color.equals("blue") && Type.equals("block")){
-            BB.start();
+        else if (Type.equals("blue block auto")){
+            BBA.start();
+        }
+
+        if (Type.equals("red platform auto")){
+            RPA.start();
+        }
+
+        else if (Type.equals("red platform park")){
+            RPP.start();
+        }
+
+        else if (Type.equals("red depot park")){
+            RDP.start();
         }
     }
 }

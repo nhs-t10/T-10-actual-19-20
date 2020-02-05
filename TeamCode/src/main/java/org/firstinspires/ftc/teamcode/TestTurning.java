@@ -13,7 +13,11 @@ public class TestTurning extends Library {
     }
 
     public void loop(){
-        turner.turnDegrees(90);
-        telemetry.addData("ACCEl: ", imu.getZAcceleration());
+        double[] array;
+        array = turner.turnDegrees(90);
+        telemetry.addData("CLOCK: ", array[0]);
+        telemetry.addData("DESTINATION ANGLE: ", array[1]);
+        telemetry.addData("ANGLE TURNED: ", array[2]);
+        telemetry.addData("ERROR: ", array[3]);
     }
 }

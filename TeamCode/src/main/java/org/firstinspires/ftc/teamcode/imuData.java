@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
 
 public class imuData
 {
@@ -24,7 +25,8 @@ public class imuData
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
         parameters.loggingEnabled = true;
         parameters.loggingTag = "IMU";
-        //parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+        imu.startAccelerationIntegration(new Position(), new Velocity(), 100 );
 
         imu.initialize(parameters);
     }
