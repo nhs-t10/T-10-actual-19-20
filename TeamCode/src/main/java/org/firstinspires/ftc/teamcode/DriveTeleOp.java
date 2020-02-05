@@ -64,7 +64,7 @@ public class DriveTeleOp extends Library{
             gripFoundation(y);
         }
 
-        if( liftUp2 || liftDown2 ){
+        if(liftUp2 || liftDown2 ){
             liftGivenControllerValues(liftUp2, liftDown2);
         }else{
             liftGivenControllerValues(liftUp, liftDown);
