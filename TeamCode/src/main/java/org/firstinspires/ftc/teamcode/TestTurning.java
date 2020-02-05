@@ -14,5 +14,6 @@ public class TestTurning extends Library {
 
     public void loop(){
         turner.turnDegrees(90);
+        telemetry.addData("ACCEl: ", imu.getZAcceleration());
     }
 }
