@@ -17,7 +17,7 @@ public class EncodersTest extends Library
 
     public void loop()
     {
-        if (getEncoderValue() - ticksPerCm * 100 > curEncoderValue)
+        if (getEncoderValue() - ticksPerCm * 100 < curEncoderValue)
             drive(.5f, 0, 0);
 
         else
