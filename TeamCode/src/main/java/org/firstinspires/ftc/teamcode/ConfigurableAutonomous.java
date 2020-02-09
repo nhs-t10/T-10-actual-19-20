@@ -14,17 +14,27 @@ public class ConfigurableAutonomous extends Library {
     }
 
     enum State {
-        STOPPED, NAVIGATING; //obv add more
+        DRIVE_TO_QUARRY, GET_QUARRY_CONFIGURATION, DRIVE_TO_SKYSTONE, PICK_UP_SKYSTONE, DRIVE_TO_FOUNDATION,
+        LATCH_FOUNDATION, DRIVE_TO_BUILDING_SITE, UNLATCH_FOUNDATION, DRIVE_TO_SKYBRIDGE, STOPPED, NAVIGATING; //obv add more
     }
 
     //assumed position of the robot at any given time
     //measured where the bottom left of the field (0, 0) is the red depot
     //TODO: attach picture to better explain
-    private float robotPosX;
-    private float robotPosY;
+    private Point robotPos;
 
     //important locations for the autonomous, will be set by buildStatesQueue()
     private float startingPosition;
+
+
+
+    /*
+    each boolean value in quarryConfiguration represents a stone
+    if quarryConfiguration[i] is true, then that means it is a skystone
+    if it is false, that means it is a regular stone
+    first in array is wall side and last is skybridge side
+    */
+    boolean[] quarryConfiguration;
 
     State currentState;
     //sequence of actions to be performed in autonomous
@@ -33,6 +43,10 @@ public class ConfigurableAutonomous extends Library {
 
     @Override
     public void init() {
+        //6 array values, one for each stone
+        //set all to false, assuming for now that all are stones
+        quarryConfiguration = new boolean[6];
+
         //initialize hardware
         hardwareInit();
         //init encoders
