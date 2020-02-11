@@ -9,7 +9,7 @@ public class JeffersonAuto extends Library
     }
 
     @Override
-    public void loop() 
+    public void loop()
     {
 
     }
