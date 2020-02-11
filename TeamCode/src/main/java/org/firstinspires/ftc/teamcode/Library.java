@@ -74,7 +74,7 @@ public abstract class Library extends OpMode{
     public DRIVING mode;
 
     //TEST
-    imuData imu;
+    IMUData imu;
     Turning turner;
 
 
