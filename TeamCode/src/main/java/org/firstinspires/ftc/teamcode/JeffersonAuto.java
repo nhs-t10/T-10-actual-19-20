@@ -4,14 +4,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name="JeffersonAuto")
 public class JeffersonAuto extends Library
 {
-    Method method;
+    DriveToQuarryExampleClass method;
     boolean isOnBlueSide;
 
     public void init()
     {
         hardwareInit();
 
-        method = new Method();
+        method = new DriveToQuarryExampleClass();
         isOnBlueSide = true;
     }
 

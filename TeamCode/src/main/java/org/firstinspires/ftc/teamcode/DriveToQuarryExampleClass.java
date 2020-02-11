@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class Method
+public class DriveToQuarryExampleClass
 {
     boolean started;
     ElapsedTime clock;
 
-    public Method()
+    public DriveToQuarryExampleClass()
     {
         started = false;
         clock = new ElapsedTime();
