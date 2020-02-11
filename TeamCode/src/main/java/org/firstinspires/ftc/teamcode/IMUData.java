@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 
-public class imuData
+public class IMUData
 {
     static BNO055IMU imu;
     Orientation angle = new Orientation();
