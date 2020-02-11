@@ -14,7 +14,7 @@ public class Turning {
     ElapsedTime clock = new ElapsedTime();
 
     //imu object
-    imuData imu;
+    IMUData imu;
 
     //Turning object: Has a destination angle
     public Turning(){
@@ -22,7 +22,7 @@ public class Turning {
     }
 
     public void initImu(HardwareMap hardwareMap) {
-        imu = new imuData(hardwareMap);
+        imu = new IMUData(hardwareMap);
         imu.initImu();
     }
 
