@@ -17,6 +17,6 @@ public class JeffersonAuto extends Library
 
     public void loop()
     {
-        method.driveToQuarry(isOnBlueSide);
+        method.individualMethod(isOnBlueSide);
     }
 }
