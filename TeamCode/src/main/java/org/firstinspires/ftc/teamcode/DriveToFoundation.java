@@ -1,18 +1,33 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class DriveToFoundation
-{
-    boolean started;
-    ElapsedTime clock;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-    public DriveToFoundation()
-    {
-        started = false;
-        clock = new ElapsedTime();
-    }
+public class DriveToFoundation extends Library {
+    private ElapsedTime clock = new ElapsedTime();
+    private boolean moving = false;
 
-    public void driveToQuarry(boolean isOnBlueSide)
-    {
+    @Override public void init(){
+        hardwareInit();
     }
+    public void loop(){ }
+
+    private void DriveToFoundation(Boolean isBlue){
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(clock.seconds()<.75){
+            if(isBlue){
+                drive(0,0,-.5f);
+            }else{
+                drive(0,0,.5f);
+            }
+        }else if(distanceLeft.getDistance(DistanceUnit.CM)<=80||distanceRight.getDistance(DistanceUnit.CM)<=80){
+            drive(-.75f,0,0);
+        }else{
+            moving = false;
+            drive(0,0,0);
+//            currentState = State.FROM_FOUNDATION;
+        }
+    }//distanceLeft reading to the platform is 90cm
 }
