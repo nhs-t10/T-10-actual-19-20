@@ -1,18 +1,18 @@
 package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class DriveBackToQuarry
 {
-    boolean started;
-    ElapsedTime clock;
+    float startEncoderValue;
+    final double ticksPerRotation = 194.13;
 
     public DriveBackToQuarry()
     {
-        started = false;
-        clock = new ElapsedTime();
+        startEncoderValue = Library.getEncoderValue();
     }
 
     public void driveToQuarry(boolean isOnBlueSide)
     {
+        if (Library.getEncoderValue() + 100 * ticksPerRotation > startEncoderValue)
+            Library.drive(.5f, 0, 0);
     }
 }
