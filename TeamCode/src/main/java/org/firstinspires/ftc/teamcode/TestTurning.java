@@ -13,6 +13,10 @@ public class TestTurning extends Library {
     }
 
     public void loop(){
-        turner.turnDegrees(180);
+        double[] array = turner.turnDegrees(180);
+        telemetry.addData("DEST ANGLE: ", array[0]);
+        telemetry.addData("CLOCK: ", array[1]);
+        telemetry.addData("CURRENT ANGLE: ", array[2]);
+        telemetry.addData("ERROR: ", array[3]);
     }
 }
