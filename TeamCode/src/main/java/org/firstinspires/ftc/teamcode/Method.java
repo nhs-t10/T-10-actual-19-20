@@ -21,6 +21,7 @@ public class Method
         }
 
         if (started && clock.seconds() < 5)
+        {
             Library.drive(.5f, 0, 0);
         }
     }
