@@ -85,7 +85,7 @@ public abstract class Library extends OpMode{
     // TODO: measured as the diameter of the spool
 
     public enum DRIVING{
-        Slow, Medium, Fast;
+        Slow, Fast;
 
         public DRIVING getNext(){
             return values()[( ordinal() + 1 ) % values().length];

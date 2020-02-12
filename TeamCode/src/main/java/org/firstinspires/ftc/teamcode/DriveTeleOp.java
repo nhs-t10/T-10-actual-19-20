@@ -76,17 +76,15 @@ public class DriveTeleOp extends Library{
 
         if( mode == DRIVING.Slow ){
             sums = drive(linear / 2, rotation / 2, side / 2); // slow driving
-        }else if( mode == DRIVING.Medium ){
-            sums = drive(linear / 1.5f, rotation / 1.5f, side / 1.5f); // medium driving
         }else if( mode == DRIVING.Fast ){
             sums = drive(linear, rotation, side); // fast driving
         }
 
-        telemetry.addData("Front Left", sums[0]);
-        telemetry.addData("Front Right", sums[1]);
-        telemetry.addData("Back Left", sums[2]);
-        telemetry.addData("Back Right", sums[3]);
-
+        telemetry.addData("Drive mode: ", mode);
+        telemetry.addData("Front Left: ", sums[0]);
+        telemetry.addData("Front Right: ", sums[1]);
+        telemetry.addData("Back Left: ", sums[2]);
+        telemetry.addData("Back Right: ", sums[3]);
         telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
     }
 }
