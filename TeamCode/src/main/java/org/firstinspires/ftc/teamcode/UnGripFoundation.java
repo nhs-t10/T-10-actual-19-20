@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode;
-        import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
-        import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-public class GripFoundation extends Library{
+public class UnGripFoundation extends Library{
     private ElapsedTime clock = new ElapsedTime();
     private boolean moving = false;
 
@@ -12,15 +12,15 @@ public class GripFoundation extends Library{
     }
     public void loop(){ }
 
-    private void GripFoundation(){
+    private void UnGripFoundation(){
         if (!moving){
             clock.reset();
             moving = true;
-            gripFoundation(true);
+            gripFoundation(false);
         }else if(clock.seconds() < 2){
-            gripFoundation(true);//this grips the foundation
+            gripFoundation(false);//this un grips the foundation
         }else{
-            gripFoundation(true);
+            gripFoundation(false);
             moving = false;
             drive(0,0,0);
             //            currentState = State.PARKING;
