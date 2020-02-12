@@ -81,7 +81,7 @@ public class TurningVerticalRev {
         if (started && clock.seconds() < 1) {
             setDestination(degrees);
         }
-        else if (started && clock.seconds() < 4) {
+        else if (started && clock.seconds() < 20) {
             error = updateAndDrive();
         }
 
