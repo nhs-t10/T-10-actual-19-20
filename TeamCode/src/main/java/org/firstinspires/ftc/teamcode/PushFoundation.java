@@ -1,18 +1,18 @@
 package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class PushFoundation
 {
-    boolean started;
-    ElapsedTime clock;
+    float startEncoderValue;
+    final double CMPerRotation = 194.13;
 
     public PushFoundation()
     {
-        started = false;
-        clock = new ElapsedTime();
+        startEncoderValue = Library.getEncoderValue();
     }
 
     public void driveToQuarry(boolean isOnBlueSide)
     {
+        if (Library.getEncoderValue() - 20 * CMPerRotation < startEncoderValue)
+            Library.drive(5f, 0, 0);
     }
 }
