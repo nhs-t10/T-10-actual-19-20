@@ -15,7 +15,7 @@ public class EncoderTest extends Library
 
     public void loop()
     {
-        if (Library.getEncoderValue() + 100 * CMPerRotation > startEncoderValue)
+        if (Library.getEncoderValue() + 5 * CMPerRotation > startEncoderValue)
             Library.drive(.5f, 0, 0);
     }
 }
