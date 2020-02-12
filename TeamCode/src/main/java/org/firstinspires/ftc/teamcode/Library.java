@@ -100,8 +100,8 @@ public abstract class Library extends OpMode{
         intakeOne = hardwareMap.dcMotor.get("i1");
         intakeTwo = hardwareMap.dcMotor.get("i2");
 
-        intakeLiftLeft = hardwareMap.servo.get("s1");
-        intakeLiftRight = hardwareMap.servo.get("s0");
+//        intakeLiftLeft = hardwareMap.servo.get("s1");
+//        intakeLiftRight = hardwareMap.servo.get("s0");
 
         color = hardwareMap.get(ColorSensor.class, "color1");
         distance = hardwareMap.get(DistanceSensor.class, "distance1");
@@ -344,15 +344,15 @@ public abstract class Library extends OpMode{
 //        }
 //    }
 
-    public static void liftIntake( boolean x){
-        if( x ){
-            intakeLiftLeft.setPosition(1);
-            intakeLiftRight.setPosition(1);
-        }else{
-            intakeLiftLeft.setPosition(0);
-            intakeLiftRight.setPosition(0);
-        }
-    }
+//    public static void liftIntake( boolean x){
+//        if( x ){
+//            intakeLiftLeft.setPosition(1);
+//            intakeLiftRight.setPosition(1);
+//        }else{
+//            intakeLiftLeft.setPosition(0);
+//            intakeLiftRight.setPosition(0);
+//        }
+//    }
 
     public static void driveInit(){
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
