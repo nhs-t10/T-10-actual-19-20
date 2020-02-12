@@ -12,7 +12,7 @@ public class DriveToFoundation extends Library {
     }
     public void loop(){ }
 
-    private void DriveToFoundation(Boolean isBlue){
+    private void DriveToFoundation(boolean isBlue){
         if(!moving){
             clock.reset();
             moving = true;
@@ -28,6 +28,6 @@ public class DriveToFoundation extends Library {
             moving = false;
             drive(0,0,0);
 //            currentState = State.FROM_FOUNDATION;
-        }
+    }
     }//distanceLeft reading to the platform is 90cm
 }
