@@ -10,6 +10,7 @@ public class EncoderTest extends Library
 
     public void init()
     {
+        hardwareInit();
         startEncoderValue = Library.getEncoderValue();
     }
 
@@ -17,6 +18,8 @@ public class EncoderTest extends Library
     {
         if (Library.getEncoderValue() - 5 * CMPerRotation < startEncoderValue)
             Library.drive(.5f, 0, 0);
+        else
+            Library.drive(0, 0, 0);
 
         telemetry.addData("Encoder Value", getEncoderValue());
     }
