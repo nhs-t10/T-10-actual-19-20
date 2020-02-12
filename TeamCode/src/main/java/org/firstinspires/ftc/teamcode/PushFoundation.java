@@ -14,5 +14,8 @@ public class PushFoundation
     {
         if (Library.getEncoderValue() - 20 * CMPerRotation < startEncoderValue)
             Library.drive(5f, 0, 0);
+
+        else
+            Library.drive(0, 0, 0);
     }
 }
