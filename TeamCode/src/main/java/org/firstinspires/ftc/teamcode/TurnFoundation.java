@@ -5,14 +5,22 @@ public class TurnFoundation
 {
     boolean started;
     ElapsedTime clock;
+    Turning turner;
 
     public TurnFoundation()
     {
         started = false;
         clock = new ElapsedTime();
+        turner = new Turning();
     }
 
-    public void driveToQuarry(boolean isOnBlueSide)
+    public void turnFoundation(boolean isOnBlueSide)
     {
+        if (isOnBlueSide) {
+            turner.turnDegrees(90);
+        }
+        else {
+            turner.turnDegrees(-90);
+        }
     }
 }
