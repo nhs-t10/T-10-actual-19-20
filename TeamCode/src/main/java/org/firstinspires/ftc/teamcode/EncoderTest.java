@@ -22,7 +22,8 @@ public class EncoderTest extends Library
         {
             telemetry.addLine("Stop");
             Library.drive(0, 0, 0);
-
+        }
+        
         telemetry.addData("Encoder Value", getEncoderValue());
     }
 }
