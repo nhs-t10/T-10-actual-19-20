@@ -17,5 +17,7 @@ public class EncoderTest extends Library
     {
         if (Library.getEncoderValue() + 5 * CMPerRotation > startEncoderValue)
             Library.drive(.5f, 0, 0);
+
+        telemetry.addData("Encoder Value", getEncoderValue());
     }
 }
