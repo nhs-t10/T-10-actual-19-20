@@ -58,9 +58,9 @@ public class DriveTeleOp extends Library
 //        lowerIntake(c);
 
         if( x2 ){
-            liftIntake(true);
+//            liftIntake(true);
         }else{
-            liftIntake(x);
+//            liftIntake(x);
         }
         if( x2 ){
             //            gripStone(true);
