@@ -1,20 +1,20 @@
-
 package org.firstinspires.ftc.teamcode;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 
-public class imuData
-{
+public class imuData{
     static BNO055IMU imu;
     Orientation angle = new Orientation();
 
-    public imuData (HardwareMap hardwareMap) {
+    public imuData( HardwareMap hardwareMap ){
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         initImu();
     }
@@ -36,31 +36,31 @@ public class imuData
         imu.initialize(parameters);
     }
 
-    public float getAngle() {
+    public float getAngle(){
         return imu.getAngularOrientation().firstAngle;
     }
 
-    public double getXVelocity() {
+    public double getXVelocity(){
         return imu.getVelocity().xVeloc;
     }
 
-    public double getYVelocity() {
+    public double getYVelocity(){
         return imu.getVelocity().yVeloc;
     }
 
-    public double getZVelocity() {
+    public double getZVelocity(){
         return imu.getVelocity().zVeloc;
     }
 
-    public double getXAcceleration() {
+    public double getXAcceleration(){
         return imu.getAcceleration().xAccel;
     }
 
-    public double getYAcceleration() {
+    public double getYAcceleration(){
         return imu.getAcceleration().yAccel;
     }
 
-    public double getZAcceleration() {
+    public double getZAcceleration(){
         return imu.getAcceleration().zAccel;
     }
 }
