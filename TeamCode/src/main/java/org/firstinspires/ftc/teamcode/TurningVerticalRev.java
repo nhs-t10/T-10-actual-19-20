@@ -13,6 +13,11 @@ public class TurningVerticalRev {
     boolean started = false;
     ElapsedTime clock = new ElapsedTime();
 
+    //Delete soon
+    double currentSecondAngle;
+    double currentThirdAngle;
+
+
     //imu object
     imuDataVerticalRev imu;
 
@@ -83,10 +88,12 @@ public class TurningVerticalRev {
         }
         else if (started && clock.seconds() < 20) {
             error = updateAndDrive();
+            currentSecondAngle = imu.getSecondAngle();
+            currentThirdAngle = imu.getThirdAngle();
         }
 
         angleTurned = imu.getAngle();
-        double[] arr = {destinationAngle, clock.seconds(), currentAngle, error};
+        double[] arr = {destinationAngle, clock.seconds(), currentAngle, currentSecondAngle, currentThirdAngle, error};
         return arr;
     }
 }

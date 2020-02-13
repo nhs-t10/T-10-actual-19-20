@@ -33,8 +33,13 @@ public class imuDataVerticalRev
     }
 
     public float getAngle() {
-        return imu.getAngularOrientation().secondAngle;
+        return imu.getAngularOrientation().firstAngle;
     }
+
+    //Delete soon
+    public float getSecondAngle(){ return imu.getAngularOrientation().secondAngle;}
+    public float getThirdAngle(){ return imu.getAngularOrientation().thirdAngle;}
+
 
     public double getXVelocity() {
         return imu.getVelocity().xVeloc;
