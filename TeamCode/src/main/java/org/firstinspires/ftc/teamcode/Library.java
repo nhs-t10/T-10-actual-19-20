@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -66,7 +65,7 @@ public abstract class Library extends OpMode{
     // Declare hardware devices
     public static DcMotor frontLeft, frontRight, backLeft, backRight, intakeOne, intakeTwo, lift;
 //    public static CRServo ;
-    public static Servo platform,grabber, intake1, intake2, intakeLiftLeft, intakeLiftRight;
+    public static Servo foundationLeft, foundationRight,grabber, intake1, intake2, intakeLiftLeft, intakeLiftRight;
     public static VoltageSensor voltageSensor;
     // Initialize hardware devices and their zero behavior
     public static ColorSensor color;
@@ -99,6 +98,9 @@ public abstract class Library extends OpMode{
         //        lift = hardwareMap.dcMotor.get("l0");
         intakeOne = hardwareMap.dcMotor.get("i1");
         intakeTwo = hardwareMap.dcMotor.get("i2");
+
+        foundationLeft = hardwareMap.servo.get("f0");
+        foundationRight = hardwareMap.servo.get("f1");
 
 //        intakeLiftLeft = hardwareMap.servo.get("s1");
 //        intakeLiftRight = hardwareMap.servo.get("s0");
@@ -324,13 +326,15 @@ public abstract class Library extends OpMode{
 //            grabber.setPosition(0);
 //    }
 
-//    public static void gripFoundation( boolean y ){
-//        if( y ){
-//            platform.setPosition(1);
-//        }else{
-//            platform.setPosition(0);
-//        }
-//    }
+    public static void gripFoundation( boolean y ){
+        if( y ){
+            foundationLeft.setPosition(.1);
+            foundationRight.setPosition(.9);
+        }else{
+            foundationLeft.setPosition(1);
+            foundationRight.setPosition(0);
+        }
+    }
 
 //    public static void liftGivenControllerValues( boolean up, boolean down ){
 //        if( up ){

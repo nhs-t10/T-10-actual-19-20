@@ -40,6 +40,9 @@ public class TestJefferson extends Library{
         boolean b = gamepad1.b;
         boolean a2 = gamepad2.a;
         boolean b2 = gamepad2.b;
+        boolean y = gamepad1.y;
+        boolean y2 = gamepad2.y;
+
         //Movement inputs
         float linear = gamepad1.left_stick_y; //Forward and back
         float side = gamepad1.left_stick_x; //Right and left
@@ -52,6 +55,12 @@ public class TestJefferson extends Library{
             intake(a2, b2);
         }else{
             intake(a, b);
+        }
+
+        if( y2 ){
+            gripFoundation(true);
+        }else{
+            gripFoundation(y);
         }
 
         if(gamepad1.dpad_up){
@@ -74,7 +83,8 @@ public class TestJefferson extends Library{
             sums = drive(linear, rotation, side); // fast driving
         }
 
-        telemetry.addData("Mode: ", sums[0]);
+        telemetry.addData("Mode: ", mode);
+        telemetry.addData("y: ", y);
         telemetry.addData("Front Left: ", sums[0]);
         telemetry.addData("Front Right: ", sums[1]);
         telemetry.addData("Back Left: ", sums[2]);
@@ -86,20 +96,20 @@ public class TestJefferson extends Library{
         if (!moving){
             clock.reset();
             moving = true;
-//            gripFoundation(true);
+            gripFoundation(true);
         }else if(clock.seconds() < 2){
-//            gripFoundation(true);//this grips the foundation
+            gripFoundation(true);//this grips the foundation
         }else if(clock.seconds() > 2 && ( distance.getDistance(DistanceUnit.CM) >= 30)){ //(!front1.isPressed()||!front2.isPressed())
-//            gripFoundation(true);
+            gripFoundation(true);
             drive(.75f,0,0);//drives until touching wall
         }else if( distance.getDistance(DistanceUnit.CM) > 10){ //(!front1.isPressed()||!front2.isPressed())
-//            gripFoundation(true);
+            gripFoundation(true);
             drive((float)( distance.getDistance(DistanceUnit.CM)/100+.1),0,0);//drives until touching wall
         }else{
-//            gripFoundation(false);
+            gripFoundation(false);
             moving = false;
             drive(0,0,0);
-            currentState = State.TELEOP;
+            currentState = State.TELEOP ;
         }
     }//wall reading is about 1cm
     private void ColorParking(boolean isBlue, boolean isFoundation){
