@@ -10,10 +10,10 @@ public class PushFoundation
         startEncoderValue = Library.getEncoderValue();
     }
 
-    public void driveToQuarry(boolean isOnBlueSide)
+    public void pushFoundation(boolean isOnBlueSide)
     {
         if (Library.getEncoderValue() - 20 * CMPerRotation < startEncoderValue)
-            Library.drive(5f, 0, 0);
+            Library.drive(.5f, 0, 0);
 
         else
             Library.drive(0, 0, 0);

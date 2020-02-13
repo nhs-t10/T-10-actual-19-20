@@ -17,6 +17,7 @@ public class JeffersonAuto extends Library
 
     public void loop()
     {
-        method.driveToQuarry(isOnBlueSide);
+        float error = method.driveToQuarry(isOnBlueSide);
+        telemetry.addData("Error", error);
     }
 }
