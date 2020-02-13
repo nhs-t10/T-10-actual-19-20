@@ -5,8 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name = "Auto Selections")
 
 public class AutoSelection extends Library{
-    public enum Auto {COLOR, RED, BLUE, VIBE}
-    public enum File {BPA, BPP, BDP, BBA, RPA, RPP, RDP}
+    public enum Auto{COLOR, RED, BLUE, VIBE}
+
+    public enum File{BPA, BPP, BDP, BBA, RPA, RPP, RDP}
 
     private String Color;
     private Auto auto = Auto.COLOR;
@@ -36,11 +37,11 @@ public class AutoSelection extends Library{
                 telemetry.addLine("UP for BLUE side");
                 telemetry.addLine("DOWN for RED side");
 
-                if( up )
+                if( up ){
                     Color = "red";
-
-                else if( down )
+                }else if( down ){
                     Color = "blue";
+                }
 
                 if( Color.equals("blue") ){
                     auto = Auto.BLUE;
@@ -109,14 +110,35 @@ public class AutoSelection extends Library{
     }
 
     public void loop(){
-        switch ( file ){
-            case BPA:{ BPA.start(); break; }
-            case BPP:{ BPP.start(); break; }
-            case BDP:{ BDP.start(); break; }
-            case BBA:{ BBA.start(); break; }
-            case RPA:{ RPA.start(); break; }
-            case RPP:{ RPP.start(); break; }
-            case RDP:{ RDP.start(); break; }
+        switch( file ){
+            case BPA:{
+                BPA.start();
+                break;
+            }
+            case BPP:{
+                BPP.start();
+                break;
+            }
+            case BDP:{
+                BDP.start();
+                break;
+            }
+            case BBA:{
+                BBA.start();
+                break;
+            }
+            case RPA:{
+                RPA.start();
+                break;
+            }
+            case RPP:{
+                RPP.start();
+                break;
+            }
+            case RDP:{
+                RDP.start();
+                break;
+            }
         }
     }
 }

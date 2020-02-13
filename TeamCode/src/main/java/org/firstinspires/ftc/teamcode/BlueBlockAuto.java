@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 @SuppressWarnings("all")
 @Autonomous(name = "Blue Block Auto")
 public class BlueBlockAuto extends Library{
@@ -124,25 +125,25 @@ public class BlueBlockAuto extends Library{
 
     private void park(){
         //slide right and use color sensor to stop on blue line
-        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
-        if(!moving){
+        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(hsvValues[0] >= 180 || clock.seconds()>=6){
+        }else if( hsvValues[0] >= 180 || clock.seconds() >= 6 ){
             moving = false;
-            drive(0,0,0);
-            liftRight   .setPower(0);
+            drive(0, 0, 0);
+            liftRight.setPower(0);
             liftLeft.setPower(0);
             gripStone(false);
             currentState = State.END;
-        }else if(clock.seconds()>=5){
+        }else if( clock.seconds() >= 5 ){
             drive(0, 0, .3f);
         }else{
-            drive(0,0,-.4f);
+            drive(0, 0, -.4f);
         }
 
-        if(distanceLeft.getDistance(DistanceUnit.CM)>8  || distanceRight.getDistance(DistanceUnit.CM)>8){
-            drive(.3f,0,0);
+        if( distanceLeft.getDistance(DistanceUnit.CM) > 8 || distanceRight.getDistance(DistanceUnit.CM) > 8 ){
+            drive(.3f, 0, 0);
         }
     }
 
