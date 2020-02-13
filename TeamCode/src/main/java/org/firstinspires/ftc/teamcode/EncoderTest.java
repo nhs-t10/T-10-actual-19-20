@@ -1,29 +1,20 @@
 package org.firstinspires.ftc.teamcode;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+@Autonomous(name = "JeffersonAuto")
+public class EncoderTest extends Library{
+    EncoderClass method;
+    boolean isOnBlueSide;
 
-@Autonomous(name = "Encoder Test")//do not delete this test class used by sasha
-public class EncoderTest extends Library
-{
-    float startEncoderValue;
-    final double CMPerRotation = 194.13;
-
-    public void init()
-    {
+    public void init(){
         hardwareInit();
-        startEncoderValue = Library.getEncoderValue();
+        method = new EncoderClass();
+        isOnBlueSide = true;
     }
 
-    public void loop()
-    {
-        if (Library.getEncoderValue() - 5 * CMPerRotation < startEncoderValue)
-            Library.drive(.5f, 0, 0);
-        else
-        {
-            telemetry.addLine("Stop");
-            Library.drive(0, 0, 0);
-        }
-        
-        telemetry.addData("Encoder Value", getEncoderValue());
+    public void loop(){
+        float error = method.driveToQuarry(isOnBlueSide);
+        telemetry.addData("Error", error);
     }
 }
