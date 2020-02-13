@@ -14,7 +14,7 @@ public class TestJefferson extends Library{
     enum State{
         TELEOP, TO_FOUNDATION, FROM_FOUNDATION, PARKING
     }
-    private State currentState;
+    private State currentState = State.TELEOP;
 
     public void init(){
         hardwareInit();
@@ -99,7 +99,7 @@ public class TestJefferson extends Library{
 //            gripFoundation(false);
             moving = false;
             drive(0,0,0);
-            //            currentState = State.PARKING;
+            currentState = State.TELEOP;
         }
     }//wall reading is about 1cm
     private void ColorParking(boolean isBlue, boolean isFoundation){
@@ -111,11 +111,11 @@ public class TestJefferson extends Library{
         }else if(isBlue&&(hsvValues[0]>=180||clock.seconds()>=6)){
             moving = false;
             drive(0,0,0);
-            //            currentState = State.END;
+            currentState = State.TELEOP;
         }else if(!isBlue&&(hsvValues[0]<=60||clock.seconds()>=6)){
             moving = false;
             drive(0,0,0);
-            //            currentState = State.END;
+            currentState = State.TELEOP;
         }else if(clock.seconds()>=5){
             if(isDriveRight){
                 drive(0, 0, -.3f);
@@ -149,7 +149,7 @@ public class TestJefferson extends Library{
         }else{
             moving = false;
             drive(0,0,0);
-            //            currentState = State.FROM_FOUNDATION;
+            currentState = State.TELEOP;
         }
     }//distanceLeft reading to the platform is 90cm
 }
