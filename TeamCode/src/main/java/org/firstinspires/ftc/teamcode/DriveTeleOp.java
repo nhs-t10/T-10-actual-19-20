@@ -50,7 +50,7 @@ public class DriveTeleOp extends Library{
             gripStone(x);
         }
 
-        if( a || a2){
+        if( a || a2 ){
             tapeMeasure.setPower(1);
         }else if( b || b2 ){
             tapeMeasure.setPower(-1);
@@ -64,7 +64,7 @@ public class DriveTeleOp extends Library{
             gripFoundation(y);
         }
 
-        if(liftUp2 || liftDown2 ){
+        if( liftUp2 || liftDown2 ){
             liftGivenControllerValues(liftUp2, liftDown2);
         }else{
             liftGivenControllerValues(liftUp, liftDown);

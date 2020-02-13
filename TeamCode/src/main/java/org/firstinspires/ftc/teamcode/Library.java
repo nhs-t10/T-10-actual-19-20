@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +34,8 @@ public abstract class Library extends OpMode{
 
     // Since ImageTarget trackables use mm to specifiy their dimensions, we must use mm for all the physical dimension.
     // We will define some constants and conversions here
-    private static final float mmPerInch        = 25.4f;
-    private static final float mmTargetHeight   = (6) * mmPerInch;          // the height of the center of the target image above the floor
+    private static final float mmPerInch = 25.4f;
+    private static final float mmTargetHeight = ( 6 ) * mmPerInch;          // the height of the center of the target image above the floor
 
     // Constant for Stone Target
     private static final float stoneZ = 2.00f * mmPerInch;
@@ -48,16 +49,16 @@ public abstract class Library extends OpMode{
 
     // Constants for perimeter targets
     private static final float halfField = 72 * mmPerInch;
-    private static final float quadField  = 36 * mmPerInch;
+    private static final float quadField = 36 * mmPerInch;
 
     // Class Members
     private static List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
     private static OpenGLMatrix lastLocation = null;
     private static VuforiaLocalizer vuforia = null;
     private static boolean targetVisible = false;
-    private float phoneXRotate    = 0;
-    private float phoneYRotate    = 0;
-    private float phoneZRotate    = 0;
+    private float phoneXRotate = 0;
+    private float phoneYRotate = 0;
+    private float phoneZRotate = 0;
 
     // mm the lift moves for each rotation of the lift motor
     // TODO: measured as the diameter of the spool
@@ -138,7 +139,7 @@ public abstract class Library extends OpMode{
 
         // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraDirection   = CAMERA_CHOICE;
+        parameters.cameraDirection = CAMERA_CHOICE;
 
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
@@ -197,83 +198,58 @@ public abstract class Library extends OpMode{
            Rotated it to to face forward, and raised it to sit on the ground correctly.
            This can be used for generic target-centric approach algorithms */
 
-        stoneTarget.setLocation(OpenGLMatrix
-                .translation(0, 0, stoneZ)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, -90)));
+        stoneTarget.setLocation(OpenGLMatrix.translation(0, 0, stoneZ).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, -90)));
 
         //Set the position of the bridge support targets with relation to origin (center of field)
-        blueFrontBridge.setLocation(OpenGLMatrix
-                .translation(-bridgeX, bridgeY, bridgeZ)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 0, bridgeRotY, bridgeRotZ)));
+        blueFrontBridge.setLocation(OpenGLMatrix.translation(-bridgeX, bridgeY, bridgeZ).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 0, bridgeRotY, bridgeRotZ)));
 
-        blueRearBridge.setLocation(OpenGLMatrix
-                .translation(-bridgeX, bridgeY, bridgeZ)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 0, -bridgeRotY, bridgeRotZ)));
+        blueRearBridge.setLocation(OpenGLMatrix.translation(-bridgeX, bridgeY, bridgeZ).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 0, -bridgeRotY, bridgeRotZ)));
 
-        redFrontBridge.setLocation(OpenGLMatrix
-                .translation(-bridgeX, -bridgeY, bridgeZ)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 0, -bridgeRotY, 0)));
+        redFrontBridge.setLocation(OpenGLMatrix.translation(-bridgeX, -bridgeY, bridgeZ).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 0, -bridgeRotY, 0)));
 
-        redRearBridge.setLocation(OpenGLMatrix
-                .translation(bridgeX, -bridgeY, bridgeZ)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 0, bridgeRotY, 0)));
+        redRearBridge.setLocation(OpenGLMatrix.translation(bridgeX, -bridgeY, bridgeZ).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 0, bridgeRotY, 0)));
 
         //Set the position of the perimeter targets with relation to origin (center of field)
-        red1.setLocation(OpenGLMatrix
-                .translation(quadField, -halfField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 180)));
+        red1.setLocation(OpenGLMatrix.translation(quadField, -halfField, mmTargetHeight).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 180)));
 
-        red2.setLocation(OpenGLMatrix
-                .translation(-quadField, -halfField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 180)));
+        red2.setLocation(OpenGLMatrix.translation(-quadField, -halfField, mmTargetHeight).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 180)));
 
-        front1.setLocation(OpenGLMatrix
-                .translation(-halfField, -quadField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0 , 90)));
+        front1.setLocation(OpenGLMatrix.translation(-halfField, -quadField, mmTargetHeight).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 90)));
 
-        front2.setLocation(OpenGLMatrix
-                .translation(-halfField, quadField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 90)));
+        front2.setLocation(OpenGLMatrix.translation(-halfField, quadField, mmTargetHeight).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 90)));
 
-        blue1.setLocation(OpenGLMatrix
-                .translation(-quadField, halfField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 0)));
+        blue1.setLocation(OpenGLMatrix.translation(-quadField, halfField, mmTargetHeight).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 0)));
 
-        blue2.setLocation(OpenGLMatrix
-                .translation(quadField, halfField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 0)));
+        blue2.setLocation(OpenGLMatrix.translation(quadField, halfField, mmTargetHeight).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 0)));
 
-        rear1.setLocation(OpenGLMatrix
-                .translation(halfField, quadField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0 , -90)));
+        rear1.setLocation(OpenGLMatrix.translation(halfField, quadField, mmTargetHeight).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, -90)));
 
-        rear2.setLocation(OpenGLMatrix
-                .translation(halfField, -quadField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, -90)));
+        rear2.setLocation(OpenGLMatrix.translation(halfField, -quadField, mmTargetHeight).multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, -90)));
 
         // Create a transformation matrix describing where the phone is on the robot.
-        if (CAMERA_CHOICE == BACK)
+        if( CAMERA_CHOICE == BACK ){
             phoneYRotate = -90;
-        else
+        }else{
             phoneYRotate = 90;
+        }
 
         // Rotate the phone vertical about the X axis if it's in portrait mode
-        if (PHONE_IS_PORTRAIT)
+        if( PHONE_IS_PORTRAIT ){
             phoneXRotate = 90;
+        }
 
         // Next, translate the camera lens to where it is on the robot.
         // In this example, it is centered (left to right), but forward of the middle of the robot, and above ground level.
-        final float CAMERA_FORWARD_DISPLACEMENT  = 4.0f * mmPerInch;   // eg: Camera is 4 Inches in front of robot center
+        final float CAMERA_FORWARD_DISPLACEMENT = 4.0f * mmPerInch;   // eg: Camera is 4 Inches in front of robot center
         final float CAMERA_VERTICAL_DISPLACEMENT = 8.0f * mmPerInch;   // eg: Camera is 8 Inches above ground
-        final float CAMERA_LEFT_DISPLACEMENT     = 0;     // eg: Camera is ON the robot's center line
+        final float CAMERA_LEFT_DISPLACEMENT = 0;     // eg: Camera is ON the robot's center line
 
-        OpenGLMatrix robotFromCamera = OpenGLMatrix
-                .translation(CAMERA_FORWARD_DISPLACEMENT, CAMERA_LEFT_DISPLACEMENT, CAMERA_VERTICAL_DISPLACEMENT)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, YZX, DEGREES, phoneYRotate, phoneZRotate, phoneXRotate));
+        OpenGLMatrix robotFromCamera = OpenGLMatrix.translation(CAMERA_FORWARD_DISPLACEMENT, CAMERA_LEFT_DISPLACEMENT, CAMERA_VERTICAL_DISPLACEMENT).multiplied(Orientation.getRotationMatrix(EXTRINSIC, YZX, DEGREES, phoneYRotate, phoneZRotate, phoneXRotate));
 
         /**  Let all the trackable listeners know where the phone is.  */
-        for (VuforiaTrackable trackable : allTrackables)
-            ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, parameters.cameraDirection);
+        for( VuforiaTrackable trackable : allTrackables ){
+            ( (VuforiaTrackableDefaultListener) trackable.getListener() ).setPhoneInformation(robotFromCamera, parameters.cameraDirection);
+        }
 
         targetsSkyStone.activate();
     }
@@ -339,8 +315,8 @@ public abstract class Library extends OpMode{
     //forward, rotational and horizontal multiplier arrays
     //Any resulting values above .9 are rounded down to .9 (any higher value might cause the robot
     //to crash) and used to set the power of each of the motors
-    public static float[] drive(float l, float r, float s){
-//        s = -s; //if sideways is inverted
+    public static float[] drive( float l, float r, float s ){
+        //        s = -s; //if sideways is inverted
         float[] sums = new float[4];
         float[] forwardMultiplier = { -1f, 1f, -1f, 1f };
         float[] rotationalMultiplier = { 1f, 1f, 1f, 1f };
@@ -373,8 +349,7 @@ public abstract class Library extends OpMode{
     //        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     //    }
 
-    public static Float getEncoderValue()
-    {
+    public static Float getEncoderValue(){
         return ( backLeft.getCurrentPosition() + frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backRight.getCurrentPosition() ) / 4f;
     }
 
@@ -401,19 +376,19 @@ public abstract class Library extends OpMode{
     /*
     int SCALAR = 1;
      */
-    public static float encodersDriveForButNoLoops(float startPos, float goalPos, float scalar){
-        if(goalPos == 0)
+    public static float encodersDriveForButNoLoops( float startPos, float goalPos, float scalar ){
+        if( goalPos == 0 ){
             return 1f;
+        }
 
         drive(scalar, scalar, scalar);
-        return (getEncoderValue() - startPos) / goalPos;
+        return ( getEncoderValue() - startPos ) / goalPos;
     }
 
     //tells if under bridge or not (basic version)
-    public static boolean isUnderBridge(int gray, boolean blue)
-    {
-        int minColor = (int)(gray*1.3);
-        return (color.blue() > minColor && blue) || (color.red() > minColor && !blue);
+    public static boolean isUnderBridge( int gray, boolean blue ){
+        int minColor = (int) ( gray * 1.3 );
+        return ( color.blue() > minColor && blue ) || ( color.red() > minColor && !blue );
     }
 
 
@@ -421,7 +396,7 @@ public abstract class Library extends OpMode{
 
     /**
      * needs to be called every time through loop
-     *
+     * <p>
      * param motor    the target motor that will be rotating
      * param finalPos desired final rotation of the motor in encoder steps, can be positive or negative
      **/
@@ -435,37 +410,31 @@ public abstract class Library extends OpMode{
             motor.setPower(-0.9);
         }
     }*/
-
-    public static void rotateFor(float degreesInRadians)
-    {
+    public static void rotateFor( float degreesInRadians ){
         float start = getEncoderValue();
-        if(degreesInRadians>getEncoderValue() - start)
-        {
-            drive(0,(Math.abs(degreesInRadians))/(degreesInRadians),0);
+        if( degreesInRadians > getEncoderValue() - start ){
+            drive(0, ( Math.abs(degreesInRadians) ) / ( degreesInRadians ), 0);
         }
     }
 
-    public static boolean isSkystoneVisible()
-    {
+    public static boolean isSkystoneVisible(){
         targetVisible = false;
-        for (VuforiaTrackable trackable : allTrackables)
-        {
-            if (((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible())
-            {
+        for( VuforiaTrackable trackable : allTrackables ){
+            if( ( (VuforiaTrackableDefaultListener) trackable.getListener() ).isVisible() ){
                 targetVisible = true;
 
                 // getUpdatedRobotLocation() will return null if no new information is available since
                 // the last time that call was made, or if the trackable is not currently visible.
-                OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener) trackable.getListener()).getUpdatedRobotLocation();
-                if (robotLocationTransform != null)
+                OpenGLMatrix robotLocationTransform = ( (VuforiaTrackableDefaultListener) trackable.getListener() ).getUpdatedRobotLocation();
+                if( robotLocationTransform != null ){
                     lastLocation = robotLocationTransform;
+                }
 
                 break;
             }
 
             // Provide feedback as to where the robot is located (if we know).
-            if (targetVisible)
-            {
+            if( targetVisible ){
                 // express position (translation) of robot in inches.
                 VectorF translation = lastLocation.getTranslation();
 
@@ -474,7 +443,7 @@ public abstract class Library extends OpMode{
             }
         }
 
-        return ((VuforiaTrackableDefaultListener) allTrackables.get(0).getListener()).isVisible();
+        return ( (VuforiaTrackableDefaultListener) allTrackables.get(0).getListener() ).isVisible();
     }
 
     /**

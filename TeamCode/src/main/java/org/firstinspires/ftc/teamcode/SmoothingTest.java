@@ -4,8 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 
 @Autonomous(name = "Leroy smoothing test")
-public class SmoothingTest extends Library
-{
+public class SmoothingTest extends Library{
     imuData imu;
     Turning turner;
     double angleTurned = 0;
@@ -14,8 +13,7 @@ public class SmoothingTest extends Library
     double goalAccel = 1.5;
     double checkAccel = 0.008;
 
-    public void init()
-    {
+    public void init(){
         hardwareInit();
         imu = new imuData(hardwareMap);
         imu.initImu();
@@ -23,8 +21,8 @@ public class SmoothingTest extends Library
         test = new ExponentialSmoothing();
     }
 
-    public void loop() {
-        if (test.getClockTime() < 3000) {
+    public void loop(){
+        if( test.getClockTime() < 3000 ){
 
             test.smallAcceleration(goalAccel, imu);
             goalAccel += checkAccel;
@@ -36,7 +34,7 @@ public class SmoothingTest extends Library
             telemetry.addData("Current Velocity Y:", imu.getYVelocity());
             telemetry.addData("Starting Accelerations Z:", imu.getZAcceleration());
             telemetry.addData("Current Velocity Z:", imu.getZVelocity());
-        } else if (test.getClockTime() < 6000) {
+        }else if( test.getClockTime() < 6000 ){
             test.smoothing(1.6, 1.6, imu);
             //            timeCheck += 10;
             //test.updateClock();
@@ -46,7 +44,7 @@ public class SmoothingTest extends Library
             telemetry.addData("Current Velocity Y:", imu.getYVelocity());
             telemetry.addData("Smoothed Acceleration Z:", imu.getZAcceleration());
             telemetry.addData("Current Velocity Z:", imu.getZVelocity());
-        } else if (test.getClockTime() < 9000) {
+        }else if( test.getClockTime() < 9000 ){
             test.decelerateToValue(imu, 0);
             //            timeCheck += 100;
             //test.updateClock();

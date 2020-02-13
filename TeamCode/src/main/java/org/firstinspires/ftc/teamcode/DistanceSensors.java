@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 import android.graphics.Color;
 
 
@@ -13,7 +15,7 @@ public class DistanceSensors extends Library{
     boolean bToggle = false;
     boolean yToggle = false;
     private final double SCALE_FACTOR = 255;
-    private float[] hsvValues = {0F, 0F, 0F};
+    private float[] hsvValues = { 0F, 0F, 0F };
 
     public void init(){
         hardwareInit();
@@ -26,7 +28,7 @@ public class DistanceSensors extends Library{
         boolean a = gamepad1.a;
         boolean y = gamepad1.y;
 
-        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
+        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
 
         //Movement inputs
         float linear = gamepad1.left_stick_y; //Forward and back
@@ -34,70 +36,70 @@ public class DistanceSensors extends Library{
         float rotation = gamepad1.right_stick_x; //Rotating in place
 
         if( x ){
-            if(!xToggle){
+            if( !xToggle ){
                 xToggle = true;
             }else{
                 xToggle = false;
             }
         }
-        if(xToggle){
-            if(distanceLeft.getDistance(DistanceUnit.CM) >= 20 || distanceLeft.getDistance(DistanceUnit.CM) >= 20){
-                drive(.25f,0,0);
+        if( xToggle ){
+            if( distanceLeft.getDistance(DistanceUnit.CM) >= 20 || distanceLeft.getDistance(DistanceUnit.CM) >= 20 ){
+                drive(.25f, 0, 0);
             }else{
-                drive(0,0,0);
+                drive(0, 0, 0);
                 xToggle = false;
             }
         }
 
         if( a ){
-            if(!aToggle){
+            if( !aToggle ){
                 aToggle = true;
             }else{
                 aToggle = false;
             }
         }
-        if(aToggle){
-            if(hsvValues[0] < 140){ //hsvValues[0] < 140 this is blue
-                drive(0,0,.4f);
+        if( aToggle ){
+            if( hsvValues[0] < 140 ){ //hsvValues[0] < 140 this is blue
+                drive(0, 0, .4f);
             }else{
-                drive(0,0,0);
+                drive(0, 0, 0);
                 aToggle = false;
             }
         }
 
         if( b ){
-            if(!bToggle){
+            if( !bToggle ){
                 bToggle = true;
             }else{
                 bToggle = false;
             }
         }
-        if(bToggle){
-            if(hsvValues[0] > 100){ //hsvValues[0] > 100 this is red
-                drive(0,0,-.4f);
+        if( bToggle ){
+            if( hsvValues[0] > 100 ){ //hsvValues[0] > 100 this is red
+                drive(0, 0, -.4f);
             }else{
-                drive(0,0,0);
+                drive(0, 0, 0);
                 bToggle = false;
             }
         }
 
         if( y ){
-            if(!yToggle){
+            if( !yToggle ){
                 yToggle = true;
             }else{
                 yToggle = false;
             }
         }
-        if(yToggle){
-            if(isSkystoneVisible()){
-                drive(0,0,-.4f);
+        if( yToggle ){
+            if( isSkystoneVisible() ){
+                drive(0, 0, -.4f);
             }else{
-                drive(0,0,0);
+                drive(0, 0, 0);
                 bToggle = false;
             }
         }
 
-        if(!aToggle && !bToggle && !xToggle && !yToggle){
+        if( !aToggle && !bToggle && !xToggle && !yToggle ){
             drive(linear, rotation, side); // fast driving
         }
 

@@ -50,7 +50,7 @@ public class JoeyEncoderClass{
     }
 
     public double[] driveForCM( int cm ){
-        double [] array = {0, 0, 0, 0};
+        double[] array = { 0, 0, 0, 0 };
         if( !started ){
             started = true;
             clock.reset();
