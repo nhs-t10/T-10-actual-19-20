@@ -1,28 +1,28 @@
 package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class DriveToQuarryExampleClass
 {
-    boolean started;
-    ElapsedTime clock;
+    float error;
+    float startEncoderValue;
+    final float CMPerRotation = (float) 194.13;
 
     public DriveToQuarryExampleClass()
     {
-        started = false;
-        clock = new ElapsedTime();
+        startEncoderValue = Library.getEncoderValue();
     }
 
-    public void driveToQuarry(boolean isOnBlueSide)
+    public float driveToQuarry(boolean isOnBlueSide)
     {
-        if (!started)
-        {
-            started = true;
-            clock.reset();
-        }
+        error = 5 * CMPerRotation + startEncoderValue - Library.getEncoderValue();
 
-        if (started && clock.seconds() < 5)
-        {
-            Library.drive(.5f, 0, 0);
-        }
+        if (error > 1)
+            Library.drive(.001f * error, 0, 0);
+
+        else
+            Library.drive(0, 0, 0);
+
+        return error;
     }
 }
