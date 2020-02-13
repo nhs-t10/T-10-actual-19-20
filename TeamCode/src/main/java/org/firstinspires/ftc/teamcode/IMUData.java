@@ -1,18 +1,19 @@
 package org.firstinspires.ftc.teamcode;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 
-public class IMUData
-{
+public class IMUData{
     static BNO055IMU imu;
     Orientation angle = new Orientation();
 
-    public IMUData (HardwareMap hardwareMap) {
+    public IMUData( HardwareMap hardwareMap ){
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         initImu();
     }
@@ -26,34 +27,37 @@ public class IMUData
         parameters.loggingEnabled = true;
         parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-        imu.startAccelerationIntegration(new Position(), new Velocity(), 100 );
+        imu.startAccelerationIntegration(new Position(), new Velocity(), 100);
 
         imu.initialize(parameters);
     }
 
-    public float getAngle() {
+    public float getAngle(){
         return imu.getAngularOrientation().thirdAngle;
     }
 
-    public double getXVelocity()
-    {
+    public double getXVelocity(){
         return imu.getVelocity().xVeloc;
     }
 
-    public double getYVelocity()
-    {
+    public double getYVelocity(){
         return imu.getVelocity().yVeloc;
     }
 
-    public double getZVelocity()
-    {
+    public double getZVelocity(){
         return imu.getVelocity().zVeloc;
     }
 
-    public double getXAcceleration() { return imu.getAcceleration().xAccel; }
+    public double getXAcceleration(){
+        return imu.getAcceleration().xAccel;
+    }
 
-    public double getYAcceleration() { return imu.getAcceleration().yAccel; }
+    public double getYAcceleration(){
+        return imu.getAcceleration().yAccel;
+    }
 
-    public double getZAcceleration() { return imu.getAcceleration().zAccel; }
+    public double getZAcceleration(){
+        return imu.getAcceleration().zAccel;
+    }
 
 }

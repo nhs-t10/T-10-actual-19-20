@@ -1,21 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
-public class PushFoundation
-{
+public class PushFoundation{
     float startEncoderValue;
     final double CMPerRotation = 194.13;
 
-    public PushFoundation()
-    {
+    public PushFoundation(){
         startEncoderValue = Library.getEncoderValue();
     }
 
-    public void pushFoundation(boolean isOnBlueSide)
-    {
-        if (Library.getEncoderValue() - 20 * CMPerRotation < startEncoderValue)
+    public void pushFoundation( boolean isOnBlueSide ){
+        if( Library.getEncoderValue() - 20 * CMPerRotation < startEncoderValue ){
             Library.drive(.5f, 0, 0);
-
-        else
+        }else{
             Library.drive(0, 0, 0);
+        }
     }
 }
