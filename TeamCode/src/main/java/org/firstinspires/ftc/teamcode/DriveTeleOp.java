@@ -3,17 +3,16 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "TeleOp")
-public class DriveTeleOp extends Library
-{
+public class DriveTeleOp extends Library{
 
-    public void init()
-    {
+    public void init(){
         hardwareInit();
         driveInit();
     }
+
     private float[] sums;
-    public void loop()
-    {
+
+    public void loop(){
         //Intake for blocks | gamepad 1
         boolean a = gamepad1.a;
         boolean c = gamepad1.right_bumper;
@@ -55,12 +54,12 @@ public class DriveTeleOp extends Library
             intake(a, b);
         }
 
-//        lowerIntake(c);
+        //        lowerIntake(c);
 
         if( x2 ){
-//            liftIntake(true);
+            //            liftIntake(true);
         }else{
-//            liftIntake(x);
+            //            liftIntake(x);
         }
         if( x2 ){
             //            gripStone(true);
@@ -69,15 +68,15 @@ public class DriveTeleOp extends Library
         }
 
         if( y2 ){
-//            gripFoundation(true);
+            //            gripFoundation(true);
         }else{
-//            gripFoundation(y);
+            //            gripFoundation(y);
         }
 
         if( liftUp2 || liftDown2 ){
-//            liftGivenControllerValues(liftUp2, liftDown2);
+            //            liftGivenControllerValues(liftUp2, liftDown2);
         }else{
-//            liftGivenControllerValues(liftUp, liftDown);
+            //            liftGivenControllerValues(liftUp, liftDown);
         }
 
         /*(if (grabberRight2 != 0 || grabberLeft2 != 0)

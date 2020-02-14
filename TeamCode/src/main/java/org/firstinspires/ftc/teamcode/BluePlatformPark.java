@@ -7,30 +7,33 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name="Blue Platform Park")
-public class BluePlatformPark extends Library {
+@Autonomous(name = "Blue Platform Park")
+public class BluePlatformPark extends Library{
 
     enum State{
         PARKING, END
     }
+
     State currentState;
     ElapsedTime clock = new ElapsedTime();
     boolean moving = false;
     private final double SCALE_FACTOR = 255;
-    private float[] hsvValues = {0F, 0F, 0F};
+    private float[] hsvValues = { 0F, 0F, 0F };
 
-    @Override public void init(){
+    @Override
+    public void init(){
         hardwareInit();
         currentState = State.PARKING;
     }
+
     public void loop(){
         /*
         Loop constantly checks state, and then executes a command based on this.
         */
-        if( currentState == State.PARKING){
+        if( currentState == State.PARKING ){
             Parking();
         }
-        if( currentState == State.END){
+        if( currentState == State.END ){
             Stop();
         }
 
@@ -38,36 +41,36 @@ public class BluePlatformPark extends Library {
     }
 
     public void Parking(){
-        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
-        if(!moving){
+        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(hsvValues[0] >= 130 || clock.seconds()>=6){
+        }else if( hsvValues[0] >= 130 || clock.seconds() >= 6 ){
             moving = false;
-            drive(0,0,0);
+            drive(0, 0, 0);
             currentState = State.END;
-        }else if(clock.seconds()>=5){
+        }else if( clock.seconds() >= 5 ){
             drive(0, 0, -.3f);
         }else{
-            drive(0,0,.4f);
+            drive(0, 0, .4f);
         }
 
-        if(distance.getDistance(DistanceUnit.CM)>8){
-            drive(.3f,0,0);
+        if( distance.getDistance(DistanceUnit.CM) > 8 ){
+            drive(.3f, 0, 0);
         }
     }
 
     public void Stop(){
         moving = false;
-        drive(0,0,0);
+        drive(0, 0, 0);
     }
 
     private void Telemetry(){
-        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
+        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
         telemetry.addData("Red: ", color.red());
         telemetry.addData("Green: ", color.green());
         telemetry.addData("Blue: ", color.blue());
-        telemetry.addData("Light: ",color.alpha());
+        telemetry.addData("Light: ", color.alpha());
         telemetry.addData("Hue: ", hsvValues[0]);
         telemetry.addData("Saturation: ", hsvValues[1]);
         telemetry.addData("Value: ", hsvValues[2]);

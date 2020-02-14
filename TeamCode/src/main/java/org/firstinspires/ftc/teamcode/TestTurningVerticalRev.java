@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "Turning Test")
-public class TestTurningVerticalRev extends Library {
+public class TestTurningVerticalRev extends Library{
     TurningVerticalRev turner;
 
     public void init(){

@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
 import android.graphics.Color;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 @SuppressWarnings("all")
 @Autonomous(name = "Blue Block Auto")
 public class BlueBlockAuto extends Library{
@@ -18,13 +20,12 @@ public class BlueBlockAuto extends Library{
     float[] hsvValues = { 0F, 0F, 0F };
 
     @Override
-    public void init()
-    {
+    public void init(){
         hardwareInit();
         vuforiaInit();
         currentState = State.SCAN;
         turner = new Turning();
-//        turner.initImuAndTurning(hardwareMap);
+        //        turner.initImuAndTurning(hardwareMap);
     }
 
     public void loop(){
@@ -44,9 +45,9 @@ public class BlueBlockAuto extends Library{
         if( currentState == State.MOVE ){
             move();
         }
-//        if( currentState == State.TRAVEL ){
-//            travel();
-//        }
+        //        if( currentState == State.TRAVEL ){
+        //            travel();
+        //        }
         if( currentState == State.PARK ){
             park();
         }
@@ -105,42 +106,42 @@ public class BlueBlockAuto extends Library{
         }
     }
 
-//    private void travel(){
-//        //back up a small amount, then slide left to cross the barrier
-//        if( !moving ){
-//            clock.reset();
-//            moving = true;
-//        }else if( clock.seconds() < 2 ){
-//            drive(0, 0, .5f);
-//        }else{
-//            drive(0, 0, 0);
-//            //            lift.setPower(0);
-//            //            gripStone(false);
-//            moving = false;
-//            currentState = State.PARK;
-//        }
-//    }
+    //    private void travel(){
+    //        //back up a small amount, then slide left to cross the barrier
+    //        if( !moving ){
+    //            clock.reset();
+    //            moving = true;
+    //        }else if( clock.seconds() < 2 ){
+    //            drive(0, 0, .5f);
+    //        }else{
+    //            drive(0, 0, 0);
+    //            //            lift.setPower(0);
+    //            //            gripStone(false);
+    //            moving = false;
+    //            currentState = State.PARK;
+    //        }
+    //    }
 
     private void park(){
         //slide right and use color sensor to stop on blue line
-        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
-        if(!moving){
+        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(hsvValues[0] >= 130 || clock.seconds()>=6){
+        }else if( hsvValues[0] >= 130 || clock.seconds() >= 6 ){
             moving = false;
-            drive(0,0,0);
+            drive(0, 0, 0);
             //lift.setPower(0);
             //gripStone(false);
             currentState = State.END;
-        }else if(clock.seconds()>=5){
+        }else if( clock.seconds() >= 5 ){
             drive(0, 0, .3f);
         }else{
-            drive(0,0,-.4f);
+            drive(0, 0, -.4f);
         }
 
-        if(distance.getDistance(DistanceUnit.CM)>8){
-            drive(.3f,0,0);
+        if( distance.getDistance(DistanceUnit.CM) > 8 ){
+            drive(.3f, 0, 0);
         }
     }
 

@@ -11,6 +11,6 @@ public class radiansbad extends Library{
     }
 
     public void loop(){
-       telemetry.addData("", isSkystoneVisible());
+        telemetry.addData("", isSkystoneVisible());
     }
 }

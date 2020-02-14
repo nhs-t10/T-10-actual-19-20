@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode;
+
 import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 import android.graphics.Color;
+
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "Test Jefferson")
@@ -9,27 +13,30 @@ public class TestJefferson extends Library{
     private ElapsedTime clock = new ElapsedTime();
     private boolean moving = false;
     private final double SCALE_FACTOR = 255;
-    private float[] hsvValues = {0F, 0F, 0F};
+    private float[] hsvValues = { 0F, 0F, 0F };
 
     enum State{
         TELEOP, TO_FOUNDATION, FROM_FOUNDATION, PARKING
     }
+
     private State currentState = State.TELEOP;
 
     public void init(){
         hardwareInit();
         driveInit();
     }
+
     private float[] sums;
+
     public void loop(){
-        if( currentState == State.TELEOP){
+        if( currentState == State.TELEOP ){
             TeleOpDrive();
-        }else if( currentState == State.TO_FOUNDATION){
+        }else if( currentState == State.TO_FOUNDATION ){
             DriveToFoundation(true);
-        }else if( currentState == State.FROM_FOUNDATION){
+        }else if( currentState == State.FROM_FOUNDATION ){
             BackUpFoundation();
-        }else if( currentState == State.PARKING){
-            ColorParking(true,true);
+        }else if( currentState == State.PARKING ){
+            ColorParking(true, true);
         }
 
         telemetry.addData("Current State: ", currentState);
@@ -63,13 +70,13 @@ public class TestJefferson extends Library{
             gripFoundation(y);
         }
 
-        if(gamepad1.dpad_up){
+        if( gamepad1.dpad_up ){
             currentState = State.TO_FOUNDATION;
-        }else if(gamepad1.dpad_right){
+        }else if( gamepad1.dpad_right ){
             currentState = State.FROM_FOUNDATION;
-        }else if(gamepad1.dpad_down){
+        }else if( gamepad1.dpad_down ){
             currentState = State.PARKING;
-        }else if(gamepad1.dpad_left){
+        }else if( gamepad1.dpad_left ){
             currentState = State.TELEOP;
         }
 
@@ -93,7 +100,7 @@ public class TestJefferson extends Library{
     }
 
     private void BackUpFoundation(){
-        if (!moving){
+        if( !moving ){
             clock.reset();
             moving = true;
             gripFoundation(true);
@@ -112,53 +119,55 @@ public class TestJefferson extends Library{
             currentState = State.TELEOP ;
         }
     }//wall reading is about 1cm
-    private void ColorParking(boolean isBlue, boolean isFoundation){
-        Color.RGBToHSV((int)(color.red()*SCALE_FACTOR), (int)(color.green()*SCALE_FACTOR), (int)(color.blue()*SCALE_FACTOR), hsvValues);
-        boolean isDriveRight = isBlue==isFoundation;
-        if(!moving){
+
+    private void ColorParking( boolean isBlue, boolean isFoundation ){
+        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
+        boolean isDriveRight = isBlue == isFoundation;
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(isBlue&&(hsvValues[0]>=180||clock.seconds()>=6)){
+        }else if( isBlue && ( hsvValues[0] >= 180 || clock.seconds() >= 6 ) ){
             moving = false;
-            drive(0,0,0);
+            drive(0, 0, 0);
             currentState = State.TELEOP;
-        }else if(!isBlue&&(hsvValues[0]<=60||clock.seconds()>=6)){
+        }else if( !isBlue && ( hsvValues[0] <= 60 || clock.seconds() >= 6 ) ){
             moving = false;
-            drive(0,0,0);
+            drive(0, 0, 0);
             currentState = State.TELEOP;
-        }else if(clock.seconds()>=5){
-            if(isDriveRight){
+        }else if( clock.seconds() >= 5 ){
+            if( isDriveRight ){
                 drive(0, 0, -.3f);
             }else{
                 drive(0, 0, .3f);
             }
         }else{
-            if(isDriveRight){
-                drive(0,0,.4f);
+            if( isDriveRight ){
+                drive(0, 0, .4f);
             }else{
-                drive(0,0,-.4f);
+                drive(0, 0, -.4f);
             }
         }
 
-        if( distance.getDistance(DistanceUnit.CM)>8 || distance.getDistance(DistanceUnit.CM)>8){
-            drive(.3f,0,0);
+        if( distance.getDistance(DistanceUnit.CM) > 8 || distance.getDistance(DistanceUnit.CM) > 8 ){
+            drive(.3f, 0, 0);
         }
     }
-    private void DriveToFoundation(boolean isBlue){
-        if(!moving){
+
+    private void DriveToFoundation( boolean isBlue ){
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(clock.seconds()<.75){
-            if(isBlue){
-                drive(0,0,-.5f);
+        }else if( clock.seconds() < .75 ){
+            if( isBlue ){
+                drive(0, 0, -.5f);
             }else{
-                drive(0,0,.5f);
+                drive(0, 0, .5f);
             }
-        }else if(distance.getDistance(DistanceUnit.CM)<=80){
-            drive(-.75f,0,0);
+        }else if( distance.getDistance(DistanceUnit.CM) <= 80 ){
+            drive(-.75f, 0, 0);
         }else{
             moving = false;
-            drive(0,0,0);
+            drive(0, 0, 0);
             currentState = State.TELEOP;
         }
     }//distanceLeft reading to the platform is 90cm
