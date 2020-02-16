@@ -304,8 +304,8 @@ public abstract class Library extends OpMode{
 
     public static void gripFoundation( boolean y ){
         if( y ){
-            foundationLeft.setPosition(.1);
-            foundationRight.setPosition(.9);
+            foundationLeft.setPosition(.145);
+            foundationRight.setPosition(.6);
         }else{
             foundationLeft.setPosition(1);
             foundationRight.setPosition(0);
