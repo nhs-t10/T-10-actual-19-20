@@ -38,8 +38,14 @@ public class JeffAutoMethods{
         if(!moving){
             clock.reset();
             moving = true;
-        }else if(clock.seconds() < 5){
-
+        }else if( clock.seconds() < .75 ){
+            if( isBlueSide ){
+                Library.drive(0, 0, -.5f);
+            }else{
+                Library.drive(0, 0, .5f);
+            }
+        }else if( Library.distanceLeft.getDistance(DistanceUnit.CM) <= 80 || Library.distanceRight.getDistance(DistanceUnit.CM) <= 80 ){
+            Library.drive(-.75f, 0, 0);
         }else{
             return true;
         }
