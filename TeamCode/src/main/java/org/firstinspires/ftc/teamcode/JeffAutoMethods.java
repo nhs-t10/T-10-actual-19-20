@@ -90,6 +90,17 @@ public class JeffAutoMethods{
         }
         return false;
     }
+    public boolean ungripFoundation(float length){
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(clock.seconds() < 5){
+
+        }else{
+            return true;
+        }
+        return false;
+    }
     public boolean moveToParkingPositionFoundation(){
         if(!moving){
             clock.reset();
@@ -101,7 +112,62 @@ public class JeffAutoMethods{
         }
         return false;
     }
-    public boolean EXTEND_TAPE_MEASURE(float length){
+    public boolean extendTapeMeasure(float length){
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(clock.seconds() < 5){
+
+        }else{
+            return true;
+        }
+        return false;
+    }
+    public boolean driveToQuarry(float length){
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(clock.seconds() < 5){
+
+        }else{
+            return true;
+        }
+        return false;
+    }
+    public boolean getQuarryConfiguration(float length){
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(clock.seconds() < 5){
+
+        }else{
+            return true;
+        }
+        return false;
+    }
+    public boolean pickUpBlock(float length){
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(clock.seconds() < 5){
+
+        }else{
+            return true;
+        }
+        return false;
+    }
+    public boolean driveToBuildingZone(float length){
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(clock.seconds() < 5){
+
+        }else{
+            return true;
+        }
+        return false;
+    }
+    public boolean placeBlock(float length){
         if(!moving){
             clock.reset();
             moving = true;
