@@ -57,4 +57,59 @@ public class JeffAutoMethods{
         }
         return false;
     }
+    public boolean backUpFoundation(){
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(clock.seconds() < 5){
+
+        }else{
+            return true;
+        }
+        return false;
+    }
+    public boolean turnFoundation(){
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(clock.seconds() < 5){
+
+        }else{
+            return true;
+        }
+        return false;
+    }
+    public boolean pushFoundation(){
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(clock.seconds() < 5){
+
+        }else{
+            return true;
+        }
+        return false;
+    }
+    public boolean moveToParkingPositionFoundation(){
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(clock.seconds() < 5){
+
+        }else{
+            return true;
+        }
+        return false;
+    }
+    public boolean EXTEND_TAPE_MEASURE(float length){
+        if(!moving){
+            clock.reset();
+            moving = true;
+        }else if(clock.seconds() < 5){
+
+        }else{
+            return true;
+        }
+        return false;
+    }
 }
