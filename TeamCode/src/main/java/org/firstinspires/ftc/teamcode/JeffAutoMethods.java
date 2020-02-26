@@ -79,8 +79,8 @@ public class JeffAutoMethods{
         if(!moving){
             clock.reset();
             moving = true;
-        }else if(clock.seconds() < 5){
-
+        }else if(clock.seconds() < 1.5){
+            Library.drive(0.4f, 0.0f, 0.0f);
         }else{
             return true;
         }
@@ -179,7 +179,7 @@ public class JeffAutoMethods{
             clock.reset();
             moving = true;
         }else if(clock.seconds() < 5){
-
+            turner.turnDegrees(90);
         }else{
             return true;
         }
