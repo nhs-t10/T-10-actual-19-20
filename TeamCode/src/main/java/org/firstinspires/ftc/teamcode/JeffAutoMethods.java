@@ -77,6 +77,7 @@ public class JeffAutoMethods{
         if( !moving ){
             clock.reset();
             moving = true;
+
         }else if( clock.seconds() < 0.2 ){
             Library.drive(1, 0, 0);
 
@@ -104,11 +105,11 @@ public class JeffAutoMethods{
         return false;
     }
 
-    public boolean extendTapeMeasure( float length ){
+    public boolean extendTapeMeasure(){
         if( !moving ){
             clock.reset();
             moving = true;
-        }else if( clock.seconds() < 1 ){
+        }else if( clock.seconds() < 5 ){
             Library.tapeMeasure.setPower(1);
         }else{
             return true;
@@ -180,8 +181,8 @@ public class JeffAutoMethods{
         if( !moving ){
             clock.reset();
             moving = true;
-        }else if( clock.seconds() < 5 ){
-
+        }else if(clock.seconds() < 5){
+            turner.turnDegrees(90);
         }else{
             return true;
         }
