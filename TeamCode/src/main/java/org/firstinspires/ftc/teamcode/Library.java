@@ -126,7 +126,7 @@ public abstract class Library extends OpMode{
         mode = DRIVING.Fast;
     }
 
-    public void vuforiaInit(){
+    public static void vuforiaInit(){
         //TEST
         //imu = new imuData(hardwareMap);
         //turner = new Turning();
