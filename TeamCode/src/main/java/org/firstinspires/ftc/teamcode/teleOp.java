@@ -4,8 +4,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name = "TeleOp")
-public class DriveTeleOp extends Library{
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "TeleOp")
+public class teleOp extends Library{
     private boolean subroutine;
     private boolean intakeUp = true;
 
