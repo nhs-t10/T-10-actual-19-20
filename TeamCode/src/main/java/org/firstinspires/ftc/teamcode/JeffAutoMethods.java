@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import android.graphics.Color;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -11,12 +12,15 @@ public class JeffAutoMethods{
     boolean moving;
     Turning turner;
     private ElapsedTime clock = new ElapsedTime();
+    final double SCALE_FACTOR = 255;
+    float[] hsvValues = { 0F, 0F, 0F };
 
     public JeffAutoMethods( boolean blueSide, HardwareMap hardwareMap ){
         this.isBlueSide = blueSide;
         moving = false;
         turner = new Turning();
         turner.initImu(hardwareMap);
+        Library.vuforiaInit();
     }
 
     public boolean driveToFoundation(){
@@ -130,15 +134,15 @@ public class JeffAutoMethods{
     }
 
     public boolean getQuarryConfiguration(){
-        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
+        Color.RGBToHSV((int) ( Library.color.red() * SCALE_FACTOR ), (int) ( Library.color.green() * SCALE_FACTOR ), (int) ( Library.color.blue() * SCALE_FACTOR ), hsvValues);
         if( !moving ){
             clock.reset();
             moving = true;
         }else if( clock.seconds() < 1 ){
-            if( isSkystoneVisible() ){
-                currentState = State.MOVE;
+            if( Library.isSkystoneVisible() ){
+                move();
             }else{
-                currentState = State.SLIDE;
+                slide();
             }
 
         }else{
@@ -153,11 +157,11 @@ public class JeffAutoMethods{
             clock.reset();
             moving = true;
         }else if( clock.milliseconds() < 50 ){
-            drive(0, 0, -.5f);
+            Library.drive(0, 0, -.5f);
         }else{
-            drive(0, 0, 0);
+            Library.drive(0, 0, 0);
             moving = false;
-            currentState = State.SCAN;
+            getQuarryConfiguration();
         }
     }
 
@@ -166,42 +170,41 @@ public class JeffAutoMethods{
         if( !moving ){
             clock.reset();
             moving = true;
-        }else if( distanceLeft.getDistance(DistanceUnit.INCH) <= 18 ){
-            drive(.5f, 0, 0);
+        }else if( Library.distanceLeft.getDistance(DistanceUnit.INCH) <= 18 ){
+            Library.drive(.5f, 0, 0);
         }else{
             turner.turnDegrees(180);
-            drive(0, 0, 0);
-            gripStone(true);
-            liftRight.setPower(0.0001);
-            liftLeft.setPower(0.0001);
-            drive(1, 0, 0);
-            drive(0, 0, 0);
+            Library.drive(0, 0, 0);
+            Library.gripStone(true);
+            Library.liftRight.setPower(0.0001);
+            Library.liftLeft.setPower(0.0001);
+            Library.drive(1, 0, 0);
+            Library.drive(0, 0, 0);
             moving = false;
-            currentState = State.PARK;
+            park();
         }
     }
 
     private void park(){
         //slide right and use color sensor to stop on blue line
-        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
+        Color.RGBToHSV((int) ( Library.color.red() * SCALE_FACTOR ), (int) ( Library.color.green() * SCALE_FACTOR ), (int) ( Library.color.blue() * SCALE_FACTOR ), hsvValues);
         if( !moving ){
             clock.reset();
             moving = true;
         }else if( hsvValues[0] >= 180 || clock.seconds() >= 6 ){
             moving = false;
-            drive(0, 0, 0);
-            liftRight.setPower(0);
-            liftLeft.setPower(0);
-            gripStone(false);
-            currentState = State.END;
+            Library.drive(0, 0, 0);
+            Library.liftRight.setPower(0);
+            Library.liftLeft.setPower(0);
+            Library.gripStone(false);
         }else if( clock.seconds() >= 5 ){
-            drive(0, 0, .3f);
+            Library.drive(0, 0, .3f);
         }else{
-            drive(0, 0, -.4f);
+            Library.drive(0, 0, -.4f);
         }
 
-        if( distanceLeft.getDistance(DistanceUnit.CM) > 8 || distanceRight.getDistance(DistanceUnit.CM) > 8 ){
-            drive(.3f, 0, 0);
+        if( Library.distanceLeft.getDistance(DistanceUnit.CM) > 8 || Library.distanceRight.getDistance(DistanceUnit.CM) > 8 ){
+            Library.drive(.3f, 0, 0);
         }
     }
 
