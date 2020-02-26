@@ -104,11 +104,11 @@ public class JeffAutoMethods{
         return false;
     }
 
-    public boolean extendTapeMeasure( float length ){
+    public boolean extendTapeMeasure(){
         if( !moving ){
             clock.reset();
             moving = true;
-        }else if( clock.seconds() < 1 ){
+        }else if( clock.seconds() < 5 ){
             Library.tapeMeasure.setPower(1);
         }else{
             return true;

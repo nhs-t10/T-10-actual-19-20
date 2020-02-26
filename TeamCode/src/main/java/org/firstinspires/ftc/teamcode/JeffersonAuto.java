@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.teamcode;
-
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "JeffersonAuto")
@@ -11,10 +11,11 @@ public class JeffersonAuto extends Library{
     boolean isOnBlueSide;
     boolean finished;
     boolean isOnFoundationSide;
+    HardwareMap hardwareMap;
 
     public void init(){
         hardwareInit();
-        method = new JeffAutoMethods(isOnBlueSide);
+        method = new JeffAutoMethods(isOnBlueSide, hardwareMap);
     }
 
     public void init_loop(){
@@ -58,7 +59,7 @@ public class JeffersonAuto extends Library{
             }else if( foundation[index] == States.MOVE_TO_PARKING_POSITION_FOUNDATION ){
                 finished = method.moveToParkingPositionFoundation();
             }else if( foundation[index] == States.EXTEND_TAPE_MEASURE ){
-                finished = method.extendTapeMeasure(5);
+                finished = method.extendTapeMeasure();
             }
         }else{
             if( block[index] == States.DRIVE_TO_QUARRY ){
@@ -74,7 +75,7 @@ public class JeffersonAuto extends Library{
             }else if( block[index] == States.TURN_TO_PARKING_LINE_BLOCK ){
                 finished = method.turnToParkingLineBlock();
             }else if( block[index] == States.EXTEND_TAPE_MEASURE ){
-                finished = method.extendTapeMeasure(5);
+                finished = method.extendTapeMeasure();
             }
         }
         if( finished ){
