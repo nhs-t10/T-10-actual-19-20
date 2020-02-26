@@ -3,7 +3,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "JeffersonAuto")
 public class JeffersonAuto extends Library{
-    private Enum[] foundation = new Enum[]{ States.DRIVE_TO_FOUNDATION, States.GRIP_FOUNDATION, States.BACK_UP_FOUNDATION, States.TURN_FOUNDATION, States.PUSH_FOUNDATION.UNGRIP_FOUNDATION, States.MOVE_TO_PARKING_POSITION_FOUNDATION, States.EXTEND_TAPE_MEASURE };
+    private Enum[] foundation = new Enum[]{ States.DRIVE_TO_FOUNDATION, States.GRIP_FOUNDATION, States.BACK_UP_FOUNDATION, States.TURN_FOUNDATION, States.UNGRIP_FOUNDATION, States.MOVE_TO_PARKING_POSITION_FOUNDATION, States.EXTEND_TAPE_MEASURE };
     private Enum[] block = new Enum[]{ States.DRIVE_TO_QUARRY, States.GET_QUARRY_CONFIGURATION, States.PICK_UP_BLOCK, States.DRIVE_TO_BUILDING_ZONE, States.PLACE_BLOCK, States.TURN_TO_PARKING_LINE_BLOCK, States.EXTEND_TAPE_MEASURE };
     private JeffAutoMethods method;
     private int index = 0;

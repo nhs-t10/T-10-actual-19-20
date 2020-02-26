@@ -6,16 +6,16 @@ import android.graphics.Color;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-public class JeffAutoMethods{
+class JeffAutoMethods{
 
-    boolean isBlueSide;
-    boolean moving;
-    Turning turner;
+    private boolean isBlueSide;
+    private boolean moving;
+    private Turning turner;
     private ElapsedTime clock = new ElapsedTime();
-    final double SCALE_FACTOR = 255;
-    float[] hsvValues = { 0F, 0F, 0F };
+    private final double SCALE_FACTOR = 255;
+    private float[] hsvValues = { 0F, 0F, 0F };
 
-    public JeffAutoMethods( boolean blueSide, HardwareMap hardwareMap ){
+    JeffAutoMethods( boolean blueSide, HardwareMap hardwareMap ){
         this.isBlueSide = blueSide;
         moving = false;
         turner = new Turning();
@@ -23,7 +23,7 @@ public class JeffAutoMethods{
         Library.vuforiaInit();
     }
 
-    public boolean driveToFoundation(){
+    boolean driveToFoundation(){
         if( !moving ){
             clock.reset();
             moving = true;
@@ -42,14 +42,14 @@ public class JeffAutoMethods{
         return false;
     }//distanceLeft reading to the platform is 90cm
 
-    public boolean gripFoundation(){
+    boolean gripFoundation(){
 
         Library.gripFoundation(true);
 
         return true;
     }
 
-    public boolean backUpFoundation(){
+    boolean backUpFoundation(){
         if( !moving ){
             clock.reset();
             moving = true;
@@ -61,7 +61,7 @@ public class JeffAutoMethods{
         return false;
     }
 
-    public boolean turnFoundation(){
+    boolean turnFoundation(){
         if( !moving ){
             clock.reset();
             moving = true;
@@ -77,7 +77,7 @@ public class JeffAutoMethods{
         return false;
     }
 
-    public boolean pushFoundation(){
+    boolean pushFoundation(){
         if( !moving ){
             clock.reset();
             moving = true;
@@ -91,13 +91,13 @@ public class JeffAutoMethods{
         return false;
     }
 
-    public boolean ungripFoundation(){
+    boolean ungripFoundation(){
 
         Library.gripFoundation(false);
         return true;
     }
 
-    public boolean moveToParkingPositionFoundation(){
+    boolean moveToParkingPositionFoundation(){
         if( !moving ){
             clock.reset();
             moving = true;
@@ -109,7 +109,7 @@ public class JeffAutoMethods{
         return false;
     }
 
-    public boolean extendTapeMeasure(){
+    boolean extendTapeMeasure(){
         if( !moving ){
             clock.reset();
             moving = true;
@@ -121,7 +121,7 @@ public class JeffAutoMethods{
         return false;
     }
 
-    public boolean driveToQuarry(){
+    boolean driveToQuarry(){
         if( !moving ){
             clock.reset();
             moving = true;
@@ -133,7 +133,7 @@ public class JeffAutoMethods{
         return false;
     }
 
-    public boolean getQuarryConfiguration(){
+    boolean getQuarryConfiguration(){
         Color.RGBToHSV((int) ( Library.color.red() * SCALE_FACTOR ), (int) ( Library.color.green() * SCALE_FACTOR ), (int) ( Library.color.blue() * SCALE_FACTOR ), hsvValues);
         if( !moving ){
             clock.reset();
@@ -208,7 +208,7 @@ public class JeffAutoMethods{
         }
     }
 
-    public boolean pickUpBlock(){
+    boolean pickUpBlock(){
         if( !moving ){
             clock.reset();
             moving = true;
@@ -220,7 +220,7 @@ public class JeffAutoMethods{
         return false;
     }
 
-    public boolean driveToBuildingZone(){
+    boolean driveToBuildingZone(){
         if( !moving ){
             clock.reset();
             moving = true;
@@ -232,7 +232,7 @@ public class JeffAutoMethods{
         return false;
     }
 
-    public boolean placeBlock(){
+    boolean placeBlock(){
         if( !moving ){
             clock.reset();
             moving = true;
@@ -244,7 +244,7 @@ public class JeffAutoMethods{
         return false;
     }
 
-    public boolean turnToParkingLineBlock(){
+    boolean turnToParkingLineBlock(){
         if( !moving ){
             clock.reset();
             moving = true;
