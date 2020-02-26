@@ -1,5 +1,4 @@
 package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "JeffersonAuto")
@@ -11,7 +10,6 @@ public class JeffersonAuto extends Library{
     boolean isOnBlueSide;
     boolean finished;
     boolean isOnFoundationSide;
-    HardwareMap hardwareMap;
 
     public void init(){
         hardwareInit();
