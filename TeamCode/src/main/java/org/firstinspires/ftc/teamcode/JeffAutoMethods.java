@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -12,7 +12,7 @@ public class JeffAutoMethods{
     Turning turner;
     private ElapsedTime clock = new ElapsedTime();
 
-    public JeffAutoMethods(boolean blueSide, HardwareMap hardwareMap){
+    public JeffAutoMethods( boolean blueSide, HardwareMap hardwareMap ){
         this.isBlueSide = blueSide;
         moving = false;
         turner = new Turning();
@@ -20,7 +20,7 @@ public class JeffAutoMethods{
     }
 
     public boolean driveToFoundation(){
-        if(!moving){
+        if( !moving ){
             clock.reset();
             moving = true;
         }else if( clock.seconds() < .75 ){
@@ -39,32 +39,29 @@ public class JeffAutoMethods{
     }//distanceLeft reading to the platform is 90cm
 
     public boolean gripFoundation(){
-        if(!moving){
-            clock.reset();
-            moving = true;
-        }else if(clock.seconds() < 5){
 
-        }else{
-            return true;
-        }
-        return false;
+        Library.gripFoundation(true);
+
+        return true;
     }
+
     public boolean backUpFoundation(){
-        if(!moving){
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(clock.seconds() < 5){
-
+        }else if( clock.seconds() < 2 ){
+            Library.drive(1, 0, 0);
         }else{
             return true;
         }
         return false;
     }
+
     public boolean turnFoundation(){
-        if(!moving){
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(clock.seconds() < 2){
+        }else if( clock.seconds() < 2 ){
             if( !isBlueSide ){
                 turner.turnDegrees(90);
             }else{
@@ -75,107 +72,113 @@ public class JeffAutoMethods{
         }
         return false;
     }
+
     public boolean pushFoundation(){
-        if(!moving){
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(clock.seconds() < 1.5){
-            Library.drive(0.4f, 0.0f, 0.0f);
+
+        }else if( clock.seconds() < 0.2 ){
+            Library.drive(1, 0, 0);
+
         }else{
             return true;
         }
         return false;
     }
+
     public boolean ungripFoundation(){
-        if(!moving){
-            clock.reset();
-            moving = true;
-        }else if(clock.seconds() < 5){
 
-        }else{
-            return true;
-        }
-        return false;
+        Library.gripFoundation(false);
+        return true;
     }
+
     public boolean moveToParkingPositionFoundation(){
-        if(!moving){
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(clock.seconds() < 5){
+        }else if( clock.seconds() < 5 ){
 
         }else{
             return true;
         }
         return false;
     }
-    public boolean extendTapeMeasure(float length){
-        if(!moving){
+
+    public boolean extendTapeMeasure(){
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(clock.seconds() < 5){
-
+        }else if( clock.seconds() < 5 ){
+            Library.tapeMeasure.setPower(1);
         }else{
             return true;
         }
         return false;
     }
+
     public boolean driveToQuarry(){
-        if(!moving){
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(clock.seconds() < 5){
+        }else if( clock.seconds() < 5 ){
 
         }else{
             return true;
         }
         return false;
     }
+
     public boolean getQuarryConfiguration(){
-        if(!moving){
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(clock.seconds() < 5){
+        }else if( clock.seconds() < 5 ){
 
         }else{
             return true;
         }
         return false;
     }
+
     public boolean pickUpBlock(){
-        if(!moving){
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(clock.seconds() < 5){
+        }else if( clock.seconds() < 5 ){
 
         }else{
             return true;
         }
         return false;
     }
+
     public boolean driveToBuildingZone(){
-        if(!moving){
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(clock.seconds() < 5){
+        }else if( clock.seconds() < 5 ){
 
         }else{
             return true;
         }
         return false;
     }
+
     public boolean placeBlock(){
-        if(!moving){
+        if( !moving ){
             clock.reset();
             moving = true;
-        }else if(clock.seconds() < 5){
+        }else if( clock.seconds() < 5 ){
 
         }else{
             return true;
         }
         return false;
     }
+
     public boolean turnToParkingLineBlock(){
-        if(!moving){
+        if( !moving ){
             clock.reset();
             moving = true;
         }else if(clock.seconds() < 5){
