@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name = "TeleOp")
 public class DriveTeleOp extends Library{
     private boolean subroutine;
+    private boolean intakeUp = true;
 
     public void init(){
         hardwareInit();
@@ -36,6 +37,12 @@ public class DriveTeleOp extends Library{
         boolean liftUp2 = gamepad2.right_bumper;
         boolean liftDown2 = gamepad2.left_bumper;
 
+        //Intake controls | Both gamepads
+        float intakeIn = gamepad1.right_trigger;
+        float intakeOut = gamepad1.left_trigger;
+        float intakeIn2 = gamepad2.right_trigger;
+        float intakeOut2 = gamepad2.left_trigger;
+
         //Movement inputs
         float linear = gamepad1.left_stick_y; //Forward and back
         float side = gamepad1.left_stick_x; //Right and left
@@ -44,10 +51,14 @@ public class DriveTeleOp extends Library{
         //If controller two gives any commands (true) than the robot will use those inputs
         //Otherwise, it will use the inputs of controller one
 
-        if( x2 ){
-            gripStone(x2);
-        }else{
-            gripStone(x);
+        gripStone(x2);
+
+        if(x && intakeUp){
+            lowerIntake(false);
+            intakeUp = false;
+        }else if(x){
+            lowerIntake(true);
+            intakeUp = true;
         }
 
         if( a || a2 ){
@@ -68,6 +79,12 @@ public class DriveTeleOp extends Library{
             liftGivenControllerValues(liftUp2, liftDown2);
         }else{
             liftGivenControllerValues(liftUp, liftDown);
+        }
+
+        if( intakeIn2 !=0  || intakeOut2 != 0){
+            intake(intakeIn2, intakeOut2);
+        }else{
+            intake(intakeIn, intakeOut);
         }
 
         if( gamepad1.right_stick_button ){

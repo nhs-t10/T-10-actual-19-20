@@ -65,9 +65,9 @@ public abstract class Library extends OpMode{
     final static int MM_PER_LIFT_ROTATION = 1;
     private static final int TRACTION_SCALER = 1; //temp value will be changed // Used in driveForEncoders/slideForEncoders
     // Declare hardware devices
-    public static DcMotor frontLeft, frontRight, backLeft, backRight, liftLeft, liftRight;
+    public static DcMotor frontLeft, frontRight, backLeft, backRight, liftLeft, liftRight, intakeOne, intakeTwo;
     public static CRServo tapeMeasure;
-    public static Servo foundationLeft, foundationRight, grabber1, grabber2;
+    public static Servo foundationLeft, foundationRight, grabber1, grabber2, intakeLiftLeft, intakeLiftRight;
     public static VoltageSensor voltageSensor;
     // Initialize hardware devices and their zero behavior
     public static ColorSensor color;
@@ -108,12 +108,15 @@ public abstract class Library extends OpMode{
         foundationRight = hardwareMap.servo.get("s2");
         foundationLeft = hardwareMap.servo.get("s3");
         tapeMeasure = hardwareMap.crservo.get("s4");
+        intakeLiftLeft = hardwareMap.servo.get("s5");
+        intakeLiftRight = hardwareMap.servo.get("s6");
+
+        intakeOne = hardwareMap.dcMotor.get("i1");
+        intakeTwo = hardwareMap.dcMotor.get("i2");
 
         color = hardwareMap.get(ColorSensor.class, "color0");
         distanceLeft = hardwareMap.get(DistanceSensor.class, "distance0");
         distanceRight = hardwareMap.get(DistanceSensor.class, "distance1");
-        //front1 = hardwareMap.touchSensor.get("touch1");
-        //front2 = hardwareMap.touchSensor.get("touch2");
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -122,6 +125,9 @@ public abstract class Library extends OpMode{
 
         liftLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         mode = DRIVING.Fast;
     }
@@ -271,6 +277,32 @@ public abstract class Library extends OpMode{
             grabber2.setPosition(0);
         }
     }
+
+    public static void intake( float a, float b ){
+        double num = 0.0;
+
+        if( a != 0 ){
+            num = a/2;
+        }else if( b != 0 ){
+            num = -b/2;
+        }else{
+            num = 0;
+        }
+
+        intakeOne.setPower(num);
+        intakeTwo.setPower(-num);
+    }
+
+    public static void lowerIntake( boolean x ){
+        if( x ){
+            intakeLiftLeft.setPosition(1);
+            intakeLiftRight.setPosition(1);
+        }else{
+            intakeLiftLeft.setPosition(0);
+            intakeLiftRight.setPosition(0);
+        }
+    }
+
 
     public static void gripFoundation( boolean y ){
         if( y ){
