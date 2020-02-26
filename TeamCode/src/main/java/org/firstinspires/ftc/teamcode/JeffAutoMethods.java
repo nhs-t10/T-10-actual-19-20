@@ -37,6 +37,7 @@ class JeffAutoMethods{
             Library.drive(-.75f, 0, 0);
         }else{
             Library.drive(0, 0, 0);
+            moving = false;
             return true;
         }
         return false;
@@ -56,6 +57,7 @@ class JeffAutoMethods{
         }else if( clock.seconds() < 2 ){
             Library.drive(1, 0, 0);
         }else{
+            moving = false;
             return true;
         }
         return false;
@@ -72,6 +74,7 @@ class JeffAutoMethods{
                 turner.turnDegrees(-90);
             }
         }else{
+            moving = false;
             return true;
         }
         return false;
@@ -86,6 +89,7 @@ class JeffAutoMethods{
             Library.drive(1, 0, 0);
 
         }else{
+            moving = false;
             return true;
         }
         return false;
@@ -104,6 +108,7 @@ class JeffAutoMethods{
         }else if( clock.seconds() < 5 ){
 
         }else{
+            moving = false;
             return true;
         }
         return false;
@@ -116,6 +121,7 @@ class JeffAutoMethods{
         }else if( clock.seconds() < 5 ){
             Library.tapeMeasure.setPower(1);
         }else{
+            moving = false;
             return true;
         }
         return false;
@@ -125,9 +131,10 @@ class JeffAutoMethods{
         if( !moving ){
             clock.reset();
             moving = true;
-        }else if( clock.seconds() < 5 ){
-
+        }else if( Library.distanceLeft.getDistance(DistanceUnit.INCH) <= 18 ){
+            Library.drive(.5f, 0, 0);
         }else{
+            moving = false;
             return true;
         }
         return false;
@@ -146,6 +153,7 @@ class JeffAutoMethods{
             }
 
         }else{
+            moving = false;
             return true;
         }
         return false;
@@ -215,6 +223,7 @@ class JeffAutoMethods{
         }else if( clock.seconds() < 5 ){
 
         }else{
+            moving = false;
             return true;
         }
         return false;
@@ -227,6 +236,7 @@ class JeffAutoMethods{
         }else if( clock.seconds() < 5 ){
 
         }else{
+            moving = false;
             return true;
         }
         return false;
@@ -239,6 +249,7 @@ class JeffAutoMethods{
         }else if( clock.seconds() < 5 ){
 
         }else{
+            moving = false;
             return true;
         }
         return false;
@@ -251,6 +262,7 @@ class JeffAutoMethods{
         }else if(clock.seconds() < 5){
             turner.turnDegrees(90);
         }else{
+            moving = false;
             return true;
         }
         return false;
