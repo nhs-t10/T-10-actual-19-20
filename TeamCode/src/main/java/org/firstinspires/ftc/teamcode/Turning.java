@@ -68,6 +68,9 @@ public class Turning{
         if( Math.abs(error) > 2 ){
             Library.drive(0f, (float) pComponent, 0f);
         }
+        else{
+            Library.drive(0f, 0f,0f);
+        }
     }
 
     public void turnDegrees( int degrees ){

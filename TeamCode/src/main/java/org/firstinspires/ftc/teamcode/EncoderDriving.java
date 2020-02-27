@@ -10,6 +10,8 @@ public class EncoderDriving{
     float startEncoderValue;
     float destinationEncoderValue;
     boolean started;
+    boolean strafingRight;
+    boolean strafingLeft;
     float P = 0.001f;
     float RotationPerCM = (float) 194.13;
     ElapsedTime clock;
@@ -67,4 +69,41 @@ public class EncoderDriving{
         }
         return error;
     }
+
+    public void setStrafeDistance(float distCM){
+        destinationEncoderValue = distCM * RotationPerCM + Library.getBackLeftEncoderValue();
+    }
+
+    private void strafe(){
+        if (destinationEncoderValue > 0){
+            strafingRight = true;
+        }
+        else{
+            strafingLeft = true;
+        }
+
+        error = Math.abs(destinationEncoderValue - Library.getBackLeftEncoderValue());
+        if (error > 1){
+            if (strafingRight){
+                Library.drive(0, 0, P * error);
+            }
+            else{
+                Library.drive(0,0, -P * error);
+            }
+        }else{
+            Library.drive(0,0,0);
+        }
+    }
+
+    public float encoderStrafe(float distCM){
+        if( !started){
+            started = true;
+            clock.reset();
+            setStrafeDistance(distCM);
+        }else if (clock.seconds() < 6){
+            strafe();
+        }
+        return error;
+    }
+
 }
