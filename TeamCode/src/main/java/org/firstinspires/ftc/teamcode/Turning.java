@@ -32,12 +32,13 @@ public class Turning{
 
         if( destinationAngle > 180 ){
             destinationAngle -= 360;
-        }else if( destinationAngle < -180 ){
+        }
+        else if( destinationAngle < -180 ){
             destinationAngle += 360;
         }
     }
 
-    public double updateAndDrive(){
+    public void updateAndDrive(){
         //Setting the current angle
         currentAngle = imu.getAngle();
 
@@ -49,7 +50,8 @@ public class Turning{
         double turnAngle = -error;
         if( turnAngle > 180 ){
             turnAngle -= 360;
-        }else if( turnAngle < -180 ){
+        }
+        else if( turnAngle < -180 ){
             turnAngle += 360;
         }
 
@@ -66,13 +68,10 @@ public class Turning{
         if( Math.abs(error) > 2 ){
             Library.drive(0f, (float) pComponent, 0f);
         }
-
-        return error;
     }
 
-    public double[] turnDegrees( int degrees ){
+    public void turnDegrees( int degrees ){
         angleTurned = imu.getAngle();
-        double error = 0.0;
         if( !started ){
             started = true;
             clock.reset();
@@ -80,13 +79,11 @@ public class Turning{
 
         if( started && clock.seconds() < 1 ){
             setDestination(degrees);
-        }else if( started && clock.seconds() < 4 ){
-            error = updateAndDrive();
+        }
+        else if( started && clock.seconds() < 4 ){
+            updateAndDrive();
         }
 
         angleTurned = imu.getAngle();
-
-        double[] array = { clock.seconds(), destinationAngle, angleTurned, error };
-        return array;
     }
 }
