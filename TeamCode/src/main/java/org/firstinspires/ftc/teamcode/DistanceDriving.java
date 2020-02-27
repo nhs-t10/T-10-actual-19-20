@@ -8,6 +8,7 @@ public class DistanceDriving {
         double destinationDistance;
         double pComponent;
         final double P = 0.01;
+        double error;
 
         boolean started = false;
         ElapsedTime clock = new ElapsedTime();
@@ -56,6 +57,34 @@ public class DistanceDriving {
             }
 
             return error;
+        }
+
+        // stuff from EncoderDriving
+
+        public void setStarted(boolean start){
+            started = start;
+        }
+
+        public double getP(){
+            return P;
+        }
+
+        public boolean getStarted(){
+            return started;
+        }
+
+        /*public void setDistance(float distCM){
+            destinationEncoderValue = distCM * RotationPerCM + Library.getEncoderValue();
+        }
+       */
+
+        private void drive(){
+            error = destinationDistance - Library.distanceLeft.getDistance(DistanceUnit.CM);
+            if(error > 1){
+                Library.drive((float) (P * error), 0, 0);
+            }else{
+                Library.drive(0,0,0);
+            }
         }
 
 //        public double[] turnDegrees( int degrees ){
