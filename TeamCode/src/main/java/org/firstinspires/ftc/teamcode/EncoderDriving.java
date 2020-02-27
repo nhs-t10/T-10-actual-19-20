@@ -95,7 +95,7 @@ public class EncoderDriving{
         }
     }
 
-    public float encoderStrafe(float distCM){
+    public void encoderStrafe(float distCM){
         if( !started){
             started = true;
             clock.reset();
@@ -103,7 +103,6 @@ public class EncoderDriving{
         }else if (clock.seconds() < 6){
             strafe();
         }
-        return error;
     }
 
 }
