@@ -21,7 +21,7 @@ public class ExtendTapeMeasure extends Library{
         }else if( isTenSeconds && clock.seconds() <= 10 ){
             tapeMeasure.setPower(1);//this goes for 10 seconds or roughly 40cm
         }else if( !isTenSeconds && clock.seconds() <= 5 ){
-            tapeMeasure.setPower(1);//this goes for 5 seconds or roughly 5cm
+            tapeMeasure.setPower(1);//this goes for 5 seconds or roughly 20cm
         }else{
             tapeMeasure.setPower(0);
             //            currentState = State.END;
