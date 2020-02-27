@@ -20,7 +20,6 @@ class JeffAutoMethods{
         moving = false;
         turner = new Turning();
         turner.initImu(hardwareMap);
-        Library.vuforiaInit();
     }
 
     boolean driveToFoundation(){

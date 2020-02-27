@@ -6,8 +6,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
-import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+
 
 public class IMUData{
     static BNO055IMU imu;
@@ -27,13 +28,16 @@ public class IMUData{
         parameters.loggingEnabled = true;
         parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-        imu.startAccelerationIntegration(new Position(), new Velocity(), 100);
+
+        /*Position position = new Position();
+        Velocity velocity= new Velocity();
+        imu.startAccelerationIntegration(position, velocity, 1000 );*/
 
         imu.initialize(parameters);
     }
 
     public float getAngle(){
-        return imu.getAngularOrientation().thirdAngle;
+        return imu.getAngularOrientation().firstAngle;
     }
 
     public double getXVelocity(){
@@ -59,5 +63,4 @@ public class IMUData{
     public double getZAcceleration(){
         return imu.getAcceleration().zAccel;
     }
-
 }
