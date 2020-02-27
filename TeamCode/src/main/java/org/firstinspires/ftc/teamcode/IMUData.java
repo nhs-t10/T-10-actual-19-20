@@ -29,10 +29,6 @@ public class IMUData{
         parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
-        /*Position position = new Position();
-        Velocity velocity= new Velocity();
-        imu.startAccelerationIntegration(position, velocity, 1000 );*/
-
         imu.initialize(parameters);
     }
 

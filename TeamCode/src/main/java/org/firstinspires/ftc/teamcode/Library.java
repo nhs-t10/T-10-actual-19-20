@@ -383,6 +383,10 @@ public abstract class Library extends OpMode{
         return ( backLeft.getCurrentPosition() + frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backRight.getCurrentPosition() ) / 4f;
     }
 
+    public static int getBackLeftEncoderValue(){
+        return ( backLeft.getCurrentPosition());
+    }
+
     /*public static void strafeForEncoders( float distanceInMM, boolean sensor ){
         float startPosition = backLeft.getCurrentPosition();
         float num = distanceInMM;
