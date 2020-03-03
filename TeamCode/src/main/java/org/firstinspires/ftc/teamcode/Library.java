@@ -270,11 +270,11 @@ public abstract class Library extends OpMode{
 
     public static void gripStone( boolean x ){
         if( x ){
-            grabber1.setPosition(1);
-            grabber2.setPosition(1);
+            grabber1.setPosition(.1);//basically 0
+            grabber2.setPosition(.5);//this wont work on new grabber needs lots of testing
         }else{
-            grabber1.setPosition(0);
-            grabber2.setPosition(0);
+            grabber1.setPosition(1);//almost 180
+            grabber2.setPosition(0);//90 degrees?
         }
     }
 
