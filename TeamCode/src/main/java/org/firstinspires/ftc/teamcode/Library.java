@@ -75,8 +75,8 @@ public abstract class Library extends OpMode{
     public DRIVING mode;
 
     //TEST
-    IMUData imu;
-    Turning turner;
+    //IMUData imu;
+    //Turning turner;
 
 
     // the rotation of the encoders is measured in steps
@@ -379,11 +379,11 @@ public abstract class Library extends OpMode{
     //        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     //    }
 
-    public static Float getEncoderValue(){
+    public static float getEncoderValue(){
         return ( backLeft.getCurrentPosition() + frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backRight.getCurrentPosition() ) / 4f;
     }
 
-    public static int getBackLeftEncoderValue(){
+    public static float getBackLeftEncoderValue(){
         return ( backLeft.getCurrentPosition());
     }
 

@@ -7,19 +7,21 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class EncoderDriving{
     float error;
+    float[] meow;
     float startEncoderValue;
     float destinationEncoderValue;
     boolean started;
     boolean strafingRight;
     boolean strafingLeft;
-    float P = 0.001f;
-    float RotationPerCM = (float) 194.13;
+    float P = 0.01f;
+    float RotationPerCM = (float) 10.13;
     ElapsedTime clock;
 
     public EncoderDriving(){
         started = false;
         clock = new ElapsedTime();
         destinationEncoderValue = 0;
+        meow = new float[3];
     }
 
     public void setP(float newP){
@@ -53,7 +55,7 @@ public class EncoderDriving{
     private void drive(){
         error = destinationEncoderValue - Library.getEncoderValue();
         if(error > 1){
-            Library.drive(P * error, 0, 0);
+            Library.drive(P * -error, 0, 0);
         }else{
             Library.drive(0,0,0);
         }
@@ -71,31 +73,24 @@ public class EncoderDriving{
     }
 
     public void setStrafeDistance(float distCM){
-        destinationEncoderValue = distCM * RotationPerCM + Library.getBackLeftEncoderValue();
+        destinationEncoderValue = distCM * RotationPerCM * 10 + Library.getBackLeftEncoderValue();
     }
 
-    private void strafe(){
-        if (destinationEncoderValue > 0){
-            strafingRight = true;
-        }
-        else{
-            strafingLeft = true;
-        }
-
-        error = Math.abs(destinationEncoderValue - Library.getBackLeftEncoderValue());
-        if (error > 1){
-            if (strafingRight){
-                Library.drive(0, 0, P * error);
-            }
-            else{
-                Library.drive(0,0, -P * error);
-            }
+    private float[] strafe(){
+        float curencval = Library.getBackLeftEncoderValue();
+        error = destinationEncoderValue - curencval;
+        if (Math.abs(error) > 1){
+            Library.drive(0, 0, -P * error);
         }else{
             Library.drive(0,0,0);
         }
+        meow[0] = error;
+        meow[1] = destinationEncoderValue;
+        meow[2] = curencval;
+        return meow;
     }
 
-    public void encoderStrafe(float distCM){
+    public float[] encoderStrafe(float distCM){
         if( !started){
             started = true;
             clock.reset();
@@ -103,6 +98,7 @@ public class EncoderDriving{
         }else if (clock.seconds() < 6){
             strafe();
         }
+        return meow;
     }
 
 }

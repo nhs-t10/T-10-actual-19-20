@@ -7,19 +7,28 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class TestEncoders extends Library{
     EncoderDriving driving;
     ElapsedTime clock;
+    boolean started;
+    float[] error;
+    float errorturn;
 
     public void init(){
         hardwareInit();
         driving = new EncoderDriving();
         clock = new ElapsedTime();
+        started = false;
+        error = new float[3];
+        errorturn = 0;
     }
 
     public void loop(){
-        if (clock.seconds() < 5){
-            driving.encoderDrive(10);
+        if(!started){
+            started = true;
+            clock.reset();
+        }else if (clock.seconds() < 5){
+            error = driving.encoderStrafe(10);
         }
-        else{
-            driving.encoderStrafe(10);
-        }
+        telemetry.addData("Encoder Error: ",error[0]);
+        telemetry.addData("Destination: ",error[1]);
+        telemetry.addData("Current: ",error[2]);
     }
 }
