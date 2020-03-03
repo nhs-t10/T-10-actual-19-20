@@ -24,18 +24,18 @@ class JeffAutoMethods{
     }
 
     boolean driveToFoundation(){
-        //this works with grippers on front NOT back
+        //this works with grippers on back
         if( !moving ){
             clock.reset();
             moving = true;
         }else if( clock.seconds() < .75 ){
             if( isBlueSide ){
-                Library.drive(0, 0, -.5f);
-            }else{
                 Library.drive(0, 0, .5f);
+            }else{
+                Library.drive(0, 0, -.5f);
             }
-        }else if( Library.distanceLeft.getDistance(DistanceUnit.CM) <= 80 || Library.distanceRight.getDistance(DistanceUnit.CM) <= 80 ){
-            Library.drive(-.75f, 0, 0);
+        }else if( clock.seconds() < 3.5 ){
+            Library.drive(.75f, 0, 0);
         }else{
             Library.drive(0, 0, 0);
             moving = false;
