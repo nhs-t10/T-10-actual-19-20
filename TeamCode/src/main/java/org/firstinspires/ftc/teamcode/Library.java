@@ -99,17 +99,17 @@ public abstract class Library extends OpMode{
         driveInit();
 
         //        lift = hardwareMap.dcMotor.get("l0");
-        intakeOne = hardwareMap.dcMotor.get("i1");
-        intakeTwo = hardwareMap.dcMotor.get("i2");
-
-        foundationLeft = hardwareMap.servo.get("f0");
-        foundationRight = hardwareMap.servo.get("f1");
+//        intakeOne = hardwareMap.dcMotor.get("i1");
+//        intakeTwo = hardwareMap.dcMotor.get("i2");
+//
+//        foundationLeft = hardwareMap.servo.get("f0");
+//        foundationRight = hardwareMap.servo.get("f1");
 
         //        intakeLiftLeft = hardwareMap.servo.get("s1");
         //        intakeLiftRight = hardwareMap.servo.get("s0");
 
-        color = hardwareMap.get(ColorSensor.class, "color1");
-        distance = hardwareMap.get(DistanceSensor.class, "distance1");
+//        color = hardwareMap.get(ColorSensor.class, "color1");
+//        distance = hardwareMap.get(DistanceSensor.class, "distance1");
         //BLDistance = hardwareMap.get(DistanceSensor.class, "BackLeftDistance");
         //BRDistance = hardwareMap.get(DistanceSensor.class, "BackRightDistance");
 
@@ -124,8 +124,8 @@ public abstract class Library extends OpMode{
         //lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //liftGivenControllerValues.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //liftGivenControllerValues.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         mode = DRIVING.Fast;
     }
@@ -268,20 +268,20 @@ public abstract class Library extends OpMode{
 
     //Each method below uses inputs to dictate the robot's actions
     //(i.e gripSkystone, which determines weather the robot should grab or not)
-    public static void intake( boolean a, boolean b ){
-        double num = 0.0;
-
-        if( a ){
-            num = .5;
-        }else if( b ){
-            num = -.5;
-        }else{
-            num = 0;
-        }
-
-        intakeOne.setPower(num);
-        intakeTwo.setPower(-num);
-    }
+//    public static void intake( boolean a, boolean b ){
+//        double num = 0.0;
+//
+//        if( a ){
+//            num = .5;
+//        }else if( b ){
+//            num = -.5;
+//        }else{
+//            num = 0;
+//        }
+//
+//        intakeOne.setPower(num);
+//        intakeTwo.setPower(-num);
+//    }
 
     //    public static void lowerIntake( boolean x ){
     //        if( x ){
@@ -302,15 +302,15 @@ public abstract class Library extends OpMode{
     //            grabber.setPosition(0);
     //    }
 
-    public static void gripFoundation( boolean y ){
-        if( y ){
-            foundationLeft.setPosition(.145);
-            foundationRight.setPosition(.6);
-        }else{
-            foundationLeft.setPosition(1);
-            foundationRight.setPosition(0);
-        }
-    }
+//    public static void gripFoundation( boolean y ){
+//        if( y ){
+//            foundationLeft.setPosition(.145);
+//            foundationRight.setPosition(.6);
+//        }else{
+//            foundationLeft.setPosition(1);
+//            foundationRight.setPosition(0);
+//        }
+//    }
 
     //    public static void liftGivenControllerValues( boolean up, boolean down ){
     //        if( up ){
@@ -386,8 +386,12 @@ public abstract class Library extends OpMode{
     //        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     //    }
 
-    public static Float getEncoderValue(){
+    public static float getEncoderValue(){
         return ( backLeft.getCurrentPosition() + frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backRight.getCurrentPosition() ) / 4f;
+    }
+
+    public static float getBackLeftEncoderValue(){
+        return ( backLeft.getCurrentPosition());
     }
 
     /*public static void strafeForEncoders( float distanceInMM, boolean sensor ){
