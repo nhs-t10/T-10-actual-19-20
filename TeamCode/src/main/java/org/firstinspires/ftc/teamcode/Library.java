@@ -108,11 +108,11 @@ public abstract class Library extends OpMode{
         foundationRight = hardwareMap.servo.get("s2");
         foundationLeft = hardwareMap.servo.get("s3");
         tapeMeasure = hardwareMap.crservo.get("s4");
-        intakeLiftLeft = hardwareMap.servo.get("s5");
-        intakeLiftRight = hardwareMap.servo.get("s6");
-
-        intakeOne = hardwareMap.dcMotor.get("i1");
-        intakeTwo = hardwareMap.dcMotor.get("i2");
+//        intakeLiftLeft = hardwareMap.servo.get("s5");
+//        intakeLiftRight = hardwareMap.servo.get("s6");
+//
+//        intakeOne = hardwareMap.dcMotor.get("i1");
+//        intakeTwo = hardwareMap.dcMotor.get("i2");
 
         color = hardwareMap.get(ColorSensor.class, "color0");
         distanceLeft = hardwareMap.get(DistanceSensor.class, "distance0");
@@ -126,8 +126,8 @@ public abstract class Library extends OpMode{
         liftLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         mode = DRIVING.Fast;
     }
