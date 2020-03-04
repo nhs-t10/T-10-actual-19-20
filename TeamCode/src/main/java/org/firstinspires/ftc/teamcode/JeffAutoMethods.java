@@ -152,7 +152,7 @@ class JeffAutoMethods{
         if( !moving ){
             clock.reset();
             moving = true;
-        }else if( Library.distanceLeft.getDistance(DistanceUnit.INCH) <= 18 ){
+        }else if( Library.distanceLeft.getDistance(DistanceUnit.CM) <= 80 ){
             Library.drive(.5f, 0, 0);
         }else{
             moving = false;
@@ -174,7 +174,7 @@ class JeffAutoMethods{
                     clock2.reset();
                     moving2 = true;
                     sensedBlock = true;
-                }else if( Library.distanceLeft.getDistance(DistanceUnit.INCH) <= 23 ){
+                }else if( Library.distanceLeft.getDistance(DistanceUnit.CM) <= 90 ){
                     Library.drive(.5f, 0, 0);
                 }else{
                     turner.turnDegrees(180);
@@ -185,7 +185,7 @@ class JeffAutoMethods{
                 if( !moving2 ){
                     clock2.reset();
                     moving2 = true;
-                }else if( clock2.milliseconds() < 50 ){
+                }else if( clock2.seconds() < .5 ){
                     Library.drive(0, 0, -.5f);
                 }else{
                     Library.drive(0, 0, 0);
