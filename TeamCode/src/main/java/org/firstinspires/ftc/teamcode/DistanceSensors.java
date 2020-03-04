@@ -28,7 +28,7 @@ public class DistanceSensors extends Library{
         boolean a = gamepad1.a;
         boolean y = gamepad1.y;
 
-        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
+//        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
 
         //Movement inputs
         float linear = gamepad1.left_stick_y; //Forward and back

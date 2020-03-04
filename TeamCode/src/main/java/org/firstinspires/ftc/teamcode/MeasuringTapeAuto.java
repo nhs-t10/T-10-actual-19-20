@@ -41,7 +41,6 @@ public class MeasuringTapeAuto extends Library{
     }
 
     public void Parking(){
-        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
         if( !moving ){
             clock.reset();
             moving = true;
@@ -75,15 +74,6 @@ public class MeasuringTapeAuto extends Library{
     }
 
     private void Telemetry(){
-        Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
-        telemetry.addData("Red: ", color.red());
-        telemetry.addData("Green: ", color.green());
-        telemetry.addData("Blue: ", color.blue());
-        telemetry.addData("Light: ", color.alpha());
-        telemetry.addData("Hue: ", hsvValues[0]);
-        telemetry.addData("Saturation: ", hsvValues[1]);
-        telemetry.addData("Value: ", hsvValues[2]);
-
         telemetry.addData("Millis since State Start: ", clock.seconds());
         telemetry.addData("State: ", currentState);
         telemetry.addData("Distamce Left: ", distanceLeft.getDistance(DistanceUnit.CM));

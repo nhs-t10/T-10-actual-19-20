@@ -70,7 +70,7 @@ public abstract class Library extends OpMode{
     public static Servo foundationLeft, foundationRight, grabber1, grabber2, intakeLiftLeft, intakeLiftRight;
     public static VoltageSensor voltageSensor;
     // Initialize hardware devices and their zero behavior
-    public static ColorSensor color;
+//    public static ColorSensor color;
     public static DistanceSensor distanceLeft, distanceRight;
     public DRIVING mode;
 
@@ -114,7 +114,7 @@ public abstract class Library extends OpMode{
 //        intakeOne = hardwareMap.dcMotor.get("i1");
 //        intakeTwo = hardwareMap.dcMotor.get("i2");
 
-        color = hardwareMap.get(ColorSensor.class, "color0");
+//        color = hardwareMap.get(ColorSensor.class, "color0");
         distanceLeft = hardwareMap.get(DistanceSensor.class, "distance0");
         distanceRight = hardwareMap.get(DistanceSensor.class, "distance1");
 
@@ -278,30 +278,30 @@ public abstract class Library extends OpMode{
         }
     }
 
-    public static void intake( float a, float b ){
-        double num = 0.0;
+//    public static void intake( float a, float b ){
+//        double num = 0.0;
+//
+//        if( a != 0 ){
+//            num = a/2;
+//        }else if( b != 0 ){
+//            num = -b/2;
+//        }else{
+//            num = 0;
+//        }
+//
+//        intakeOne.setPower(num);
+//        intakeTwo.setPower(-num);
+//    }
 
-        if( a != 0 ){
-            num = a/2;
-        }else if( b != 0 ){
-            num = -b/2;
-        }else{
-            num = 0;
-        }
-
-        intakeOne.setPower(num);
-        intakeTwo.setPower(-num);
-    }
-
-    public static void lowerIntake( boolean x ){
-        if( x ){
-            intakeLiftLeft.setPosition(1);
-            intakeLiftRight.setPosition(1);
-        }else{
-            intakeLiftLeft.setPosition(0);
-            intakeLiftRight.setPosition(0);
-        }
-    }
+//    public static void lowerIntake( boolean x ){
+//        if( x ){
+//            intakeLiftLeft.setPosition(1);
+//            intakeLiftRight.setPosition(1);
+//        }else{
+//            intakeLiftLeft.setPosition(0);
+//            intakeLiftRight.setPosition(0);
+//        }
+//    }
 
 
     public static void gripFoundation( boolean y ){
@@ -418,10 +418,10 @@ public abstract class Library extends OpMode{
     }
 
     //tells if under bridge or not (basic version)
-    public static boolean isUnderBridge( int gray, boolean blue ){
-        int minColor = (int) ( gray * 1.3 );
-        return ( color.blue() > minColor && blue ) || ( color.red() > minColor && !blue );
-    }
+//    public static boolean isUnderBridge( int gray, boolean blue ){
+//        int minColor = (int) ( gray * 1.3 );
+//        return ( color.blue() > minColor && blue ) || ( color.red() > minColor && !blue );
+//    }
 
 
     // TODO: make this use a PID controller
