@@ -216,13 +216,21 @@ class JeffAutoMethods{
     }
 
     boolean driveToBuildingZone(){
-        //NOT FINISHED
         if( !moving ){
             clock.reset();
             moving = true;
-        }else if( clock.seconds() < 5 ){
-
+        }else if( clock.seconds() < .5 ){
+            Library.drive(-.25f,0,0);
+        }else if( clock.seconds() < 1.5 ){
+            turner.turnDegrees(90);
+        }else if( clock.seconds() < 6 ){
+            Library.drive(-1,0,0);
+        }else if( clock.seconds() < 7 ){
+           turner.turnDegrees(-90);
+        }else if( clock.seconds() < 8 ){
+            Library.drive(.3f,0,0);
         }else{
+            Library.drive(0,0,0);
             moving = false;
             return true;
         }
@@ -230,12 +238,11 @@ class JeffAutoMethods{
     }
 
     boolean placeBlock(){
-        //NOT FINISHED
         if( !moving ){
             clock.reset();
             moving = true;
-        }else if( clock.seconds() < 5 ){
-
+        }else if( clock.seconds() < 2 ){
+            Library.gripStone(false);
         }else{
             moving = false;
             return true;
@@ -244,12 +251,11 @@ class JeffAutoMethods{
     }
 
     boolean turnToParkingLineBlock(){
-        //NOT FINISHED?
         if( !moving ){
             clock.reset();
             moving = true;
-        }else if(clock.seconds() < 5){
-            turner.turnDegrees(90);
+        }else if(clock.seconds() < 2){
+            turner.turnDegrees(180);
         }else{
             moving = false;
             return true;
