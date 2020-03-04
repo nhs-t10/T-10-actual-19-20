@@ -391,7 +391,7 @@ public abstract class Library extends OpMode{
     }
 
     public static float getBackLeftEncoderValue(){
-        return ( backLeft.getCurrentPosition());
+        return ( backLeft.getCurrentPosition() * 1f);
     }
 
     /*public static void strafeForEncoders( float distanceInMM, boolean sensor ){

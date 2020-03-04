@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name = "TeleOp")
-public class DriveTeleOp extends Library{
+@TeleOp(name = "Encoder TeleOp")
+public class EncoderTeleOp extends Library{
 
     public void init(){
         hardwareInit();
@@ -95,11 +95,22 @@ public class DriveTeleOp extends Library{
             sums = drive(linear, rotation, side); // fast driving
         }
 
+        float backLeftEnc = backLeft.getCurrentPosition();
+        float backRightEnc = backRight.getCurrentPosition();
+        float frontLeftEnc = frontLeft.getCurrentPosition();
+        float frontRightEnc = frontRight.getCurrentPosition();
+        float average = getEncoderValue();
+
         telemetry.addData("Mode: ", mode);
-        telemetry.addData("Front Left", sums[0]);
-        telemetry.addData("Front Right", sums[1]);
-        telemetry.addData("Back Left", sums[2]);
-        telemetry.addData("Back Right", sums[3]);
+//        telemetry.addData("Front Left", sums[0]);
+//        telemetry.addData("Front Right", sums[1]);
+//        telemetry.addData("Back Left", sums[2]);
+//        telemetry.addData("Back Right", sums[3]);
+        telemetry.addData("Encoder BL: ", backLeftEnc);
+        telemetry.addData("Encoder BR: ", backRightEnc);
+        telemetry.addData("Encoder FL: ", frontLeftEnc);
+        telemetry.addData("Encoder FR: ", frontRightEnc);
+        telemetry.addData("Encoder Av: ", average);
 
         telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
     }

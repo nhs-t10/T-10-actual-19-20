@@ -4,19 +4,16 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "Turning Test")
 public class TestTurning extends Library{
-    Turning turner;
+    PortalTurning turner;
 
     public void init(){
         hardwareInit();
-        turner = new Turning();
+        turner = new PortalTurning();
         turner.initImu(hardwareMap);
     }
 
     public void loop(){
-        double[] array = turner.turnDegrees(180);
-        telemetry.addData("DEST ANGLE: ", array[0]);
-        telemetry.addData("CLOCK: ", array[1]);
-        telemetry.addData("CURRENT ANGLE: ", array[2]);
-        telemetry.addData("ERROR: ", array[3]);
+        float error = turner.turnDegrees(180);
+        telemetry.addData("ERROR: ", error);
     }
 }

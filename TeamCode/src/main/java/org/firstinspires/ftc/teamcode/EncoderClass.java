@@ -80,7 +80,8 @@ public class EncoderClass{
         float curencval = Library.getBackLeftEncoderValue();
         error = destinationEncoderValue - curencval;
         if (Math.abs(error) > 1){
-            Library.drive(0, 0, -P * error);
+            //Library.drive(0, 0, -P * error);
+            Library.drive(0, 0, -.5f);
         }else{
             Library.drive(0,0,0);
         }

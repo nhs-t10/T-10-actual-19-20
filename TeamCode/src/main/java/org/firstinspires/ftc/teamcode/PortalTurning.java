@@ -84,6 +84,7 @@ public class PortalTurning{
         if( !started ){
             started = true;
             clock.reset();
+            setDestination(degrees);
         }
 
         //        if( started && clock.seconds() < 1 ){

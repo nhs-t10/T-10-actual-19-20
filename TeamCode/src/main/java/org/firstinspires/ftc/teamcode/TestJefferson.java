@@ -34,7 +34,7 @@ public class TestJefferson extends Library{
         }else if( currentState == State.TO_FOUNDATION ){
             DriveToFoundation(true);
         }else if( currentState == State.FROM_FOUNDATION ){
-            BackUpFoundation();
+            //BackUpFoundation();
         }else if( currentState == State.PARKING ){
             ColorParking(true, true);
         }
@@ -59,188 +59,6 @@ public class TestJefferson extends Library{
         //Otherwise, it will use the inputs of controller one
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        if( a2 || b2 ){
-            intake(a2, b2);
-        }else{
-            intake(a, b);
-        }
-
-        if( y2 ){
-            gripFoundation(true);
-        }else{
-            gripFoundation(y);
-        }
 
         if( gamepad1.dpad_up ){
             currentState = State.TO_FOUNDATION;
@@ -271,26 +89,26 @@ public class TestJefferson extends Library{
         telemetry.addData("Values: ", linear + "\n " + rotation + "\n " + side);
     }
 
-    private void BackUpFoundation(){
-        if( !moving ){
-            clock.reset();
-            moving = true;
-            gripFoundation(true);
-        }else if(clock.seconds() < 2){
-            gripFoundation(true);//this grips the foundation
-        }else if(clock.seconds() > 2 && ( distance.getDistance(DistanceUnit.CM) >= 30)){ //(!front1.isPressed()||!front2.isPressed())
-            gripFoundation(true);
-            drive(.75f,0,0);//drives until touching wall
-        }else if( distance.getDistance(DistanceUnit.CM) > 10){ //(!front1.isPressed()||!front2.isPressed())
-            gripFoundation(true);
-            drive((float)( distance.getDistance(DistanceUnit.CM)/100+.1),0,0);//drives until touching wall
-        }else{
-            gripFoundation(false);
-            moving = false;
-            drive(0,0,0);
-            currentState = State.TELEOP ;
-        }
-    }//wall reading is about 1cm
+//    private void BackUpFoundation(){
+//        if( !moving ){
+//            clock.reset();
+//            moving = true;
+//            gripFoundation(true);
+//        }else if(clock.seconds() < 2){
+//            gripFoundation(true);//this grips the foundation
+//        }else if(clock.seconds() > 2 && ( distance.getDistance(DistanceUnit.CM) >= 30)){ //(!front1.isPressed()||!front2.isPressed())
+//            gripFoundation(true);
+//            drive(.75f,0,0);//drives until touching wall
+//        }else if( distance.getDistance(DistanceUnit.CM) > 10){ //(!front1.isPressed()||!front2.isPressed())
+//            gripFoundation(true);
+//            drive((float)( distance.getDistance(DistanceUnit.CM)/100+.1),0,0);//drives until touching wall
+//        }else{
+//            gripFoundation(false);
+//            moving = false;
+//            drive(0,0,0);
+//            currentState = State.TELEOP ;
+//        }
+//    }//wall reading is about 1cm
 
     private void ColorParking( boolean isBlue, boolean isFoundation ){
         Color.RGBToHSV((int) ( color.red() * SCALE_FACTOR ), (int) ( color.green() * SCALE_FACTOR ), (int) ( color.blue() * SCALE_FACTOR ), hsvValues);
