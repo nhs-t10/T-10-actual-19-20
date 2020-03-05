@@ -118,12 +118,12 @@ public class BlueQuarryAuto extends Library
                     curEncoderValue = getEncoderValue();
                 }
 
-            case MOVE_UNDER_BRIDGE:
-                if (!isUnderBridge(255, true))
-                    drive(0, 0, .5f);
-
-                else
-                    drive(0, 0, 0);
+//            case MOVE_UNDER_BRIDGE:
+//                if (!isUnderBridge(255, true))
+//                    drive(0, 0, .5f);
+//
+//                else
+//                    drive(0, 0, 0);
 
             default:
                 telemetry.addLine("The routine has been completed");

@@ -108,11 +108,11 @@ public abstract class Library extends OpMode{
         foundationRight = hardwareMap.servo.get("s2");
         foundationLeft = hardwareMap.servo.get("s3");
         tapeMeasure = hardwareMap.crservo.get("s4");
-//        intakeLiftLeft = hardwareMap.servo.get("s5");
-//        intakeLiftRight = hardwareMap.servo.get("s6");
-//
-//        intakeOne = hardwareMap.dcMotor.get("i1");
-//        intakeTwo = hardwareMap.dcMotor.get("i2");
+        intakeLiftLeft = hardwareMap.servo.get("s5");
+        intakeLiftRight = hardwareMap.servo.get("s6");
+
+        intakeOne = hardwareMap.dcMotor.get("i1");
+        intakeTwo = hardwareMap.dcMotor.get("i2");
 
 //        color = hardwareMap.get(ColorSensor.class, "color0");
         distanceLeft = hardwareMap.get(DistanceSensor.class, "distance0");
@@ -126,8 +126,8 @@ public abstract class Library extends OpMode{
         liftLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-//        intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         mode = DRIVING.Fast;
     }
@@ -278,30 +278,30 @@ public abstract class Library extends OpMode{
         }
     }
 
-//    public static void intake( float a, float b ){
-//        double num = 0.0;
-//
-//        if( a != 0 ){
-//            num = a/2;
-//        }else if( b != 0 ){
-//            num = -b/2;
-//        }else{
-//            num = 0;
-//        }
-//
-//        intakeOne.setPower(num);
-//        intakeTwo.setPower(-num);
-//    }
+    public static void intake( float a, float b ){
+        double num = 0.0;
 
-//    public static void lowerIntake( boolean x ){
-//        if( x ){
-//            intakeLiftLeft.setPosition(1);
-//            intakeLiftRight.setPosition(1);
-//        }else{
-//            intakeLiftLeft.setPosition(0);
-//            intakeLiftRight.setPosition(0);
-//        }
-//    }
+        if( a != 0 ){
+            num = a/2;
+        }else if( b != 0 ){
+            num = -b/2;
+        }else{
+            num = 0;
+        }
+
+        intakeOne.setPower(num);
+        intakeTwo.setPower(-num);
+    }
+
+    public static void lowerIntake( boolean x ){
+        if( x ){
+            intakeLiftLeft.setPosition(1);
+            intakeLiftRight.setPosition(1);
+        }else{
+            intakeLiftLeft.setPosition(0);
+            intakeLiftRight.setPosition(0);
+        }
+    }
 
 
     public static void gripFoundation( boolean y ){

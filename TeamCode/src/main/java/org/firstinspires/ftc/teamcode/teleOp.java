@@ -53,13 +53,13 @@ public class teleOp extends Library{
 
         gripStone(x2);
 
-//        if(x && intakeUp){
-//            lowerIntake(false);
-//            intakeUp = false;
-//        }else if(x){
-//            lowerIntake(true);
-//            intakeUp = true;
-//        }
+        if(x && intakeUp){
+            lowerIntake(false);
+            intakeUp = false;
+        }else if(x){
+            lowerIntake(true);
+            intakeUp = true;
+        }
 
         if( a || a2 ){
             tapeMeasure.setPower(1);
@@ -81,11 +81,11 @@ public class teleOp extends Library{
             liftGivenControllerValues(liftUp, liftDown);
         }
 
-//        if( intakeIn2 !=0  || intakeOut2 != 0){
-//            intake(intakeIn2, intakeOut2);
-//        }else{
-//            intake(intakeIn, intakeOut);
-//        }
+        if( intakeIn2 !=0  || intakeOut2 != 0){
+            intake(intakeIn2, intakeOut2);
+        }else{
+            intake(intakeIn, intakeOut);
+        }
 
         if( gamepad1.right_stick_button ){
             mode = mode.getNext();
