@@ -8,7 +8,6 @@ public class Turning{
     double destinationAngle;
     double pComponent;
     double angleTurned = 0;
-    float error;
     final double P = 0.01;
 
     boolean started = false;
@@ -27,9 +26,9 @@ public class Turning{
         imu.initImu();
     }
 
-    public double getCurrentAngle(){
+    /*public double getCurrentAngle(){
         return imu.getAngle();
-    }
+    }*/
 
     //Setting the destination in degrees
     public void setDestination( float degrees ){
