@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name = "Test Turning")
+@Autonomous(name = "Test Turning")
 public class TestTurning extends Library{
     private boolean subroutine;
     private boolean intakeUp = true;

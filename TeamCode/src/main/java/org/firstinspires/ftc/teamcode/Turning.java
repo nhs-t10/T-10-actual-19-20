@@ -43,7 +43,7 @@ public class Turning{
         }
     }
 
-    public float updateAndDrive(){
+    public void updateAndDrive(){
         //Setting the current angle
         currentAngle = imu.getAngle();
 
@@ -76,24 +76,22 @@ public class Turning{
         else{
             Library.drive(0f, 0f,0f);
         }
-        return (float)error;
     }
 
-    public float turnDegrees( int degrees ){
+    public void turnDegrees( int degrees ){
         angleTurned = imu.getAngle();
         if( !started ){
             started = true;
             clock.reset();
         }
 
-//        if( started && clock.seconds() < 1 ){
-//            setDestination(degrees);
-//        }
+        if( started && clock.seconds() < 1 ){
+            setDestination(degrees);
+        }
         else if( started && clock.seconds() < 4 ){
             updateAndDrive();
         }
 
         angleTurned = imu.getAngle();
-        return error;
     }
 }
