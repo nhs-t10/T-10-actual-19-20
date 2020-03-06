@@ -271,10 +271,10 @@ public abstract class Library extends OpMode{
     public static void gripStone( boolean x ){
         if( x ){
             grabber1.setPosition(.1);//basically 0
-            grabber2.setPosition(.5);//this wont work on new grabber needs lots of testing
+            grabber2.setPosition(0);//this wont work on new grabber needs lots of testing
         }else{
             grabber1.setPosition(1);//almost 180
-            grabber2.setPosition(0);//90 degrees?
+            grabber2.setPosition(.5);//90 degrees?
         }
     }
 
@@ -282,23 +282,23 @@ public abstract class Library extends OpMode{
         double num = 0.0;
 
         if( a != 0 ){
-            num = a/2;
+            num = a/1.3;
         }else if( b != 0 ){
-            num = -b/2;
+            num = -b/1.3;
         }else{
             num = 0;
         }
 
-        intakeOne.setPower(num);
-        intakeTwo.setPower(-num);
+        intakeOne.setPower(-num);
+        intakeTwo.setPower(num);
     }
 
     public static void lowerIntake( boolean x ){
         if( x ){
-            intakeLiftLeft.setPosition(1);
+            intakeLiftLeft.setPosition(0);
             intakeLiftRight.setPosition(1);
         }else{
-            intakeLiftLeft.setPosition(0);
+            intakeLiftLeft.setPosition(1);
             intakeLiftRight.setPosition(0);
         }
     }
@@ -306,22 +306,22 @@ public abstract class Library extends OpMode{
 
     public static void gripFoundation( boolean y ){
         if( y ){
-            foundationRight.setPosition(.4);
-            foundationLeft.setPosition(.4);
+            foundationRight.setPosition(.05);
+            foundationLeft.setPosition(.8);
         }else{
-            foundationRight.setPosition(0);
-            foundationLeft.setPosition(0);
+            foundationRight.setPosition(.25);
+            foundationLeft.setPosition(.55);
         }
     }
 
     public static void liftGivenControllerValues( boolean up, boolean down ){
         if( up ){
             liftLeft.setPower(.15);
-            liftRight.setPower(-.15);
+            liftRight.setPower(.15);
         }
         if( down ){
             liftLeft.setPower(-.5);
-            liftRight.setPower(.5);
+            liftRight.setPower(-.5);
         }
         if( !up && !down ){
             liftLeft.setPower(0);

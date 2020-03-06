@@ -1,13 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "TeleOp")
 public class teleOp extends Library{
     private boolean subroutine;
     private boolean intakeUp = true;
+    private boolean isPressed = false;
+    private boolean isPressed2 = false;
 
     public void init(){
         hardwareInit();
@@ -53,12 +55,12 @@ public class teleOp extends Library{
 
         gripStone(x2);
 
-        if(x && intakeUp){
-            lowerIntake(false);
-            intakeUp = false;
-        }else if(x){
-            lowerIntake(true);
-            intakeUp = true;
+        if(x && !isPressed){
+            intakeUp = !intakeUp;
+            lowerIntake(intakeUp);
+            isPressed = true;
+        }else if(!x && isPressed){
+            isPressed = false;
         }
 
         if( a || a2 ){
@@ -87,8 +89,10 @@ public class teleOp extends Library{
             intake(intakeIn, intakeOut);
         }
 
-        if( gamepad1.right_stick_button ){
+        if( gamepad1.right_stick_button && !isPressed2){
             mode = mode.getNext();
+        }else if(!gamepad1.right_stick_button && isPressed){
+            isPressed2 = false;
         }
 
         if( mode == DRIVING.Slow ){
