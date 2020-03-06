@@ -295,8 +295,8 @@ public abstract class Library extends OpMode{
 
     public static void lowerIntake( boolean x ){
         if( x ){
-            intakeLiftLeft.setPosition(0);
-            intakeLiftRight.setPosition(1);
+            intakeLiftLeft.setPosition(.3);
+            intakeLiftRight.setPosition(.7);
         }else{
             intakeLiftLeft.setPosition(1);
             intakeLiftRight.setPosition(0);
@@ -306,8 +306,8 @@ public abstract class Library extends OpMode{
 
     public static void gripFoundation( boolean y ){
         if( y ){
-            foundationRight.setPosition(.05);
-            foundationLeft.setPosition(.8);
+            foundationRight.setPosition(.1);
+            foundationLeft.setPosition(.7);
         }else{
             foundationRight.setPosition(.25);
             foundationLeft.setPosition(.55);
@@ -316,12 +316,12 @@ public abstract class Library extends OpMode{
 
     public static void liftGivenControllerValues( boolean up, boolean down ){
         if( up ){
-            liftLeft.setPower(.15);
-            liftRight.setPower(.15);
+            liftLeft.setPower(.5);
+            liftRight.setPower(.5);
         }
         if( down ){
-            liftLeft.setPower(-.5);
-            liftRight.setPower(-.5);
+            liftLeft.setPower(-.25);
+            liftRight.setPower(-.25);
         }
         if( !up && !down ){
             liftLeft.setPower(0);
